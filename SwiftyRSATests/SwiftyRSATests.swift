@@ -11,6 +11,40 @@ import XCTest
 
 class SwiftyRSATests: XCTestCase {
     
+    func testClassPEM() {
+        let str = "ClearText"
+        
+        let bundle = NSBundle(forClass: self.dynamicType)
+        
+        let pubPath   = bundle.pathForResource("swiftyrsa-public", ofType: "pem")!
+        let pubString = NSString(contentsOfFile: pubPath, encoding: NSUTF8StringEncoding, error: nil)! as String
+        
+        let privPath   = bundle.pathForResource("swiftyrsa-private", ofType: "pem")!
+        let privString = NSString(contentsOfFile: privPath, encoding: NSUTF8StringEncoding, error: nil)! as String
+        
+        let encrypted = SwiftyRSA.encryptString(str, publicKeyPEM: pubString)!
+        let decrypted = SwiftyRSA.decryptString(encrypted, privateKeyPEM: privString)!
+        
+        XCTAssert(str == decrypted)
+    }
+    
+    func testClassDER() {
+        let str = "ClearText"
+        
+        let bundle = NSBundle(forClass: self.dynamicType)
+        
+        let pubPath  = bundle.pathForResource("swiftyrsa-public", ofType: "der")!
+        let pubData = NSData(contentsOfFile: pubPath)!
+        
+        let privPath   = bundle.pathForResource("swiftyrsa-private", ofType: "pem")!
+        let privString = NSString(contentsOfFile: privPath, encoding: NSUTF8StringEncoding, error: nil)! as String
+        
+        let encrypted = SwiftyRSA.encryptString(str, publicKeyDER: pubData)!
+        let decrypted = SwiftyRSA.decryptString(encrypted, privateKeyPEM: privString)!
+        
+        XCTAssert(str == decrypted)
+    }
+    
     func testPEM() {
         let str = "ClearText"
         
@@ -27,7 +61,7 @@ class SwiftyRSATests: XCTestCase {
         let privKey    = rsa.privateKeyFromPEMString(privString)!
         
         let encrypted = rsa.encryptString(str, publicKey: pubKey)!
-        let decrypted = rsa.decryptData(encrypted, privateKey: privKey)!
+        let decrypted = rsa.decryptString(encrypted, privateKey: privKey)!
         
         XCTAssert(str == decrypted)
     }
@@ -48,7 +82,7 @@ class SwiftyRSATests: XCTestCase {
         let privKey    = rsa.privateKeyFromPEMString(privString)!
         
         let encrypted = rsa.encryptString(str, publicKey: pubKey)!
-        let decrypted = rsa.decryptData(encrypted, privateKey: privKey)!
+        let decrypted = rsa.decryptString(encrypted, privateKey: privKey)!
         
         XCTAssert(str == decrypted)
     }

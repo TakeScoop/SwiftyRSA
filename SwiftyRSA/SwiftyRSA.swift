@@ -16,6 +16,39 @@ public class SwiftyRSA {
     
     public init() {}
     
+    class func encryptString(str: String, publicKeyPEM: String, padding: SecPadding = SecPadding(kSecPaddingPKCS1)) -> String? {
+        let rsa = SwiftyRSA()
+        
+        let key: SecKeyRef! = rsa.publicKeyFromPEMString(publicKeyPEM)
+        if key == nil {
+            return nil
+        }
+        
+        return rsa.encryptString(str, publicKey: key, padding: padding)
+    }
+    
+    class func encryptString(str: String, publicKeyDER: NSData, padding: SecPadding = SecPadding(kSecPaddingPKCS1)) -> String? {
+        let rsa = SwiftyRSA()
+        
+        let key: SecKeyRef! = rsa.publicKeyFromDERData(publicKeyDER)
+        if key == nil {
+            return nil
+        }
+        
+        return rsa.encryptString(str, publicKey: key, padding: padding)
+    }
+    
+    class func decryptString(str: String, privateKeyPEM: String, padding: SecPadding = SecPadding(kSecPaddingPKCS1)) -> String? {
+        let rsa = SwiftyRSA()
+        
+        let key: SecKeyRef! = rsa.privateKeyFromPEMString(privateKeyPEM)
+        if key == nil {
+            return nil
+        }
+        
+        return rsa.decryptString(str, privateKey: key, padding: padding)
+    }
+    
     public func publicKeyFromDERData(keyData: NSData) -> SecKeyRef? {
         return addKey(keyData, isPublic: true)
     }
@@ -36,7 +69,7 @@ public class SwiftyRSA {
         return addKey(data!, isPublic: false)
     }
     
-    public func encryptString(str: String, publicKey: SecKeyRef, padding: SecPadding = SecPadding(kSecPaddingPKCS1)) -> NSData? {
+    public func encryptString(str: String, publicKey: SecKeyRef, padding: SecPadding = SecPadding(kSecPaddingPKCS1)) -> String? {
         let blockSize = SecKeyGetBlockSize(publicKey)
         let plainTextData = [UInt8](str.utf8)
         let plainTextDataLength = Int(count(str))
@@ -48,11 +81,21 @@ public class SwiftyRSA {
             return nil
         }
         
-        let data = NSData(bytes: encryptedData, length: encryptedDataLength)
-        return data
+        let data: NSData! = NSData(bytes: encryptedData, length: encryptedDataLength)
+        if data == nil {
+            return nil
+        }
+        
+        return data.base64EncodedStringWithOptions(nil)
     }
     
-    public func decryptData(data: NSData, privateKey: SecKeyRef, padding: SecPadding = SecPadding(kSecPaddingPKCS1)) -> String? {
+    public func decryptString(str: String, privateKey: SecKeyRef, padding: SecPadding = SecPadding(kSecPaddingPKCS1)) -> String? {
+        
+        let data: NSData! = NSData(base64EncodedString: str, options: NSDataBase64DecodingOptions(0))
+        if data == nil {
+            return nil
+        }
+        
         let blockSize = SecKeyGetBlockSize(privateKey)
         
         var encryptedData = [UInt8](count: blockSize, repeatedValue: 0)
