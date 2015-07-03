@@ -8,19 +8,19 @@
 
 import Foundation
 
-class SwiftyRSA {
+public class SwiftyRSA {
     
     private var keyTags: [NSData] = []
     
     // MARK: - Public
     
-    init() {}
+    public init() {}
     
-    func publicKeyFromDERData(keyData: NSData) -> SecKeyRef? {
+    public func publicKeyFromDERData(keyData: NSData) -> SecKeyRef? {
         return addKey(keyData, isPublic: true)
     }
     
-    func publicKeyFromPEMString(key: String) -> SecKeyRef? {
+    public func publicKeyFromPEMString(key: String) -> SecKeyRef? {
         let data = dataFromPEMKey(key)
         if data == nil {
             return nil
@@ -28,7 +28,7 @@ class SwiftyRSA {
         return addKey(data!, isPublic: true)
     }
     
-    func privateKeyFromPEMString(key: String) -> SecKeyRef? {
+    public func privateKeyFromPEMString(key: String) -> SecKeyRef? {
         let data = dataFromPEMKey(key)
         if data == nil {
             return nil
@@ -36,7 +36,7 @@ class SwiftyRSA {
         return addKey(data!, isPublic: false)
     }
     
-    func encryptString(str: String, publicKey: SecKeyRef, padding: SecPadding = SecPadding(kSecPaddingPKCS1)) -> NSData? {
+    public func encryptString(str: String, publicKey: SecKeyRef, padding: SecPadding = SecPadding(kSecPaddingPKCS1)) -> NSData? {
         let blockSize = SecKeyGetBlockSize(publicKey)
         let plainTextData = [UInt8](str.utf8)
         let plainTextDataLength = Int(count(str))
@@ -52,7 +52,7 @@ class SwiftyRSA {
         return data
     }
     
-    func decryptData(data: NSData, privateKey: SecKeyRef, padding: SecPadding = SecPadding(kSecPaddingPKCS1)) -> String? {
+    public func decryptData(data: NSData, privateKey: SecKeyRef, padding: SecPadding = SecPadding(kSecPaddingPKCS1)) -> String? {
         let blockSize = SecKeyGetBlockSize(privateKey)
         
         var encryptedData = [UInt8](count: blockSize, repeatedValue: 0)
