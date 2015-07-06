@@ -90,4 +90,4 @@ Inspired from
 License
 -------
 
-This project is copyrighted under the MIT license. Complete license can be found here: <https://github.com/TakeScoop/SwiftyRSA/LICENSE.MD>
+This project is copyrighted under the MIT license. Complete license can be found here: <https://github.com/TakeScoop/SwiftyRSA/blob/master/LICENSE.md>
