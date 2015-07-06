@@ -86,3 +86,8 @@ Inspired from
 
  - <http://blog.flirble.org/2011/01/05/rsa-public-key-openssl-ios/>
  - <https://github.com/lancy/RSADemo>
+
+License
+-------
+
+This project is copyrighted under the MIT license. Complete license can be found here: <https://github.com/TakeScoop/SwiftyRSA/LICENSE.MD>
