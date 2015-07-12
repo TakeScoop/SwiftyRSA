@@ -12,11 +12,9 @@ public class SwiftyRSA {
     
     private var keyTags: [NSData] = []
     
-    // MARK: - Public
+    // MARK: - Public Shorthands
     
-    public init() {}
-    
-    class func encryptString(str: String, publicKeyPEM: String, padding: SecPadding = SecPadding(kSecPaddingPKCS1)) -> String? {
+    public class func encryptString(str: String, publicKeyPEM: String, padding: SecPadding = SecPadding(kSecPaddingPKCS1)) -> String? {
         let rsa = SwiftyRSA()
         
         let key: SecKeyRef! = rsa.publicKeyFromPEMString(publicKeyPEM)
@@ -27,7 +25,7 @@ public class SwiftyRSA {
         return rsa.encryptString(str, publicKey: key, padding: padding)
     }
     
-    class func encryptString(str: String, publicKeyDER: NSData, padding: SecPadding = SecPadding(kSecPaddingPKCS1)) -> String? {
+    public class func encryptString(str: String, publicKeyDER: NSData, padding: SecPadding = SecPadding(kSecPaddingPKCS1)) -> String? {
         let rsa = SwiftyRSA()
         
         let key: SecKeyRef! = rsa.publicKeyFromDERData(publicKeyDER)
@@ -38,7 +36,7 @@ public class SwiftyRSA {
         return rsa.encryptString(str, publicKey: key, padding: padding)
     }
     
-    class func decryptString(str: String, privateKeyPEM: String, padding: SecPadding = SecPadding(kSecPaddingPKCS1)) -> String? {
+    public class func decryptString(str: String, privateKeyPEM: String, padding: SecPadding = SecPadding(kSecPaddingPKCS1)) -> String? {
         let rsa = SwiftyRSA()
         
         let key: SecKeyRef! = rsa.privateKeyFromPEMString(privateKeyPEM)
@@ -48,6 +46,10 @@ public class SwiftyRSA {
         
         return rsa.decryptString(str, privateKey: key, padding: padding)
     }
+    
+    // MARK: - Public Advanced Methods
+    
+    public init() {}
     
     public func publicKeyFromDERData(keyData: NSData) -> SecKeyRef? {
         return addKey(keyData, isPublic: true)

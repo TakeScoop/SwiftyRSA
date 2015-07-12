@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 
   s.homepage     = "https://github.com/TakeScoop/SwiftyRSA"
   s.license      = "MIT"
-  s.author       = { "Loïs Di Qual" => "lois@takescoop.com" }
+  s.author       = { "Scoop" => "ops@takescoop.com" }
 
   s.source       = { :git => "git@github.com:TakeScoop/SwiftyRSA.git" }
   s.source_files = "SwiftyRSA/SwiftyRSA.swift"
