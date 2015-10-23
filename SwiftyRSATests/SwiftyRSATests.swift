@@ -17,10 +17,10 @@ class SwiftyRSATests: XCTestCase {
         let bundle = NSBundle(forClass: self.dynamicType)
         
         let pubPath   = bundle.pathForResource("swiftyrsa-public", ofType: "pem")!
-        let pubString = NSString(contentsOfFile: pubPath, encoding: NSUTF8StringEncoding, error: nil)! as String
+        let pubString = (try! NSString(contentsOfFile: pubPath, encoding: NSUTF8StringEncoding)) as String
         
         let privPath   = bundle.pathForResource("swiftyrsa-private", ofType: "pem")!
-        let privString = NSString(contentsOfFile: privPath, encoding: NSUTF8StringEncoding, error: nil)! as String
+        let privString = (try! NSString(contentsOfFile: privPath, encoding: NSUTF8StringEncoding)) as String
         
         let encrypted = SwiftyRSA.encryptString(str, publicKeyPEM: pubString)!
         let decrypted = SwiftyRSA.decryptString(encrypted, privateKeyPEM: privString)!
@@ -37,7 +37,7 @@ class SwiftyRSATests: XCTestCase {
         let pubData = NSData(contentsOfFile: pubPath)!
         
         let privPath   = bundle.pathForResource("swiftyrsa-private", ofType: "pem")!
-        let privString = NSString(contentsOfFile: privPath, encoding: NSUTF8StringEncoding, error: nil)! as String
+        let privString = (try! NSString(contentsOfFile: privPath, encoding: NSUTF8StringEncoding)) as String
         
         let encrypted = SwiftyRSA.encryptString(str, publicKeyDER: pubData)!
         let decrypted = SwiftyRSA.decryptString(encrypted, privateKeyPEM: privString)!
@@ -53,11 +53,11 @@ class SwiftyRSATests: XCTestCase {
         let rsa = SwiftyRSA()
         
         let pubPath   = bundle.pathForResource("swiftyrsa-public", ofType: "pem")!
-        let pubString = NSString(contentsOfFile: pubPath, encoding: NSUTF8StringEncoding, error: nil)! as String
+        let pubString = (try! NSString(contentsOfFile: pubPath, encoding: NSUTF8StringEncoding)) as String
         let pubKey    = rsa.publicKeyFromPEMString(pubString)!
         
         let privPath   = bundle.pathForResource("swiftyrsa-private", ofType: "pem")!
-        let privString = NSString(contentsOfFile: privPath, encoding: NSUTF8StringEncoding, error: nil)! as String
+        let privString = (try! NSString(contentsOfFile: privPath, encoding: NSUTF8StringEncoding)) as String
         let privKey    = rsa.privateKeyFromPEMString(privString)!
         
         let encrypted = rsa.encryptString(str, publicKey: pubKey)!
@@ -78,7 +78,7 @@ class SwiftyRSATests: XCTestCase {
         let pubKey  = rsa.publicKeyFromDERData(pubData)!
         
         let privPath   = bundle.pathForResource("swiftyrsa-private", ofType: "pem")!
-        let privString = NSString(contentsOfFile: privPath, encoding: NSUTF8StringEncoding, error: nil)! as String
+        let privString = (try! NSString(contentsOfFile: privPath, encoding: NSUTF8StringEncoding)) as String
         let privKey    = rsa.privateKeyFromPEMString(privString)!
         
         let encrypted = rsa.encryptString(str, publicKey: pubKey)!
