@@ -3,7 +3,7 @@
 //  SwiftyRSA
 //
 //  Created by Loïs Di Qual on 7/2/15.
-//  Copyright (c) 2015 Scoop. All rights reserved.
+//  Copyright (c) 2015 Scoop Technologies, Inc. All rights reserved.
 //
 
 import Foundation
