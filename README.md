@@ -3,6 +3,13 @@ SwiftyRSA
 
 Public key RSA encryption in Swift.
 
+Installation
+------------
+
+```
+pod 'SwiftyRSA', :git => 'git@github.com:TakeScoop/SwiftyRSA.git'
+```
+
 Usage
 -----
 
@@ -10,16 +17,16 @@ Usage
 
 ```
 // With a PEM public key
-let encrypted = SwiftyRSA.encryptString(str, publicKeyPEM: pemString)
+let encrypted = try! SwiftyRSA.encryptString(str, publicKeyPEM: pemString)
 
 // With a DER public key
-let encrypted = SwiftyRSA.encryptString(str, publicKeyDER: derData)
+let encrypted = try! SwiftyRSA.encryptString(str, publicKeyDER: derData)
 ```
 
 ### Decrypt ###
 
 ```
-let decrypted = SwiftyRSA.decryptString(str, privateKeyPEM: pemString)
+let decrypted = try! SwiftyRSA.decryptString(str, privateKeyPEM: pemString)
 ```
 
 ### Advanced Usage ###
@@ -34,27 +41,27 @@ let rsa = SwiftyRSA()
 // Public key (PEM)
 let pubPath   = bundle.pathForResource("public", ofType: "pem")!
 let pubString = NSString(contentsOfFile: pubPath, encoding: NSUTF8StringEncoding, error: nil)! as String
-let pubKey    = rsa.publicKeyFromPEMString(pubString)!
+let pubKey    = try! rsa.publicKeyFromPEMString(pubString)
 
 // Public key (DER)
 let pubPath = bundle.pathForResource("public", ofType: "der")!
 let pubData = NSData(contentsOfFile: pubPath)!
-let pubKey  = rsa.publicKeyFromDERData(pubData)!
+let pubKey  = try! rsa.publicKeyFromDERData(pubData)
 
 // Private key (PEM)
 let privPath   = bundle.pathForResource("private", ofType: "pem")!
 let privString = NSString(contentsOfFile: privPath, encoding: NSUTF8StringEncoding, error: nil)! as String
-let privKey    = rsa.privateKeyFromPEMString(privString)!
+let privKey    = try! rsa.privateKeyFromPEMString(privString)
 ```
 
 #### Use a key instance to encrypt/decrypt ####
 
 ```
 // Encrypt
-let encryptedString = rsa.encryptString(str, publicKey: pubKey)!
+let encryptedString = try! rsa.encryptString(str, publicKey: pubKey)
 
 // Decrypt
-let decryptedString = rsa.decryptString(encrypted, privateKey: privKey)!
+let decryptedString = try! rsa.decryptString(encrypted, privateKey: privKey)
 ```
 
 Under the hood

@@ -8,6 +8,19 @@
 
 import Foundation
 
+public class SwiftyRSAError: NSError {
+    init(message: String) {
+        super.init(domain: "com.takescoop.SwiftyRSA", code: 500, userInfo: [
+            NSLocalizedDescriptionKey: message
+        ])
+    }
+
+    @available(*, unavailable)
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 public class SwiftyRSA {
     
     private var keyTags: [NSData] = []
@@ -15,64 +28,43 @@ public class SwiftyRSA {
     
     // MARK: - Public Shorthands
     
-    public class func encryptString(str: String, publicKeyPEM: String, padding: SecPadding = defaultPadding) -> String? {
+    public class func encryptString(str: String, publicKeyPEM: String, padding: SecPadding = defaultPadding) throws -> String {
         let rsa = SwiftyRSA()
-        
-        let key: SecKeyRef! = rsa.publicKeyFromPEMString(publicKeyPEM)
-        if key == nil {
-            return nil
-        }
-        
-        return rsa.encryptString(str, publicKey: key, padding: padding)
+        let key = try rsa.publicKeyFromPEMString(publicKeyPEM)
+        return try rsa.encryptString(str, publicKey: key, padding: padding)
     }
     
-    public class func encryptString(str: String, publicKeyDER: NSData, padding: SecPadding = defaultPadding) -> String? {
+    public class func encryptString(str: String, publicKeyDER: NSData, padding: SecPadding = defaultPadding) throws -> String {
         let rsa = SwiftyRSA()
-        
-        let key: SecKeyRef! = rsa.publicKeyFromDERData(publicKeyDER)
-        if key == nil {
-            return nil
-        }
-        
-        return rsa.encryptString(str, publicKey: key, padding: padding)
+        let key = try rsa.publicKeyFromDERData(publicKeyDER)
+        return try rsa.encryptString(str, publicKey: key, padding: padding)
     }
     
-    public class func decryptString(str: String, privateKeyPEM: String, padding: SecPadding = defaultPadding) -> String? {
+    public class func decryptString(str: String, privateKeyPEM: String, padding: SecPadding = defaultPadding) throws -> String {
         let rsa = SwiftyRSA()
-        
-        let key: SecKeyRef! = rsa.privateKeyFromPEMString(privateKeyPEM)
-        if key == nil {
-            return nil
-        }
-        
-        return rsa.decryptString(str, privateKey: key, padding: padding)
+        let key = try rsa.privateKeyFromPEMString(privateKeyPEM)
+        return try rsa.decryptString(str, privateKey: key, padding: padding)
     }
     
     // MARK: - Public Advanced Methods
     
     public init() {}
     
-    public func publicKeyFromDERData(keyData: NSData) -> SecKeyRef? {
-        return addKey(keyData, isPublic: true)
+    public func publicKeyFromDERData(keyData: NSData) throws -> SecKeyRef {
+        return try addKey(keyData, isPublic: true)
     }
     
-    public func publicKeyFromPEMString(key: String) -> SecKeyRef? {
-        let data = dataFromPEMKey(key)
-        if data == nil {
-            return nil
-        }
-        return addKey(data!, isPublic: true)
+    public func publicKeyFromPEMString(key: String) throws -> SecKeyRef {
+        let data = try dataFromPEMKey(key)
+        return try addKey(data, isPublic: true)
     }
     
-    public func privateKeyFromPEMString(key: String) -> SecKeyRef? {
-        let data = dataFromPEMKey(key)
-        if data == nil {
-            return nil
-        }
-        return addKey(data!, isPublic: false)
+    public func privateKeyFromPEMString(key: String) throws -> SecKeyRef {
+        let data = try dataFromPEMKey(key)
+        return try addKey(data, isPublic: false)
     }
     
-    public func encryptString(str: String, publicKey: SecKeyRef, padding: SecPadding = defaultPadding) -> String? {
+    public func encryptString(str: String, publicKey: SecKeyRef, padding: SecPadding = defaultPadding) throws -> String {
         let blockSize = SecKeyGetBlockSize(publicKey)
         let plainTextData = [UInt8](str.utf8)
         let plainTextDataLength = Int(str.characters.count)
@@ -81,22 +73,17 @@ public class SwiftyRSA {
         
         let status = SecKeyEncrypt(publicKey, padding, plainTextData, plainTextDataLength, &encryptedData, &encryptedDataLength)
         if status != noErr {
-            return nil
+            throw SwiftyRSAError(message: "Couldn't encrypt provided string. OSStatus: \(status)")
         }
         
-        let data: NSData! = NSData(bytes: encryptedData, length: encryptedDataLength)
-        if data == nil {
-            return nil
-        }
-        
+        let data = NSData(bytes: encryptedData, length: encryptedDataLength)
         return data.base64EncodedStringWithOptions([])
     }
     
-    public func decryptString(str: String, privateKey: SecKeyRef, padding: SecPadding = defaultPadding) -> String? {
+    public func decryptString(str: String, privateKey: SecKeyRef, padding: SecPadding = defaultPadding) throws -> String {
         
-        let data: NSData! = NSData(base64EncodedString: str, options: NSDataBase64DecodingOptions(rawValue: 0))
-        if data == nil {
-            return nil
+        guard let data = NSData(base64EncodedString: str, options: []) else {
+            throw SwiftyRSAError(message: "Couldn't decode base 64 encoded string")
         }
         
         let blockSize = SecKeyGetBlockSize(privateKey)
@@ -107,24 +94,28 @@ public class SwiftyRSA {
         var decryptedData = [UInt8](count: Int(blockSize), repeatedValue: 0)
         var decryptedDataLength = blockSize
         
-        _ = SecKeyDecrypt(privateKey, padding, encryptedData, blockSize, &decryptedData, &decryptedDataLength)
+        let status = SecKeyDecrypt(privateKey, padding, encryptedData, blockSize, &decryptedData, &decryptedDataLength)
+        if status != noErr {
+            throw SwiftyRSAError(message: "Couldn't decrypt provided string. OSStatus: \(status)")
+        }
         
         let decryptedNSData = NSData(bytes: decryptedData, length: decryptedDataLength)
-        return NSString(data: decryptedNSData, encoding: NSUTF8StringEncoding) as? String
+        guard let decryptedString = NSString(data: decryptedNSData, encoding: NSUTF8StringEncoding) else {
+            throw SwiftyRSAError(message: "Couldn't convert decrypted data to UTF8 string")
+        }
+        
+        return decryptedString as String
     }
     
     // MARK: - Private
     
-    private func addKey(keyData: NSData, isPublic: Bool) -> SecKeyRef? {
+    private func addKey(keyData: NSData, isPublic: Bool) throws -> SecKeyRef {
         
-        var keyData: NSData! = keyData
+        var keyData = keyData
         
         // Strip key header if necessary
         if isPublic {
-            keyData = stripPublicKeyHeader(keyData)
-            if keyData == nil {
-                return nil
-            }
+            try keyData = stripPublicKeyHeader(keyData)
         }
         
         let tag = NSUUID().UUIDString
@@ -137,17 +128,17 @@ public class SwiftyRSA {
         
         // Add persistent version of the key to system keychain
         let keyDict = NSMutableDictionary()
-        keyDict.setObject(kSecClassKey,            forKey: kSecClass as! NSCopying)
-        keyDict.setObject(tagData,                 forKey: kSecAttrApplicationTag as! NSCopying)
-        keyDict.setObject(kSecAttrKeyTypeRSA,      forKey: kSecAttrKeyType as! NSCopying)
-        keyDict.setObject(keyData,                 forKey: kSecValueData as! NSCopying)
-        keyDict.setObject(keyClass,                forKey: kSecAttrKeyClass as! NSCopying)
-        keyDict.setObject(NSNumber(bool: true),    forKey: kSecReturnPersistentRef as! NSCopying)
+        keyDict.setObject(kSecClassKey,         forKey: kSecClass as! NSCopying)
+        keyDict.setObject(tagData,              forKey: kSecAttrApplicationTag as! NSCopying)
+        keyDict.setObject(kSecAttrKeyTypeRSA,   forKey: kSecAttrKeyType as! NSCopying)
+        keyDict.setObject(keyData,              forKey: kSecValueData as! NSCopying)
+        keyDict.setObject(keyClass,             forKey: kSecAttrKeyClass as! NSCopying)
+        keyDict.setObject(NSNumber(bool: true), forKey: kSecReturnPersistentRef as! NSCopying)
         keyDict.setObject(kSecAttrAccessibleWhenUnlocked, forKey: kSecAttrAccessible as! NSCopying)
         
         var secStatus = SecItemAdd(keyDict as CFDictionary, persistKey)
         if secStatus != noErr && secStatus != errSecDuplicateItem {
-            return nil
+            throw SwiftyRSAError(message: "Provided key couldn't be added to the keychain")
         }
         
         keyTags.append(tagData)
@@ -160,10 +151,14 @@ public class SwiftyRSA {
         keyDict.setObject(kSecAttrKeyTypeRSA,   forKey: kSecAttrKeyType as! NSCopying)
         secStatus = SecItemCopyMatching(keyDict as CFDictionaryRef, &keyRef)
         
-        return keyRef != nil ? (keyRef! as! SecKeyRef) : nil
+        guard let unwrappedKeyRef = keyRef else {
+            throw SwiftyRSAError(message: "Couldn't get key reference from the keychain")
+        }
+        
+        return unwrappedKeyRef as! SecKeyRef
     }
     
-    private func dataFromPEMKey(key: String) -> NSData? {
+    private func dataFromPEMKey(key: String) throws -> NSData {
         let rawLines = key.componentsSeparatedByString("\n")
         var lines = [String]()
         
@@ -179,27 +174,28 @@ public class SwiftyRSA {
         }
         
         if lines.count == 0 {
-            return nil
+            throw SwiftyRSAError(message: "Couldn't get data from PEM key: no data available after stripping headers")
         }
         
         // Decode base64 key
         let base64EncodedKey = lines.joinWithSeparator("")
-        let keyData: NSData! = NSData(base64EncodedString: base64EncodedKey, options: .IgnoreUnknownCharacters)
-        if keyData == nil || keyData!.length == 0 {
-            return nil
+        let keyData = NSData(base64EncodedString: base64EncodedKey, options: .IgnoreUnknownCharacters)
+        
+        guard let unwrappedKeyData = keyData where unwrappedKeyData.length != 0 else {
+            throw SwiftyRSAError(message: "Couldn't decode PEM key data (base64)")
         }
         
-        return keyData
+        return unwrappedKeyData
     }
     
-    private func stripPublicKeyHeader(keyData: NSData) -> NSData? {
+    private func stripPublicKeyHeader(keyData: NSData) throws -> NSData {
         let count = keyData.length / sizeof(CUnsignedChar)
         var byteArray = [CUnsignedChar](count: count, repeatedValue: 0)
         keyData.getBytes(&byteArray, length: keyData.length)
         
         var index = 0
         if byteArray[index++] != 0x30 {
-            return nil
+            throw SwiftyRSAError(message: "Invalid byte at index 0 (\(byteArray[0])) for public key header")
         }
         
         if byteArray[index] > 0x80 {
@@ -216,7 +212,7 @@ public class SwiftyRSA {
         index += 15
         
         if byteArray[index++] != 0x03 {
-            return nil
+            throw SwiftyRSAError(message: "Invalid byte at index \(index - 1) (\(byteArray[index - 1])) for public key header")
         }
         
         if byteArray[index] > 0x80 {
@@ -227,7 +223,7 @@ public class SwiftyRSA {
         }
         
         if byteArray[index++] != 0 {
-            return nil
+            throw SwiftyRSAError(message: "Invalid byte at index \(index - 1) (\(byteArray[index - 1])) for public key header")
         }
         
         let test = [CUnsignedChar](byteArray[index...keyData.length - 1])
