@@ -1,7 +1,9 @@
 SwiftyRSA
 =========
 
-Public key RSA encryption in Swift.
+**Public key RSA encryption in Swift.**
+
+SwiftyRSA is used in the [Scoop](https://www.takescoop.com/) [iOS app](https://itunes.apple.com/us/app/scoop-easy-custom-carpooling/id997978145?mt=8) to encrypt driver license numbers before submitting them to Checkr through our API.
 
 Installation
 ------------
