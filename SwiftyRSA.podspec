@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SwiftyRSA"
-  s.version      = "0.0.3"
+  s.version      = "0.1.0"
   s.summary      = "Public key RSA encryption in Swift."
 
   s.description  = <<-DESC
