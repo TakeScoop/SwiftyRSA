@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Security
 
 public class SwiftyRSAError: NSError {
     init(message: String) {

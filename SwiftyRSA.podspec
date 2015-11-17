@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.license      = "MIT"
   s.author       = { "Scoop" => "ops@takescoop.com" }
 
-  s.source       = { :git => "git@github.com:TakeScoop/SwiftyRSA.git" }
+  s.source       = { :git => "https://github.com/TakeScoop/SwiftyRSA.git", :tag => "0.1.0" }
   s.source_files = "SwiftyRSA/SwiftyRSA.swift"
   s.framework    = "Security"
 

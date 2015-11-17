@@ -9,7 +9,7 @@ Installation
 ------------
 
 ```
-pod 'SwiftyRSA', :git => 'git@github.com:TakeScoop/SwiftyRSA.git'
+pod 'SwiftyRSA'
 ```
 
 Usage
