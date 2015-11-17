@@ -17,7 +17,6 @@ Pod::Spec.new do |s|
   s.framework    = "Security"
 
   s.requires_arc = true
-  s.osx.deployment_target = "10.9"
-  s.ios.deployment_target = "8.0"
+  s.platform = :ios, "8.0"
 
 end
