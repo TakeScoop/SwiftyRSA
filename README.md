@@ -15,7 +15,7 @@ pod 'SwiftyRSA'
 Usage
 -----
 
-### Encrypt ###
+### Encrypt
 
 ```
 // With a PEM public key
@@ -25,15 +25,28 @@ let encrypted = try! SwiftyRSA.encryptString(str, publicKeyPEM: pemString)
 let encrypted = try! SwiftyRSA.encryptString(str, publicKeyDER: derData)
 ```
 
-### Decrypt ###
+### Decrypt
 
 ```
 let decrypted = try! SwiftyRSA.decryptString(str, privateKeyPEM: pemString)
 ```
 
-### Advanced Usage ###
+Advanced Usage
+--------------
 
-#### Get a key instance ####
+### Create public and private RSA keys
+
+Use `ssh-keygen` to generate a PEM public key and a PEM private key. SwiftyRSA also supports DER public keys.
+
+```
+$ ssh-keygen -t rsa -f ~/mykey -N ''
+$ cat ~/mykey > ~/private.pem
+$ ssh-keygen -f ~/mykey.pub -e -m pem > ~/public.pem
+```
+
+Your keys are now in `~/public.pem` and `~/private.pem`. Don't move `~/mykey` and `~/mykey.pub` in a secure place.
+
+### Get a key instance
 
 Note that the key reference will only be valid as long as the `SwiftyRSA` instance is alive.
 
@@ -58,7 +71,7 @@ let privString = NSString(contentsOfFile: privPath, encoding: NSUTF8StringEncodi
 let privKey    = try! rsa.privateKeyFromPEMString(privString)
 ```
 
-#### Use a key instance to encrypt/decrypt ####
+### Use a key instance to encrypt/decrypt
 
 ```
 // Encrypt
