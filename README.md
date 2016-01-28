@@ -38,6 +38,8 @@ let decrypted = try! SwiftyRSA.decryptString(str, privateKeyPEM: pemString)
 Note that the key reference will only be valid as long as the `SwiftyRSA` instance is alive.
 
 ```
+import SwiftyRSA
+
 let rsa = SwiftyRSA()
 
 // Public key (PEM)
@@ -64,6 +66,25 @@ let encryptedString = try! rsa.encryptString(str, publicKey: pubKey)
 
 // Decrypt
 let decryptedString = try! rsa.decryptString(encrypted, privateKey: privKey)
+```
+
+### Use with Objective-C
+
+```
+@import SwiftyRSA;
+
+NSString* str = @"ClearText";
+
+NSBundle* bundle = [NSBundle bundleForClass:self.class];
+
+NSString* pubPath = [bundle pathForResource:@"swiftyrsa-public" ofType:@"pem"];
+NSString* pubString = [NSString stringWithContentsOfFile:pubPath encoding:NSUTF8StringEncoding error:nil];
+
+NSString* privPath = [bundle pathForResource:@"swiftyrsa-private" ofType:@"pem"];
+NSString* privString = [NSString stringWithContentsOfFile:privPath encoding:NSUTF8StringEncoding error:nil];
+
+NSString* encrypted = [SwiftyRSA encryptString:str publicKeyPEM:pubString padding:kSecPaddingPKCS1 error:nil];
+NSString* decrypted = [SwiftyRSA decryptString:encrypted privateKeyPEM:privString padding:kSecPaddingPKCS1 error:nil];
 ```
 
 Under the hood

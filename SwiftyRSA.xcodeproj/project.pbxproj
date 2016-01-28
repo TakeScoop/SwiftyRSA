@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C01F96141C5AC3E300F232AC /* SwiftyRSAObjcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C01F96131C5AC3E300F232AC /* SwiftyRSAObjcTests.m */; };
 		C03D827C1B45E649008711CF /* SwiftyRSA.h in Headers */ = {isa = PBXBuildFile; fileRef = C03D827B1B45E649008711CF /* SwiftyRSA.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C03D82821B45E649008711CF /* SwiftyRSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C03D82761B45E649008711CF /* SwiftyRSA.framework */; };
 		C03D82891B45E649008711CF /* SwiftyRSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03D82881B45E649008711CF /* SwiftyRSATests.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C01F96131C5AC3E300F232AC /* SwiftyRSAObjcTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwiftyRSAObjcTests.m; sourceTree = "<group>"; };
 		C03D82761B45E649008711CF /* SwiftyRSA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyRSA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C03D827A1B45E649008711CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C03D827B1B45E649008711CF /* SwiftyRSA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyRSA.h; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 			children = (
 				C03D82951B45E886008711CF /* keys */,
 				C03D82881B45E649008711CF /* SwiftyRSATests.swift */,
+				C01F96131C5AC3E300F232AC /* SwiftyRSAObjcTests.m */,
 				C03D82861B45E649008711CF /* Supporting Files */,
 			);
 			path = SwiftyRSATests;
@@ -179,7 +182,7 @@
 		C03D826D1B45E649008711CF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Scoop;
 				TargetAttributes = {
@@ -242,6 +245,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C01F96141C5AC3E300F232AC /* SwiftyRSAObjcTests.m in Sources */,
 				C03D829C1B45E8A9008711CF /* SwiftyRSA.swift in Sources */,
 				C03D82891B45E649008711CF /* SwiftyRSATests.swift in Sources */,
 			);
@@ -386,6 +390,7 @@
 		C03D82901B45E649008711CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -398,12 +403,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.takescoop.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		C03D82911B45E649008711CF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

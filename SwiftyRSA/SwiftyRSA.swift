@@ -22,7 +22,8 @@ public class SwiftyRSAError: NSError {
     }
 }
 
-public class SwiftyRSA {
+@objc
+public class SwiftyRSA: NSObject {
     
     private var keyTags: [NSData] = []
     private static let defaultPadding: SecPadding = .PKCS1
@@ -49,7 +50,9 @@ public class SwiftyRSA {
     
     // MARK: - Public Advanced Methods
     
-    public init() {}
+    public override init() {
+    	super.init()
+    }
     
     public func publicKeyFromDERData(keyData: NSData) throws -> SecKeyRef {
         return try addKey(keyData, isPublic: true)
