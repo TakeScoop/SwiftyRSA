@@ -1,0 +1,14 @@
+language: objective-c
+osx_image: xcode7.3
+xcode_sdk:
+  - iphonesimulator8.1
+  - iphonesimulator8.2
+  - iphonesimulator8.3
+  - iphonesimulator9.0
+  - iphonesimulator9.1
+  - iphonesimulator9.2
+  - iphonesimulator9.3
+before_install:
+  - gem install scan -v '0.5.2'
+script:
+  - scan

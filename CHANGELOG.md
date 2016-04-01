@@ -9,6 +9,7 @@ SwiftyRSA Changelog
  - Added instructions to create public/private keys using `ssh-keygen`.
  - Fixed swift 3 compiler warnings.
    [#4](https://github.com/TakeScoop/SwiftyRSA/issues/4)
+ - SwiftyRSA is now unit tested on each commit with Travis CI.
 
 # [0.1.0]
 

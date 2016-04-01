@@ -1,6 +1,11 @@
 SwiftyRSA
 =========
 
+![](https://img.shields.io/cocoapods/v/SwiftyRSA.svg)
+![](https://img.shields.io/cocoapods/p/SwiftyRSA.svg)
+![](https://img.shields.io/badge/language-swift_2\+-brightgreen.svg)
+![](https://img.shields.io/travis/TakeScoop/SwiftyRSA/master.svg)
+
 **Public key RSA encryption in Swift.**
 
 SwiftyRSA is used in the [Scoop](https://www.takescoop.com/) [iOS app](https://itunes.apple.com/us/app/scoop-easy-custom-carpooling/id997978145?mt=8) to encrypt driver license numbers before submitting them to Checkr through our API.
@@ -44,7 +49,7 @@ $ cat ~/mykey > ~/private.pem
 $ ssh-keygen -f ~/mykey.pub -e -m pem > ~/public.pem
 ```
 
-Your keys are now in `~/public.pem` and `~/private.pem`. Don't move `~/mykey` and `~/mykey.pub` in a secure place.
+Your keys are now in `~/public.pem` and `~/private.pem`. Don't forget to move `~/mykey` and `~/mykey.pub` to a secure place.
 
 ### Get a key instance
 
