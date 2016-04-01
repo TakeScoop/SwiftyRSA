@@ -163,21 +163,12 @@ public class SwiftyRSA: NSObject {
     }
     
     private func dataFromPEMKey(key: String) throws -> NSData {
-        let rawLines = key.componentsSeparatedByString("\n")
-        var lines = [String]()
         
-        for line in rawLines {
-            if line == "-----BEGIN RSA PRIVATE KEY-----" ||
-                line == "-----END RSA PRIVATE KEY-----"   ||
-                line == "-----BEGIN PUBLIC KEY-----" ||
-                line == "-----END PUBLIC KEY-----"   ||
-                line == "" {
-                    continue
-            }
-            lines.append(line)
+        let lines = key.componentsSeparatedByString("\n").filter { line in
+            return !line.hasPrefix("-----BEGIN") && !line.hasPrefix("-----END")
         }
         
-        if lines.count == 0 {
+        guard lines.count != 0 else {
             throw SwiftyRSAError(message: "Couldn't get data from PEM key: no data available after stripping headers")
         }
         
@@ -192,14 +183,46 @@ public class SwiftyRSA: NSObject {
         return unwrappedKeyData
     }
     
+    /**
+     This method strips the x509 from a provided ASN.1 DER public key.
+     If the key doesn't contain a header, the DER data is returned as is.
+     
+     Supported formats are:
+     
+     Headerless:
+     SEQUENCE
+     	INTEGER (1024 or 2048 bit) -- modulo
+     	INTEGER -- public exponent
+     
+     With x509 header:
+     SEQUENCE
+     	SEQUENCE
+     		OBJECT IDENTIFIER 1.2.840.113549.1.1.1
+     		NULL
+     	BIT STRING
+     		SEQUENCE
+     		INTEGER (1024 or 2048 bit) -- modulo
+     		INTEGER -- public exponent
+     
+     Example of headerless key:
+     https://lapo.it/asn1js/#3082010A0282010100C1A0DFA367FBC2A5FD6ED5A071E02A4B0617E19C6B5AD11BB61192E78D212F10A7620084A3CED660894134D4E475BAD7786FA1D40878683FD1B7A1AD9C0542B7A666457A270159DAC40CE25B2EAE7CCD807D31AE725CA394F90FBB5C5BA500545B99C545A9FE08EFF00A5F23457633E1DB84ED5E908EF748A90F8DFCCAFF319CB0334705EA012AF15AA090D17A9330159C9AFC9275C610BB9B7C61317876DC7386C723885C100F774C19830F475AD1E9A9925F9CA9A69CE0181A214DF2EB75FD13E6A546B8C8ED699E33A8521242B7E42711066AEC22D25DD45D56F94D3170D6F2C25164D2DACED31C73963BA885ADCB706F40866B8266433ED5161DC50E4B3B0203010001
+     
+     Example of key with X509 header (notice the additional ASN.1 sequence):
+     https://lapo.it/asn1js/#30819F300D06092A864886F70D010101050003818D0030818902818100D0674615A252ED3D75D2A3073A0A8A445F3188FD3BEB8BA8584F7299E391BDEC3427F287327414174997D147DD8CA62647427D73C9DA5504E0A3EED5274A1D50A1237D688486FADB8B82061675ABFA5E55B624095DB8790C6DBCAE83D6A8588C9A6635D7CF257ED1EDE18F04217D37908FD0CBB86B2C58D5F762E6207FF7B92D0203010001
+     */
     private func stripPublicKeyHeader(keyData: NSData) throws -> NSData {
         let count = keyData.length / sizeof(CUnsignedChar)
+        
+        guard count > 0 else {
+            throw SwiftyRSAError(message: "Provided public key is empty")
+        }
+        
         var byteArray = [CUnsignedChar](count: count, repeatedValue: 0)
         keyData.getBytes(&byteArray, length: keyData.length)
         
         var index = 0
         if byteArray[index++] != 0x30 {
-            throw SwiftyRSAError(message: "Invalid byte at index 0 (\(byteArray[0])) for public key header")
+            throw SwiftyRSAError(message: "Provided key doesn't have a valid ASN1 structure (first byte should be 0x30 == SEQUENCE)")
         }
         
         if byteArray[index] > 0x80 {
@@ -209,9 +232,18 @@ public class SwiftyRSA: NSObject {
             index++
         }
         
-        let seqiod: [CUnsignedChar] = [0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01,
-            0x01, 0x05, 0x00]
-        byteArray.replaceRange(Range<Int>(start: index, end: index + seqiod.count), with: seqiod)
+        // If current byte marks an integer (0x02), it means the key doesn't have a X509 header and just
+        // contains its modulo & public exponent. In this case, we can just return the provided DER data as is.
+        if Int(byteArray[index]) == 0x02 {
+            return keyData
+        }
+        
+        // Now that we've excluded the possibility of headerless key, we're looking for a valid X509 header sequence.
+        // It should look like this:
+        // 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01, 0x01, 0x05, 0x00
+        guard Int(byteArray[index]) == 0x30 else {
+            throw SwiftyRSAError(message: "Provided key doesn't have a valid X509 header")
+        }
         
         index += 15
         

@@ -86,4 +86,25 @@ class SwiftyRSATests: XCTestCase {
         
         XCTAssert(str == decrypted)
     }
+    
+    func testPEMHeaderless() {
+        let str = "ClearText"
+        
+        let bundle = NSBundle(forClass: self.dynamicType)
+        
+        let rsa = SwiftyRSA()
+        
+        let pubPath   = bundle.pathForResource("swiftyrsa-public-headerless", ofType: "pem")!
+        let pubString = (try! NSString(contentsOfFile: pubPath, encoding: NSUTF8StringEncoding)) as String
+        let pubKey    = try! rsa.publicKeyFromPEMString(pubString)
+        
+        let privPath   = bundle.pathForResource("swiftyrsa-private-headerless", ofType: "pem")!
+        let privString = (try! NSString(contentsOfFile: privPath, encoding: NSUTF8StringEncoding)) as String
+        let privKey    = try! rsa.privateKeyFromPEMString(privString)
+        
+        let encrypted = try! rsa.encryptString(str, publicKey: pubKey)
+        let decrypted = try! rsa.decryptString(encrypted, privateKey: privKey)
+        
+        XCTAssert(str == decrypted)
+    }
 }

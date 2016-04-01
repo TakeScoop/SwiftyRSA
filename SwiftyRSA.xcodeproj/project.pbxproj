@@ -16,6 +16,8 @@
 		C03D829A1B45E886008711CF /* swiftyrsa-public.der in Resources */ = {isa = PBXBuildFile; fileRef = C03D82971B45E886008711CF /* swiftyrsa-public.der */; };
 		C03D829B1B45E886008711CF /* swiftyrsa-public.pem in Resources */ = {isa = PBXBuildFile; fileRef = C03D82981B45E886008711CF /* swiftyrsa-public.pem */; };
 		C03D829C1B45E8A9008711CF /* SwiftyRSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03D82921B45E663008711CF /* SwiftyRSA.swift */; };
+		C0646A481CAF29E000587FF1 /* swiftyrsa-private-headerless.pem in Resources */ = {isa = PBXBuildFile; fileRef = C0646A461CAF29E000587FF1 /* swiftyrsa-private-headerless.pem */; };
+		C0646A491CAF29E000587FF1 /* swiftyrsa-public-headerless.pem in Resources */ = {isa = PBXBuildFile; fileRef = C0646A471CAF29E000587FF1 /* swiftyrsa-public-headerless.pem */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,8 @@
 		C03D82961B45E886008711CF /* swiftyrsa-private.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-private.pem"; sourceTree = "<group>"; };
 		C03D82971B45E886008711CF /* swiftyrsa-public.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = "swiftyrsa-public.der"; sourceTree = "<group>"; };
 		C03D82981B45E886008711CF /* swiftyrsa-public.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-public.pem"; sourceTree = "<group>"; };
+		C0646A461CAF29E000587FF1 /* swiftyrsa-private-headerless.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-private-headerless.pem"; sourceTree = "<group>"; };
+		C0646A471CAF29E000587FF1 /* swiftyrsa-public-headerless.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-public-headerless.pem"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,8 +87,8 @@
 			isa = PBXGroup;
 			children = (
 				C03D827B1B45E649008711CF /* SwiftyRSA.h */,
-				C03D82791B45E649008711CF /* Supporting Files */,
 				C03D82921B45E663008711CF /* SwiftyRSA.swift */,
+				C03D82791B45E649008711CF /* Supporting Files */,
 			);
 			path = SwiftyRSA;
 			sourceTree = "<group>";
@@ -119,6 +123,8 @@
 		C03D82951B45E886008711CF /* keys */ = {
 			isa = PBXGroup;
 			children = (
+				C0646A461CAF29E000587FF1 /* swiftyrsa-private-headerless.pem */,
+				C0646A471CAF29E000587FF1 /* swiftyrsa-public-headerless.pem */,
 				C03D82961B45E886008711CF /* swiftyrsa-private.pem */,
 				C03D82971B45E886008711CF /* swiftyrsa-public.der */,
 				C03D82981B45E886008711CF /* swiftyrsa-public.pem */,
@@ -226,7 +232,9 @@
 			files = (
 				C03D829B1B45E886008711CF /* swiftyrsa-public.pem in Resources */,
 				C03D82991B45E886008711CF /* swiftyrsa-private.pem in Resources */,
+				C0646A481CAF29E000587FF1 /* swiftyrsa-private-headerless.pem in Resources */,
 				C03D829A1B45E886008711CF /* swiftyrsa-public.der in Resources */,
+				C0646A491CAF29E000587FF1 /* swiftyrsa-public-headerless.pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

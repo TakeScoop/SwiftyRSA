@@ -1,8 +1,10 @@
 SwiftyRSA Changelog
 ===================
 
-# [Unreleased (master)][master]
+# [master]
 
+ - Added support for headerless RSA public keys, improved public key header parsing function.
+   [#2](https://github.com/TakeScoop/SwiftyRSA/issues/2)
  - Added Objective-C support.
  - Added instructions to create public/private keys using `ssh-keygen`.
 

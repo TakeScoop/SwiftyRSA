@@ -92,4 +92,26 @@
     XCTAssertTrue([str isEqualToString:decrypted]);
 }
 
+- (void)testPEMHeaderless {
+    NSString* str = @"ClearText";
+    
+    NSBundle* bundle = [NSBundle bundleForClass:self.class];
+    
+    SwiftyRSA* rsa = [SwiftyRSA new];
+    
+    
+    NSString* pubPath = [bundle pathForResource:@"swiftyrsa-public-headerless" ofType:@"pem"];
+    NSString* pubString = [NSString stringWithContentsOfFile:pubPath encoding:NSUTF8StringEncoding error:nil];
+    SecKeyRef pubKey = [rsa publicKeyFromPEMString:pubString error:nil];
+    
+    NSString* privPath = [bundle pathForResource:@"swiftyrsa-private-headerless" ofType:@"pem"];
+    NSString* privString = [NSString stringWithContentsOfFile:privPath encoding:NSUTF8StringEncoding error:nil];
+    SecKeyRef privKey = [rsa privateKeyFromPEMString:privString error:nil];
+    
+    NSString* encrypted = [rsa encryptString:str publicKey:pubKey padding:kSecPaddingPKCS1 error:nil];
+    NSString* decrypted = [rsa decryptString:encrypted privateKey:privKey padding:kSecPaddingPKCS1 error: nil];
+    
+    XCTAssertTrue([str isEqualToString:decrypted]);
+}
+
 @end
