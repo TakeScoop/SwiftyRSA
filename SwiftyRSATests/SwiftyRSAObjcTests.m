@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "SwiftyRSATests-Swift.h"
+@import SwiftyRSA;
 
 @interface SwiftyRSAObjcTests : XCTestCase
 

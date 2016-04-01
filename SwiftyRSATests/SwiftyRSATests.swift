@@ -8,6 +8,7 @@
 
 import UIKit
 import XCTest
+import SwiftyRSA
 
 class SwiftyRSATests: XCTestCase {
     

@@ -15,7 +15,6 @@
 		C03D82991B45E886008711CF /* swiftyrsa-private.pem in Resources */ = {isa = PBXBuildFile; fileRef = C03D82961B45E886008711CF /* swiftyrsa-private.pem */; };
 		C03D829A1B45E886008711CF /* swiftyrsa-public.der in Resources */ = {isa = PBXBuildFile; fileRef = C03D82971B45E886008711CF /* swiftyrsa-public.der */; };
 		C03D829B1B45E886008711CF /* swiftyrsa-public.pem in Resources */ = {isa = PBXBuildFile; fileRef = C03D82981B45E886008711CF /* swiftyrsa-public.pem */; };
-		C03D829C1B45E8A9008711CF /* SwiftyRSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03D82921B45E663008711CF /* SwiftyRSA.swift */; };
 		C0646A481CAF29E000587FF1 /* swiftyrsa-private-headerless.pem in Resources */ = {isa = PBXBuildFile; fileRef = C0646A461CAF29E000587FF1 /* swiftyrsa-private-headerless.pem */; };
 		C0646A491CAF29E000587FF1 /* swiftyrsa-public-headerless.pem in Resources */ = {isa = PBXBuildFile; fileRef = C0646A471CAF29E000587FF1 /* swiftyrsa-public-headerless.pem */; };
 /* End PBXBuildFile section */
@@ -254,7 +253,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C01F96141C5AC3E300F232AC /* SwiftyRSAObjcTests.m in Sources */,
-				C03D829C1B45E8A9008711CF /* SwiftyRSA.swift in Sources */,
 				C03D82891B45E649008711CF /* SwiftyRSATests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
