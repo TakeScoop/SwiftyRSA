@@ -127,7 +127,7 @@ public class SwiftyRSA: NSObject {
         removeKeyWithTagData(tagData)
         
         // Add persistent version of the key to system keychain
-        let persistKey = UnsafeMutablePointer<AnyObject?>()
+        let persistKey = UnsafeMutablePointer<AnyObject?>(nil)
         let keyClass   = isPublic ? kSecAttrKeyClassPublic : kSecAttrKeyClassPrivate
         
         // Add persistent version of the key to system keychain
@@ -221,15 +221,16 @@ public class SwiftyRSA: NSObject {
         keyData.getBytes(&byteArray, length: keyData.length)
         
         var index = 0
-        if byteArray[index++] != 0x30 {
+        if byteArray[index] != 0x30 {
             throw SwiftyRSAError(message: "Provided key doesn't have a valid ASN1 structure (first byte should be 0x30 == SEQUENCE)")
         }
         
+        index += 1
         if byteArray[index] > 0x80 {
             index += Int(byteArray[index]) - 0x80 + 1
         }
         else {
-            index++
+            index += 1
         }
         
         // If current byte marks an integer (0x02), it means the key doesn't have a X509 header and just
@@ -246,21 +247,23 @@ public class SwiftyRSA: NSObject {
         }
         
         index += 15
-        
-        if byteArray[index++] != 0x03 {
+        if byteArray[index] != 0x03 {
             throw SwiftyRSAError(message: "Invalid byte at index \(index - 1) (\(byteArray[index - 1])) for public key header")
         }
         
+        index += 1
         if byteArray[index] > 0x80 {
             index += Int(byteArray[index]) - 0x80 + 1
         }
         else {
-            index++
+            index += 1
         }
         
-        if byteArray[index++] != 0 {
+        if byteArray[index] != 0 {
             throw SwiftyRSAError(message: "Invalid byte at index \(index - 1) (\(byteArray[index - 1])) for public key header")
         }
+        
+        index += 1
         
         let test = [CUnsignedChar](byteArray[index...keyData.length - 1])
         
