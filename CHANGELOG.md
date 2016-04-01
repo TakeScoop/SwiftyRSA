@@ -5,6 +5,7 @@ SwiftyRSA Changelog
 
  - Added Objective-C support.
  - Added instructions to create public/private keys using `ssh-keygen`.
+ - Fixed swift 3 compiler warnings
 
 # [0.1.0]
 
