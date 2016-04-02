@@ -3,6 +3,8 @@ SwiftyRSA Changelog
 
 # [master]
 
+# [0.2.0]
+
  - Added NSData encryption/decryption.
  - Fixed a bug where SwiftyRSA couldn't encrypt/decrypt data which length was bigger than the RSA key block size.
    [#6](https://github.com/TakeScoop/SwiftyRSA/issues/6)
@@ -19,5 +21,6 @@ SwiftyRSA Changelog
 
 Initial release.
 
-[master]: https://github.com/TakeScoop/SwiftyRSA/compare/0.1.0...master
+[master]: https://github.com/TakeScoop/SwiftyRSA/compare/0.2.0...master
+[0.2.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.2.0
 [0.1.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.1.0
