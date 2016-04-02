@@ -3,6 +3,9 @@ SwiftyRSA Changelog
 
 # [master]
 
+ - Added NSData encryption/decryption.
+ - Fixed a bug where SwiftyRSA couldn't encrypt/decrypt data which length was bigger than the RSA key block size.
+   [#6](https://github.com/TakeScoop/SwiftyRSA/issues/6)
  - Added support for headerless RSA public keys, improved public key header parsing function.
    [#2](https://github.com/TakeScoop/SwiftyRSA/issues/2)
  - Added Objective-C support.

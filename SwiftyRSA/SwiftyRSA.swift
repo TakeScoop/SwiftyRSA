@@ -48,6 +48,24 @@ public class SwiftyRSA: NSObject {
         return try rsa.decryptString(str, privateKey: key, padding: padding)
     }
     
+    public class func encryptData(data: NSData, publicKeyPEM: String, padding: SecPadding = defaultPadding) throws -> NSData {
+        let rsa = SwiftyRSA()
+        let key = try rsa.publicKeyFromPEMString(publicKeyPEM)
+        return try rsa.encryptData(data, publicKey: key, padding: padding)
+    }
+    
+    public class func encryptData(data: NSData, publicKeyDER: NSData, padding: SecPadding = defaultPadding) throws -> NSData {
+        let rsa = SwiftyRSA()
+        let key = try rsa.publicKeyFromDERData(publicKeyDER)
+        return try rsa.encryptData(data, publicKey: key, padding: padding)
+    }
+    
+    public class func decryptData(data: NSData, privateKeyPEM: String, padding: SecPadding = defaultPadding) throws -> NSData {
+        let rsa = SwiftyRSA()
+        let key = try rsa.privateKeyFromPEMString(privateKeyPEM)
+        return try rsa.decryptData(data, privateKey: key, padding: padding)
+    }
+    
     // MARK: - Public Advanced Methods
     
     public override init() {
@@ -68,43 +86,84 @@ public class SwiftyRSA: NSObject {
         return try addKey(data, isPublic: false)
     }
     
-    public func encryptString(str: String, publicKey: SecKeyRef, padding: SecPadding = defaultPadding) throws -> String {
+    // Encrypts data with a RSA key
+    public func encryptData(data: NSData, publicKey: SecKeyRef, padding: SecPadding) throws -> NSData {
         let blockSize = SecKeyGetBlockSize(publicKey)
-        let plainTextData = [UInt8](str.utf8)
-        let plainTextDataLength = Int(str.characters.count)
-        var encryptedData = [UInt8](count: Int(blockSize), repeatedValue: 0)
-        var encryptedDataLength = blockSize
+        let maxChunkSize = blockSize - 11
         
-        let status = SecKeyEncrypt(publicKey, padding, plainTextData, plainTextDataLength, &encryptedData, &encryptedDataLength)
-        if status != noErr {
-            throw SwiftyRSAError(message: "Couldn't encrypt provided string. OSStatus: \(status)")
+        var decryptedDataAsArray = [UInt8](count: data.length / sizeof(UInt8), repeatedValue: 0)
+        data.getBytes(&decryptedDataAsArray, length: data.length)
+        
+        var encryptedData = [UInt8](count: 0, repeatedValue: 0)
+        var idx = 0
+        while (idx < decryptedDataAsArray.count) {
+            
+            let idxEnd = min(idx + maxChunkSize, decryptedDataAsArray.count)
+            let chunkData = [UInt8](decryptedDataAsArray[idx..<idxEnd])
+            
+            var encryptedDataBuffer = [UInt8](count: blockSize, repeatedValue: 0)
+            var encryptedDataLength = blockSize
+            
+            let status = SecKeyEncrypt(publicKey, padding, chunkData, chunkData.count, &encryptedDataBuffer, &encryptedDataLength)
+            
+            guard status == noErr else {
+                throw SwiftyRSAError(message: "Couldn't encrypt chunk at index \(idx)")
+            }
+
+            encryptedData += encryptedDataBuffer
+            
+            idx += maxChunkSize
         }
         
-        let data = NSData(bytes: encryptedData, length: encryptedDataLength)
-        return data.base64EncodedStringWithOptions([])
+        return NSData(bytes: encryptedData, length: encryptedData.count)
+    }
+    
+    // Decrypt an encrypted data with a RSA key
+    public func decryptData(encryptedData: NSData, privateKey: SecKeyRef, padding: SecPadding) throws -> NSData {
+        let blockSize = SecKeyGetBlockSize(privateKey)
+        
+        var encryptedDataAsArray = [UInt8](count: encryptedData.length / sizeof(UInt8), repeatedValue: 0)
+        encryptedData.getBytes(&encryptedDataAsArray, length: encryptedData.length)
+        
+        var decryptedData = [UInt8](count: 0, repeatedValue: 0)
+        var idx = 0
+        while (idx < encryptedDataAsArray.count) {
+            
+            let idxEnd = min(idx + blockSize, encryptedDataAsArray.count)
+            let chunkData = [UInt8](encryptedDataAsArray[idx..<idxEnd])
+            
+            var decryptedDataBuffer = [UInt8](count: blockSize, repeatedValue: 0)
+            var decryptedDataLength = blockSize
+            
+            let status = SecKeyDecrypt(privateKey, padding, chunkData, idxEnd-idx, &decryptedDataBuffer, &decryptedDataLength)
+            guard status == noErr else {
+                throw SwiftyRSAError(message: "Couldn't decrypt chunk at index \(idx)")
+            }
+            
+            decryptedData += [UInt8](decryptedDataBuffer[0..<decryptedDataLength])
+            
+            idx += blockSize
+        }
+        
+        return NSData(bytes: decryptedData, length: decryptedData.count)
+    }
+    
+    public func encryptString(str: String, publicKey: SecKeyRef, padding: SecPadding = defaultPadding) throws -> String {
+        guard let data = str.dataUsingEncoding(NSUTF8StringEncoding) else {
+            throw SwiftyRSAError(message: "Couldn't get UT8 data from provided string")
+        }
+        let encryptedData = try encryptData(data, publicKey: publicKey, padding: padding)
+        return encryptedData.base64EncodedStringWithOptions([])
     }
     
     public func decryptString(str: String, privateKey: SecKeyRef, padding: SecPadding = defaultPadding) throws -> String {
-        
-        guard let data = NSData(base64EncodedString: str, options: []) else {
+        guard let data =  NSData(base64EncodedString: str, options: []) else {
             throw SwiftyRSAError(message: "Couldn't decode base 64 encoded string")
         }
         
-        let blockSize = SecKeyGetBlockSize(privateKey)
+        let decryptedData = try decryptData(data, privateKey: privateKey, padding: padding)
         
-        var encryptedData = [UInt8](count: blockSize, repeatedValue: 0)
-        data.getBytes(&encryptedData, length: blockSize)
-        
-        var decryptedData = [UInt8](count: Int(blockSize), repeatedValue: 0)
-        var decryptedDataLength = blockSize
-        
-        let status = SecKeyDecrypt(privateKey, padding, encryptedData, blockSize, &decryptedData, &decryptedDataLength)
-        if status != noErr {
-            throw SwiftyRSAError(message: "Couldn't decrypt provided string. OSStatus: \(status)")
-        }
-        
-        let decryptedNSData = NSData(bytes: decryptedData, length: decryptedDataLength)
-        guard let decryptedString = NSString(data: decryptedNSData, encoding: NSUTF8StringEncoding) else {
+        guard let decryptedString = NSString(data: decryptedData, encoding: NSUTF8StringEncoding) else {
             throw SwiftyRSAError(message: "Couldn't convert decrypted data to UTF8 string")
         }
         

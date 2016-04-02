@@ -114,4 +114,27 @@
     XCTAssertTrue([str isEqualToString:decrypted]);
 }
 
+- (void)testDataEncryptDecrypt {
+    
+    
+    NSMutableData* data = [NSMutableData dataWithCapacity:2048 * sizeof(UInt32)];
+    for (unsigned int i = 0 ; i < 2048 ; ++i ){
+        u_int32_t randomBits = arc4random();
+        [data appendBytes:(void*)&randomBits length:sizeof(UInt32)];
+    }
+    
+    NSBundle* bundle = [NSBundle bundleForClass:self.class];
+    
+    NSString* pubPath = [bundle pathForResource:@"swiftyrsa-public" ofType:@"pem"];
+    NSString* pubString = [NSString stringWithContentsOfFile:pubPath encoding:NSUTF8StringEncoding error:nil];
+    
+    NSString* privPath = [bundle pathForResource:@"swiftyrsa-private" ofType:@"pem"];
+    NSString* privString = [NSString stringWithContentsOfFile:privPath encoding:NSUTF8StringEncoding error:nil];
+    
+    NSData* encrypted = [SwiftyRSA encryptData:data publicKeyPEM:pubString padding:kSecPaddingPKCS1 error:nil];
+    NSData* decrypted = [SwiftyRSA decryptData:encrypted privateKeyPEM:privString padding:kSecPaddingPKCS1 error:nil];
+    
+    XCTAssertTrue([data isEqualToData:decrypted]);
+}
+
 @end

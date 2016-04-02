@@ -23,17 +23,25 @@ Usage
 ### Encrypt
 
 ```
-// With a PEM public key
-let encrypted = try! SwiftyRSA.encryptString(str, publicKeyPEM: pemString)
+// String
+let encryptedString = try! SwiftyRSA.encryptString(str, publicKeyPEM: pemString)
 
-// With a DER public key
-let encrypted = try! SwiftyRSA.encryptString(str, publicKeyDER: derData)
+// Data
+let encryptedData = try! SwiftyRSA.encryptData(data, publicKeyPEM: pemString)
+
+// With a DER key
+let encryptedString = try! SwiftyRSA.encryptString(str, publicKeyDER: derData)
+let encryptedData = try! SwiftyRSA.encryptData(data, publicKeyDER: pemString)
 ```
 
 ### Decrypt
 
 ```
-let decrypted = try! SwiftyRSA.decryptString(str, privateKeyPEM: pemString)
+// String
+let decryptedString = try! SwiftyRSA.decryptString(str, privateKeyPEM: pemString)
+
+// Data
+let decryptedData = try! SwiftyRSA.decryptData(data, privateKeyPEM: pemString)
 ```
 
 Advanced Usage
@@ -81,9 +89,11 @@ let privKey    = try! rsa.privateKeyFromPEMString(privString)
 ```
 // Encrypt
 let encryptedString = try! rsa.encryptString(str, publicKey: pubKey)
+let encryptedData = try! rsa.encryptData(data, publicKey: pubKey)
 
 // Decrypt
-let decryptedString = try! rsa.decryptString(encrypted, privateKey: privKey)
+let decryptedString = try! rsa.decryptString(str, privateKey: privKey)
+let decryptedData = try! rsa.decryptData(data, privateKey: privKey)
 ```
 
 ### Use with Objective-C
@@ -134,6 +144,7 @@ Inspired from
 
  - <http://blog.flirble.org/2011/01/05/rsa-public-key-openssl-ios/>
  - <https://github.com/lancy/RSADemo>
+ - <https://github.com/btnguyen2k/swift-rsautils>
 
 License
 -------
