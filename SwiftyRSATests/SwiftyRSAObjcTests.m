@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "SwiftyRSATests-Swift.h"
 @import SwiftyRSA;
 
 @interface SwiftyRSAObjcTests : XCTestCase
@@ -18,13 +19,8 @@
 - (void)testClassPEM {
     NSString* str = @"ClearText";
     
-    NSBundle* bundle = [NSBundle bundleForClass:self.class];
-    
-    NSString* pubPath = [bundle pathForResource:@"swiftyrsa-public" ofType:@"pem"];
-    NSString* pubString = [NSString stringWithContentsOfFile:pubPath encoding:NSUTF8StringEncoding error:nil];
-    
-    NSString* privPath = [bundle pathForResource:@"swiftyrsa-private" ofType:@"pem"];
-    NSString* privString = [NSString stringWithContentsOfFile:privPath encoding:NSUTF8StringEncoding error:nil];
+    NSString* pubString = [TestUtils pemKeyStringWithName:@"swiftyrsa-public"];
+    NSString* privString = [TestUtils pemKeyStringWithName:@"swiftyrsa-private"];
     
     NSString* encrypted = [SwiftyRSA encryptString:str publicKeyPEM:pubString padding:kSecPaddingPKCS1 error:nil];
     NSString* decrypted = [SwiftyRSA decryptString:encrypted privateKeyPEM:privString padding:kSecPaddingPKCS1 error:nil];
@@ -35,13 +31,8 @@
 - (void)testClassDER {
     NSString* str = @"ClearText";
     
-    NSBundle* bundle = [NSBundle bundleForClass:self.class];
-    
-    NSString* pubPath = [bundle pathForResource:@"swiftyrsa-public" ofType:@"der"];
-    NSData* pubData = [NSData dataWithContentsOfFile:pubPath];
-    
-    NSString* privPath = [bundle pathForResource:@"swiftyrsa-private" ofType:@"pem"];
-    NSString* privString = [NSString stringWithContentsOfFile:privPath encoding:NSUTF8StringEncoding error:nil];
+    NSData* pubData = [TestUtils derKeyDataWithName:@"swiftyrsa-public"];
+    NSString* privString = [TestUtils pemKeyStringWithName:@"swiftyrsa-private"];
     
     NSString* encrypted = [SwiftyRSA encryptString:str publicKeyDER:pubData padding:kSecPaddingPKCS1 error:nil];
     NSString* decrypted = [SwiftyRSA decryptString:encrypted privateKeyPEM:privString padding:kSecPaddingPKCS1 error:nil];
@@ -52,17 +43,12 @@
 - (void)testPEM {
     NSString* str = @"ClearText";
     
-    NSBundle* bundle = [NSBundle bundleForClass:self.class];
-    
     SwiftyRSA* rsa = [SwiftyRSA new];
     
-    
-    NSString* pubPath = [bundle pathForResource:@"swiftyrsa-public" ofType:@"pem"];
-    NSString* pubString = [NSString stringWithContentsOfFile:pubPath encoding:NSUTF8StringEncoding error:nil];
+    NSString* pubString = [TestUtils pemKeyStringWithName:@"swiftyrsa-public"];
 	SecKeyRef pubKey = [rsa publicKeyFromPEMString:pubString error:nil];
     
-    NSString* privPath = [bundle pathForResource:@"swiftyrsa-private" ofType:@"pem"];
-    NSString* privString = [NSString stringWithContentsOfFile:privPath encoding:NSUTF8StringEncoding error:nil];
+    NSString* privString = [TestUtils pemKeyStringWithName:@"swiftyrsa-private"];
     SecKeyRef privKey = [rsa privateKeyFromPEMString:privString error:nil];
     
     NSString* encrypted = [rsa encryptString:str publicKey:pubKey padding:kSecPaddingPKCS1 error:nil];
@@ -74,16 +60,12 @@
 - (void)testDER {
     NSString* str = @"ClearText";
     
-    NSBundle* bundle = [NSBundle bundleForClass:self.class];
-    
     SwiftyRSA* rsa = [SwiftyRSA new];
     
-    NSString* pubPath = [bundle pathForResource:@"swiftyrsa-public" ofType:@"der"];
-    NSData* pubData = [NSData dataWithContentsOfFile:pubPath];
+    NSData* pubData = [TestUtils derKeyDataWithName:@"swiftyrsa-public"];
     SecKeyRef pubKey = [rsa publicKeyFromDERData:pubData error:nil];
     
-    NSString* privPath = [bundle pathForResource:@"swiftyrsa-private" ofType:@"pem"];
-    NSString* privString = [NSString stringWithContentsOfFile:privPath encoding:NSUTF8StringEncoding error:nil];
+    NSString* privString = [TestUtils pemKeyStringWithName:@"swiftyrsa-private"];
     SecKeyRef privKey = [rsa privateKeyFromPEMString:privString error:nil];
     
     NSString* encrypted = [rsa encryptString:str publicKey:pubKey padding:kSecPaddingPKCS1 error:nil];
@@ -95,17 +77,12 @@
 - (void)testPEMHeaderless {
     NSString* str = @"ClearText";
     
-    NSBundle* bundle = [NSBundle bundleForClass:self.class];
-    
     SwiftyRSA* rsa = [SwiftyRSA new];
     
-    
-    NSString* pubPath = [bundle pathForResource:@"swiftyrsa-public-headerless" ofType:@"pem"];
-    NSString* pubString = [NSString stringWithContentsOfFile:pubPath encoding:NSUTF8StringEncoding error:nil];
+    NSString* pubString = [TestUtils pemKeyStringWithName:@"swiftyrsa-public-headerless"];
     SecKeyRef pubKey = [rsa publicKeyFromPEMString:pubString error:nil];
     
-    NSString* privPath = [bundle pathForResource:@"swiftyrsa-private-headerless" ofType:@"pem"];
-    NSString* privString = [NSString stringWithContentsOfFile:privPath encoding:NSUTF8StringEncoding error:nil];
+    NSString* privString = [TestUtils pemKeyStringWithName:@"swiftyrsa-private-headerless"];
     SecKeyRef privKey = [rsa privateKeyFromPEMString:privString error:nil];
     
     NSString* encrypted = [rsa encryptString:str publicKey:pubKey padding:kSecPaddingPKCS1 error:nil];
@@ -123,13 +100,8 @@
         [data appendBytes:(void*)&randomBits length:sizeof(UInt32)];
     }
     
-    NSBundle* bundle = [NSBundle bundleForClass:self.class];
-    
-    NSString* pubPath = [bundle pathForResource:@"swiftyrsa-public" ofType:@"pem"];
-    NSString* pubString = [NSString stringWithContentsOfFile:pubPath encoding:NSUTF8StringEncoding error:nil];
-    
-    NSString* privPath = [bundle pathForResource:@"swiftyrsa-private" ofType:@"pem"];
-    NSString* privString = [NSString stringWithContentsOfFile:privPath encoding:NSUTF8StringEncoding error:nil];
+    NSString* pubString = [TestUtils pemKeyStringWithName:@"swiftyrsa-public"];
+    NSString* privString = [TestUtils pemKeyStringWithName:@"swiftyrsa-private"];
     
     NSData* encrypted = [SwiftyRSA encryptData:data publicKeyPEM:pubString padding:kSecPaddingPKCS1 error:nil];
     NSData* decrypted = [SwiftyRSA decryptData:encrypted privateKeyPEM:privString padding:kSecPaddingPKCS1 error:nil];

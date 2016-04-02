@@ -17,6 +17,7 @@
 		C03D829B1B45E886008711CF /* swiftyrsa-public.pem in Resources */ = {isa = PBXBuildFile; fileRef = C03D82981B45E886008711CF /* swiftyrsa-public.pem */; };
 		C0646A481CAF29E000587FF1 /* swiftyrsa-private-headerless.pem in Resources */ = {isa = PBXBuildFile; fileRef = C0646A461CAF29E000587FF1 /* swiftyrsa-private-headerless.pem */; };
 		C0646A491CAF29E000587FF1 /* swiftyrsa-public-headerless.pem in Resources */ = {isa = PBXBuildFile; fileRef = C0646A471CAF29E000587FF1 /* swiftyrsa-public-headerless.pem */; };
+		C0646A4B1CAF5A3D00587FF1 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0646A4A1CAF5A3D00587FF1 /* TestUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,7 @@
 		C03D82981B45E886008711CF /* swiftyrsa-public.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-public.pem"; sourceTree = "<group>"; };
 		C0646A461CAF29E000587FF1 /* swiftyrsa-private-headerless.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-private-headerless.pem"; sourceTree = "<group>"; };
 		C0646A471CAF29E000587FF1 /* swiftyrsa-public-headerless.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-public-headerless.pem"; sourceTree = "<group>"; };
+		C0646A4A1CAF5A3D00587FF1 /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				C03D82951B45E886008711CF /* keys */,
 				C03D82881B45E649008711CF /* SwiftyRSATests.swift */,
 				C01F96131C5AC3E300F232AC /* SwiftyRSAObjcTests.m */,
+				C0646A4A1CAF5A3D00587FF1 /* TestUtils.swift */,
 				C03D82861B45E649008711CF /* Supporting Files */,
 			);
 			path = SwiftyRSATests;
@@ -253,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C01F96141C5AC3E300F232AC /* SwiftyRSAObjcTests.m in Sources */,
+				C0646A4B1CAF5A3D00587FF1 /* TestUtils.swift in Sources */,
 				C03D82891B45E649008711CF /* SwiftyRSATests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
