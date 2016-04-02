@@ -73,16 +73,11 @@ class SwiftyRSATests: XCTestCase {
     func testPEMHeaderless() {
         let str = "ClearText"
         
-        let rsa = SwiftyRSA()
-        
         let pubString = TestUtils.pemKeyString(name: "swiftyrsa-public-headerless")
-        let pubKey    = try! rsa.publicKeyFromPEMString(pubString)
-        
         let privString = TestUtils.pemKeyString(name: "swiftyrsa-private-headerless")
-        let privKey    = try! rsa.privateKeyFromPEMString(privString)
         
-        let encrypted = try! rsa.encryptString(str, publicKey: pubKey)
-        let decrypted = try! rsa.decryptString(encrypted, privateKey: privKey)
+        let encrypted = try! SwiftyRSA.encryptString(str, publicKeyPEM: pubString)
+        let decrypted = try! SwiftyRSA.decryptString(encrypted, privateKeyPEM: privString)
         
         XCTAssertEqual(str, decrypted)
     }

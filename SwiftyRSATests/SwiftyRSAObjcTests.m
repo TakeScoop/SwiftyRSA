@@ -77,16 +77,11 @@
 - (void)testPEMHeaderless {
     NSString* str = @"ClearText";
     
-    SwiftyRSA* rsa = [SwiftyRSA new];
-    
     NSString* pubString = [TestUtils pemKeyStringWithName:@"swiftyrsa-public-headerless"];
-    SecKeyRef pubKey = [rsa publicKeyFromPEMString:pubString error:nil];
-    
     NSString* privString = [TestUtils pemKeyStringWithName:@"swiftyrsa-private-headerless"];
-    SecKeyRef privKey = [rsa privateKeyFromPEMString:privString error:nil];
     
-    NSString* encrypted = [rsa encryptString:str publicKey:pubKey padding:kSecPaddingPKCS1 error:nil];
-    NSString* decrypted = [rsa decryptString:encrypted privateKey:privKey padding:kSecPaddingPKCS1 error: nil];
+    NSString* encrypted = [SwiftyRSA encryptString:str publicKeyPEM:pubString padding:kSecPaddingPKCS1 error:nil];
+    NSString* decrypted = [SwiftyRSA decryptString:encrypted privateKeyPEM:privString padding:kSecPaddingPKCS1 error:nil];
     
     XCTAssertTrue([str isEqualToString:decrypted]);
 }
