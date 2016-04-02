@@ -3,6 +3,8 @@ SwiftyRSA Changelog
 
 # [master]
 
+ - Added Carthage support.
+
 # [0.2.0]
 
  - Added NSData encryption/decryption.

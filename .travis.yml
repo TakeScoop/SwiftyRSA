@@ -10,5 +10,8 @@ xcode_sdk:
   - iphonesimulator9.3
 before_install:
   - gem install scan -v '0.5.2'
+  - brew install carthage
 script:
   - scan
+  - cd CarthageIntegrationTest && carthage bootstrap && xcodebuild -configuration Debug -project CarthageIntegrationTest.xcodeproj -sdk iphonesimulator
+  

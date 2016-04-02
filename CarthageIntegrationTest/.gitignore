@@ -1,0 +1,2 @@
+# We're ignoring the .resolved file so Carthage always fetches master during Travis CI tests
+Cartfile.resolved

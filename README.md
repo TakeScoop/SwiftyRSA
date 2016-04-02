@@ -2,6 +2,7 @@ SwiftyRSA
 =========
 
 ![](https://img.shields.io/cocoapods/v/SwiftyRSA.svg)
+![](https://img.shields.io/badge/carthage-compatible-brightgreen.svg)
 ![](https://img.shields.io/cocoapods/p/SwiftyRSA.svg)
 ![](https://img.shields.io/badge/language-swift_2\+-brightgreen.svg)
 ![](https://img.shields.io/travis/TakeScoop/SwiftyRSA/master.svg)
@@ -13,8 +14,16 @@ SwiftyRSA is used in the [Scoop](https://www.takescoop.com/) [iOS app](https://i
 Installation
 ------------
 
+With Cocoapods:
+
 ```
 pod 'SwiftyRSA'
+```
+
+With Carthage:
+
+```
+github "TakeScoop/SwiftyRSA"
 ```
 
 Usage
