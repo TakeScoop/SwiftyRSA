@@ -276,12 +276,12 @@ public class SwiftyRSA: NSObject {
             throw SwiftyRSAError(message: "Provided public key is empty")
         }
         
-        var byteArray = [CUnsignedChar](count: count, repeatedValue: 0)
+        var byteArray = [UInt8](count: count, repeatedValue: 0)
         keyData.getBytes(&byteArray, length: keyData.length)
         
         var index = 0
-        if byteArray[index] != 0x30 {
-            throw SwiftyRSAError(message: "Provided key doesn't have a valid ASN1 structure (first byte should be 0x30 == SEQUENCE)")
+        guard byteArray[index] == 0x30 else {
+            throw SwiftyRSAError(message: "Provided key doesn't have a valid ASN.1 structure (first byte should be 0x30 == SEQUENCE)")
         }
         
         index += 1
@@ -318,15 +318,14 @@ public class SwiftyRSA: NSObject {
             index += 1
         }
         
-        if byteArray[index] != 0 {
+        guard byteArray[index] == 0 else {
             throw SwiftyRSAError(message: "Invalid byte at index \(index - 1) (\(byteArray[index - 1])) for public key header")
         }
         
         index += 1
         
-        let test = [CUnsignedChar](byteArray[index...keyData.length - 1])
-        
-        let data = NSData(bytes: test, length: keyData.length - index)
+        let strippedKeyBytes = [UInt8](byteArray[index...keyData.length - 1])
+        let data = NSData(bytes: strippedKeyBytes, length: keyData.length - index)
         
         return data
     }
