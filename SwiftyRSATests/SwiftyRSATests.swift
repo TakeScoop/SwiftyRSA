@@ -106,4 +106,17 @@ class SwiftyRSATests: XCTestCase {
         
         XCTAssertEqual(data, decrypted)
     }
+    
+    func testSignVerify() {
+        let bytes = [UInt32](count: 16, repeatedValue: 0).map { _ in arc4random() }
+        let data = NSData(bytes: bytes, length: bytes.count * sizeof(UInt32))
+        
+        let pubString = TestUtils.pemKeyString(name: "swiftyrsa-public")
+        let privString = TestUtils.pemKeyString(name: "swiftyrsa-private")
+        
+        let signature = try! SwiftyRSA.signData(data, privateKeyPEM: privString)
+        
+        let signatureVerification = try! SwiftyRSA.verifySignatureData(data, signature: signature, publicKeyPEM: pubString)
+        XCTAssert(signatureVerification)
+    }
 }
