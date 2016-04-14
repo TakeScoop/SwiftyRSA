@@ -8,7 +8,6 @@
 
 import Foundation
 import Security
-//import CommonCrypto
 
 public class SwiftyRSAError: NSError {
     init(message: String) {
@@ -88,6 +87,18 @@ public class SwiftyRSA: NSObject {
     public class func verifySignatureData(data: NSData, signature: NSData, publicKeyPEM: String, padding: SecPadding=defaultPadding) throws -> Bool {
         let rsa = SwiftyRSA()
         let key = try rsa.publicKeyFromPEMString(publicKeyPEM)
+        return try rsa.verifySignatureData(data, signatureData: signature, publicKey: key, padding: padding)
+    }
+    
+    public class func verifySignatureString(str: String, signature: String, publicKeyDER: NSData, padding: SecPadding=defaultPadding) throws -> Bool {
+        let rsa = SwiftyRSA()
+        let key = try rsa.publicKeyFromDERData(publicKeyDER)
+        return try rsa.verifySignatureString(str, signature: signature, publicKey: key, padding: padding)
+    }
+    
+    public class func verifySignatureData(data: NSData, signature: NSData, publicKeyDER: NSData, padding: SecPadding=defaultPadding) throws -> Bool {
+        let rsa = SwiftyRSA()
+        let key = try rsa.publicKeyFromDERData(publicKeyDER)
         return try rsa.verifySignatureData(data, signatureData: signature, publicKey: key, padding: padding)
     }
     
@@ -211,30 +222,26 @@ public class SwiftyRSA: NSObject {
         let blockSize = SecKeyGetBlockSize(privateKey)
         let maxChunkSize = blockSize - 11
         
+        guard (data.length / sizeof(UInt8) <= maxChunkSize) else {
+            throw SwiftyRSAError(message: "data length exceeds \(maxChunkSize)")
+        }
+        
         var signDataAsArray = [UInt8](count: data.length / sizeof(UInt8), repeatedValue: 0)
         data.getBytes(&signDataAsArray, length: data.length)
         
         var signatureData = [UInt8](count: 0, repeatedValue: 0)
-        var idx = 0
-        while (idx < signDataAsArray.count) {
+        
+        var signatureDataBuffer = [UInt8](count: blockSize, repeatedValue: 0)
+        var signatureDataLength = blockSize
             
-            let idxEnd = min(idx + maxChunkSize, signDataAsArray.count)
-            let chunkData = [UInt8](signDataAsArray[idx..<idxEnd])
-            
-            var signatureDataBuffer = [UInt8](count: blockSize, repeatedValue: 0)
-            var signatureDataLength = blockSize
-            
-            let status = SecKeyRawSign(privateKey, padding, chunkData, chunkData.count, &signatureDataBuffer, &signatureDataLength)
+        let status = SecKeyRawSign(privateKey, padding, signDataAsArray, signDataAsArray.count, &signatureDataBuffer, &signatureDataLength)
             
             
-            guard status == noErr else {
-                throw SwiftyRSAError(message: "Couldn't sign chunk at index \(idx)")
-            }
+        guard status == noErr else {
+            throw SwiftyRSAError(message: "Couldn't sign data \(status)")
+        }
             
             signatureData += signatureDataBuffer
-            
-            idx += maxChunkSize
-        }
         
         
         return NSData(bytes: signatureData, length: signatureData.count)
@@ -260,10 +267,10 @@ public class SwiftyRSA: NSObject {
     public func verifySignatureData(data: NSData, signatureData: NSData, publicKey: SecKeyRef, padding: SecPadding) throws -> Bool {
     
         var verifyDataAsArray = [UInt8](count: data.length / sizeof(UInt8), repeatedValue: 0)
-        signatureData.getBytes(&verifyDataAsArray, length: data.length)
+        data.getBytes(&verifyDataAsArray, length: data.length)
         
         var signatureDataAsArray = [UInt8](count: signatureData.length / sizeof(UInt8), repeatedValue: 0)
-        data.getBytes(&signatureDataAsArray, length: signatureData.length)
+        signatureData.getBytes(&signatureDataAsArray, length: signatureData.length)
         
         let status = SecKeyRawVerify(publicKey, padding, verifyDataAsArray, verifyDataAsArray.count, signatureDataAsArray, signatureDataAsArray.count)
         

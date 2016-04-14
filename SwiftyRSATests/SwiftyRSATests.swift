@@ -118,5 +118,12 @@ class SwiftyRSATests: XCTestCase {
         
         let signatureVerification = try! SwiftyRSA.verifySignatureData(data, signature: signature, publicKeyPEM: pubString)
         XCTAssert(signatureVerification)
+        
+        let badBytes = [UInt32](count: 16, repeatedValue: 0).map { _ in arc4random() }
+        let badData = NSData(bytes: badBytes, length: badBytes.count * sizeof(UInt32))
+        
+        let failedVerification = try! SwiftyRSA.verifySignatureData(badData, signature:  signature, publicKeyPEM: pubString)
+        
+        XCTAssert(!failedVerification)
     }
 }
