@@ -116,24 +116,24 @@ class SwiftyRSATests: XCTestCase {
         
         let signature = try! SwiftyRSA.signData(data, privateKeyPEM: privString)
         
-        let signatureVerification = try! SwiftyRSA.verifySignatureData(data, signature: signature, publicKeyPEM: pubString)
-        XCTAssert(signatureVerification)
+        try! SwiftyRSA.verifySignatureData(data, signature: signature, publicKeyPEM: pubString)
         
         let badBytes = [UInt32](count: 16, repeatedValue: 0).map { _ in arc4random() }
         let badData = NSData(bytes: badBytes, length: badBytes.count * sizeof(UInt32))
         
-        let failedVerification = try! SwiftyRSA.verifySignatureData(badData, signature:  signature, publicKeyPEM: pubString)
-        
-        
-        XCTAssert(!failedVerification)
+        do {
+            try SwiftyRSA.verifySignatureData(badData, signature:  signature, publicKeyPEM: pubString)
+        } catch {
+            XCTAssert(true)
+        }
         
         let testString = "Lorum Ipsum Ipso Facto Ad Astra Ixnay Onay Ayway"
         
         let stringSignature = try! SwiftyRSA.signString(testString, privateKeyPEM: privString)
         
-        let stringVerification = try! SwiftyRSA.verifySignatureString(testString, signature: stringSignature, publicKeyPEM: pubString)
+        try! SwiftyRSA.verifySignatureString(testString, signature: stringSignature, publicKeyPEM: pubString)
         
-        XCTAssert(stringVerification)
+        XCTAssert(true)
         
         
 

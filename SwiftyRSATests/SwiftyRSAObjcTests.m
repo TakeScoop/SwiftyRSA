@@ -106,7 +106,6 @@
 
 - (void)testSignVerify {
     
-    
     NSMutableData* data = [NSMutableData dataWithCapacity:2048 * sizeof(UInt32)];
     for (unsigned int i = 0 ; i < 2048 ; ++i ){
         u_int32_t randomBits = arc4random();
@@ -120,6 +119,11 @@
     
     NSString *signature = [SwiftyRSA signString:[data description] privateKeyPEM:privString error:&error];
     
+    XCTAssert(error == nil);
+
+    
+    [SwiftyRSA verifySignatureString:[data description] signature:signature publicKeyPEM:pubString error:&error];
+
     XCTAssert(error == nil);
 }
 
