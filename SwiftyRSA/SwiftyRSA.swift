@@ -79,28 +79,28 @@ public class SwiftyRSA: NSObject {
         return try rsa.signData(data, privateKey: key)
     }
     
-    public class func verifySignatureString(str: String, signature: String, publicKeyPEM: String) throws -> Bool {
+    public class func verifySignatureString(str: String, signature: String, publicKeyPEM: String) throws -> Void {
         let rsa = SwiftyRSA()
         let key = try rsa.publicKeyFromPEMString(publicKeyPEM)
-        return try rsa.verifySignatureString(str, signature: signature, publicKey: key)
+        try rsa.verifySignatureString(str, signature: signature, publicKey: key)
     }
     
-    public class func verifySignatureData(data: NSData, signature: NSData, publicKeyPEM: String) throws -> Bool {
+    public class func verifySignatureData(data: NSData, signature: NSData, publicKeyPEM: String) throws -> Void {
         let rsa = SwiftyRSA()
         let key = try rsa.publicKeyFromPEMString(publicKeyPEM)
-        return try rsa.verifySignatureData(data, signatureData: signature, publicKey: key)
+        try rsa.verifySignatureData(data, signatureData: signature, publicKey: key)
     }
     
-    public class func verifySignatureString(str: String, signature: String, publicKeyDER: NSData) throws -> Bool {
+    public class func verifySignatureString(str: String, signature: String, publicKeyDER: NSData) throws -> Void {
         let rsa = SwiftyRSA()
         let key = try rsa.publicKeyFromDERData(publicKeyDER)
-        return try rsa.verifySignatureString(str, signature: signature, publicKey: key)
+        try rsa.verifySignatureString(str, signature: signature, publicKey: key)
     }
     
-    public class func verifySignatureData(data: NSData, signature: NSData, publicKeyDER: NSData) throws -> Bool {
+    public class func verifySignatureData(data: NSData, signature: NSData, publicKeyDER: NSData) throws -> Void {
         let rsa = SwiftyRSA()
         let key = try rsa.publicKeyFromDERData(publicKeyDER)
-        return try rsa.verifySignatureData(data, signatureData: signature, publicKey: key)
+        try rsa.verifySignatureData(data, signatureData: signature, publicKey: key)
     }
     
 
@@ -255,7 +255,7 @@ public class SwiftyRSA: NSObject {
     
     // Verify data with an RSA key
     
-    public func verifySignatureString(str: String, signature: String, publicKey: SecKeyRef) throws -> Bool {
+    public func verifySignatureString(str: String, signature: String, publicKey: SecKeyRef) throws -> Void {
         
         
         guard let data=str.dataUsingEncoding(NSUTF8StringEncoding) else {
@@ -266,19 +266,19 @@ public class SwiftyRSA: NSObject {
             throw SwiftyRSAError(message: "Couldn't get signature data from provided base64 string")
         }
         
-        return try verifySignatureData(data, signatureData: signatureData, publicKey: publicKey)
+        try verifySignatureData(data, signatureData: signatureData, publicKey: publicKey)
   
     }
     
-    public func verifySignatureData(data: NSData, signatureData: NSData, publicKey: SecKeyRef) throws -> Bool {
+    public func verifySignatureData(data: NSData, signatureData: NSData, publicKey: SecKeyRef) throws -> Void {
         
         let digest=data.SHA1()
         
-        return try verifySHA1SignatureData(digest, SHA1Data: signatureData, publicKey: publicKey)
+        try verifySHA1SignatureData(digest, SHA1Data: signatureData, publicKey: publicKey)
         
     }
     
-    public func verifySHA1SignatureData(data: NSData, SHA1Data: NSData, publicKey: SecKeyRef) throws -> Bool {
+    public func verifySHA1SignatureData(data: NSData, SHA1Data: NSData, publicKey: SecKeyRef) throws -> Void {
         
         var verifyDataAsArray = [UInt8](count: data.length / sizeof(UInt8), repeatedValue: 0)
         data.getBytes(&verifyDataAsArray, length: data.length)
@@ -288,11 +288,7 @@ public class SwiftyRSA: NSObject {
         
         let status = SecKeyRawVerify(publicKey, .PKCS1SHA1, verifyDataAsArray, verifyDataAsArray.count, signatureDataAsArray, signatureDataAsArray.count)
         
-        if (status == errSecSuccess) {
-            return true
-        } else if (status == -9809) {
-            return false
-        } else {
+        guard status == errSecSuccess else {
             throw SwiftyRSAError(message: "Couldn't verify signature - \(status)")
         }
         
