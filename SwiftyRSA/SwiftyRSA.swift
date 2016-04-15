@@ -9,6 +9,7 @@
 import Foundation
 import Security
 
+
 public class SwiftyRSAError: NSError {
     init(message: String) {
         super.init(domain: "com.takescoop.SwiftyRSA", code: 500, userInfo: [
@@ -66,42 +67,43 @@ public class SwiftyRSA: NSObject {
         return try rsa.decryptData(data, privateKey: key, padding: padding)
     }
     
-    public class func signString(str: String, privateKeyPEM: String, padding: SecPadding = defaultPadding) throws -> String {
+    public class func signString(str: String, privateKeyPEM: String) throws -> String {
         let rsa = SwiftyRSA()
         let key = try rsa.privateKeyFromPEMString(privateKeyPEM)
-        return try rsa.signString(str, privateKey: key, padding: padding)
+        return try rsa.signString(str, privateKey: key)
     }
     
-    public class func signData(data: NSData, privateKeyPEM: String, padding: SecPadding = defaultPadding) throws -> NSData {
+    public class func signData(data: NSData, privateKeyPEM: String) throws -> NSData {
         let rsa = SwiftyRSA()
         let key = try rsa.privateKeyFromPEMString(privateKeyPEM)
-        return try rsa.signData(data, privateKey: key, padding: padding)
+        return try rsa.signData(data, privateKey: key)
     }
     
-    public class func verifySignatureString(str: String, signature: String, publicKeyPEM: String, padding: SecPadding=defaultPadding) throws -> Bool {
+    public class func verifySignatureString(str: String, signature: String, publicKeyPEM: String) throws -> Bool {
         let rsa = SwiftyRSA()
         let key = try rsa.publicKeyFromPEMString(publicKeyPEM)
-        return try rsa.verifySignatureString(str, signature: signature, publicKey: key, padding: padding)
+        return try rsa.verifySignatureString(str, signature: signature, publicKey: key)
     }
     
-    public class func verifySignatureData(data: NSData, signature: NSData, publicKeyPEM: String, padding: SecPadding=defaultPadding) throws -> Bool {
+    public class func verifySignatureData(data: NSData, signature: NSData, publicKeyPEM: String) throws -> Bool {
         let rsa = SwiftyRSA()
         let key = try rsa.publicKeyFromPEMString(publicKeyPEM)
-        return try rsa.verifySignatureData(data, signatureData: signature, publicKey: key, padding: padding)
+        return try rsa.verifySignatureData(data, signatureData: signature, publicKey: key)
     }
     
-    public class func verifySignatureString(str: String, signature: String, publicKeyDER: NSData, padding: SecPadding=defaultPadding) throws -> Bool {
+    public class func verifySignatureString(str: String, signature: String, publicKeyDER: NSData) throws -> Bool {
         let rsa = SwiftyRSA()
         let key = try rsa.publicKeyFromDERData(publicKeyDER)
-        return try rsa.verifySignatureString(str, signature: signature, publicKey: key, padding: padding)
+        return try rsa.verifySignatureString(str, signature: signature, publicKey: key)
     }
     
-    public class func verifySignatureData(data: NSData, signature: NSData, publicKeyDER: NSData, padding: SecPadding=defaultPadding) throws -> Bool {
+    public class func verifySignatureData(data: NSData, signature: NSData, publicKeyDER: NSData) throws -> Bool {
         let rsa = SwiftyRSA()
         let key = try rsa.publicKeyFromDERData(publicKeyDER)
-        return try rsa.verifySignatureData(data, signatureData: signature, publicKey: key, padding: padding)
+        return try rsa.verifySignatureData(data, signatureData: signature, publicKey: key)
     }
     
+
     // MARK: - Public Advanced Methods
     
     public override init() {
@@ -210,38 +212,42 @@ public class SwiftyRSA: NSObject {
     
     // Sign data with an RSA key
     
-    public func signString(str: String, privateKey: SecKeyRef, padding: SecPadding = defaultPadding) throws -> String {
+    public func signString(str: String, privateKey: SecKeyRef) throws -> String {
         guard let data=str.dataUsingEncoding(NSUTF8StringEncoding) else {
             throw SwiftyRSAError(message: "Couldn't get UTF8 data from provided string")
         }
-        let signature = try signData(data, privateKey: privateKey, padding: padding)
+        let signature = try signData(data, privateKey: privateKey)
         return signature.base64EncodedStringWithOptions([])
     }
     
-    public func signData(data: NSData, privateKey: SecKeyRef, padding: SecPadding) throws -> NSData {
+    public func signData(data: NSData, privateKey: SecKeyRef) throws -> NSData {
+        
+        let digest=data.SHA1()
+        
+        return try signSHA1Digest(digest, privateKey: privateKey)
+    }
+    
+    public func signSHA1Digest(digest: NSData, privateKey: SecKeyRef) throws -> NSData {
+        
         let blockSize = SecKeyGetBlockSize(privateKey)
         let maxChunkSize = blockSize - 11
         
-        guard (data.length / sizeof(UInt8) <= maxChunkSize) else {
+        guard (digest.length / sizeof(UInt8) <= maxChunkSize) else {
             throw SwiftyRSAError(message: "data length exceeds \(maxChunkSize)")
         }
         
-        var signDataAsArray = [UInt8](count: data.length / sizeof(UInt8), repeatedValue: 0)
-        data.getBytes(&signDataAsArray, length: data.length)
+        var signDataAsArray = [UInt8](count: digest.length / sizeof(UInt8), repeatedValue: 0)
+        digest.getBytes(&signDataAsArray, length: digest.length)
         
-        var signatureData = [UInt8](count: 0, repeatedValue: 0)
-        
-        var signatureDataBuffer = [UInt8](count: blockSize, repeatedValue: 0)
+        var signatureData = [UInt8](count: blockSize, repeatedValue: 0)
         var signatureDataLength = blockSize
             
-        let status = SecKeyRawSign(privateKey, padding, signDataAsArray, signDataAsArray.count, &signatureDataBuffer, &signatureDataLength)
+        let status = SecKeyRawSign(privateKey, .PKCS1SHA1, signDataAsArray, signDataAsArray.count, &signatureData, &signatureDataLength)
             
             
         guard status == noErr else {
             throw SwiftyRSAError(message: "Couldn't sign data \(status)")
         }
-            
-            signatureData += signatureDataBuffer
         
         
         return NSData(bytes: signatureData, length: signatureData.count)
@@ -249,30 +255,38 @@ public class SwiftyRSA: NSObject {
     
     // Verify data with an RSA key
     
-    public func verifySignatureString(str: String, signature: String, publicKey: SecKeyRef, padding: SecPadding) throws -> Bool {
+    public func verifySignatureString(str: String, signature: String, publicKey: SecKeyRef) throws -> Bool {
         
         
         guard let data=str.dataUsingEncoding(NSUTF8StringEncoding) else {
             throw SwiftyRSAError(message: "Couldn't get UTF8 data from provided string")
         }
         
-        guard let signatureData = NSData(base64EncodedString: str, options: []) else {
+        guard let signatureData = NSData(base64EncodedString: signature, options: []) else {
             throw SwiftyRSAError(message: "Couldn't get signature data from provided base64 string")
         }
         
-        return try verifySignatureData(data, signatureData: signatureData, publicKey: publicKey, padding: padding)
+        return try verifySignatureData(data, signatureData: signatureData, publicKey: publicKey)
   
     }
     
-    public func verifySignatureData(data: NSData, signatureData: NSData, publicKey: SecKeyRef, padding: SecPadding) throws -> Bool {
+    public func verifySignatureData(data: NSData, signatureData: NSData, publicKey: SecKeyRef) throws -> Bool {
+        
+        let digest=data.SHA1()
+        
+        return try verifySHA1SignatureData(digest, SHA1Data: signatureData, publicKey: publicKey)
+        
+    }
     
+    public func verifySHA1SignatureData(data: NSData, SHA1Data: NSData, publicKey: SecKeyRef) throws -> Bool {
+        
         var verifyDataAsArray = [UInt8](count: data.length / sizeof(UInt8), repeatedValue: 0)
         data.getBytes(&verifyDataAsArray, length: data.length)
         
-        var signatureDataAsArray = [UInt8](count: signatureData.length / sizeof(UInt8), repeatedValue: 0)
-        signatureData.getBytes(&signatureDataAsArray, length: signatureData.length)
+        var signatureDataAsArray = [UInt8](count: SHA1Data.length / sizeof(UInt8), repeatedValue: 0)
+        SHA1Data.getBytes(&signatureDataAsArray, length: SHA1Data.length)
         
-        let status = SecKeyRawVerify(publicKey, padding, verifyDataAsArray, verifyDataAsArray.count, signatureDataAsArray, signatureDataAsArray.count)
+        let status = SecKeyRawVerify(publicKey, .PKCS1SHA1, verifyDataAsArray, verifyDataAsArray.count, signatureDataAsArray, signatureDataAsArray.count)
         
         if (status == errSecSuccess) {
             return true
