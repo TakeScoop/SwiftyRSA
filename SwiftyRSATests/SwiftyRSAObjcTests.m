@@ -114,6 +114,7 @@
     
     NSString* pubString = [TestUtils pemKeyStringWithName:@"swiftyrsa-public"];
     NSString* privString = [TestUtils pemKeyStringWithName:@"swiftyrsa-private"];
+    NSData* pubData = [TestUtils derKeyDataWithName:@"swiftyrsa-public"];
     
     NSError* error;
     
@@ -122,8 +123,25 @@
     XCTAssertNil(error);
 
     [SwiftyRSA verifySignatureString:[data description] signature:signature publicKeyPEM:pubString error:&error];
-
+    
     XCTAssertNil(error);
+    
+    [SwiftyRSA verifySignatureString:[data description] signature:signature publicKeyDER:pubData error:&error];
+    
+    XCTAssertNil(error);
+    
+    NSData *signatureData = [SwiftyRSA signData:data privateKeyPEM:privString error:&error];
+    
+    XCTAssertNil(error);
+    
+    [SwiftyRSA verifySignatureData:data signature:signatureData publicKeyPEM:pubString error:&error];
+    
+    XCTAssertNil(error);
+    
+    [SwiftyRSA verifySignatureData:data signature:signatureData publicKeyDER:pubData error:&error];
+    
+    XCTAssertNil(error);
+
 }
 
 @end
