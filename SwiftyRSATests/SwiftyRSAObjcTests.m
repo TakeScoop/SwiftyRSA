@@ -159,7 +159,7 @@
     
     XCTAssertNil(error);
     
-    [rsa verifySHA1SignatureData:digest SHA1Signature:digestSignature publicKey:pubKey error:&error];
+    [rsa verifySHA1SignatureData:digest signature:digestSignature publicKey:pubKey error:&error];
     
     XCTAssertNil(error);
 

@@ -150,7 +150,7 @@ class SwiftyRSATests: XCTestCase {
         
         let digestSignature = try! rsa.signSHA1Digest(digest, privateKey: privKey)
         
-        try! rsa.verifySHA1SignatureData(digest, SHA1Signature: digestSignature, publicKey: pubKey)
+        try! rsa.verifySHA1SignatureData(digest, signature: digestSignature, publicKey: pubKey)
         
         XCTAssert(true)
         
