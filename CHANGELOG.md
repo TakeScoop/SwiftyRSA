@@ -1,6 +1,10 @@
 SwiftyRSA Changelog
 ===================
 
+# [X.X.X]
+
+ - Added digital signature creation & verification support
+
 # [master]
 
  - Added Carthage support.
