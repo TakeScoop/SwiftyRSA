@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SwiftyRSA  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="SwiftyRSA  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">SwiftyRSA Docs</a> (42% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">SwiftyRSA Reference</a>
+        <img id="carat" src="img/carat.png" />
+        SwiftyRSA  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/SwiftyRSA.html">SwiftyRSA</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SwiftyRSAError.html">SwiftyRSAError</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <a href='#swiftyrsa' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='swiftyrsa'>SwiftyRSA</h1>
+
+<p><img src="https://img.shields.io/cocoapods/v/SwiftyRSA.svg" alt="">
+<img src="https://img.shields.io/badge/carthage-compatible-brightgreen.svg" alt="">
+<img src="https://img.shields.io/cocoapods/p/SwiftyRSA.svg" alt="">
+<img src="https://img.shields.io/badge/language-swift_2+-brightgreen.svg" alt="">
+<img src="https://img.shields.io/travis/TakeScoop/SwiftyRSA/master.svg" alt=""></p>
+
+<p><strong>Public key RSA encryption in Swift.</strong></p>
+
+<p>SwiftyRSA is used in the <a href="https://www.takescoop.com/">Scoop</a> <a href="https://itunes.apple.com/us/app/scoop-easy-custom-carpooling/id997978145?mt=8">iOS app</a> to encrypt driver license numbers before submitting them to Checkr through our API.</p>
+<a href='#installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='installation'>Installation</h2>
+
+<p>With Cocoapods:</p>
+<pre class="highlight plaintext"><code>pod 'SwiftyRSA'
+</code></pre>
+
+<p>With Carthage:</p>
+<pre class="highlight plaintext"><code>github "TakeScoop/SwiftyRSA"
+</code></pre>
+<a href='#usage' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='usage'>Usage</h2>
+<a href='#encrypt' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='encrypt'>Encrypt</h3>
+<pre class="highlight plaintext"><code>// String
+let encryptedString = try! SwiftyRSA.encryptString(str, publicKeyPEM: pemString)
+
+// Data
+let encryptedData = try! SwiftyRSA.encryptData(data, publicKeyPEM: pemString)
+
+// With a DER key
+let encryptedString = try! SwiftyRSA.encryptString(str, publicKeyDER: derData)
+let encryptedData = try! SwiftyRSA.encryptData(data, publicKeyDER: pemString)
+</code></pre>
+<a href='#decrypt' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='decrypt'>Decrypt</h3>
+<pre class="highlight plaintext"><code>// String
+let decryptedString = try! SwiftyRSA.decryptString(str, privateKeyPEM: pemString)
+
+// Data
+let decryptedData = try! SwiftyRSA.decryptData(data, privateKeyPEM: pemString)
+</code></pre>
+<a href='#advanced_usage' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='advanced_usage'>Advanced Usage</h2>
+<a href='#create_public_and_private_rsa_keys' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='create_public_and_private_rsa_keys'>Create public and private RSA keys</h3>
+
+<p>Use <code>ssh-keygen</code> to generate a PEM public key and a PEM private key. SwiftyRSA also supports DER public keys.</p>
+<pre class="highlight plaintext"><code>$ ssh-keygen -t rsa -f ~/mykey -N ''
+$ cat ~/mykey &gt; ~/private.pem
+$ ssh-keygen -f ~/mykey.pub -e -m pem &gt; ~/public.pem
+</code></pre>
+
+<p>Your keys are now in <code>~/public.pem</code> and <code>~/private.pem</code>. Don&rsquo;t forget to move <code>~/mykey</code> and <code>~/mykey.pub</code> to a secure place.</p>
+<a href='#get_a_key_instance' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='get_a_key_instance'>Get a key instance</h3>
+
+<p>Note that the key reference will only be valid as long as the <code>SwiftyRSA</code> instance is alive.</p>
+<pre class="highlight plaintext"><code>import SwiftyRSA
+
+let rsa = SwiftyRSA()
+
+// Public key (PEM)
+let pubPath   = bundle.pathForResource("public", ofType: "pem")!
+let pubString = NSString(contentsOfFile: pubPath, encoding: NSUTF8StringEncoding, error: nil)! as String
+let pubKey    = try! rsa.publicKeyFromPEMString(pubString)
+
+// Public key (DER)
+let pubPath = bundle.pathForResource("public", ofType: "der")!
+let pubData = NSData(contentsOfFile: pubPath)!
+let pubKey  = try! rsa.publicKeyFromDERData(pubData)
+
+// Private key (PEM)
+let privPath   = bundle.pathForResource("private", ofType: "pem")!
+let privString = NSString(contentsOfFile: privPath, encoding: NSUTF8StringEncoding, error: nil)! as String
+let privKey    = try! rsa.privateKeyFromPEMString(privString)
+</code></pre>
+<a href='#use_a_key_instance_to_encrypt_decrypt' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='use_a_key_instance_to_encrypt_decrypt'>Use a key instance to encrypt/decrypt</h3>
+<pre class="highlight plaintext"><code>// Encrypt
+let encryptedString = try! rsa.encryptString(str, publicKey: pubKey)
+let encryptedData = try! rsa.encryptData(data, publicKey: pubKey)
+
+// Decrypt
+let decryptedString = try! rsa.decryptString(str, privateKey: privKey)
+let decryptedData = try! rsa.decryptData(data, privateKey: privKey)
+</code></pre>
+<a href='#use_with_objective_c' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='use_with_objective_c'>Use with Objective-C</h3>
+<pre class="highlight plaintext"><code>@import SwiftyRSA;
+
+NSString* str = @"ClearText";
+
+NSBundle* bundle = [NSBundle bundleForClass:self.class];
+
+NSString* pubPath = [bundle pathForResource:@"swiftyrsa-public" ofType:@"pem"];
+NSString* pubString = [NSString stringWithContentsOfFile:pubPath encoding:NSUTF8StringEncoding error:nil];
+
+NSString* privPath = [bundle pathForResource:@"swiftyrsa-private" ofType:@"pem"];
+NSString* privString = [NSString stringWithContentsOfFile:privPath encoding:NSUTF8StringEncoding error:nil];
+
+NSString* encrypted = [SwiftyRSA encryptString:str publicKeyPEM:pubString padding:kSecPaddingPKCS1 error:nil];
+NSString* decrypted = [SwiftyRSA decryptString:encrypted privateKeyPEM:privString padding:kSecPaddingPKCS1 error:nil];
+</code></pre>
+<a href='#under_the_hood' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='under_the_hood'>Under the hood</h2>
+
+<p>When encrypting using a public key:</p>
+
+<ul>
+<li>If the key is in PEM format, get rid of meta data and convert to NSData</li>
+<li>Strip the ASN.1 data from the public key header (otherwise the keychain won&rsquo;t accept it)</li>
+<li>Add the public key to the app keychain, with a random tag</li>
+<li>Get a reference on the key using the key tag</li>
+<li>Convert clear text to NSData using UTF8</li>
+<li>Encrypt data with <code>SecKeyEncrypt</code> using the key reference</li>
+<li>Convert the resulting data to base64 and return it</li>
+<li>Delete public key from keychain using tag</li>
+</ul>
+
+<p>When decrypting using a private key:</p>
+
+<ul>
+<li>Get rid of PEM meta data and convert to NSData</li>
+<li>Add the private key to the app keychain, with a random tag</li>
+<li>Get a reference on the key using the key tag</li>
+<li>Convert encrypted text to NSData from base64 string</li>
+<li>Decrypt data with <code>SecKeyDecrypt</code> using the key reference</li>
+<li>Convert the resulting data to String using UTF8</li>
+<li>Delete private key from keychain using tag</li>
+</ul>
+<a href='#inspired_from' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='inspired_from'>Inspired from</h2>
+
+<ul>
+<li><a href="http://blog.flirble.org/2011/01/05/rsa-public-key-openssl-ios/">http://blog.flirble.org/2011/01/05/rsa-public-key-openssl-ios/</a></li>
+<li><a href="https://github.com/lancy/RSADemo">https://github.com/lancy/RSADemo</a></li>
+<li><a href="https://github.com/btnguyen2k/swift-rsautils">https://github.com/btnguyen2k/swift-rsautils</a></li>
+</ul>
+<a href='#license' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='license'>License</h2>
+
+<p>This project is copyrighted under the MIT license. Complete license can be found here: <a href="https://github.com/TakeScoop/SwiftyRSA/blob/master/LICENSE">https://github.com/TakeScoop/SwiftyRSA/blob/master/LICENSE</a></p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2016 <a class="link" href="https://github.com/TakeScoop/SwiftyRSA" target="_blank" rel="external">Scoop</a>. All rights reserved. (Last updated: 2016-04-17)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.6.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
