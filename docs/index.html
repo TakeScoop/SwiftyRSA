@@ -13,7 +13,7 @@
     <a title="SwiftyRSA  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">SwiftyRSA Docs</a> (42% documented)</p>
+        <p><a href="index.html">SwiftyRSA Docs</a> (46% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -34,6 +34,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/SwiftyRSAError.html">SwiftyRSAError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/VerificationResult.html">VerificationResult</a>
               </li>
             </ul>
           </li>
@@ -82,6 +85,27 @@ let decryptedString = try! SwiftyRSA.decryptString(str, privateKeyPEM: pemString
 // Data
 let decryptedData = try! SwiftyRSA.decryptData(data, privateKeyPEM: pemString)
 </code></pre>
+<a href='#sign' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='sign'>Sign</h3>
+
+<p>SwiftyRSA can sign data with a private key.  SwiftyRSA will calculate an SHA1 digest
+of the supplied <code>String</code>/<code>NSData</code> and use this to generate the digital signature.</p>
+<pre class="highlight plaintext"><code>// String
+let signatureString = try! SwitfyRSA.signString(str, privateKeyPEM: pemString)
+
+// Data
+let signatureData = try! SwiftyRSA.signData(data, privateKeyPEM: pemString)
+</code></pre>
+<a href='#verify' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='verify'>Verify</h2>
+
+<p>SwiftyRSA can verify digital signatures with a public key.  SwiftyRSA will calculate 
+an SHA1 digest of the supplied <code>String</code>/<code>NSData</code> and use this to verify the digital 
+signature.</p>
+<pre class="highlight plaintext"><code>// String
+try! SwitfyRSA.verifySignatureString(str, signature: sigString, publicKeyPEM: pemString)
+
+// Data
+try! SwitfyRSA.verifySignatureData(data, signature: sigData, publicKeyPEM: String)
+</code></pre>
 <a href='#advanced_usage' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='advanced_usage'>Advanced Usage</h2>
 <a href='#create_public_and_private_rsa_keys' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='create_public_and_private_rsa_keys'>Create public and private RSA keys</h3>
 
@@ -122,6 +146,12 @@ let encryptedData = try! rsa.encryptData(data, publicKey: pubKey)
 // Decrypt
 let decryptedString = try! rsa.decryptString(str, privateKey: privKey)
 let decryptedData = try! rsa.decryptData(data, privateKey: privKey)
+</code></pre>
+<a href='#sign_or_verify_an_sha1_digest' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='sign_or_verify_an_sha1_digest'>Sign or verify an SHA1 digest</h3>
+<pre class="highlight plaintext"><code>let rsa = SwiftyRSA()
+let digestSignature = try! rsa.signSHA1Digest(digest, privateKey: privKey)
+
+try! rsa.verifySHA1SignatureData(digest, signature: digestSignature, publicKey: pubKey)
 </code></pre>
 <a href='#use_with_objective_c' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='use_with_objective_c'>Use with Objective-C</h3>
 <pre class="highlight plaintext"><code>@import SwiftyRSA;

@@ -14,7 +14,7 @@
     <a title="SwiftyRSA Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">SwiftyRSA Docs</a> (42% documented)</p>
+        <p><a href="../index.html">SwiftyRSA Docs</a> (46% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -35,6 +35,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/SwiftyRSAError.html">SwiftyRSAError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/VerificationResult.html">VerificationResult</a>
               </li>
             </ul>
           </li>
@@ -318,9 +321,9 @@ resulting digest will be signed.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:ZFC9SwiftyRSA9SwiftyRSA21verifySignatureStringFzTSS9signatureSS12publicKeyPEMSS_T_"></a>
+                    <a name="/s:ZFC9SwiftyRSA9SwiftyRSA21verifySignatureStringFzTSS9signatureSS12publicKeyPEMSS_CS_18VerificationResult"></a>
                     <a name="//apple_ref/swift/Method/verifySignatureString(_:signature:publicKeyPEM:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:ZFC9SwiftyRSA9SwiftyRSA21verifySignatureStringFzTSS9signatureSS12publicKeyPEMSS_T_">verifySignatureString(_:signature:publicKeyPEM:)</a>
+                    <a class="token" href="#/s:ZFC9SwiftyRSA9SwiftyRSA21verifySignatureStringFzTSS9signatureSS12publicKeyPEMSS_CS_18VerificationResult">verifySignatureString(_:signature:publicKeyPEM:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -342,7 +345,7 @@ resulting digest will be verified against the supplied signature.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">verifySignatureString</span><span class="p">(</span><span class="nv">str</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">signature</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">publicKeyPEM</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">verifySignatureString</span><span class="p">(</span><span class="nv">str</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">signature</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">publicKeyPEM</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">VerificationResult</span></code></pre>
 
                         </div>
                       </div>
@@ -392,15 +395,20 @@ resulting digest will be verified against the supplied signature.</p>
                           </tbody>
                         </table>
                       </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Classes/VerificationResult.html">VerificationResult</a></code> that indicates whether the signature was valid or not</p>
+
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:ZFC9SwiftyRSA9SwiftyRSA19verifySignatureDataFzTCSo6NSData9signatureS1_12publicKeyPEMSS_T_"></a>
+                    <a name="/s:ZFC9SwiftyRSA9SwiftyRSA19verifySignatureDataFzTCSo6NSData9signatureS1_12publicKeyPEMSS_CS_18VerificationResult"></a>
                     <a name="//apple_ref/swift/Method/verifySignatureData(_:signature:publicKeyPEM:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:ZFC9SwiftyRSA9SwiftyRSA19verifySignatureDataFzTCSo6NSData9signatureS1_12publicKeyPEMSS_T_">verifySignatureData(_:signature:publicKeyPEM:)</a>
+                    <a class="token" href="#/s:ZFC9SwiftyRSA9SwiftyRSA19verifySignatureDataFzTCSo6NSData9signatureS1_12publicKeyPEMSS_CS_18VerificationResult">verifySignatureData(_:signature:publicKeyPEM:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -422,7 +430,7 @@ resulting digest will be verified against the supplied signature.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">verifySignatureData</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">,</span> <span class="nv">signature</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">,</span> <span class="nv">publicKeyPEM</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">verifySignatureData</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">,</span> <span class="nv">signature</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">,</span> <span class="nv">publicKeyPEM</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">VerificationResult</span></code></pre>
 
                         </div>
                       </div>
@@ -472,15 +480,20 @@ resulting digest will be verified against the supplied signature.</p>
                           </tbody>
                         </table>
                       </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Classes/VerificationResult.html">VerificationResult</a></code> that indicates whether the signature was valid or not</p>
+
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:ZFC9SwiftyRSA9SwiftyRSA21verifySignatureStringFzTSS9signatureSS12publicKeyDERCSo6NSData_T_"></a>
+                    <a name="/s:ZFC9SwiftyRSA9SwiftyRSA21verifySignatureStringFzTSS9signatureSS12publicKeyDERCSo6NSData_CS_18VerificationResult"></a>
                     <a name="//apple_ref/swift/Method/verifySignatureString(_:signature:publicKeyDER:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:ZFC9SwiftyRSA9SwiftyRSA21verifySignatureStringFzTSS9signatureSS12publicKeyDERCSo6NSData_T_">verifySignatureString(_:signature:publicKeyDER:)</a>
+                    <a class="token" href="#/s:ZFC9SwiftyRSA9SwiftyRSA21verifySignatureStringFzTSS9signatureSS12publicKeyDERCSo6NSData_CS_18VerificationResult">verifySignatureString(_:signature:publicKeyDER:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -502,7 +515,7 @@ resulting digest will be verified against the supplied signature.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">verifySignatureString</span><span class="p">(</span><span class="nv">str</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">signature</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">publicKeyDER</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">verifySignatureString</span><span class="p">(</span><span class="nv">str</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">signature</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">publicKeyDER</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">VerificationResult</span></code></pre>
 
                         </div>
                       </div>
@@ -552,15 +565,20 @@ resulting digest will be verified against the supplied signature.</p>
                           </tbody>
                         </table>
                       </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Classes/VerificationResult.html">VerificationResult</a></code> that indicates whether the signature was valid or not</p>
+
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:ZFC9SwiftyRSA9SwiftyRSA19verifySignatureDataFzTCSo6NSData9signatureS1_12publicKeyDERS1__T_"></a>
+                    <a name="/s:ZFC9SwiftyRSA9SwiftyRSA19verifySignatureDataFzTCSo6NSData9signatureS1_12publicKeyDERS1__CS_18VerificationResult"></a>
                     <a name="//apple_ref/swift/Method/verifySignatureData(_:signature:publicKeyDER:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:ZFC9SwiftyRSA9SwiftyRSA19verifySignatureDataFzTCSo6NSData9signatureS1_12publicKeyDERS1__T_">verifySignatureData(_:signature:publicKeyDER:)</a>
+                    <a class="token" href="#/s:ZFC9SwiftyRSA9SwiftyRSA19verifySignatureDataFzTCSo6NSData9signatureS1_12publicKeyDERS1__CS_18VerificationResult">verifySignatureData(_:signature:publicKeyDER:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -582,7 +600,7 @@ resulting digest will be verified against the supplied signature.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">verifySignatureData</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">,</span> <span class="nv">signature</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">,</span> <span class="nv">publicKeyDER</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">verifySignatureData</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">,</span> <span class="nv">signature</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">,</span> <span class="nv">publicKeyDER</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">VerificationResult</span></code></pre>
 
                         </div>
                       </div>
@@ -631,6 +649,11 @@ resulting digest will be verified against the supplied signature.</p>
                             </tr>
                           </tbody>
                         </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Classes/VerificationResult.html">VerificationResult</a></code> that indicates whether the signature was valid or not</p>
+
                       </div>
                     </section>
                   </div>
@@ -1016,9 +1039,9 @@ resulting digest will be signed.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC9SwiftyRSA9SwiftyRSA21verifySignatureStringFzTSS9signatureSS9publicKeyCSo6SecKey_T_"></a>
+                    <a name="/s:FC9SwiftyRSA9SwiftyRSA21verifySignatureStringFzTSS9signatureSS9publicKeyCSo6SecKey_CS_18VerificationResult"></a>
                     <a name="//apple_ref/swift/Method/verifySignatureString(_:signature:publicKey:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC9SwiftyRSA9SwiftyRSA21verifySignatureStringFzTSS9signatureSS9publicKeyCSo6SecKey_T_">verifySignatureString(_:signature:publicKey:)</a>
+                    <a class="token" href="#/s:FC9SwiftyRSA9SwiftyRSA21verifySignatureStringFzTSS9signatureSS9publicKeyCSo6SecKey_CS_18VerificationResult">verifySignatureString(_:signature:publicKey:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1040,7 +1063,7 @@ resulting digest will be verified against the supplied signature.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">verifySignatureString</span><span class="p">(</span><span class="nv">str</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">signature</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">publicKey</span><span class="p">:</span> <span class="kt">SecKeyRef</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">verifySignatureString</span><span class="p">(</span><span class="nv">str</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">signature</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">publicKey</span><span class="p">:</span> <span class="kt">SecKeyRef</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">VerificationResult</span></code></pre>
 
                         </div>
                       </div>
@@ -1090,15 +1113,20 @@ resulting digest will be verified against the supplied signature.</p>
                           </tbody>
                         </table>
                       </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Classes/VerificationResult.html">VerificationResult</a></code> that indicates whether the signature was valid or not</p>
+
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC9SwiftyRSA9SwiftyRSA19verifySignatureDataFzTCSo6NSData13signatureDataS1_9publicKeyCSo6SecKey_T_"></a>
+                    <a name="/s:FC9SwiftyRSA9SwiftyRSA19verifySignatureDataFzTCSo6NSData13signatureDataS1_9publicKeyCSo6SecKey_CS_18VerificationResult"></a>
                     <a name="//apple_ref/swift/Method/verifySignatureData(_:signatureData:publicKey:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC9SwiftyRSA9SwiftyRSA19verifySignatureDataFzTCSo6NSData13signatureDataS1_9publicKeyCSo6SecKey_T_">verifySignatureData(_:signatureData:publicKey:)</a>
+                    <a class="token" href="#/s:FC9SwiftyRSA9SwiftyRSA19verifySignatureDataFzTCSo6NSData13signatureDataS1_9publicKeyCSo6SecKey_CS_18VerificationResult">verifySignatureData(_:signatureData:publicKey:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1120,7 +1148,7 @@ resulting digest will be verified against the supplied signature.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">verifySignatureData</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">,</span> <span class="nv">signatureData</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">,</span> <span class="nv">publicKey</span><span class="p">:</span> <span class="kt">SecKeyRef</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">verifySignatureData</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">,</span> <span class="nv">signatureData</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">,</span> <span class="nv">publicKey</span><span class="p">:</span> <span class="kt">SecKeyRef</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">VerificationResult</span></code></pre>
 
                         </div>
                       </div>
@@ -1170,15 +1198,20 @@ resulting digest will be verified against the supplied signature.</p>
                           </tbody>
                         </table>
                       </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Classes/VerificationResult.html">VerificationResult</a></code> that indicates whether the signature was valid or not</p>
+
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC9SwiftyRSA9SwiftyRSA23verifySHA1SignatureDataFzTCSo6NSData9signatureS1_9publicKeyCSo6SecKey_T_"></a>
+                    <a name="/s:FC9SwiftyRSA9SwiftyRSA23verifySHA1SignatureDataFzTCSo6NSData9signatureS1_9publicKeyCSo6SecKey_CS_18VerificationResult"></a>
                     <a name="//apple_ref/swift/Method/verifySHA1SignatureData(_:signature:publicKey:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC9SwiftyRSA9SwiftyRSA23verifySHA1SignatureDataFzTCSo6NSData9signatureS1_9publicKeyCSo6SecKey_T_">verifySHA1SignatureData(_:signature:publicKey:)</a>
+                    <a class="token" href="#/s:FC9SwiftyRSA9SwiftyRSA23verifySHA1SignatureDataFzTCSo6NSData9signatureS1_9publicKeyCSo6SecKey_CS_18VerificationResult">verifySHA1SignatureData(_:signature:publicKey:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1199,7 +1232,7 @@ resulting digest will be verified against the supplied signature.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">verifySHA1SignatureData</span><span class="p">(</span><span class="kt">SHA1Data</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">,</span> <span class="nv">signature</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">,</span> <span class="nv">publicKey</span><span class="p">:</span> <span class="kt">SecKeyRef</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">verifySHA1SignatureData</span><span class="p">(</span><span class="kt">SHA1Data</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">,</span> <span class="nv">signature</span><span class="p">:</span> <span class="kt">NSData</span><span class="p">,</span> <span class="nv">publicKey</span><span class="p">:</span> <span class="kt">SecKeyRef</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">VerificationResult</span></code></pre>
 
                         </div>
                       </div>
@@ -1248,6 +1281,11 @@ resulting digest will be verified against the supplied signature.</p>
                             </tr>
                           </tbody>
                         </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Classes/VerificationResult.html">VerificationResult</a></code> that indicates whether the signature was valid or not</p>
+
                       </div>
                     </section>
                   </div>
