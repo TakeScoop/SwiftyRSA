@@ -123,25 +123,29 @@
     
     XCTAssertNil(error);
 
-    [SwiftyRSA verifySignatureString:[data description] signature:signature publicKeyPEM:pubString error:&error];
+    VerificationResult* result = [SwiftyRSA verifySignatureString:[data description] signature:signature publicKeyPEM:pubString error:&error];
     
     XCTAssertNil(error);
+    XCTAssert(result.boolValue);
     
-    [SwiftyRSA verifySignatureString:[data description] signature:signature publicKeyDER:pubData error:&error];
+    result = [SwiftyRSA verifySignatureString:[data description] signature:signature publicKeyDER:pubData error:&error];
     
     XCTAssertNil(error);
+    XCTAssert(result.boolValue);
     
     NSData *signatureData = [SwiftyRSA signData:data privateKeyPEM:privString error:&error];
     
     XCTAssertNil(error);
     
-    [SwiftyRSA verifySignatureData:data signature:signatureData publicKeyPEM:pubString error:&error];
+    result = [SwiftyRSA verifySignatureData:data signature:signatureData publicKeyPEM:pubString error:&error];
     
     XCTAssertNil(error);
+    XCTAssert(result.boolValue);
     
-    [SwiftyRSA verifySignatureData:data signature:signatureData publicKeyDER:pubData error:&error];
+    result = [SwiftyRSA verifySignatureData:data signature:signatureData publicKeyDER:pubData error:&error];
     
     XCTAssertNil(error);
+    XCTAssert(result.boolValue);
     
     SwiftyRSA* rsa=[[SwiftyRSA alloc]init];
     
@@ -159,9 +163,10 @@
     
     XCTAssertNil(error);
     
-    [rsa verifySHA1SignatureData:digest signature:digestSignature publicKey:pubKey error:&error];
+    result = [rsa verifySHA1SignatureData:digest signature:digestSignature publicKey:pubKey error:&error];
     
     XCTAssertNil(error);
+    XCTAssert(result.boolValue);
 
 
    }
