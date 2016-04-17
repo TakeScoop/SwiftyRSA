@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB5F57C61CC3223C0021663C /* NSData+SHA1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE429651CC069AC00FF75E8 /* NSData+SHA1.swift */; };
 		BBE429641CC068C700FF75E8 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE429561CC0675400FF75E8 /* CommonCrypto.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		BBE429661CC069AC00FF75E8 /* NSData+SHA1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE429651CC069AC00FF75E8 /* NSData+SHA1.swift */; };
 		C01F96141C5AC3E300F232AC /* SwiftyRSAObjcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C01F96131C5AC3E300F232AC /* SwiftyRSAObjcTests.m */; };
@@ -342,6 +343,7 @@
 				C01F96141C5AC3E300F232AC /* SwiftyRSAObjcTests.m in Sources */,
 				C0646A4B1CAF5A3D00587FF1 /* TestUtils.swift in Sources */,
 				C03D82891B45E649008711CF /* SwiftyRSATests.swift in Sources */,
+				BB5F57C61CC3223C0021663C /* NSData+SHA1.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,6 +572,7 @@
 				BBE4295D1CC0675500FF75E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C03D82701B45E649008711CF /* Build configuration list for PBXProject "SwiftyRSA" */ = {
 			isa = XCConfigurationList;
