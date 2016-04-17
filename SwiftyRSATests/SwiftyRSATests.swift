@@ -108,15 +108,21 @@ class SwiftyRSATests: XCTestCase {
     }
     
     func testSignVerify() {
+        
+        
         let bytes = [UInt32](count: 2048, repeatedValue: 0).map { _ in arc4random() }
         let data = NSData(bytes: bytes, length: bytes.count * sizeof(UInt32))
         
         let pubString = TestUtils.pemKeyString(name: "swiftyrsa-public")
         let privString = TestUtils.pemKeyString(name: "swiftyrsa-private")
         
+        let pubData = TestUtils.derKeyData(name: "swiftyrsa-public")
+        
         let signature = try! SwiftyRSA.signData(data, privateKeyPEM: privString)
         
         try! SwiftyRSA.verifySignatureData(data, signature: signature, publicKeyPEM: pubString)
+        
+        try! SwiftyRSA.verifySignatureData(data, signature:  signature, publicKeyDER:  pubData)
         
         let badBytes = [UInt32](count: 16, repeatedValue: 0).map { _ in arc4random() }
         let badData = NSData(bytes: badBytes, length: badBytes.count * sizeof(UInt32))
@@ -132,6 +138,19 @@ class SwiftyRSATests: XCTestCase {
         let stringSignature = try! SwiftyRSA.signString(testString, privateKeyPEM: privString)
         
         try! SwiftyRSA.verifySignatureString(testString, signature: stringSignature, publicKeyPEM: pubString)
+        
+        try! SwiftyRSA.verifySignatureString(testString, signature: stringSignature, publicKeyDER: pubData)
+        
+        let rsa = SwiftyRSA()
+        
+        let pubKey = try! rsa.publicKeyFromPEMString(pubString)
+        let privKey = try! rsa.privateKeyFromPEMString(privString)
+        
+        let digest=data.SHA1()
+        
+        let digestSignature = try! rsa.signSHA1Digest(digest, privateKey: privKey)
+        
+        try! rsa.verifySHA1SignatureData(digest, SHA1Signature: digestSignature, publicKey: pubKey)
         
         XCTAssert(true)
         
