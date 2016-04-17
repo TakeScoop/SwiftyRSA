@@ -138,7 +138,10 @@ let decryptedData = try! rsa.decryptData(data, privateKey: privKey)
 let rsa = SwiftyRSA()
 let digestSignature = try! rsa.signSHA1Digest(digest, privateKey: privKey)
 
-try! rsa.verifySHA1SignatureData(digest, signature: digestSignature, publicKey: pubKey)
+let verificationResult = try! rsa.verifySHA1SignatureData(digest, signature: digestSignature, publicKey: pubKey)
+if (verificationResult) {
+    // verification was successful
+}
 ```
 
 ### Use with Objective-C
@@ -158,6 +161,13 @@ NSString* privString = [NSString stringWithContentsOfFile:privPath encoding:NSUT
 
 NSString* encrypted = [SwiftyRSA encryptString:str publicKeyPEM:pubString padding:kSecPaddingPKCS1 error:nil];
 NSString* decrypted = [SwiftyRSA decryptString:encrypted privateKeyPEM:privString padding:kSecPaddingPKCS1 error:nil];
+
+NSString* signature = [SwiftyRSA signString:str] privateKeyPEM:privString error:&error];
+VerificationResult* result = [SwiftyRSA verifySignatureString:str signature:signature publicKeyDER:pubData error:&error];
+if (result.boolValue) {
+    // verification was successful
+}    
+
 ```
 
 Under the hood
