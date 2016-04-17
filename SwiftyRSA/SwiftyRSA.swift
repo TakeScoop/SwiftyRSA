@@ -67,11 +67,31 @@ public class SwiftyRSA: NSObject {
         return try rsa.decryptData(data, privateKey: key, padding: padding)
     }
     
+    /**
+     Sign a `String` using a private key.  The supplied string will be hashed using SHA1 and the 
+     resulting digest will be signed.
+     
+     - parameter str: The `String` to be signed.
+     - parameter privateKeyPEM: A `String` containing the private key for the signing operation in PEM format
+     - returns: Base64 encoded signature for the SHA1 hash of the string.
+     - throws: `SwiftyRSAError` if there is an error in the signing process
+     */
+    
     public class func signString(str: String, privateKeyPEM: String) throws -> String {
         let rsa = SwiftyRSA()
         let key = try rsa.privateKeyFromPEMString(privateKeyPEM)
         return try rsa.signString(str, privateKey: key)
     }
+    
+    /**
+     Sign an `NSData` block using a private key.  The supplied data will be hashed using SHA1 and the
+     resulting digest will be signed.
+     
+     - parameter data: The `NSData` to be signed.
+     - parameter privateKeyPEM: A `String` containing the private key for the signing operation in PEM format
+     - returns: The signature for the SHA1 hash of the string.
+     - throws: `SwiftyRSAError` if there is an error in the signing process
+     */
     
     public class func signData(data: NSData, privateKeyPEM: String) throws -> NSData {
         let rsa = SwiftyRSA()
@@ -79,11 +99,31 @@ public class SwiftyRSA: NSObject {
         return try rsa.signData(data, privateKey: key)
     }
     
+    /**
+     Verify a signature using a public key.  The supplied `String` will be hashed using SHA1 and the
+     resulting digest will be verified against the supplied signature.
+     
+     - parameter str: The `String` to be verified.  This string will be hashed using SHA1
+     - parameter signature: The BASE64 string representation of the signature to be verified.
+     - parameter publicKeyPEM: A `String` containing the public key for the signing operation in PEM format
+     - throws: `SwiftyRSAError` if there is an error in the verification process
+     */
+    
     public class func verifySignatureString(str: String, signature: String, publicKeyPEM: String) throws -> Void {
         let rsa = SwiftyRSA()
         let key = try rsa.publicKeyFromPEMString(publicKeyPEM)
         try rsa.verifySignatureString(str, signature: signature, publicKey: key)
     }
+    
+    /**
+     Verify a signature using a public key.  The supplied `NSData` will be hashed using SHA1 and the
+     resulting digest will be verified against the supplied signature.
+     
+     - parameter data: The `NSData` to be verified.  This data will be hashed using SHA1
+     - parameter signature: The signature to be verified.
+     - parameter publicKeyPEM: A `String` containing the public key for the signing operation in PEM format
+     - throws: `SwiftyRSAError` if there is an error in the verification process
+     */
     
     public class func verifySignatureData(data: NSData, signature: NSData, publicKeyPEM: String) throws -> Void {
         let rsa = SwiftyRSA()
@@ -91,11 +131,31 @@ public class SwiftyRSA: NSObject {
         try rsa.verifySignatureData(data, signatureData: signature, publicKey: key)
     }
     
+    /**
+     Verify a signature using a public key.  The supplied `String` will be hashed using SHA1 and the
+     resulting digest will be verified against the supplied signature.
+     
+     - parameter str: The `String` to be verified.  This string will be hashed using SHA1
+     - parameter signature: The BASE64 string representation of the signature to be verified.
+     - parameter publicKeyDER: The public key for the signing operation in DER format
+     - throws: `SwiftyRSAError` if there is an error in the verification process
+     */
+    
     public class func verifySignatureString(str: String, signature: String, publicKeyDER: NSData) throws -> Void {
         let rsa = SwiftyRSA()
         let key = try rsa.publicKeyFromDERData(publicKeyDER)
         try rsa.verifySignatureString(str, signature: signature, publicKey: key)
     }
+    
+    /**
+    Verify a signature using a public key.  The supplied `NSData` will be hashed using SHA1 and the
+    resulting digest will be verified against the supplied signature.
+    
+    - parameter data: The `NSData` to be verified.  This data will be hashed using SHA1
+    - parameter signature: The signature to be verified.
+    - parameter publicKeyDER: The public key for the signing operation in DER format
+    - throws: `SwiftyRSAError` if there is an error in the verification process
+    */
     
     public class func verifySignatureData(data: NSData, signature: NSData, publicKeyDER: NSData) throws -> Void {
         let rsa = SwiftyRSA()
@@ -212,6 +272,16 @@ public class SwiftyRSA: NSObject {
     
     // Sign data with an RSA key
     
+    /**
+     Sign a `String` using a private key.  The supplied string will be hashed using SHA1 and the
+     resulting hash will be signed.
+     
+     - parameter str: The `String` to be signed.
+     - parameter privateKey: A `SecKeyRef` for the private key
+     - returns: Base64 encoded signature for the SHA1 hash of the string.
+     - throws: `SwiftyRSAError` if there is an error in the signing process
+     */
+    
     public func signString(str: String, privateKey: SecKeyRef) throws -> String {
         guard let data=str.dataUsingEncoding(NSUTF8StringEncoding) else {
             throw SwiftyRSAError(message: "Couldn't get UTF8 data from provided string")
@@ -220,12 +290,31 @@ public class SwiftyRSA: NSObject {
         return signature.base64EncodedStringWithOptions([])
     }
     
+    /**
+     Sign an `NSData` block using a private key.  The supplied data will be hashed using SHA1 and the
+     resulting digest will be signed.
+     
+     - parameter data: The `NSData` to be signed.
+     - parameter privateKey: A `SecKeyRef` for the private key
+     - returns: The signature for the SHA1 hash of the string.
+     - throws: `SwiftyRSAError` if there is an error in the signing process
+     */
+    
     public func signData(data: NSData, privateKey: SecKeyRef) throws -> NSData {
         
         let digest=data.SHA1()
         
         return try signSHA1Digest(digest, privateKey: privateKey)
     }
+    
+    /**
+     Sign an `NSData` block using a private key.  The supplied data must represent an SHA1 digest.
+     
+     - parameter digest: The `NSData` containing the SHA1 digest to be signed.
+     - parameter privateKey: A `SecKeyRef` for the private key
+     - returns: The signature for the SHA1 hash of the string.
+     - throws: `SwiftyRSAError` if there is an error in the signing process
+     */
     
     public func signSHA1Digest(digest: NSData, privateKey: SecKeyRef) throws -> NSData {
         
@@ -255,6 +344,16 @@ public class SwiftyRSA: NSObject {
     
     // Verify data with an RSA key
     
+    /**
+     Verify a signature using a public key.  The supplied `String` will be hashed using SHA1 and the
+     resulting digest will be verified against the supplied signature.
+     
+     - parameter str: The `String` to be verified.  This string will be hashed using SHA1
+     - parameter signature: The BASE64 string representation of the signature to be verified.
+     - parameter publicKey: A `SecKeyRef` for the public key
+     - throws: `SwiftyRSAError` if there is an error in the verification process
+     */
+    
     public func verifySignatureString(str: String, signature: String, publicKey: SecKeyRef) throws -> Void {
         
         
@@ -270,21 +369,40 @@ public class SwiftyRSA: NSObject {
   
     }
     
+    /**
+     Verify a signature using a public key.  The supplied `NSData` will be hashed using SHA1 and the
+     resulting digest will be verified against the supplied signature.
+     
+     - parameter data: The `NSData` to be verified.  This string will be hashed using SHA1
+     - parameter signatureData: The of the signature data to be verified.
+     - parameter publicKey: A `SecKeyRef` for the public key
+     - throws: `SwiftyRSAError` if there is an error in the verification process
+     */
+    
     public func verifySignatureData(data: NSData, signatureData: NSData, publicKey: SecKeyRef) throws -> Void {
         
         let digest=data.SHA1()
         
-        try verifySHA1SignatureData(digest, SHA1Signature: signatureData, publicKey: publicKey)
+        try verifySHA1SignatureData(digest, signature: signatureData, publicKey: publicKey)
         
     }
     
-    public func verifySHA1SignatureData(data: NSData, SHA1Signature: NSData, publicKey: SecKeyRef) throws -> Void {
+    /**
+     Verify a signature using a public key.  The supplied `NSData` represents an SHA1 digest to be verified against the supplied signature.
+     
+     - parameter data: The `NSData` containing the SHA1 digest to be verified.
+     - parameter SHA1Signature: The `NSData` containing the SHA1 digest to be verified.
+     - parameter publicKey: A `SecKeyRef` for the public key
+     - throws: `SwiftyRSAError` if there is an error in the verification process
+     */
+    
+    public func verifySHA1SignatureData(SHA1Data: NSData, signature: NSData, publicKey: SecKeyRef) throws -> Void {
         
-        var verifyDataAsArray = [UInt8](count: data.length / sizeof(UInt8), repeatedValue: 0)
-        data.getBytes(&verifyDataAsArray, length: data.length)
+        var verifyDataAsArray = [UInt8](count: SHA1Data.length / sizeof(UInt8), repeatedValue: 0)
+        SHA1Data.getBytes(&verifyDataAsArray, length: SHA1Data.length)
         
-        var signatureDataAsArray = [UInt8](count: SHA1Signature.length / sizeof(UInt8), repeatedValue: 0)
-        SHA1Signature.getBytes(&signatureDataAsArray, length: SHA1Signature.length)
+        var signatureDataAsArray = [UInt8](count: signature.length / sizeof(UInt8), repeatedValue: 0)
+        signature.getBytes(&signatureDataAsArray, length: signature.length)
         
         let status = SecKeyRawVerify(publicKey, .PKCS1SHA1, verifyDataAsArray, verifyDataAsArray.count, signatureDataAsArray, signatureDataAsArray.count)
         
