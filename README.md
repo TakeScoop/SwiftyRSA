@@ -53,6 +53,33 @@ let decryptedString = try! SwiftyRSA.decryptString(str, privateKeyPEM: pemString
 let decryptedData = try! SwiftyRSA.decryptData(data, privateKeyPEM: pemString)
 ```
 
+### Sign
+
+SwiftyRSA can sign data with a private key.  SwiftyRSA will calculate an SHA1 digest
+of the supplied `String`/`NSData` and use this to generate the digital signature.
+
+```
+// String
+let signatureString = try! SwitfyRSA.signString(str, privateKeyPEM: pemString)
+
+// Data
+let signatureData = try! SwiftyRSA.signData(data, privateKeyPEM: pemString)
+```
+
+## Verify
+
+SwiftyRSA can verify digital signatures with a public key.  SwiftyRSA will calculate 
+an SHA1 digest of the supplied `String`/`NSData` and use this to verify the digital 
+signature.
+
+```
+// String
+try! SwitfyRSA.verifySignatureString(str, signature: sigString, publicKeyPEM: pemString)
+
+// Data
+try! SwitfyRSA.verifySignatureData(data, signature: sigData, publicKeyPEM: String)
+```
+
 Advanced Usage
 --------------
 
@@ -103,6 +130,15 @@ let encryptedData = try! rsa.encryptData(data, publicKey: pubKey)
 // Decrypt
 let decryptedString = try! rsa.decryptString(str, privateKey: privKey)
 let decryptedData = try! rsa.decryptData(data, privateKey: privKey)
+```
+
+### Sign or verify an SHA1 digest
+
+```
+let rsa = SwiftyRSA()
+let digestSignature = try! rsa.signSHA1Digest(digest, privateKey: privKey)
+
+try! rsa.verifySHA1SignatureData(digest, signature: digestSignature, publicKey: pubKey)
 ```
 
 ### Use with Objective-C
