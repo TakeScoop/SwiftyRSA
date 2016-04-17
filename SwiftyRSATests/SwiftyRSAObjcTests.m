@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "SwiftyRSATests-Swift.h"
 @import SwiftyRSA;
+@import CommonCrypto;
 
 @interface SwiftyRSAObjcTests : XCTestCase
 
@@ -141,7 +142,37 @@
     [SwiftyRSA verifySignatureData:data signature:signatureData publicKeyDER:pubData error:&error];
     
     XCTAssertNil(error);
+    
+    SwiftyRSA* rsa=[[SwiftyRSA alloc]init];
+    
+    SecKeyRef pubKey = [rsa publicKeyFromPEMString:pubString error:&error];
+    
+    XCTAssertNil(error);
+    
+    SecKeyRef privKey = [rsa privateKeyFromPEMString:privString error:&error];
+    
+    XCTAssertNil(error);
+    
+    NSData* digest=[self sha1Hash:data];
+    
+    NSData* digestSignature = [rsa signSHA1Digest:digest privateKey:privKey error:&error];
+    
+    XCTAssertNil(error);
+    
+    [rsa verifySHA1SignatureData:digest SHA1Signature:digestSignature publicKey:pubKey error:&error];
+    
+    XCTAssertNil(error);
 
+
+   }
+
+- (NSData *)sha1Hash:(NSData *)data
+{
+    unsigned char digest[CC_SHA1_DIGEST_LENGTH];
+    if (CC_SHA1(data.bytes, (CC_LONG)data.length, digest)) {
+        return [NSData dataWithBytes:digest length:CC_SHA1_DIGEST_LENGTH];
+    }
+    return nil;
 }
 
 @end
