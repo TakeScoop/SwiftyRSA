@@ -11,7 +11,7 @@ import CommonCrypto
 
 extension NSData {
     func SHA1() -> NSData {
-        var digest = [UInt8](count:Int(CC_SHA1_DIGEST_LENGTH), repeatedValue: 0)
+        var digest = [UInt8](count: Int(CC_SHA1_DIGEST_LENGTH), repeatedValue: 0)
         
         CC_SHA1(self.bytes, CC_LONG(self.length), &digest)
         
