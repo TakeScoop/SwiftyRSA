@@ -274,17 +274,17 @@ public class SwiftyRSA: NSObject {
         
         let digest=data.SHA1()
         
-        try verifySHA1SignatureData(digest, SHA1Data: signatureData, publicKey: publicKey)
+        try verifySHA1SignatureData(digest, SHA1Signature: signatureData, publicKey: publicKey)
         
     }
     
-    public func verifySHA1SignatureData(data: NSData, SHA1Data: NSData, publicKey: SecKeyRef) throws -> Void {
+    public func verifySHA1SignatureData(data: NSData, SHA1Signature: NSData, publicKey: SecKeyRef) throws -> Void {
         
         var verifyDataAsArray = [UInt8](count: data.length / sizeof(UInt8), repeatedValue: 0)
         data.getBytes(&verifyDataAsArray, length: data.length)
         
-        var signatureDataAsArray = [UInt8](count: SHA1Data.length / sizeof(UInt8), repeatedValue: 0)
-        SHA1Data.getBytes(&signatureDataAsArray, length: SHA1Data.length)
+        var signatureDataAsArray = [UInt8](count: SHA1Signature.length / sizeof(UInt8), repeatedValue: 0)
+        SHA1Signature.getBytes(&signatureDataAsArray, length: SHA1Signature.length)
         
         let status = SecKeyRawVerify(publicKey, .PKCS1SHA1, verifyDataAsArray, verifyDataAsArray.count, signatureDataAsArray, signatureDataAsArray.count)
         
