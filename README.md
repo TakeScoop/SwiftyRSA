@@ -74,10 +74,16 @@ signature.
 
 ```
 // String
-try! SwitfyRSA.verifySignatureString(str, signature: sigString, publicKeyPEM: pemString)
+let verificationResult = try! SwitfyRSA.verifySignatureString(str, signature: sigString, publicKeyPEM: pemString)
+if (verificationResult) {
+    // verification was successful
+}
 
 // Data
-try! SwitfyRSA.verifySignatureData(data, signature: sigData, publicKeyPEM: String)
+let verificationResult = try! SwitfyRSA.verifySignatureData(data, signature: sigData, publicKeyPEM: String)
+if (verificationResult) {
+    // verification was successful
+}
 ```
 
 Advanced Usage
