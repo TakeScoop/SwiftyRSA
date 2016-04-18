@@ -3,9 +3,7 @@ SwiftyRSA Changelog
 
 # [master]
 
-# https://github.com/TakeScoop/SwiftyRSA/pull/7
-
- - Added digital signature creation & verification support
+ - Added digital signature creation & verification support (https://github.com/TakeScoop/SwiftyRSA/pull/7)
 
 # [0.2.1]
 
