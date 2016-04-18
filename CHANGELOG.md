@@ -3,7 +3,9 @@ SwiftyRSA Changelog
 
 # [master]
 
+ - Fixed compiler warnings for Carthage.
  - Added Carthage support.
+
 
 # [0.2.0]
 
