@@ -7,10 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BB5F57C61CC3223C0021663C /* NSData+SHA1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE429651CC069AC00FF75E8 /* NSData+SHA1.swift */; };
 		BB8460AE1CC608F6006F802C /* NSData+SHA1.h in Headers */ = {isa = PBXBuildFile; fileRef = BB8460AC1CC608F6006F802C /* NSData+SHA1.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BB8460AF1CC608F6006F802C /* NSData+SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = BB8460AD1CC608F6006F802C /* NSData+SHA1.m */; };
-		BBE429661CC069AC00FF75E8 /* NSData+SHA1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE429651CC069AC00FF75E8 /* NSData+SHA1.swift */; };
 		C01F96141C5AC3E300F232AC /* SwiftyRSAObjcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C01F96131C5AC3E300F232AC /* SwiftyRSAObjcTests.m */; };
 		C03D827C1B45E649008711CF /* SwiftyRSA.h in Headers */ = {isa = PBXBuildFile; fileRef = C03D827B1B45E649008711CF /* SwiftyRSA.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C03D82821B45E649008711CF /* SwiftyRSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C03D82761B45E649008711CF /* SwiftyRSA.framework */; };
@@ -37,12 +35,6 @@
 /* Begin PBXFileReference section */
 		BB8460AC1CC608F6006F802C /* NSData+SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+SHA1.h"; sourceTree = "<group>"; };
 		BB8460AD1CC608F6006F802C /* NSData+SHA1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+SHA1.m"; sourceTree = "<group>"; };
-		BBE4295A1CC0675500FF75E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BBE4295E1CC0677F00FF75E8 /* CommonCrypto.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CommonCrypto.xcconfig; sourceTree = "<group>"; };
-		BBE4295F1CC067CD00FF75E8 /* iphoneos.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = iphoneos.modulemap; sourceTree = "<group>"; };
-		BBE429601CC067E400FF75E8 /* iphonesimulator.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = iphonesimulator.modulemap; sourceTree = "<group>"; };
-		BBE429611CC067F400FF75E8 /* macosx.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = macosx.modulemap; sourceTree = "<group>"; };
-		BBE429651CC069AC00FF75E8 /* NSData+SHA1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+SHA1.swift"; sourceTree = "<group>"; };
 		C01F96131C5AC3E300F232AC /* SwiftyRSAObjcTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwiftyRSAObjcTests.m; sourceTree = "<group>"; };
 		C03D82761B45E649008711CF /* SwiftyRSA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyRSA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C03D827A1B45E649008711CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -78,24 +70,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		BBE429571CC0675500FF75E8 /* CommonCrypto */ = {
-			isa = PBXGroup;
-			children = (
-				BBE4295A1CC0675500FF75E8 /* Info.plist */,
-				BBE4295E1CC0677F00FF75E8 /* CommonCrypto.xcconfig */,
-				BBE4295F1CC067CD00FF75E8 /* iphoneos.modulemap */,
-				BBE429601CC067E400FF75E8 /* iphonesimulator.modulemap */,
-				BBE429611CC067F400FF75E8 /* macosx.modulemap */,
-			);
-			path = CommonCrypto;
-			sourceTree = "<group>";
-		};
 		C03D826C1B45E649008711CF = {
 			isa = PBXGroup;
 			children = (
 				C03D82781B45E649008711CF /* SwiftyRSA */,
 				C03D82851B45E649008711CF /* SwiftyRSATests */,
-				BBE429571CC0675500FF75E8 /* CommonCrypto */,
 				C03D82771B45E649008711CF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -116,7 +95,6 @@
 				BB8460AD1CC608F6006F802C /* NSData+SHA1.m */,
 				C03D827B1B45E649008711CF /* SwiftyRSA.h */,
 				C03D82921B45E663008711CF /* SwiftyRSA.swift */,
-				BBE429651CC069AC00FF75E8 /* NSData+SHA1.swift */,
 				C03D82791B45E649008711CF /* Supporting Files */,
 			);
 			path = SwiftyRSA;
@@ -276,7 +254,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBE429661CC069AC00FF75E8 /* NSData+SHA1.swift in Sources */,
 				BB8460AF1CC608F6006F802C /* NSData+SHA1.m in Sources */,
 				C03D82931B45E663008711CF /* SwiftyRSA.swift in Sources */,
 			);
@@ -289,7 +266,6 @@
 				C01F96141C5AC3E300F232AC /* SwiftyRSAObjcTests.m in Sources */,
 				C0646A4B1CAF5A3D00587FF1 /* TestUtils.swift in Sources */,
 				C03D82891B45E649008711CF /* SwiftyRSATests.swift in Sources */,
-				BB5F57C61CC3223C0021663C /* NSData+SHA1.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
