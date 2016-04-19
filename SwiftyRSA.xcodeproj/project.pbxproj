@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		BB5F57C61CC3223C0021663C /* NSData+SHA1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE429651CC069AC00FF75E8 /* NSData+SHA1.swift */; };
-		BBE429641CC068C700FF75E8 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE429561CC0675400FF75E8 /* CommonCrypto.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		BB8460AE1CC608F6006F802C /* NSData+SHA1.h in Headers */ = {isa = PBXBuildFile; fileRef = BB8460AC1CC608F6006F802C /* NSData+SHA1.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB8460AF1CC608F6006F802C /* NSData+SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = BB8460AD1CC608F6006F802C /* NSData+SHA1.m */; };
 		BBE429661CC069AC00FF75E8 /* NSData+SHA1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE429651CC069AC00FF75E8 /* NSData+SHA1.swift */; };
 		C01F96141C5AC3E300F232AC /* SwiftyRSAObjcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C01F96131C5AC3E300F232AC /* SwiftyRSAObjcTests.m */; };
 		C03D827C1B45E649008711CF /* SwiftyRSA.h in Headers */ = {isa = PBXBuildFile; fileRef = C03D827B1B45E649008711CF /* SwiftyRSA.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -24,13 +25,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		BBE429621CC0687B00FF75E8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C03D826D1B45E649008711CF /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BBE429551CC0675400FF75E8;
-			remoteInfo = CommonCrypto;
-		};
 		C03D82831B45E649008711CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C03D826D1B45E649008711CF /* Project object */;
@@ -41,7 +35,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BBE429561CC0675400FF75E8 /* CommonCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CommonCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB8460AC1CC608F6006F802C /* NSData+SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+SHA1.h"; sourceTree = "<group>"; };
+		BB8460AD1CC608F6006F802C /* NSData+SHA1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+SHA1.m"; sourceTree = "<group>"; };
 		BBE4295A1CC0675500FF75E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BBE4295E1CC0677F00FF75E8 /* CommonCrypto.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = CommonCrypto.xcconfig; sourceTree = "<group>"; };
 		BBE4295F1CC067CD00FF75E8 /* iphoneos.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = iphoneos.modulemap; sourceTree = "<group>"; };
@@ -65,18 +60,10 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		BBE429521CC0675400FF75E8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C03D82721B45E649008711CF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBE429641CC068C700FF75E8 /* CommonCrypto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,7 +105,6 @@
 			children = (
 				C03D82761B45E649008711CF /* SwiftyRSA.framework */,
 				C03D82811B45E649008711CF /* SwiftyRSATests.xctest */,
-				BBE429561CC0675400FF75E8 /* CommonCrypto.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -126,6 +112,8 @@
 		C03D82781B45E649008711CF /* SwiftyRSA */ = {
 			isa = PBXGroup;
 			children = (
+				BB8460AC1CC608F6006F802C /* NSData+SHA1.h */,
+				BB8460AD1CC608F6006F802C /* NSData+SHA1.m */,
 				C03D827B1B45E649008711CF /* SwiftyRSA.h */,
 				C03D82921B45E663008711CF /* SwiftyRSA.swift */,
 				BBE429651CC069AC00FF75E8 /* NSData+SHA1.swift */,
@@ -177,17 +165,11 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		BBE429531CC0675400FF75E8 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C03D82731B45E649008711CF /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB8460AE1CC608F6006F802C /* NSData+SHA1.h in Headers */,
 				C03D827C1B45E649008711CF /* SwiftyRSA.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -195,24 +177,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		BBE429551CC0675400FF75E8 /* CommonCrypto */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BBE4295B1CC0675500FF75E8 /* Build configuration list for PBXNativeTarget "CommonCrypto" */;
-			buildPhases = (
-				BBE429511CC0675400FF75E8 /* Sources */,
-				BBE429521CC0675400FF75E8 /* Frameworks */,
-				BBE429531CC0675400FF75E8 /* Headers */,
-				BBE429541CC0675400FF75E8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = CommonCrypto;
-			productName = CommonCrypto;
-			productReference = BBE429561CC0675400FF75E8 /* CommonCrypto.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		C03D82751B45E649008711CF /* SwiftyRSA */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C03D828C1B45E649008711CF /* Build configuration list for PBXNativeTarget "SwiftyRSA" */;
@@ -225,7 +189,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				BBE429631CC0687B00FF75E8 /* PBXTargetDependency */,
 			);
 			name = SwiftyRSA;
 			productName = SwiftyRSA;
@@ -256,13 +219,10 @@
 		C03D826D1B45E649008711CF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Scoop;
 				TargetAttributes = {
-					BBE429551CC0675400FF75E8 = {
-						CreatedOnToolsVersion = 7.3;
-					};
 					C03D82751B45E649008711CF = {
 						CreatedOnToolsVersion = 6.3;
 					};
@@ -285,19 +245,11 @@
 			targets = (
 				C03D82751B45E649008711CF /* SwiftyRSA */,
 				C03D82801B45E649008711CF /* SwiftyRSATests */,
-				BBE429551CC0675400FF75E8 /* CommonCrypto */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		BBE429541CC0675400FF75E8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C03D82741B45E649008711CF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -320,18 +272,12 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		BBE429511CC0675400FF75E8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C03D82711B45E649008711CF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				BBE429661CC069AC00FF75E8 /* NSData+SHA1.swift in Sources */,
+				BB8460AF1CC608F6006F802C /* NSData+SHA1.m in Sources */,
 				C03D82931B45E663008711CF /* SwiftyRSA.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,11 +296,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		BBE429631CC0687B00FF75E8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BBE429551CC0675400FF75E8 /* CommonCrypto */;
-			targetProxy = BBE429621CC0687B00FF75E8 /* PBXContainerItemProxy */;
-		};
 		C03D82841B45E649008711CF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C03D82751B45E649008711CF /* SwiftyRSA */;
@@ -363,45 +304,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		BBE4295C1CC0675500FF75E8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = BBE4295E1CC0677F00FF75E8 /* CommonCrypto.xcconfig */;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = CommonCrypto/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.takescoop.CommonCrypto;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		BBE4295D1CC0675500FF75E8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = BBE4295E1CC0677F00FF75E8 /* CommonCrypto.xcconfig */;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = CommonCrypto/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.takescoop.CommonCrypto;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
 		C03D828A1B45E649008711CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -565,15 +467,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BBE4295B1CC0675500FF75E8 /* Build configuration list for PBXNativeTarget "CommonCrypto" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BBE4295C1CC0675500FF75E8 /* Debug */,
-				BBE4295D1CC0675500FF75E8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		C03D82701B45E649008711CF /* Build configuration list for PBXProject "SwiftyRSA" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
