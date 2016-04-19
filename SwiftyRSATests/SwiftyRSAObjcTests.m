@@ -9,7 +9,6 @@
 #import <XCTest/XCTest.h>
 #import "SwiftyRSATests-Swift.h"
 @import SwiftyRSA;
-@import CommonCrypto;
 
 @interface SwiftyRSAObjcTests : XCTestCase
 
@@ -157,7 +156,7 @@
     
     XCTAssertNil(error);
     
-    NSData* digest=[self sha1Hash:data];
+    NSData* digest=[data SHA1];
     
     NSData* digestSignature = [rsa signSHA1Digest:digest privateKey:privKey error:&error];
     
@@ -170,14 +169,5 @@
 
 
    }
-
-- (NSData *)sha1Hash:(NSData *)data
-{
-    unsigned char digest[CC_SHA1_DIGEST_LENGTH];
-    if (CC_SHA1(data.bytes, (CC_LONG)data.length, digest)) {
-        return [NSData dataWithBytes:digest length:CC_SHA1_DIGEST_LENGTH];
-    }
-    return nil;
-}
 
 @end
