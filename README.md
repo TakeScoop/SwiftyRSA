@@ -53,6 +53,39 @@ let decryptedString = try! SwiftyRSA.decryptString(str, privateKeyPEM: pemString
 let decryptedData = try! SwiftyRSA.decryptData(data, privateKeyPEM: pemString)
 ```
 
+### Sign
+
+SwiftyRSA can sign data with a private key.  SwiftyRSA will calculate an SHA1 digest
+of the supplied `String`/`NSData` and use this to generate the digital signature.
+
+```
+// String
+let signatureString = try! SwitfyRSA.signString(str, privateKeyPEM: pemString)
+
+// Data
+let signatureData = try! SwiftyRSA.signData(data, privateKeyPEM: pemString)
+```
+
+## Verify
+
+SwiftyRSA can verify digital signatures with a public key.  SwiftyRSA will calculate 
+an SHA1 digest of the supplied `String`/`NSData` and use this to verify the digital 
+signature.
+
+```
+// String
+let verificationResult = try! SwitfyRSA.verifySignatureString(str, signature: sigString, publicKeyPEM: pemString)
+if (verificationResult) {
+    // verification was successful
+}
+
+// Data
+let verificationResult = try! SwitfyRSA.verifySignatureData(data, signature: sigData, publicKeyPEM: String)
+if (verificationResult) {
+    // verification was successful
+}
+```
+
 Advanced Usage
 --------------
 
@@ -105,6 +138,18 @@ let decryptedString = try! rsa.decryptString(str, privateKey: privKey)
 let decryptedData = try! rsa.decryptData(data, privateKey: privKey)
 ```
 
+### Sign or verify an SHA1 digest
+
+```
+let rsa = SwiftyRSA()
+let digestSignature = try! rsa.signSHA1Digest(digest, privateKey: privKey)
+
+let verificationResult = try! rsa.verifySHA1SignatureData(digest, signature: digestSignature, publicKey: pubKey)
+if (verificationResult) {
+    // verification was successful
+}
+```
+
 ### Use with Objective-C
 
 ```
@@ -122,6 +167,13 @@ NSString* privString = [NSString stringWithContentsOfFile:privPath encoding:NSUT
 
 NSString* encrypted = [SwiftyRSA encryptString:str publicKeyPEM:pubString padding:kSecPaddingPKCS1 error:nil];
 NSString* decrypted = [SwiftyRSA decryptString:encrypted privateKeyPEM:privString padding:kSecPaddingPKCS1 error:nil];
+
+NSString* signature = [SwiftyRSA signString:str] privateKeyPEM:privString error:&error];
+VerificationResult* result = [SwiftyRSA verifySignatureString:str signature:signature publicKeyDER:pubData error:&error];
+if (result.boolValue) {
+    // verification was successful
+}    
+
 ```
 
 Under the hood

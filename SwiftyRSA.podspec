@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.author       = { "Scoop" => "ops@takescoop.com" }
 
   s.source       = { :git => "https://github.com/TakeScoop/SwiftyRSA.git", :tag => "0.2.1" }
-  s.source_files = "SwiftyRSA/SwiftyRSA.swift"
+  s.source_files = "SwiftyRSA/*.{swift,m,h}"
   s.framework    = "Security"
 
   s.requires_arc = true

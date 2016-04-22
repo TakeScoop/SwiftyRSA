@@ -3,6 +3,8 @@ SwiftyRSA Changelog
 
 # [master]
 
+ - Added digital signature creation & verification support (https://github.com/TakeScoop/SwiftyRSA/pull/7)
+
 # [0.2.1]
 
  - Fixed compiler warnings for Carthage. [#8](https://github.com/TakeScoop/SwiftyRSA/issues/8)
