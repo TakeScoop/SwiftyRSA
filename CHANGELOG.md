@@ -1,14 +1,17 @@
 SwiftyRSA Changelog
 ===================
 
-# [master]
+# [0.3.0]
 
- - Added digital signature creation & verification support (https://github.com/TakeScoop/SwiftyRSA/pull/7)
+ - Added digital signature creation & verification support.
+ [#7](https://github.com/TakeScoop/SwiftyRSA/pull/7)
 
 # [0.2.1]
 
- - Fixed compiler warnings for Carthage. [#8](https://github.com/TakeScoop/SwiftyRSA/issues/8)
- - Added Carthage support. [#3](https://github.com/TakeScoop/SwiftyRSA/issues/3)
+ - Fixed compiler warnings for Carthage.
+	[#8](https://github.com/TakeScoop/SwiftyRSA/issues/8)
+ - Added Carthage support.
+   [#3](https://github.com/TakeScoop/SwiftyRSA/issues/3)
 
 # [0.2.0]
 
@@ -28,7 +31,8 @@ SwiftyRSA Changelog
 
 Initial release.
 
-[master]: https://github.com/TakeScoop/SwiftyRSA/compare/0.2.0...master
+[master]: https://github.com/TakeScoop/SwiftyRSA/compare/0.3.0...master
+[0.3.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.3.0
 [0.2.1]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.2.1
 [0.2.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.2.0
 [0.1.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.1.0
