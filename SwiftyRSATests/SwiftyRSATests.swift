@@ -201,6 +201,14 @@ class SwiftyRSATests: XCTestCase {
         result = try! rsa.verifySHA512SignatureData(digest, signature: digestSignature, publicKey: pubKey)
         XCTAssert(result)
         
+        let hashingMethods: [SwiftyRSADigestType] = [.SHA1, .SHA224, .SHA256, .SHA384, .SHA512]
+        
+        for method in hashingMethods {
+            digestSignature = try! rsa.signData(data, privateKey: privKey, digestMethod: method)
+            result = try! rsa.verifySignatureData(data, signatureData: digestSignature, publicKey: pubKey, digestMethod: method)
+             XCTAssert(result)
+        }
         
     }
+    
 }
