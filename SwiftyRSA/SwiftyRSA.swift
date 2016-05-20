@@ -10,12 +10,21 @@ import Foundation
 import Security
 
 
+@objc public enum SwiftyRSADigestType: Int {
+    case SHA1 = 1
+    case SHA224 = 224
+    case SHA256 = 256
+    case SHA384 = 384
+    case SHA512 = 512
+}
+
 public class SwiftyRSAError: NSError {
     init(message: String) {
         super.init(domain: "com.takescoop.SwiftyRSA", code: 500, userInfo: [
             NSLocalizedDescriptionKey: message
         ])
     }
+
 
     @available(*, unavailable)
     required public init?(coder aDecoder: NSCoder) {
@@ -113,6 +122,40 @@ public class SwiftyRSA: NSObject {
         let rsa = SwiftyRSA()
         let key = try rsa.privateKeyFromPEMString(privateKeyPEM)
         return try rsa.signData(data, privateKey: key)
+    }
+    
+    /**
+     Sign a `String` using a private key.  The supplied string will be hashed using the specified 
+     hashing function and the resulting digest will be signed.
+     
+     - parameter str: The `String` to be signed.
+     - parameter privateKeyPEM: A `String` containing the private key for the signing operation in PEM format
+     - parameter digestMethod: The `SwiftyRSADigestType` that indicates the hashing function
+     - returns: Base64 encoded signature for the SHA1 hash of the string.
+     - throws: `SwiftyRSAError` if there is an error in the signing process
+     */
+    
+    public class func signString(str: String, privateKeyPEM: String, digestMethod: SwiftyRSADigestType) throws -> String {
+        let rsa = SwiftyRSA()
+        let key = try rsa.privateKeyFromPEMString(privateKeyPEM)
+        return try rsa.signString(str, privateKey: key, digestMethod: digestMethod)
+    }
+    
+    /**
+     Sign an `NSData` block using a private key.  The supplied data will be hashed using the specified
+     hashing function and theresulting digest will be signed.
+     
+     - parameter data: The `NSData` to be signed.
+     - parameter privateKeyPEM: A `String` containing the private key for the signing operation in PEM format
+     - parameter digestMethod: The `SwiftyRSADigestType` that indicates the hashing function
+     - returns: The signature for the SHA1 hash of the string.
+     - throws: `SwiftyRSAError` if there is an error in the signing process
+     */
+    
+    public class func signData(data: NSData, privateKeyPEM: String, digestMethod: SwiftyRSADigestType) throws -> NSData {
+        let rsa = SwiftyRSA()
+        let key = try rsa.privateKeyFromPEMString(privateKeyPEM)
+        return try rsa.signData(data, privateKey: key, digestMethod: digestMethod)
     }
     
     /**
@@ -321,10 +364,44 @@ public class SwiftyRSA: NSObject {
      */
     
     public func signData(data: NSData, privateKey: SecKeyRef) throws -> NSData {
+        return try signData(data, privateKey: privateKey, digestMethod: .SHA1)
+    }
+    
+    /**
+     Sign a `String` using a private key.  The supplied string will be hashed using the specified
+     hashing method and the resulting hash will be signed.
+     
+     - parameter str: The `String` to be signed.
+     - parameter privateKey: A `SecKeyRef` for the private key
+     - parameter digestMethod: The `SwiftyRSADigestType` that indicates the hashing function
+     - returns: Base64 encoded signature for the hash of the string.
+     - throws: `SwiftyRSAError` if there is an error in the signing process
+     */
+    
+    public func signString(str: String, privateKey: SecKeyRef, digestMethod: SwiftyRSADigestType) throws -> String {
+        guard let data=str.dataUsingEncoding(NSUTF8StringEncoding) else {
+            throw SwiftyRSAError(message: "Couldn't get UTF8 data from provided string")
+        }
+        let signature = try signData(data, privateKey: privateKey, digestMethod:digestMethod)
+        return signature.base64EncodedStringWithOptions([])
+    }
+    
+    /**
+     Sign an `NSData` block using a private key.  The supplied data will be hashed using the specified
+     hashing method and the resulting digest will be signed.
+     
+     - parameter data: The `NSData` to be signed.
+     - parameter privateKey: A `SecKeyRef` for the private key
+     - parameter digestMethod: The `SwiftyRSADigestType` that indicates the hashing function
+     - returns: The signature for the  hash of the string.
+     - throws: `SwiftyRSAError` if there is an error in the signing process
+     */
+    
+    public func signData(data: NSData, privateKey: SecKeyRef, digestMethod: SwiftyRSADigestType) throws -> NSData {
         
-        let digest=data.SHA1()
+        let (digest, padding) = self.digestForData(data, digestMethod: digestMethod)
         
-        return try signSHA1Digest(digest, privateKey: privateKey)
+        return try signDigest(digest, privateKey: privateKey,  padding: padding)
     }
     
     /**
@@ -439,9 +516,53 @@ public class SwiftyRSA: NSObject {
     
     public func verifySignatureData(data: NSData, signatureData: NSData, publicKey: SecKeyRef) throws -> VerificationResult {
         
-        let digest=data.SHA1()
+        return try verifySignatureData(data, signatureData: signatureData, publicKey: publicKey, digestMethod: .SHA1)
+    }
+    
+    /**
+     Verify a signature using a public key.  The supplied `String` will be hashed using the specified
+     hasing function and resulting digest will be verified against the supplied signature.
+     
+     - parameter str: The `String` to be verified.  This string will be hashed using SHA1
+     - parameter signature: The BASE64 string representation of the signature to be verified.
+     - parameter publicKey: A `SecKeyRef` for the public key
+     - parameter digestMethod: The `SwiftyRSADigestType` that indicates the hashing function
+     - returns: A `VerificationResult` that indicates whether the signature was valid or not
+     - throws: `SwiftyRSAError` if there is an error in the verification process
+     */
+    
+    public func verifySignatureString(str: String, signature: String, publicKey: SecKeyRef, digestMethod: SwiftyRSADigestType) throws -> VerificationResult {
         
-        return try verifySHA1SignatureData(digest, signature: signatureData, publicKey: publicKey)
+        
+        guard let data=str.dataUsingEncoding(NSUTF8StringEncoding) else {
+            throw SwiftyRSAError(message: "Couldn't get UTF8 data from provided string")
+        }
+        
+        guard let signatureData = NSData(base64EncodedString: signature, options: []) else {
+            throw SwiftyRSAError(message: "Couldn't get signature data from provided base64 string")
+        }
+        
+        return try verifySignatureData(data, signatureData: signatureData, publicKey: publicKey, digestMethod: digestMethod)
+        
+    }
+    
+    /**
+     Verify a signature using a public key.  The supplied `NSData` will be hashed using SHA1 and the
+     resulting digest will be verified against the supplied signature.
+     
+     - parameter data: The `NSData` to be verified.  This string will be hashed using SHA1
+     - parameter signatureData: The of the signature data to be verified.
+     - parameter publicKey: A `SecKeyRef` for the public key
+     - parameter digestMethod: The `SwiftyRSADigestType` that indicates the hashing function
+     - returns: A `VerificationResult` that indicates whether the signature was valid or not
+     - throws: `SwiftyRSAError` if there is an error in the verification process
+     */
+    
+    public func verifySignatureData(data: NSData, signatureData: NSData, publicKey: SecKeyRef, digestMethod: SwiftyRSADigestType) throws -> VerificationResult {
+        
+        let (digest, padding) = self.digestForData(data, digestMethod: digestMethod)
+        
+        return try verifySignatureData(digest, signature: signatureData, publicKey: publicKey, padding: padding)
         
     }
     
@@ -737,6 +858,34 @@ public class SwiftyRSA: NSObject {
         } else {
             throw SwiftyRSAError(message: "Couldn't verify signature - \(status)")
         }
+        
+    }
+    
+    private func digestForData(data: NSData, digestMethod: SwiftyRSADigestType) -> (NSData, SecPadding) {
+        
+        
+        var digest: NSData
+        var padding: SecPadding
+        
+        switch digestMethod {
+        case .SHA1:
+            digest = data.SHA1()
+            padding = .PKCS1SHA1
+        case .SHA224:
+            digest = data.SHA224()
+            padding = .PKCS1SHA224
+        case .SHA256:
+            digest = data.SHA256()
+            padding = .PKCS1SHA256
+        case .SHA384:
+            digest = data.SHA384()
+            padding = .PKCS1SHA384
+        case .SHA512:
+            digest = data.SHA512()
+            padding = .PKCS1SHA512
+        }
+        
+        return (digest,padding)
         
     }
     
