@@ -1,5 +1,7 @@
 SwiftyRSA Changelog
 ===================
+# master
+ - Add support for digest algorithms other than SHA1
 
 # [0.3.0]
 
