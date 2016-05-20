@@ -86,6 +86,23 @@ if (verificationResult) {
 }
 ```
 
+## Alternate digest algorithms
+
+SHA1 is the default digest algorith, but alternate algorithms can be specified either through the use of convenience functions
+or by supplying a value for the `digestMethod` parameter:
+```
+let digest=data.SHA256()       
+let digestSignature = try! rsa.signSHA256Digest(digest, privateKey: privKey)
+let result = try! rsa.verifySHA256SignatureData(digest, signature: digestSignature, publicKey: pubKey)
+if (verificationResult) {
+    // verification was successful
+}
+```
+```
+let digestSignature = try! rsa.signData(data, privateKey: privKey, digestMethod: .SHA256)
+let result = try! rsa.verifySignatureData(data, signatureData: digestSignature, publicKey: pubKey, digestMethod: .SHA256)
+```
+
 Advanced Usage
 --------------
 
