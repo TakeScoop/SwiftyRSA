@@ -135,6 +135,9 @@ class SwiftyRSATests: XCTestCase {
             let signatureString = try! SwiftyRSA.signString(testString, privateKeyPEM: privString, digestMethod: method)
             result = try! SwiftyRSA.verifySignatureString(testString, signature: signatureString, publicKeyPEM: pubString, digestMethod: method)
             XCTAssert(result)
+            
+            result = try! SwiftyRSA.verifySignatureString(testString, signature: signatureString, publicKeyDER: pubData, digestMethod: method)
+            XCTAssert(result)
         }
 
         let signature = try! SwiftyRSA.signData(data, privateKeyPEM: privString)

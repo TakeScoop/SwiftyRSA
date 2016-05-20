@@ -135,6 +135,10 @@
         result = [SwiftyRSA verifySignatureString:testString signature:digestString publicKeyPEM:pubString digestMethod:hashingMethods[i] error:&error];
         XCTAssertNil(error);
         XCTAssert(result.boolValue);
+        
+        result = [SwiftyRSA verifySignatureString:testString signature:digestString publicKeyDER:pubData digestMethod:hashingMethods[i] error:&error];
+        XCTAssertNil(error);
+        XCTAssert(result.boolValue);
     }
     
     
