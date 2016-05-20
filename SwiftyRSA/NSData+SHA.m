@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <CommonCrypto/CommonCrypto.h>
 
-@implementation NSData (NSData_SHA)
+@implementation NSData (NSData_SwiftyRSASHA)
 
-- (nonnull NSData*) SHA1 {
+- (nonnull NSData*) SwiftyRSASHA1 {
     unsigned int outputLength = CC_SHA1_DIGEST_LENGTH;
     unsigned char output[outputLength];
     
@@ -19,7 +19,7 @@
     return [NSData dataWithBytes:output length:outputLength];
 }
 
-- (nonnull NSData*) SHA224 {
+- (nonnull NSData*) SwiftyRSASHA224 {
     unsigned int outputLength = CC_SHA224_DIGEST_LENGTH;
     unsigned char output[outputLength];
     
@@ -27,7 +27,7 @@
     return [NSData dataWithBytes:output length:outputLength];
 }
 
-- (nonnull NSData*) SHA256 {
+- (nonnull NSData*) SwiftyRSASHA256 {
     unsigned int outputLength = CC_SHA256_DIGEST_LENGTH;
     unsigned char output[outputLength];
     
@@ -35,7 +35,7 @@
     return [NSData dataWithBytes:output length:outputLength];
 }
 
-- (nonnull NSData*) SHA384 {
+- (nonnull NSData*) SwiftyRSASHA384 {
     unsigned int outputLength = CC_SHA384_DIGEST_LENGTH;
     unsigned char output[outputLength];
     
@@ -43,7 +43,7 @@
     return [NSData dataWithBytes:output length:outputLength];
 }
 
-- (nonnull NSData*) SHA512 {
+- (nonnull NSData*) SwiftyRSASHA512 {
     unsigned int outputLength = CC_SHA512_DIGEST_LENGTH;
     unsigned char output[outputLength];
     

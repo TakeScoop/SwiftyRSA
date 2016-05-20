@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSData (NSData_SHA)
+@interface NSData (NSData_SwiftyRSASHA)
 
-- (nonnull NSData*) SHA1;
-- (nonnull NSData*) SHA224;
-- (nonnull NSData*) SHA256;
-- (nonnull NSData*) SHA384;
-- (nonnull NSData*) SHA512;
+- (nonnull NSData*) SwiftyRSASHA1;
+- (nonnull NSData*) SwiftyRSASHA224;
+- (nonnull NSData*) SwiftyRSASHA256;
+- (nonnull NSData*) SwiftyRSASHA384;
+- (nonnull NSData*) SwiftyRSASHA512;
 
 @end
