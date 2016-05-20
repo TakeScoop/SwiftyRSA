@@ -191,6 +191,15 @@ if (result.boolValue) {
     // verification was successful
 }    
 
+digest = [data SHA256];
+digestSignature = [rsa signSHA256Digest:digest privateKey:privKey error:&error];
+result = [rsa verifySHA256SignatureData:digest signature:digestSignature publicKey:pubKey error:&error];
+
+digestSignature = [rsa signData:data privateKey:privKey digestMethod:SwiftyRSADigestTypeSHA256 error:&error];
+result = [rsa verifySignatureData:data signatureData:digestSignature publicKey:pubKey digestMethod:SwiftyRSADigestTypeSHA256 error:&error];
+if (result.boolValue) {
+    // verification was successful
+}
 ```
 
 Under the hood
