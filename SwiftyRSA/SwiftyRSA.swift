@@ -332,34 +332,70 @@ public class SwiftyRSA: NSObject {
      
      - parameter digest: The `NSData` containing the SHA1 digest to be signed.
      - parameter privateKey: A `SecKeyRef` for the private key
-     - returns: The signature for the SHA1 hash of the string.
+     - returns: The signature for the SHA1 digest.
      - throws: `SwiftyRSAError` if there is an error in the signing process
      */
     
     public func signSHA1Digest(digest: NSData, privateKey: SecKeyRef) throws -> NSData {
         
-        let blockSize = SecKeyGetBlockSize(privateKey)
-        let maxChunkSize = blockSize - 11
+        return try self.signDigest(digest, privateKey: privateKey, padding: .PKCS1SHA1)
         
-        guard (digest.length / sizeof(UInt8) <= maxChunkSize) else {
-            throw SwiftyRSAError(message: "data length exceeds \(maxChunkSize)")
-        }
+    }
+    
+    /**
+     Sign an `NSData` block using a private key.  The supplied data must represent an SHA2-224 digest.
+     
+     - parameter digest: The `NSData` containing the SHA2-224 digest to be signed.
+     - parameter privateKey: A `SecKeyRef` for the private key
+     - returns: The signature for the SHA224 digest.
+     - throws: `SwiftyRSAError` if there is an error in the signing process
+     */
+    
+    public func signSHA224Digest(digest: NSData, privateKey: SecKeyRef) throws -> NSData {
         
-        var signDataAsArray = [UInt8](count: digest.length / sizeof(UInt8), repeatedValue: 0)
-        digest.getBytes(&signDataAsArray, length: digest.length)
+         return try self.signDigest(digest, privateKey: privateKey, padding: .PKCS1SHA224)
+    }
+    
+    /**
+     Sign an `NSData` block using a private key.  The supplied data must represent an SHA2-256 digest.
+     
+     - parameter digest: The `NSData` containing the SHA2-256 digest to be signed.
+     - parameter privateKey: A `SecKeyRef` for the private key
+     - returns: The signature for the SHA256 digest.
+     - throws: `SwiftyRSAError` if there is an error in the signing process
+     */
+    
+    public func signSHA256Digest(digest: NSData, privateKey: SecKeyRef) throws -> NSData {
         
-        var signatureData = [UInt8](count: blockSize, repeatedValue: 0)
-        var signatureDataLength = blockSize
-            
-        let status = SecKeyRawSign(privateKey, .PKCS1SHA1, signDataAsArray, signDataAsArray.count, &signatureData, &signatureDataLength)
-            
-            
-        guard status == noErr else {
-            throw SwiftyRSAError(message: "Couldn't sign data \(status)")
-        }
+         return try self.signDigest(digest, privateKey: privateKey, padding: .PKCS1SHA256)
+    }
+    
+    /**
+     Sign an `NSData` block using a private key.  The supplied data must represent an SHA2-384 digest.
+     
+     - parameter digest: The `NSData` containing the SHA2-384 digest to be signed.
+     - parameter privateKey: A `SecKeyRef` for the private key
+     - returns: The signature for the SHA384 digest.
+     - throws: `SwiftyRSAError` if there is an error in the signing process
+     */
+    
+    public func signSHA384Digest(digest: NSData, privateKey: SecKeyRef) throws -> NSData {
         
+         return try self.signDigest(digest, privateKey: privateKey, padding: .PKCS1SHA384)
+    }
+    
+    /**
+     Sign an `NSData` block using a private key.  The supplied data must represent an SHA2-512 digest.
+     
+     - parameter digest: The `NSData` containing the SHA2-512 digest to be signed.
+     - parameter privateKey: A `SecKeyRef` for the private key
+     - returns: The signature for the SHA512 digest.
+     - throws: `SwiftyRSAError` if there is an error in the signing process
+     */
+    
+    public func signSHA512Digest(digest: NSData, privateKey: SecKeyRef) throws -> NSData {
         
-        return NSData(bytes: signatureData, length: signatureData.count)
+        return try self.signDigest(digest, privateKey: privateKey, padding: .PKCS1SHA512)
     }
     
     // Verify data with an RSA key
@@ -412,8 +448,8 @@ public class SwiftyRSA: NSObject {
     /**
      Verify a signature using a public key.  The supplied `NSData` represents an SHA1 digest to be verified against the supplied signature.
      
-     - parameter data: The `NSData` containing the SHA1 digest to be verified.
-     - parameter SHA1Signature: The `NSData` containing the SHA1 digest to be verified.
+     - parameter SHA1Data: The `NSData` containing the SHA1 digest to be verified.
+     - parameter signature: The `NSData` containing the signature to be verified.
      - parameter publicKey: A `SecKeyRef` for the public key
      - returns: A `VerificationResult` that indicates whether the signature was valid or not
      - throws: `SwiftyRSAError` if there is an error in the verification process
@@ -421,21 +457,72 @@ public class SwiftyRSA: NSObject {
     
     public func verifySHA1SignatureData(SHA1Data: NSData, signature: NSData, publicKey: SecKeyRef) throws -> VerificationResult {
         
-        var verifyDataAsArray = [UInt8](count: SHA1Data.length / sizeof(UInt8), repeatedValue: 0)
-        SHA1Data.getBytes(&verifyDataAsArray, length: SHA1Data.length)
+       return try self.verifySignatureData(SHA1Data, signature: signature, publicKey: publicKey, padding: .PKCS1SHA1)
         
-        var signatureDataAsArray = [UInt8](count: signature.length / sizeof(UInt8), repeatedValue: 0)
-        signature.getBytes(&signatureDataAsArray, length: signature.length)
+    }
+    
+    
+    /**
+     Verify a signature using a public key.  The supplied `NSData` represents an SHA2-224 digest to be verified against the supplied signature.
+     
+     - parameter SHA2Data: The `NSData` containing the SHA2-224 digest to be verified.
+     - parameter signature: The `NSData` containing the signature to be verified.
+     - parameter publicKey: A `SecKeyRef` for the public key
+     - returns: A `VerificationResult` that indicates whether the signature was valid or not
+     - throws: `SwiftyRSAError` if there is an error in the verification process
+     */
+    
+    public func verifySHA224SignatureData(SHA2Data: NSData, signature: NSData, publicKey: SecKeyRef) throws -> VerificationResult {
         
-        let status = SecKeyRawVerify(publicKey, .PKCS1SHA1, verifyDataAsArray, verifyDataAsArray.count, signatureDataAsArray, signatureDataAsArray.count)
+        return try self.verifySignatureData(SHA2Data, signature: signature, publicKey: publicKey, padding: .PKCS1SHA224)
         
-        if (status == errSecSuccess) {
-            return VerificationResult(true)
-        } else if (status == -9809) {
-            return VerificationResult(false)
-        } else {
-            throw SwiftyRSAError(message: "Couldn't verify signature - \(status)")
-        }
+    }
+    
+    /**
+     Verify a signature using a public key.  The supplied `NSData` represents an SHA2-256 digest to be verified against the supplied signature.
+     
+     - parameter SHA2Data: The `NSData` containing the SHA2-256 digest to be verified.
+     - parameter signature: The `NSData` containing the signature to be verified.
+     - parameter publicKey: A `SecKeyRef` for the public key
+     - returns: A `VerificationResult` that indicates whether the signature was valid or not
+     - throws: `SwiftyRSAError` if there is an error in the verification process
+     */
+    
+    public func verifySHA256SignatureData(SHA2Data: NSData, signature: NSData, publicKey: SecKeyRef) throws -> VerificationResult {
+        
+        return try self.verifySignatureData(SHA2Data, signature: signature, publicKey: publicKey, padding: .PKCS1SHA256)
+        
+    }
+    
+    /**
+     Verify a signature using a public key.  The supplied `NSData` represents an SHA2-384 digest to be verified against the supplied signature.
+     
+     - parameter SHA2Data: The `NSData` containing the SHA2-384 digest to be verified.
+     - parameter signature: The `NSData` containing the signature to be verified.
+     - parameter publicKey: A `SecKeyRef` for the public key
+     - returns: A `VerificationResult` that indicates whether the signature was valid or not
+     - throws: `SwiftyRSAError` if there is an error in the verification process
+     */
+    
+    public func verifySHA384SignatureData(SHA2Data: NSData, signature: NSData, publicKey: SecKeyRef) throws -> VerificationResult {
+        
+        return try self.verifySignatureData(SHA2Data, signature: signature, publicKey: publicKey, padding: .PKCS1SHA384)
+        
+    }
+    
+    /**
+     Verify a signature using a public key.  The supplied `NSData` represents an SHA2-512 digest to be verified against the supplied signature.
+     
+     - parameter SHA2Data: The `NSData` containing the SHA2-512 digest to be verified.
+     - parameter signature: The `NSData` containing the signature to be verified.
+     - parameter publicKey: A `SecKeyRef` for the public key
+     - returns: A `VerificationResult` that indicates whether the signature was valid or not
+     - throws: `SwiftyRSAError` if there is an error in the verification process
+     */
+    
+    public func verifySHA512SignatureData(SHA2Data: NSData, signature: NSData, publicKey: SecKeyRef) throws -> VerificationResult {
+        
+        return try self.verifySignatureData(SHA2Data, signature: signature, publicKey: publicKey, padding: .PKCS1SHA512)
         
     }
     
@@ -605,6 +692,52 @@ public class SwiftyRSA: NSObject {
         publicKey.setObject(kSecAttrKeyTypeRSA, forKey: kSecAttrKeyType as! NSCopying)
         publicKey.setObject(tagData,            forKey: kSecAttrApplicationTag as! NSCopying)
         SecItemDelete(publicKey as CFDictionaryRef)
+    }
+    
+    private func signDigest(digest: NSData, privateKey: SecKeyRef, padding: SecPadding) throws -> NSData {
+        
+        let blockSize = SecKeyGetBlockSize(privateKey)
+        let maxChunkSize = blockSize - 11
+        
+        guard (digest.length / sizeof(UInt8) <= maxChunkSize) else {
+            throw SwiftyRSAError(message: "data length exceeds \(maxChunkSize)")
+        }
+        
+        var signDataAsArray = [UInt8](count: digest.length / sizeof(UInt8), repeatedValue: 0)
+        digest.getBytes(&signDataAsArray, length: digest.length)
+        
+        var signatureData = [UInt8](count: blockSize, repeatedValue: 0)
+        var signatureDataLength = blockSize
+        
+        let status = SecKeyRawSign(privateKey, padding, signDataAsArray, signDataAsArray.count, &signatureData, &signatureDataLength)
+        
+        
+        guard status == noErr else {
+            throw SwiftyRSAError(message: "Couldn't sign data \(status)")
+        }
+        
+        
+        return NSData(bytes: signatureData, length: signatureData.count)
+    }
+    
+    private func verifySignatureData(SHAData: NSData, signature: NSData, publicKey: SecKeyRef, padding: SecPadding) throws -> VerificationResult {
+        
+        var verifyDataAsArray = [UInt8](count: SHAData.length / sizeof(UInt8), repeatedValue: 0)
+        SHAData.getBytes(&verifyDataAsArray, length: SHAData.length)
+        
+        var signatureDataAsArray = [UInt8](count: signature.length / sizeof(UInt8), repeatedValue: 0)
+        signature.getBytes(&signatureDataAsArray, length: signature.length)
+        
+        let status = SecKeyRawVerify(publicKey, padding, verifyDataAsArray, verifyDataAsArray.count, signatureDataAsArray, signatureDataAsArray.count)
+        
+        if (status == errSecSuccess) {
+            return VerificationResult(true)
+        } else if (status == -9809) {
+            return VerificationResult(false)
+        } else {
+            throw SwiftyRSAError(message: "Couldn't verify signature - \(status)")
+        }
+        
     }
     
     deinit {
