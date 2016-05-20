@@ -74,13 +74,13 @@ signature.
 
 ```
 // String
-let verificationResult = try! SwitfyRSA.verifySignatureString(str, signature: sigString, publicKeyPEM: pemString)
+let verificationResult = try! SwiftyRSA.verifySignatureString(str, signature: sigString, publicKeyPEM: pemString)
 if (verificationResult) {
     // verification was successful
 }
 
 // Data
-let verificationResult = try! SwitfyRSA.verifySignatureData(data, signature: sigData, publicKeyPEM: String)
+let verificationResult = try! SwiftyRSA.verifySignatureData(data, signature: sigData, publicKeyPEM: String)
 if (verificationResult) {
     // verification was successful
 }
