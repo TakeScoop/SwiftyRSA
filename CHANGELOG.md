@@ -1,7 +1,10 @@
 SwiftyRSA Changelog
 ===================
+
 # master
  - Add support for digest algorithms other than SHA1
+ - `verifySHA1SignatureData` & `signSHA1Digest` are now deprecated
+ - Objective-C sign & verification functions now require a `digestMethod:` parameter
 
 # [0.3.0]
 
