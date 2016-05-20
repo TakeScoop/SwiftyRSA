@@ -89,7 +89,7 @@ if (verificationResult) {
 
 ## Alternate digest algorithms
 
-SHA1 is the default digest algorith, but alternate algorithms can be specified by supplying a value for the `digestMethod` 
+SHA1 is the default digest algorithm. Alternate algorithms can be specified by supplying a value for the `digestMethod` 
 parameter:
 
 ```
