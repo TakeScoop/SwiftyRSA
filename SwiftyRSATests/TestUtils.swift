@@ -14,7 +14,7 @@ import Foundation
         let pubPath = bundle.pathForResource(name, ofType: "pem")!
         return (try! NSString(contentsOfFile: pubPath, encoding: NSUTF8StringEncoding)) as String
     }
-
+    
     static public func derKeyData(name name: String) -> NSData {
         let bundle = NSBundle(forClass: TestUtils.self)
         let pubPath  = bundle.pathForResource(name, ofType: "der")!
