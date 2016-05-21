@@ -152,7 +152,7 @@
     
     XCTAssertNil(error);
     
-    NSData* digest=[data SwiftyRSASHA1];
+    NSData* digest = [data SwiftyRSASHA1];
     
     NSData* digestSignature = [rsa signSHA1Digest:digest privateKey:privKey error:&error];
     
