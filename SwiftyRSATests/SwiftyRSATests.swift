@@ -125,7 +125,7 @@ class SwiftyRSATests: XCTestCase {
         let pubKey = try! rsa.publicKeyFromPEMString(pubString)
         let privKey = try! rsa.privateKeyFromPEMString(privString)
         
-        let hashingMethods: [SwiftyRSADigestType] = [.SHA1, .SHA224, .SHA256, .SHA384, .SHA512]
+        let hashingMethods: [SwiftyRSA.DigestType] = [.SHA1, .SHA224, .SHA256, .SHA384, .SHA512]
         
         for method in hashingMethods {
             let digestSignature = try! SwiftyRSA.signData(data, privateKeyPEM: privString, digestMethod: method)
