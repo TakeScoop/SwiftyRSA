@@ -10,14 +10,6 @@ import Foundation
 import Security
 
 
-@objc public enum SwiftyRSADigestType: Int {
-    case SHA1 = 160
-    case SHA224 = 224
-    case SHA256 = 256
-    case SHA384 = 384
-    case SHA512 = 512
-}
-
 public class SwiftyRSAError: NSError {
     init(message: String) {
         super.init(domain: "com.takescoop.SwiftyRSA", code: 500, userInfo: [
@@ -51,9 +43,17 @@ public class VerificationResult: NSObject, BooleanType {
 @objc
 public class SwiftyRSA: NSObject {
     
+    @objc public enum DigestType: Int {
+        case SHA1
+        case SHA224
+        case SHA256
+        case SHA384
+        case SHA512
+    }
+    
     private var keyTags: [NSData] = []
     private static let defaultPadding: SecPadding = .PKCS1
-    private static let defaultDigest: SwiftyRSADigestType = .SHA1
+    private static var defaultDigest: DigestType = .SHA1
     
     // MARK: - Public Shorthands
     
@@ -99,12 +99,12 @@ public class SwiftyRSA: NSObject {
      
      - parameter str: The `String` to be signed.
      - parameter privateKeyPEM: A `String` containing the private key for the signing operation in PEM format
-     - parameter digestMethod: The `SwiftyRSADigestType` that indicates the hashing function
+     - parameter digestMethod: The `DigestType` that indicates the hashing function
      - returns: Base64 encoded signature for the hash of the string.
      - throws: `SwiftyRSAError` if there is an error in the signing process
      */
     
-    public class func signString(str: String, privateKeyPEM: String, digestMethod: SwiftyRSADigestType = defaultDigest) throws -> String {
+    public class func signString(str: String, privateKeyPEM: String, digestMethod: DigestType = defaultDigest) throws -> String {
         let rsa = SwiftyRSA()
         let key = try rsa.privateKeyFromPEMString(privateKeyPEM)
         return try rsa.signString(str, privateKey: key, digestMethod: digestMethod)
@@ -116,12 +116,12 @@ public class SwiftyRSA: NSObject {
      
      - parameter data: The `NSData` to be signed.
      - parameter privateKeyPEM: A `String` containing the private key for the signing operation in PEM format
-     - parameter digestMethod: The `SwiftyRSADigestType` that indicates the hashing function
+     - parameter digestMethod: The `DigestType` that indicates the hashing function
      - returns: The signature for the hash of the string.
      - throws: `SwiftyRSAError` if there is an error in the signing process
      */
     
-    public class func signData(data: NSData, privateKeyPEM: String, digestMethod: SwiftyRSADigestType = defaultDigest) throws -> NSData {
+    public class func signData(data: NSData, privateKeyPEM: String, digestMethod: DigestType = defaultDigest) throws -> NSData {
         let rsa = SwiftyRSA()
         let key = try rsa.privateKeyFromPEMString(privateKeyPEM)
         return try rsa.signData(data, privateKey: key, digestMethod: digestMethod)
@@ -134,12 +134,12 @@ public class SwiftyRSA: NSObject {
      - parameter str: The `String` to be verified.  This string will be hashed.
      - parameter signature: The BASE64 string representation of the signature to be verified.
      - parameter publicKeyPEM: A `String` containing the public key for the signing operation in PEM format
-     - parameter digestMethod: The `SwiftyRSADigestType` that indicates the hashing function
+     - parameter digestMethod: The `DigestType` that indicates the hashing function
      - returns: A `VerificationResult` that indicates whether the signature was valid or not
      - throws: `SwiftyRSAError` if there is an error in the verification process
      */
     
-    public class func verifySignatureString(str: String, signature: String, publicKeyPEM: String, digestMethod: SwiftyRSADigestType = defaultDigest) throws -> VerificationResult {
+    public class func verifySignatureString(str: String, signature: String, publicKeyPEM: String, digestMethod: DigestType = defaultDigest) throws -> VerificationResult {
         let rsa = SwiftyRSA()
         let key = try rsa.publicKeyFromPEMString(publicKeyPEM)
         return try rsa.verifySignatureString(str, signature: signature, publicKey: key, digestMethod: digestMethod)
@@ -152,12 +152,12 @@ public class SwiftyRSA: NSObject {
      - parameter data: The `NSData` to be verified.  This data will be hashed
      - parameter signature: The signature to be verified.
      - parameter publicKeyPEM: A `String` containing the public key for the signing operation in PEM format
-     - parameter digestMethod: The `SwiftyRSADigestType` that indicates the hashing function
+     - parameter digestMethod: The `DigestType` that indicates the hashing function
      - returns: A `VerificationResult` that indicates whether the signature was valid or not
      - throws: `SwiftyRSAError` if there is an error in the verification process
      */
     
-    public class func verifySignatureData(data: NSData, signature: NSData, publicKeyPEM: String, digestMethod: SwiftyRSADigestType = defaultDigest) throws -> VerificationResult {
+    public class func verifySignatureData(data: NSData, signature: NSData, publicKeyPEM: String, digestMethod: DigestType = defaultDigest) throws -> VerificationResult {
         let rsa = SwiftyRSA()
         let key = try rsa.publicKeyFromPEMString(publicKeyPEM)
         return try rsa.verifySignatureData(data, signatureData: signature, publicKey: key, digestMethod: digestMethod)
@@ -170,12 +170,12 @@ public class SwiftyRSA: NSObject {
      - parameter str: The `String` to be verified.  This string will be hashed
      - parameter signature: The BASE64 string representation of the signature to be verified.
      - parameter publicKeyDER: The public key for the signing operation in DER format
-     - parameter digestMethod: The `SwiftyRSADigestType` that indicates the hashing function
+     - parameter digestMethod: The `DigestType` that indicates the hashing function
      - returns: A `VerificationResult` that indicates whether the signature was valid or not
      - throws: `SwiftyRSAError` if there is an error in the verification process
      */
     
-    public class func verifySignatureString(str: String, signature: String, publicKeyDER: NSData, digestMethod: SwiftyRSADigestType = defaultDigest) throws -> VerificationResult {
+    public class func verifySignatureString(str: String, signature: String, publicKeyDER: NSData, digestMethod: DigestType = defaultDigest) throws -> VerificationResult {
         let rsa = SwiftyRSA()
         let key = try rsa.publicKeyFromDERData(publicKeyDER)
         return try rsa.verifySignatureString(str, signature: signature, publicKey: key, digestMethod: digestMethod)
@@ -188,12 +188,12 @@ public class SwiftyRSA: NSObject {
      - parameter data: The `NSData` to be verified.  This data will be hashed
      - parameter signature: The signature to be verified.
      - parameter publicKeyDER: The public key for the signing operation in DER format
-     - parameter digestMethod: The `SwiftyRSADigestType` that indicates the hashing function
+     - parameter digestMethod: The `DigestType` that indicates the hashing function
      - returns: A `VerificationResult` that indicates whether the signature was valid or not
      - throws: `SwiftyRSAError` if there is an error in the verification process
      */
     
-    public class func verifySignatureData(data: NSData, signature: NSData, publicKeyDER: NSData, digestMethod: SwiftyRSADigestType = defaultDigest) throws -> VerificationResult {
+    public class func verifySignatureData(data: NSData, signature: NSData, publicKeyDER: NSData, digestMethod: DigestType = defaultDigest) throws -> VerificationResult {
         let rsa = SwiftyRSA()
         let key = try rsa.publicKeyFromDERData(publicKeyDER)
         return try rsa.verifySignatureData(data, signatureData: signature, publicKey: key, digestMethod: digestMethod)
@@ -314,12 +314,12 @@ public class SwiftyRSA: NSObject {
      
      - parameter str: The `String` to be signed.
      - parameter privateKey: A `SecKeyRef` for the private key
-     - parameter digestMethod: The `SwiftyRSADigestType` that indicates the hashing function
+     - parameter digestMethod: The `DigestType` that indicates the hashing function
      - returns: Base64 encoded signature for the hash of the string.
      - throws: `SwiftyRSAError` if there is an error in the signing process
      */
     
-    public func signString(str: String, privateKey: SecKeyRef, digestMethod: SwiftyRSADigestType = defaultDigest) throws -> String {
+    public func signString(str: String, privateKey: SecKeyRef, digestMethod: DigestType = defaultDigest) throws -> String {
         guard let data = str.dataUsingEncoding(NSUTF8StringEncoding) else {
             throw SwiftyRSAError(message: "Couldn't get UTF8 data from provided string")
         }
@@ -333,12 +333,12 @@ public class SwiftyRSA: NSObject {
      
      - parameter data: The `NSData` to be signed.
      - parameter privateKey: A `SecKeyRef` for the private key
-     - parameter digestMethod: The `SwiftyRSADigestType` that indicates the hashing function
+     - parameter digestMethod: The `DigestType` that indicates the hashing function
      - returns: The signature for the  hash of the string.
      - throws: `SwiftyRSAError` if there is an error in the signing process
      */
     
-    public func signData(data: NSData, privateKey: SecKeyRef, digestMethod: SwiftyRSADigestType = defaultDigest) throws -> NSData {
+    public func signData(data: NSData, privateKey: SecKeyRef, digestMethod: DigestType = defaultDigest) throws -> NSData {
         
         let (digest, padding) = self.digestForData(data, digestMethod: digestMethod)
         
@@ -370,7 +370,7 @@ public class SwiftyRSA: NSObject {
      - throws: `SwiftyRSAError` if there is an error in the signing process
      */
     
-    public func signDigest(digest: NSData, privateKey: SecKeyRef, digestMethod: SwiftyRSADigestType = defaultDigest) throws -> NSData {
+    public func signDigest(digest: NSData, privateKey: SecKeyRef, digestMethod: DigestType = defaultDigest) throws -> NSData {
         
         let (_,padding) = self.digestForData(digest, digestMethod: digestMethod)
         
@@ -387,12 +387,12 @@ public class SwiftyRSA: NSObject {
      - parameter str: The `String` to be verified.  This string will be hashed
      - parameter signature: The BASE64 string representation of the signature to be verified.
      - parameter publicKey: A `SecKeyRef` for the public key
-     - parameter digestMethod: The `SwiftyRSADigestType` that indicates the hashing function
+     - parameter digestMethod: The `DigestType` that indicates the hashing function
      - returns: A `VerificationResult` that indicates whether the signature was valid or not
      - throws: `SwiftyRSAError` if there is an error in the verification process
      */
     
-    public func verifySignatureString(str: String, signature: String, publicKey: SecKeyRef, digestMethod: SwiftyRSADigestType = defaultDigest) throws -> VerificationResult {
+    public func verifySignatureString(str: String, signature: String, publicKey: SecKeyRef, digestMethod: DigestType = defaultDigest) throws -> VerificationResult {
         
         
         guard let data = str.dataUsingEncoding(NSUTF8StringEncoding) else {
@@ -414,12 +414,12 @@ public class SwiftyRSA: NSObject {
      - parameter data: The `NSData` to be verified.  This string will be hashed
      - parameter signatureData: The of the signature data to be verified.
      - parameter publicKey: A `SecKeyRef` for the public key
-     - parameter digestMethod: The `SwiftyRSADigestType` that indicates the hashing function
+     - parameter digestMethod: The `DigestType` that indicates the hashing function
      - returns: A `VerificationResult` that indicates whether the signature was valid or not
      - throws: `SwiftyRSAError` if there is an error in the verification process
      */
     
-    public func verifySignatureData(data: NSData, signatureData: NSData, publicKey: SecKeyRef, digestMethod: SwiftyRSADigestType = defaultDigest) throws -> VerificationResult {
+    public func verifySignatureData(data: NSData, signatureData: NSData, publicKey: SecKeyRef, digestMethod: DigestType = defaultDigest) throws -> VerificationResult {
         
         let (digest, padding) = self.digestForData(data, digestMethod: digestMethod)
         
@@ -453,7 +453,7 @@ public class SwiftyRSA: NSObject {
      - throws: `SwiftyRSAError` if there is an error in the verification process
      */
     
-    public func verifySignatureData(digestData: NSData, signature: NSData, publicKey: SecKeyRef, digestMethod: SwiftyRSADigestType = defaultDigest) throws -> VerificationResult {
+    public func verifySignatureData(digestData: NSData, signature: NSData, publicKey: SecKeyRef, digestMethod: DigestType = defaultDigest) throws -> VerificationResult {
         
         let (_,padding) = self.digestForData(digestData, digestMethod: digestMethod)
         
@@ -674,7 +674,7 @@ public class SwiftyRSA: NSObject {
         }
     }
     
-    private func digestForData(data: NSData, digestMethod: SwiftyRSADigestType) -> (digest:NSData, padding:SecPadding) {
+    private func digestForData(data: NSData, digestMethod: DigestType) -> (digest:NSData, padding:SecPadding) {
         
         var digest: NSData
         var padding: SecPadding
