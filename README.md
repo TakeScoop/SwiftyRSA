@@ -179,21 +179,21 @@ NSString* privString = [NSString stringWithContentsOfFile:privPath encoding:NSUT
 NSString* encrypted = [SwiftyRSA encryptString:str publicKeyPEM:pubString padding:kSecPaddingPKCS1 error:nil];
 NSString* decrypted = [SwiftyRSA decryptString:encrypted privateKeyPEM:privString padding:kSecPaddingPKCS1 error:nil];
 
-NSString* signature = [SwiftyRSA signString:str privateKeyPEM:privString digestMethod:SwiftyRSADigestTypeSHA256 error:&error];
-VerificationResult* result = [SwiftyRSA verifySignatureString:str signature:signature publicKeyDER:pubData digestMethod:SwiftyRSADigestTypeSHA256 error:&error];
+NSString* signature = [SwiftyRSA signString:str privateKeyPEM:privString digestMethod:DigestTypeSHA256 error:&error];
+VerificationResult* result = [SwiftyRSA verifySignatureString:str signature:signature publicKeyDER:pubData digestMethod:DigestTypeSHA256 error:&error];
 if (result.boolValue) {
     // verification was successful
 } 
 
-NSData* digestSignature = [rsa signData:data privateKey:privKey digestMethod:SwiftyRSADigestTypeSHA256 error:&error];
-VerificationResult* result = [rsa verifySignatureData:data signatureData:digestSignature publicKey:pubKey digestMethod:SwiftyRSADigestTypeSHA256 error:&error];
+NSData* digestSignature = [rsa signData:data privateKey:privKey digestMethod:DigestTypeSHA256 error:&error];
+VerificationResult* result = [rsa verifySignatureData:data signatureData:digestSignature publicKey:pubKey digestMethod:DigestTypeSHA256 error:&error];
 if (result.boolValue) {
     // verification was successful
 }   
 
 NSData* digest = [data SHA256];
-NSData* digestSignature = [rsa signDigest:digest privateKey:privKey digestMethod:SwiftyRSADigestTypeSHA256 error:&error];
-VerificationResult* result = [rsa verifySignatureData:digest signature:digestSignature publicKey:pubKey digestMethod:SwiftyRSADigestTypeSHA256 error:&error];
+NSData* digestSignature = [rsa signDigest:digest privateKey:privKey digestMethod:DigestTypeSHA256 error:&error];
+VerificationResult* result = [rsa verifySignatureData:digest signature:digestSignature publicKey:pubKey digestMethod:DigestTypeSHA256 error:&error];
 if (result.boolValue) {
     // verification was successful
 }
