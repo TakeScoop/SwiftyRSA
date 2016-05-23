@@ -354,7 +354,8 @@ public class SwiftyRSA: NSObject {
      - throws: `SwiftyRSAError` if there is an error in the signing process
      */
     
-    @available(*, deprecated = 0.31, message = "Use signDigest() with digestMethod = .SHA1") public func signSHA1Digest(digest: NSData, privateKey: SecKeyRef) throws -> NSData {
+    @available(*, deprecated = 0.31, message = "Use signDigest() with digestMethod = .SHA1")
+    public func signSHA1Digest(digest: NSData, privateKey: SecKeyRef) throws -> NSData {
         
         return try self.signDigest(digest, privateKey: privateKey, padding: .PKCS1SHA1)
         
@@ -437,9 +438,10 @@ public class SwiftyRSA: NSObject {
      - throws: `SwiftyRSAError` if there is an error in the verification process
      */
     
- @available(*, deprecated = 0.31, message = "Use verifySignature() with digestMethod = .SHA1") public func verifySHA1SignatureData(SHA1Data: NSData, signature: NSData, publicKey: SecKeyRef) throws -> VerificationResult {
+    @available(*, deprecated = 0.31, message = "Use verifySignature() with digestMethod = .SHA1")
+    public func verifySHA1SignatureData(SHA1Data: NSData, signature: NSData, publicKey: SecKeyRef) throws -> VerificationResult {
         
-       return try self.verifySignatureData(SHA1Data, signature: signature, publicKey: publicKey, padding: .PKCS1SHA1)
+        return try self.verifySignatureData(SHA1Data, signature: signature, publicKey: publicKey, padding: .PKCS1SHA1)
     }
     
     /**
