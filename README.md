@@ -69,21 +69,32 @@ let signatureData = try! SwiftyRSA.signData(data, privateKeyPEM: pemString)
 ## Verify
 
 SwiftyRSA can verify digital signatures with a public key.  SwiftyRSA will calculate 
-an SHA1 digest of the supplied `String`/`NSData` and use this to verify the digital 
+a digest (default is SHA1) of the supplied `String`/`NSData` and use this to verify the digital 
 signature.
 
 ```
 // String
-let verificationResult = try! SwitfyRSA.verifySignatureString(str, signature: sigString, publicKeyPEM: pemString)
+let verificationResult = try! SwiftyRSA.verifySignatureString(str, signature: sigString, publicKeyPEM: pemString)
 if (verificationResult) {
     // verification was successful
 }
 
 // Data
-let verificationResult = try! SwitfyRSA.verifySignatureData(data, signature: sigData, publicKeyPEM: String)
+let verificationResult = try! SwiftyRSA.verifySignatureData(data, signature: sigData, publicKeyPEM: String)
 if (verificationResult) {
     // verification was successful
 }
+
+```
+
+## Alternate digest algorithms
+
+SHA1 is the default digest algorithm. Alternate algorithms can be specified by supplying a value for the `digestMethod` 
+parameter:
+
+```
+let digestSignature = try! rsa.signData(data, privateKey: privKey, digestMethod: .SHA256)
+let result = try! rsa.verifySignatureData(data, signatureData: digestSignature, publicKey: pubKey, digestMethod: .SHA256)
 ```
 
 Advanced Usage
@@ -138,13 +149,13 @@ let decryptedString = try! rsa.decryptString(str, privateKey: privKey)
 let decryptedData = try! rsa.decryptData(data, privateKey: privKey)
 ```
 
-### Sign or verify an SHA1 digest
+### Sign or verify an existing digest
 
 ```
 let rsa = SwiftyRSA()
-let digestSignature = try! rsa.signSHA1Digest(digest, privateKey: privKey)
+let digestSignature = try! rsa.signDigest(digest, privateKey: privKey, digestMethod: .SHA1)
 
-let verificationResult = try! rsa.verifySHA1SignatureData(digest, signature: digestSignature, publicKey: pubKey)
+let verificationResult = try! rsa.verifySignatureData(digest, signature: digestSignature, publicKey: pubKey, digestMethod: .SHA1)
 if (verificationResult) {
     // verification was successful
 }
@@ -168,12 +179,24 @@ NSString* privString = [NSString stringWithContentsOfFile:privPath encoding:NSUT
 NSString* encrypted = [SwiftyRSA encryptString:str publicKeyPEM:pubString padding:kSecPaddingPKCS1 error:nil];
 NSString* decrypted = [SwiftyRSA decryptString:encrypted privateKeyPEM:privString padding:kSecPaddingPKCS1 error:nil];
 
-NSString* signature = [SwiftyRSA signString:str] privateKeyPEM:privString error:&error];
-VerificationResult* result = [SwiftyRSA verifySignatureString:str signature:signature publicKeyDER:pubData error:&error];
+NSString* signature = [SwiftyRSA signString:str privateKeyPEM:privString digestMethod:DigestTypeSHA256 error:&error];
+VerificationResult* result = [SwiftyRSA verifySignatureString:str signature:signature publicKeyDER:pubData digestMethod:DigestTypeSHA256 error:&error];
 if (result.boolValue) {
     // verification was successful
-}    
+} 
 
+NSData* digestSignature = [rsa signData:data privateKey:privKey digestMethod:DigestTypeSHA256 error:&error];
+VerificationResult* result = [rsa verifySignatureData:data signatureData:digestSignature publicKey:pubKey digestMethod:DigestTypeSHA256 error:&error];
+if (result.boolValue) {
+    // verification was successful
+}   
+
+NSData* digest = [data SHA256];
+NSData* digestSignature = [rsa signDigest:digest privateKey:privKey digestMethod:DigestTypeSHA256 error:&error];
+VerificationResult* result = [rsa verifySignatureData:digest signature:digestSignature publicKey:pubKey digestMethod:DigestTypeSHA256 error:&error];
+if (result.boolValue) {
+    // verification was successful
+}
 ```
 
 Under the hood

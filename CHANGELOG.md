@@ -1,6 +1,12 @@
 SwiftyRSA Changelog
 ===================
 
+# master
+ - Add support for SHA2 (224,256,384 & 512 bits) digest algorithms
+ - `verifySHA1SignatureData` & `signSHA1Digest` are now deprecated; use `verifySignature()` 
+   and `signDigest()`
+ - Objective-C sign & verification functions now require a `digestMethod:` parameter
+
 # [0.3.0]
 
  - Added digital signature creation & verification support.

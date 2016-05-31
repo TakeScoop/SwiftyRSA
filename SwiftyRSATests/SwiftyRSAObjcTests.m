@@ -111,6 +111,7 @@
         u_int32_t randomBits = arc4random();
         [data appendBytes:(void*)&randomBits length:sizeof(UInt32)];
     }
+    NSString* testString = @"Lorum Ipsum Ipso Facto Ad Astra Ixnay Onay Ayway";
     
     NSString* pubString = [TestUtils pemKeyStringWithName:@"swiftyrsa-public"];
     NSString* privString = [TestUtils pemKeyStringWithName:@"swiftyrsa-private"];
@@ -118,33 +119,28 @@
     
     NSError* error;
     
-    NSString* signature = [SwiftyRSA signString:[data description] privateKeyPEM:privString error:&error];
+    DigestType hashingMethods[] = {DigestTypeSHA1,DigestTypeSHA224,DigestTypeSHA256,DigestTypeSHA384,DigestTypeSHA512};
     
-    XCTAssertNil(error);
-
-    VerificationResult* result = [SwiftyRSA verifySignatureString:[data description] signature:signature publicKeyPEM:pubString error:&error];
+    for (int i=0; i<5; i++) {
+        NSData* digestSignature = [SwiftyRSA signData:data privateKeyPEM:privString digestMethod:hashingMethods[i] error:&error];
+        XCTAssertNil(error);
+        
+        VerificationResult* result = [SwiftyRSA verifySignatureData:data signature:digestSignature publicKeyPEM:pubString digestMethod:hashingMethods[i] error:&error];
+        XCTAssertNil(error);
+        XCTAssert(result.boolValue);
+        
+        NSString *digestString = [SwiftyRSA signString:testString privateKeyPEM:privString digestMethod:hashingMethods[i] error:&error];
+        XCTAssertNil(error);
+        
+        result = [SwiftyRSA verifySignatureString:testString signature:digestString publicKeyPEM:pubString digestMethod:hashingMethods[i] error:&error];
+        XCTAssertNil(error);
+        XCTAssert(result.boolValue);
+        
+        result = [SwiftyRSA verifySignatureString:testString signature:digestString publicKeyDER:pubData digestMethod:hashingMethods[i] error:&error];
+        XCTAssertNil(error);
+        XCTAssert(result.boolValue);
+    }
     
-    XCTAssertNil(error);
-    XCTAssert(result.boolValue);
-    
-    result = [SwiftyRSA verifySignatureString:[data description] signature:signature publicKeyDER:pubData error:&error];
-    
-    XCTAssertNil(error);
-    XCTAssert(result.boolValue);
-    
-    NSData *signatureData = [SwiftyRSA signData:data privateKeyPEM:privString error:&error];
-    
-    XCTAssertNil(error);
-    
-    result = [SwiftyRSA verifySignatureData:data signature:signatureData publicKeyPEM:pubString error:&error];
-    
-    XCTAssertNil(error);
-    XCTAssert(result.boolValue);
-    
-    result = [SwiftyRSA verifySignatureData:data signature:signatureData publicKeyDER:pubData error:&error];
-    
-    XCTAssertNil(error);
-    XCTAssert(result.boolValue);
     
     SwiftyRSA* rsa=[[SwiftyRSA alloc]init];
     
@@ -156,18 +152,59 @@
     
     XCTAssertNil(error);
     
-    NSData* digest=[data SHA1];
+    NSData* digest = [data SwiftyRSASHA1];
     
     NSData* digestSignature = [rsa signSHA1Digest:digest privateKey:privKey error:&error];
     
     XCTAssertNil(error);
     
-    result = [rsa verifySHA1SignatureData:digest signature:digestSignature publicKey:pubKey error:&error];
+    VerificationResult* result = [rsa verifySHA1SignatureData:digest signature:digestSignature publicKey:pubKey error:&error];
     
     XCTAssertNil(error);
     XCTAssert(result.boolValue);
 
+    digest = [data SwiftyRSASHA224];
+    digestSignature = [rsa signDigest:digest privateKey:privKey digestMethod:DigestTypeSHA224 error:&error];
+    
+    XCTAssertNil(error);
+    
+    result = [rsa verifySignatureData:digest signature:digestSignature publicKey:pubKey digestMethod:DigestTypeSHA224 error:&error];
+    
+    XCTAssertNil(error);
+    XCTAssert(result.boolValue);
+    
+    digest = [data SwiftyRSASHA256];
+    digestSignature = [rsa signDigest:digest privateKey:privKey digestMethod:DigestTypeSHA256 error:&error];
+    
+    XCTAssertNil(error);
+    
+    result = [rsa verifySignatureData:digest signature:digestSignature publicKey:pubKey digestMethod:DigestTypeSHA256 error:&error];
+    
+    XCTAssertNil(error);
+    XCTAssert(result.boolValue);
+    
+    digest = [data SwiftyRSASHA384];
 
-   }
+    digestSignature = [rsa signDigest:digest privateKey:privKey digestMethod:DigestTypeSHA384 error:&error];
+    
+    XCTAssertNil(error);
+    
+    result = [rsa verifySignatureData:digest signature:digestSignature publicKey:pubKey digestMethod:DigestTypeSHA384 error:&error];
+    
+    XCTAssertNil(error);
+    XCTAssert(result.boolValue);
+    
+    digest = [data SwiftyRSASHA512];
+
+    digestSignature = [rsa signDigest:digest privateKey:privKey digestMethod:DigestTypeSHA512 error:&error];
+    
+    XCTAssertNil(error);
+    
+    result = [rsa verifySignatureData:digest signature:digestSignature publicKey:pubKey digestMethod:DigestTypeSHA512 error:&error];
+    
+    XCTAssertNil(error);
+    XCTAssert(result.boolValue);
+    
+}
 
 @end
