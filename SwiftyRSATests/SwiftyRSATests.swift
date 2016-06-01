@@ -82,6 +82,22 @@ class SwiftyRSATests: XCTestCase {
         XCTAssertEqual(str, decrypted)
     }
     
+    func testEmptyString() {
+        let str = ""
+        
+        let pubString = TestUtils.pemKeyString(name: "swiftyrsa-public")
+        let privString = TestUtils.pemKeyString(name: "swiftyrsa-private")
+        
+        let encrypted = try! SwiftyRSA.encryptString(str, publicKeyPEM: pubString)
+        
+        // Decrypt does not currently work on encrypted empty strings
+        //let decrypted = try! SwiftyRSA.decryptString(encrypted, privateKeyPEM: privString)
+        //XCTAssertEqual(str, decrypted)
+        
+        // Should actually encrypt an empty string
+        XCTAssert(encrypted.characters.count > 0)
+    }
+    
     func testLongString() {
         let str = [String](count: 9999, repeatedValue: "a").joinWithSeparator("")
         
