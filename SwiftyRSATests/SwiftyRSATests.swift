@@ -96,7 +96,7 @@ class SwiftyRSATests: XCTestCase {
     
     func testDataEncryptDecrypt() {
         let bytes = [UInt32](repeating: 0, count: 2048).map { _ in arc4random() }
-        let data = Data(bytes: UnsafePointer<UInt8>(bytes), count: bytes.count * sizeof(UInt32))
+        let data = Data(bytes: UnsafePointer<UInt8>(bytes), count: bytes.count * sizeof(UInt32.self))
         
         let pubString = TestUtils.pemKeyString(name: "swiftyrsa-public")
         let privString = TestUtils.pemKeyString(name: "swiftyrsa-private")
@@ -111,7 +111,7 @@ class SwiftyRSATests: XCTestCase {
         
         
         let bytes = [UInt32](repeating: 0, count: 2048).map { _ in arc4random() }
-        let data = Data(bytes: UnsafePointer<UInt8>(bytes), count: bytes.count * sizeof(UInt32))
+        let data = Data(bytes: UnsafePointer<UInt8>(bytes), count: bytes.count * sizeof(UInt32.self))
         
         let testString = "Lorum Ipsum Ipso Facto Ad Astra Ixnay Onay Ayway"
         
@@ -135,7 +135,7 @@ class SwiftyRSATests: XCTestCase {
             let signatureString = try! SwiftyRSA.signString(testString, privateKeyPEM: privString, digestMethod: method)
             result = try! SwiftyRSA.verifySignatureString(testString, signature: signatureString, publicKeyPEM: pubString, digestMethod: method)
             XCTAssert(result)
-            
+                        
             result = try! SwiftyRSA.verifySignatureString(testString, signature: signatureString, publicKeyDER: pubData, digestMethod: method)
             XCTAssert(result)
         }
@@ -149,7 +149,7 @@ class SwiftyRSATests: XCTestCase {
         XCTAssert(result)
         
         let badBytes = [UInt32](repeating: 0, count: 16).map { _ in arc4random() }
-        let badData = Data(bytes: UnsafePointer<UInt8>(badBytes), count: badBytes.count * sizeof(UInt32))
+        let badData = Data(bytes: UnsafePointer<UInt8>(badBytes), count: badBytes.count * sizeof(UInt32.self))
         
         result = try! SwiftyRSA.verifySignatureData(badData, signature:  signature, publicKeyPEM: pubString)
         XCTAssert(!result)

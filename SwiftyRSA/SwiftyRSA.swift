@@ -175,7 +175,7 @@ public class SwiftyRSA: NSObject {
      - throws: `SwiftyRSAError` if there is an error in the verification process
      */
     
-    public class func verifySignature(_ str: String, signature: String, publicKeyDER: Data, digestMethod: DigestType = defaultDigest) throws -> VerificationResult {
+    public class func verifySignatureString(_ str: String, signature: String, publicKeyDER: Data, digestMethod: DigestType = defaultDigest) throws -> VerificationResult {
         let rsa = SwiftyRSA()
         let key = try rsa.publicKeyFromDERData(publicKeyDER)
         return try rsa.verifySignatureString(str, signature: signature, publicKey: key, digestMethod: digestMethod)
@@ -563,7 +563,7 @@ public class SwiftyRSA: NSObject {
      https://lapo.it/asn1js/#30819F300D06092A864886F70D010101050003818D0030818902818100D0674615A252ED3D75D2A3073A0A8A445F3188FD3BEB8BA8584F7299E391BDEC3427F287327414174997D147DD8CA62647427D73C9DA5504E0A3EED5274A1D50A1237D688486FADB8B82061675ABFA5E55B624095DB8790C6DBCAE83D6A8588C9A6635D7CF257ED1EDE18F04217D37908FD0CBB86B2C58D5F762E6207FF7B92D0203010001
      */
     private func stripPublicKeyHeader(_ keyData: Data) throws -> Data {
-        let count = keyData.count / sizeof(CUnsignedChar)
+        let count = keyData.count / sizeof(CUnsignedChar.self)
         
         guard count > 0 else {
             throw SwiftyRSAError(message: "Provided public key is empty")
@@ -636,11 +636,11 @@ public class SwiftyRSA: NSObject {
         let blockSize = SecKeyGetBlockSize(privateKey)
         let maxChunkSize = blockSize - 11
         
-        guard (digest.count / sizeof(UInt8) <= maxChunkSize) else {
+        guard (digest.count / sizeof(UInt8.self) <= maxChunkSize) else {
             throw SwiftyRSAError(message: "data length exceeds \(maxChunkSize)")
         }
         
-        var signDataAsArray = [UInt8](repeating: 0, count: digest.count / sizeof(UInt8))
+        var signDataAsArray = [UInt8](repeating: 0, count: digest.count / sizeof(UInt8.self))
         (digest as NSData).getBytes(&signDataAsArray, length: digest.count)
         
         var signatureData = [UInt8](repeating: 0, count: blockSize)
@@ -659,10 +659,10 @@ public class SwiftyRSA: NSObject {
     
     private func verifySignatureData(_ SHAData: Data, signature: Data, publicKey: SecKey, padding: SecPadding) throws -> VerificationResult {
         
-        var verifyDataAsArray = [UInt8](repeating: 0, count: SHAData.count / sizeof(UInt8))
+        var verifyDataAsArray = [UInt8](repeating: 0, count: SHAData.count / sizeof(UInt8.self))
         (SHAData as NSData).getBytes(&verifyDataAsArray, length: SHAData.count)
         
-        var signatureDataAsArray = [UInt8](repeating: 0, count: signature.count / sizeof(UInt8))
+        var signatureDataAsArray = [UInt8](repeating: 0, count: signature.count / sizeof(UInt8.self))
         (signature as NSData).getBytes(&signatureDataAsArray, length: signature.count)
         
         let status = SecKeyRawVerify(publicKey, padding, verifyDataAsArray, verifyDataAsArray.count, signatureDataAsArray, signatureDataAsArray.count)
