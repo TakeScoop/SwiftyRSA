@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Scoop. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import Foundation;
 
 //! Project version number for SwiftyRSA.
 FOUNDATION_EXPORT double SwiftyRSAVersionNumber;
