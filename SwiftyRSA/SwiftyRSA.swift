@@ -94,7 +94,7 @@ public class SwiftyRSA: NSObject {
     }
     
     /**
-     Sign a `String` using a private key.  The supplied string will be hashed using the specified 
+     Sign a `String` using a private key.  The supplied string will be hashed using the specified
      hashing function and the resulting digest will be signed.
      
      - parameter str: The `String` to be signed.
@@ -218,6 +218,62 @@ public class SwiftyRSA: NSObject {
     public func privateKeyFromPEMString(key: String) throws -> SecKeyRef {
         let data = try dataFromPEMKey(key)
         return try addKey(data, isPublic: false)
+    }
+    
+    /** The regular expression used to find public key armor */
+    let publicKeyRegexp : NSRegularExpression? = {
+        let publicKeyRegexp = "(-----BEGIN PUBLIC KEY-----.+?-----END PUBLIC KEY-----)"
+        
+        return try? NSRegularExpression(pattern: publicKeyRegexp, options: .DotMatchesLineSeparators)
+    }()
+    
+    /**
+    Takes an input string, scans for public key sections, and then returns `SecKeyRef`s for any valid keys found
+    
+    - This method scans the file for public key armor - if no keys are found, an empty array is returned
+    - Each public key block found is "parsed" by `publicKeyFromPEMString()` - should that method throw, the error is _swallowed_ and not rethrown
+    
+    This becomes helpful when reading multiple keys in from a single file, or when you have
+    
+    - parameter inputPEMString: The string to use to parse out values
+    - returns: An array of `SecKeyRef` objects
+     
+    - note: This method is marked as `@nonobjc` because NSArray doesn't support storing `SecKeyRef` using generics. If it can be easily exposed to ObjC as is, this can be changed - but currently, cannot be done without wrapping `SecKeyRef`'s which seems circuitous (as this is a fairly Swift'y library).
+    */
+    @nonobjc public func publicKeysFromString(inputPEMString:String) -> [SecKeyRef] {
+        var response = [SecKeyRef]()
+        
+        // If our regexp isn't valid, or the input string is empty, we can't move forward…
+        guard let publicKeyRegexp = publicKeyRegexp where inputPEMString.characters.count > 0 else {
+            return response
+        }
+        
+        let all = NSRange(
+            location: 0,
+            length: inputPEMString.characters.count
+        )
+        
+        let matches = publicKeyRegexp.matchesInString(
+            inputPEMString,
+            options: NSMatchingOptions(rawValue: 0),
+            range: all
+        )
+        
+        for result in matches {
+            let match = result.rangeAtIndex(1)
+            let start = inputPEMString.startIndex.advancedBy(match.location)
+            let end = start.advancedBy(match.length)
+            
+            let range = Range<String.Index>(start..<end)
+            
+            let thisKey = inputPEMString[range]
+            
+            if let key = try? self.publicKeyFromPEMString(thisKey) {
+                response.append(key)
+            }
+        }
+        
+        return response
     }
     
     // Encrypts data with a RSA key

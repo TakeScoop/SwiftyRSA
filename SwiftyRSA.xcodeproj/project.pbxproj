@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		934AB81C1D36E45B00365679 /* multiple-keys-testcase.pem in Resources */ = {isa = PBXBuildFile; fileRef = 934AB81A1D36BA8D00365679 /* multiple-keys-testcase.pem */; };
 		BB8460AE1CC608F6006F802C /* NSData+SHA.h in Headers */ = {isa = PBXBuildFile; fileRef = BB8460AC1CC608F6006F802C /* NSData+SHA.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BB8460AF1CC608F6006F802C /* NSData+SHA.m in Sources */ = {isa = PBXBuildFile; fileRef = BB8460AD1CC608F6006F802C /* NSData+SHA.m */; };
 		C01F96141C5AC3E300F232AC /* SwiftyRSAObjcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C01F96131C5AC3E300F232AC /* SwiftyRSAObjcTests.m */; };
@@ -33,6 +34,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		934AB81A1D36BA8D00365679 /* multiple-keys-testcase.pem */ = {isa = PBXFileReference; lastKnownFileType = text; path = "multiple-keys-testcase.pem"; sourceTree = "<group>"; };
+		934AB81B1D36BAC700365679 /* multiple-keys-testcase.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "multiple-keys-testcase.sh"; sourceTree = "<group>"; };
 		BB8460AC1CC608F6006F802C /* NSData+SHA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+SHA.h"; sourceTree = "<group>"; };
 		BB8460AD1CC608F6006F802C /* NSData+SHA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+SHA.m"; sourceTree = "<group>"; };
 		C01F96131C5AC3E300F232AC /* SwiftyRSAObjcTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwiftyRSAObjcTests.m; sourceTree = "<group>"; };
@@ -136,6 +139,8 @@
 				C03D82961B45E886008711CF /* swiftyrsa-private.pem */,
 				C03D82971B45E886008711CF /* swiftyrsa-public.der */,
 				C03D82981B45E886008711CF /* swiftyrsa-public.pem */,
+				934AB81A1D36BA8D00365679 /* multiple-keys-testcase.pem */,
+				934AB81B1D36BAC700365679 /* multiple-keys-testcase.sh */,
 			);
 			path = keys;
 			sourceTree = "<group>";
@@ -244,6 +249,7 @@
 				C0646A481CAF29E000587FF1 /* swiftyrsa-private-headerless.pem in Resources */,
 				C03D829A1B45E886008711CF /* swiftyrsa-public.der in Resources */,
 				C0646A491CAF29E000587FF1 /* swiftyrsa-public-headerless.pem in Resources */,
+				934AB81C1D36E45B00365679 /* multiple-keys-testcase.pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
