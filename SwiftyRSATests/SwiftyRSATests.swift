@@ -192,4 +192,29 @@ class SwiftyRSATests: XCTestCase {
         
     }
     
+    /// See also: multiple-keys-testcase.sh for the generation of this file
+    func testReadingPublicKeysFromComplexPEMFileWorksCorrectly(){
+        let input = TestUtils.pemKeyString(name: "multiple-keys-testcase")
+        
+        XCTAssertEqual(
+            SwiftyRSA().publicKeysFromString(input).count,
+            9
+        )
+    }
+    
+    func testReadingPublicKeysFromEmptyPEMFileReturnsEmptyArray(){
+        XCTAssertEqual(
+            SwiftyRSA().publicKeysFromString("").count,
+            0
+        )
+    }
+    
+    func testReadingPublicKeysFromPrivateKeyPEMFileReturnsEmptyArray(){
+        let input = TestUtils.pemKeyString(name: "swiftyrsa-private")
+        
+        XCTAssertEqual(
+            SwiftyRSA().publicKeysFromString(input).count,
+            0
+        )
+    }
 }
