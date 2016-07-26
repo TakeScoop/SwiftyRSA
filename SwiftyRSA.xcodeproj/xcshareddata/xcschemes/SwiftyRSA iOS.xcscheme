@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C03D82751B45E649008711CF"
                BuildableName = "SwiftyRSA.framework"
-               BlueprintName = "SwiftyRSA"
+               BlueprintName = "SwiftyRSA iOS"
                ReferencedContainer = "container:SwiftyRSA.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -59,7 +59,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C03D82751B45E649008711CF"
             BuildableName = "SwiftyRSA.framework"
-            BlueprintName = "SwiftyRSA"
+            BlueprintName = "SwiftyRSA iOS"
             ReferencedContainer = "container:SwiftyRSA.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -81,7 +81,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C03D82751B45E649008711CF"
             BuildableName = "SwiftyRSA.framework"
-            BlueprintName = "SwiftyRSA"
+            BlueprintName = "SwiftyRSA iOS"
             ReferencedContainer = "container:SwiftyRSA.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -99,7 +99,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C03D82751B45E649008711CF"
             BuildableName = "SwiftyRSA.framework"
-            BlueprintName = "SwiftyRSA"
+            BlueprintName = "SwiftyRSA iOS"
             ReferencedContainer = "container:SwiftyRSA.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
