@@ -3,6 +3,8 @@ SwiftyRSA Changelog
 
 # master
 
+# [0.4.0]
+
  - Add support for SHA2 (224,256,384 & 512 bits) digest algorithms
  - `verifySHA1SignatureData` & `signSHA1Digest` are now deprecated; use `verifySignature()`
    and `signDigest()`
@@ -42,7 +44,8 @@ SwiftyRSA Changelog
 
 Initial release.
 
-[master]: https://github.com/TakeScoop/SwiftyRSA/compare/0.3.0...master
+[master]: https://github.com/TakeScoop/SwiftyRSA/compare/0.4.0...master
+[0.4.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.4.0
 [0.3.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.3.0
 [0.2.1]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.2.1
 [0.2.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.2.0
