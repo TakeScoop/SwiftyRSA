@@ -2,12 +2,15 @@ SwiftyRSA Changelog
 ===================
 
 # master
+
  - Add support for SHA2 (224,256,384 & 512 bits) digest algorithms
  - `verifySHA1SignatureData` & `signSHA1Digest` are now deprecated; use `verifySignature()`
    and `signDigest()`
  - Objective-C sign & verification functions now require a `digestMethod:` parameter
  - Added support to read multiple keys from an input file using `publicKeysFromString()`.
 	[#22](https://github.com/TakeScoop/SwiftyRSA/pull/22)
+ - Added WatchOS and tvOS support.
+   [#23](https://github.com/TakeScoop/SwiftyRSA/pull/23)
 
 # [0.3.0]
 
