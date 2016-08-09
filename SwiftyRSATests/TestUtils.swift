@@ -11,13 +11,13 @@ import Foundation
 @objc public class TestUtils: NSObject {
     static public func pemKeyString(name: String) -> String {
         let bundle = Bundle(for: TestUtils.self)
-        let pubPath = bundle.pathForResource(name, ofType: "pem")!
+        let pubPath = bundle.path(forResource: name, ofType: "pem")!
         return (try! NSString(contentsOfFile: pubPath, encoding: String.Encoding.utf8.rawValue)) as String
     }
     
     static public func derKeyData(name: String) -> Data {
         let bundle = Bundle(for: TestUtils.self)
-        let pubPath  = bundle.pathForResource(name, ofType: "der")!
+        let pubPath  = bundle.path(forResource: name, ofType: "der")!
         return (try! Data(contentsOf: URL(fileURLWithPath: pubPath)))
     }
 }
