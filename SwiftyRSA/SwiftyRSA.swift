@@ -144,7 +144,7 @@ public class SwiftyRSA: NSObject {
         do {
             key = try rsa.publicKeyFromPEMString(publicKeyPEM)
         } catch {
-            return VerificationResult(isSuccessful: false, error: error)
+            return VerificationResult(isSuccessful: false, error: error as NSError)
         }
         return rsa.verifySignatureString(str, signature: signature, publicKey: key, digestMethod: digestMethod)
     }
@@ -167,7 +167,7 @@ public class SwiftyRSA: NSObject {
         do {
             key = try rsa.publicKeyFromPEMString(publicKeyPEM)
         } catch {
-            return VerificationResult(isSuccessful: false, error: error)
+            return VerificationResult(isSuccessful: false, error: error as NSError)
         }
         return rsa.verifySignatureData(data, signatureData: signature, publicKey: key, digestMethod: digestMethod)
     }
@@ -190,7 +190,7 @@ public class SwiftyRSA: NSObject {
         do {
             key = try rsa.publicKeyFromDERData(publicKeyDER)
         } catch {
-            return VerificationResult(isSuccessful: false, error: error)
+            return VerificationResult(isSuccessful: false, error: error as NSError)
         }
         return rsa.verifySignatureString(str, signature: signature, publicKey: key, digestMethod: digestMethod)
     }
@@ -213,7 +213,7 @@ public class SwiftyRSA: NSObject {
         do {
             key = try rsa.publicKeyFromDERData(publicKeyDER)
         } catch {
-            return VerificationResult(isSuccessful: false, error: error)
+            return VerificationResult(isSuccessful: false, error: error as NSError)
         }
         return rsa.verifySignatureData(data, signatureData: signature, publicKey: key, digestMethod: digestMethod)
     }
@@ -244,7 +244,7 @@ public class SwiftyRSA: NSObject {
         let blockSize = SecKeyGetBlockSize(publicKey)
         let maxChunkSize = blockSize - 11
         
-        var decryptedDataAsArray = [UInt8](repeating: 0, count: data.count / sizeof(UInt8.self))
+        var decryptedDataAsArray = [UInt8](repeating: 0, count: data.count / MemoryLayout<UInt8>.size)
         (data as NSData).getBytes(&decryptedDataAsArray, length: data.count)
         
         var encryptedData = [UInt8](repeating: 0, count: 0)
@@ -275,7 +275,7 @@ public class SwiftyRSA: NSObject {
     public func decryptData(_ encryptedData: Data, privateKey: SecKey, padding: SecPadding) throws -> Data {
         let blockSize = SecKeyGetBlockSize(privateKey)
         
-        var encryptedDataAsArray = [UInt8](repeating: 0, count: encryptedData.count / sizeof(UInt8.self))
+        var encryptedDataAsArray = [UInt8](repeating: 0, count: encryptedData.count / MemoryLayout<UInt8>.size)
         (encryptedData as NSData).getBytes(&encryptedDataAsArray, length: encryptedData.count)
         
         var decryptedData = [UInt8](repeating: 0, count: 0)
@@ -493,7 +493,7 @@ public class SwiftyRSA: NSObject {
         }
         
         // Add persistent version of the key to system keychain
-        let persistKey = UnsafeMutablePointer<AnyObject?>(nil)
+        let persistKey = UnsafeMutablePointer<AnyObject?>(mutating: nil)
         let keyClass   = isPublic ? kSecAttrKeyClassPublic : kSecAttrKeyClassPrivate
         
         // Add persistent version of the key to system keychain
@@ -577,7 +577,7 @@ public class SwiftyRSA: NSObject {
      https://lapo.it/asn1js/#30819F300D06092A864886F70D010101050003818D0030818902818100D0674615A252ED3D75D2A3073A0A8A445F3188FD3BEB8BA8584F7299E391BDEC3427F287327414174997D147DD8CA62647427D73C9DA5504E0A3EED5274A1D50A1237D688486FADB8B82061675ABFA5E55B624095DB8790C6DBCAE83D6A8588C9A6635D7CF257ED1EDE18F04217D37908FD0CBB86B2C58D5F762E6207FF7B92D0203010001
      */
     private func stripPublicKeyHeader(_ keyData: Data) throws -> Data {
-        let count = keyData.count / sizeof(CUnsignedChar.self)
+        let count = keyData.count / MemoryLayout<CUnsignedChar>.size
         
         guard count > 0 else {
             throw SwiftyRSAError(message: "Provided public key is empty")
@@ -650,11 +650,11 @@ public class SwiftyRSA: NSObject {
         let blockSize = SecKeyGetBlockSize(privateKey)
         let maxChunkSize = blockSize - 11
         
-        guard (digest.count / sizeof(UInt8.self) <= maxChunkSize) else {
+        guard (digest.count / MemoryLayout<UInt8>.size <= maxChunkSize) else {
             throw SwiftyRSAError(message: "data length exceeds \(maxChunkSize)")
         }
         
-        var signDataAsArray = [UInt8](repeating: 0, count: digest.count / sizeof(UInt8.self))
+        var signDataAsArray = [UInt8](repeating: 0, count: digest.count / MemoryLayout<UInt8>.size)
         (digest as NSData).getBytes(&signDataAsArray, length: digest.count)
         
         var signatureData = [UInt8](repeating: 0, count: blockSize)
@@ -673,10 +673,10 @@ public class SwiftyRSA: NSObject {
     
     private func verifySignatureData(_ SHAData: Data, signature: Data, publicKey: SecKey, padding: SecPadding) -> VerificationResult {
         
-        var verifyDataAsArray = [UInt8](repeating: 0, count: SHAData.count / sizeof(UInt8.self))
+        var verifyDataAsArray = [UInt8](repeating: 0, count: SHAData.count / MemoryLayout<UInt8>.size)
         (SHAData as NSData).getBytes(&verifyDataAsArray, length: SHAData.count)
         
-        var signatureDataAsArray = [UInt8](repeating: 0, count: signature.count / sizeof(UInt8.self))
+        var signatureDataAsArray = [UInt8](repeating: 0, count: signature.count / MemoryLayout<UInt8>.size)
         (signature as NSData).getBytes(&signatureDataAsArray, length: signature.count)
         
         let status = SecKeyRawVerify(publicKey, padding, verifyDataAsArray, verifyDataAsArray.count, signatureDataAsArray, signatureDataAsArray.count)

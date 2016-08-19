@@ -96,7 +96,9 @@ class SwiftyRSATests: XCTestCase {
     
     func testDataEncryptDecrypt() {
         let bytes = [UInt32](repeating: 0, count: 2048).map { _ in arc4random() }
-        let data = Data(bytes: UnsafePointer<UInt8>(bytes), count: bytes.count * sizeof(UInt32.self))
+        let capacity = bytes.count * MemoryLayout<UInt32>.size
+        let int8Bytes = UnsafeRawPointer(UnsafePointer<UInt32>(bytes)).bindMemory(to: UInt8.self, capacity: capacity)
+        let data = Data(bytes: int8Bytes, count: capacity)
         
         let pubString = TestUtils.pemKeyString(name: "swiftyrsa-public")
         let privString = TestUtils.pemKeyString(name: "swiftyrsa-private")
@@ -111,7 +113,9 @@ class SwiftyRSATests: XCTestCase {
         
         
         let bytes = [UInt32](repeating: 0, count: 2048).map { _ in arc4random() }
-        let data = Data(bytes: UnsafePointer<UInt8>(bytes), count: bytes.count * sizeof(UInt32.self))
+        let capacity = bytes.count * MemoryLayout<UInt32>.size
+        let int8Bytes = UnsafeRawPointer(UnsafePointer<UInt32>(bytes)).bindMemory(to: UInt8.self, capacity: capacity)
+        let data = Data(bytes: int8Bytes, count: capacity)
         
         let testString = "Lorum Ipsum Ipso Facto Ad Astra Ixnay Onay Ayway"
         
@@ -149,7 +153,9 @@ class SwiftyRSATests: XCTestCase {
         XCTAssertTrue(result.isSuccessful)
         
         let badBytes = [UInt32](repeating: 0, count: 16).map { _ in arc4random() }
-        let badData = Data(bytes: UnsafePointer<UInt8>(badBytes), count: badBytes.count * sizeof(UInt32.self))
+        let badCapacity = badBytes.count * MemoryLayout<UInt32>.size
+        let badInt8Bytes = UnsafeRawPointer(UnsafePointer<UInt32>(badBytes)).bindMemory(to: UInt8.self, capacity: capacity)
+        let badData = Data(bytes: badInt8Bytes, count: badCapacity)
         
         result = SwiftyRSA.verifySignatureData(badData, signature:  signature, publicKeyPEM: pubString)
         XCTAssertFalse(result.isSuccessful)
