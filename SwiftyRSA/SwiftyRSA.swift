@@ -279,7 +279,7 @@ public class SwiftyRSA: NSObject {
     // Encrypts data with a RSA key
     public func encryptData(data: NSData, publicKey: SecKeyRef, padding: SecPadding) throws -> NSData {
         let blockSize = SecKeyGetBlockSize(publicKey)
-        let maxChunkSize = blockSize - 11
+        let maxChunkSize = (padding == .None) ? blockSize : blockSize - 11
         
         var decryptedDataAsArray = [UInt8](count: data.length / sizeof(UInt8), repeatedValue: 0)
         data.getBytes(&decryptedDataAsArray, length: data.length)

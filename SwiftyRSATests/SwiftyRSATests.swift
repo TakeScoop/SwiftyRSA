@@ -107,6 +107,25 @@ class SwiftyRSATests: XCTestCase {
         XCTAssertEqual(data, decrypted)
     }
     
+    func testNoPaddingEncryptDecrypt() {
+        let bytes = [UInt32](count: 32, repeatedValue: 0).map { _ in arc4random() }
+        let data = NSData(bytes: bytes, length: bytes.count * sizeof(UInt32))
+        
+        let pubString = TestUtils.pemKeyString(name: "swiftyrsa-public")
+        let privString = TestUtils.pemKeyString(name: "swiftyrsa-private")
+        
+        let encrypted = try! SwiftyRSA.encryptData(data, publicKeyPEM: pubString, padding: .None)
+        let encrypted2 = try! SwiftyRSA.encryptData(encrypted, publicKeyPEM: pubString, padding: .None)
+        
+        XCTAssertTrue(encrypted.length==encrypted2.length);
+        XCTAssertTrue(encrypted.length==128);
+        
+        let decrypted1 = try! SwiftyRSA.decryptData(encrypted2, privateKeyPEM: privString, padding: .None)
+        let decrypted = try! SwiftyRSA.decryptData(decrypted1, privateKeyPEM: privString, padding: .None)
+        
+        XCTAssertEqual(data, decrypted)
+    }
+    
     func testSignVerify() {
         
         

@@ -104,6 +104,29 @@
     XCTAssertTrue([data isEqualToData:decrypted]);
 }
 
+- (void)testNoPaddingEncryptDecrypt {
+    
+    
+    NSMutableData* data = [NSMutableData dataWithCapacity:32 * sizeof(UInt32)];
+    for (unsigned int i = 0 ; i < 32 ; ++i ){
+        u_int32_t randomBits = arc4random();
+        [data appendBytes:(void*)&randomBits length:sizeof(UInt32)];
+    }
+    
+    NSString* pubString = [TestUtils pemKeyStringWithName:@"swiftyrsa-public"];
+    NSString* privString = [TestUtils pemKeyStringWithName:@"swiftyrsa-private"];
+    
+    NSData* encrypted = [SwiftyRSA encryptData:data publicKeyPEM:pubString padding:kSecPaddingNone error:nil];
+    NSData* encrypted2 = [SwiftyRSA encryptData:encrypted publicKeyPEM:pubString padding:kSecPaddingNone error:nil];
+    XCTAssertTrue(encrypted.length==encrypted2.length);
+    XCTAssertTrue(encrypted.length==128);
+    
+    NSData* decrypted1 = [SwiftyRSA decryptData:encrypted2 privateKeyPEM:privString padding:kSecPaddingNone error:nil];
+    NSData* decrypted = [SwiftyRSA decryptData:decrypted1 privateKeyPEM:privString padding:kSecPaddingNone error:nil];
+    
+    XCTAssertTrue([data isEqualToData:decrypted]);
+}
+
 - (void)testSignVerify {
     
     NSMutableData* data = [NSMutableData dataWithCapacity:2048 * sizeof(UInt32)];
