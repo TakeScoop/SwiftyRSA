@@ -3,6 +3,8 @@ SwiftyRSA Changelog
 
 # master
 
+ - Don't reduce maxmim blocksize when padding is `None` [#29](https://github.com/TakeScoop/SwiftyRSA/issues/29)
+
 # [0.4.0]
 
  - Add support for SHA2 (224,256,384 & 512 bits) digest algorithms
