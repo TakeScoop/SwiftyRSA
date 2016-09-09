@@ -39,6 +39,16 @@ public class VerificationResult: NSObject {
     }
 }
 
+extension CFString: Hashable {
+    public var hashValue: Int {
+        return (self as String).hashValue
+    }
+    
+    static public func == (lhs: CFString, rhs: CFString) -> Bool {
+        return lhs as String == rhs as String
+    }
+}
+
 @objc
 public class SwiftyRSA: NSObject {
     
@@ -492,40 +502,65 @@ public class SwiftyRSA: NSObject {
             throw SwiftyRSAError(message: "Couldn't create tag data for key")
         }
         
-        // Add persistent version of the key to system keychain
-        let persistKey = UnsafeMutablePointer<AnyObject?>(mutating: nil)
-        let keyClass   = isPublic ? kSecAttrKeyClassPublic : kSecAttrKeyClassPrivate
+        let keyClass = isPublic ? kSecAttrKeyClassPublic : kSecAttrKeyClassPrivate
         
-        // Add persistent version of the key to system keychain
-        let keyDict = NSMutableDictionary()
-        keyDict.setObject(kSecClassKey,         forKey: kSecClass as! NSCopying)
-        keyDict.setObject(tagData,              forKey: kSecAttrApplicationTag as! NSCopying)
-        keyDict.setObject(kSecAttrKeyTypeRSA,   forKey: kSecAttrKeyType as! NSCopying)
-        keyDict.setObject(keyData,              forKey: kSecValueData as! NSCopying)
-        keyDict.setObject(keyClass,             forKey: kSecAttrKeyClass as! NSCopying)
-        keyDict.setObject(NSNumber(value: true), forKey: kSecReturnPersistentRef as! NSCopying)
-        keyDict.setObject(kSecAttrAccessibleWhenUnlocked, forKey: kSecAttrAccessible as! NSCopying)
-        
-        var secStatus = SecItemAdd(keyDict as CFDictionary, persistKey)
-        if secStatus != noErr && secStatus != errSecDuplicateItem {
-            throw SwiftyRSAError(message: "Provided key couldn't be added to the keychain")
+        // On iOS 10+, we can use SecKeyCreateWithData without going through the keychain
+        if #available(iOS 10.0, *) {
+            
+            let sizeInBits = keyData.count * MemoryLayout<UInt8>.size
+            let keyDict: [CFString: Any] = [
+                kSecAttrKeyType: kSecAttrKeyTypeRSA,
+                kSecAttrKeyClass: keyClass,
+                kSecAttrKeySizeInBits: NSNumber(value: sizeInBits)
+            ]
+            
+            guard let key = SecKeyCreateWithData(keyData as CFData, keyDict as CFDictionary, nil) else {
+                throw SwiftyRSAError(message: "Couldn't create key reference from key data")
+            }
+            return key
+            
+        // On iOS 9 and earlier, add a persistent version of the key to the system keychain
+        } else {
+            
+            let persistKey = UnsafeMutablePointer<AnyObject?>(mutating: nil)
+            
+            let keyAddDict: [CFString: Any] = [
+                kSecClass: kSecClassKey,
+                kSecAttrApplicationTag: tagData,
+                kSecAttrKeyType: kSecAttrKeyTypeRSA,
+                kSecValueData: keyData,
+                kSecAttrKeyClass: keyClass,
+                kSecReturnPersistentRef: NSNumber(value: true),
+                kSecAttrAccessible: kSecAttrAccessibleWhenUnlocked
+            ]
+            
+            var secStatus = SecItemAdd(keyAddDict as CFDictionary, persistKey)
+            if secStatus != noErr && secStatus != errSecDuplicateItem {
+                throw SwiftyRSAError(message: "Provided key couldn't be added to the keychain")
+            }
+            
+            // Store the key tag so we can remove it from the keychain later on
+            keyTags.append(tagData)
+            
+            let keyCopyDict: [CFString: Any] = [
+                kSecClass: kSecClassKey,
+                kSecAttrApplicationTag: tagData,
+                kSecAttrKeyType: kSecAttrKeyTypeRSA,
+                kSecAttrKeyClass: keyClass,
+                kSecAttrAccessible: kSecAttrAccessibleWhenUnlocked,
+                kSecReturnRef: NSNumber(value: true),
+            ]
+            
+            // Now fetch the SecKeyRef version of the key
+            var keyRef: AnyObject? = nil
+            secStatus = SecItemCopyMatching(keyCopyDict as CFDictionary, &keyRef)
+            
+            guard let unwrappedKeyRef = keyRef else {
+                throw SwiftyRSAError(message: "Couldn't get key reference from the keychain")
+            }
+            
+            return unwrappedKeyRef as! SecKey
         }
-        
-        keyTags.append(tagData)
-        
-        // Now fetch the SecKeyRef version of the key
-        var keyRef: AnyObject? = nil
-        keyDict.removeObject(forKey: kSecValueData)
-        keyDict.removeObject(forKey: kSecReturnPersistentRef)
-        keyDict.setObject(NSNumber(value: true), forKey: kSecReturnRef as! NSCopying)
-        keyDict.setObject(kSecAttrKeyTypeRSA,   forKey: kSecAttrKeyType as! NSCopying)
-        secStatus = SecItemCopyMatching(keyDict as CFDictionary, &keyRef)
-        
-        guard let unwrappedKeyRef = keyRef else {
-            throw SwiftyRSAError(message: "Couldn't get key reference from the keychain")
-        }
-        
-        return unwrappedKeyRef as! SecKey
     }
     
     private func dataFromPEMKey(_ key: String) throws -> Data {
