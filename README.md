@@ -60,7 +60,7 @@ of the supplied `String`/`NSData` and use this to generate the digital signature
 
 ```
 // String
-let signatureString = try! SwitfyRSA.signString(str, privateKeyPEM: pemString)
+let signatureString = try! SwiftyRSA.signString(str, privateKeyPEM: pemString)
 
 // Data
 let signatureData = try! SwiftyRSA.signData(data, privateKeyPEM: pemString)

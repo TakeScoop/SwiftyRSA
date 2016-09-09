@@ -109,6 +109,27 @@ class SwiftyRSATests: XCTestCase {
         XCTAssertEqual(data, decrypted)
     }
     
+    func testNoPaddingEncryptDecrypt() {
+        let bytes = [UInt32](repeating: 0, count: 32).map { _ in arc4random() }
+        let capacity = bytes.count * MemoryLayout<UInt32>.size
+        let int8Bytes = UnsafeRawPointer(UnsafePointer<UInt32>(bytes)).bindMemory(to: UInt8.self, capacity: capacity)
+        let data = Data(bytes: int8Bytes, count: capacity)
+        
+        let pubString = TestUtils.pemKeyString(name: "swiftyrsa-public")
+        let privString = TestUtils.pemKeyString(name: "swiftyrsa-private")
+        
+        let encrypted = try! SwiftyRSA.encryptData(data, publicKeyPEM: pubString, padding: [])
+        let encrypted2 = try! SwiftyRSA.encryptData(encrypted, publicKeyPEM: pubString, padding: [])
+        
+        XCTAssertEqual(encrypted.count, encrypted2.count)
+        XCTAssertEqual(encrypted.count, 128)
+        
+        let decrypted1 = try! SwiftyRSA.decryptData(encrypted2, privateKeyPEM: privString, padding: [])
+        let decrypted = try! SwiftyRSA.decryptData(decrypted1, privateKeyPEM: privString, padding: [])
+        
+        XCTAssertEqual(data, decrypted)
+    }
+    
     func testSignVerify() {
         
         
@@ -198,4 +219,29 @@ class SwiftyRSATests: XCTestCase {
         
     }
     
+    /// See also: multiple-keys-testcase.sh for the generation of this file
+    func testReadingPublicKeysFromComplexPEMFileWorksCorrectly(){
+        let input = TestUtils.pemKeyString(name: "multiple-keys-testcase")
+        
+        XCTAssertEqual(
+            SwiftyRSA().publicKeysFromString(input).count,
+            9
+        )
+    }
+    
+    func testReadingPublicKeysFromEmptyPEMFileReturnsEmptyArray(){
+        XCTAssertEqual(
+            SwiftyRSA().publicKeysFromString("").count,
+            0
+        )
+    }
+    
+    func testReadingPublicKeysFromPrivateKeyPEMFileReturnsEmptyArray(){
+        let input = TestUtils.pemKeyString(name: "swiftyrsa-private")
+        
+        XCTAssertEqual(
+            SwiftyRSA().publicKeysFromString(input).count,
+            0
+        )
+    }
 }
