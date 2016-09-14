@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0730"
+   LastUpgradeVersion = "0800"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "934AB8471D370BDD00365679"
+               BlueprintIdentifier = "EFE02F454925076C3D6C2F0B0E45892E"
                BuildableName = "SwiftyRSA.framework"
                BlueprintName = "SwiftyRSA watchOS"
                ReferencedContainer = "container:SwiftyRSA.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "934AB8471D370BDD00365679"
+            BlueprintIdentifier = "EFE02F454925076C3D6C2F0B0E45892E"
             BuildableName = "SwiftyRSA.framework"
             BlueprintName = "SwiftyRSA watchOS"
             ReferencedContainer = "container:SwiftyRSA.xcodeproj">
@@ -63,7 +63,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "934AB8471D370BDD00365679"
+            BlueprintIdentifier = "EFE02F454925076C3D6C2F0B0E45892E"
             BuildableName = "SwiftyRSA.framework"
             BlueprintName = "SwiftyRSA watchOS"
             ReferencedContainer = "container:SwiftyRSA.xcodeproj">
