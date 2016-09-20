@@ -6,9 +6,10 @@
 //  Copyright © 2016 Scoop. All rights reserved.
 //
 
+@import SwiftyRSA;
+
 #import <XCTest/XCTest.h>
 #import "SwiftyRSATests-Swift.h"
-@import SwiftyRSA;
 
 @interface SwiftyRSAObjcTests : XCTestCase
 
@@ -18,7 +19,7 @@
 
 - (void)testClassPEM {
     NSString* str = @"ClearText";
-    
+        
     NSString* pubString = [TestUtils pemKeyStringWithName:@"swiftyrsa-public"];
     NSString* privString = [TestUtils pemKeyStringWithName:@"swiftyrsa-private"];
     
@@ -148,20 +149,20 @@
         NSData* digestSignature = [SwiftyRSA signData:data privateKeyPEM:privString digestMethod:hashingMethods[i] error:&error];
         XCTAssertNil(error);
         
-        VerificationResult* result = [SwiftyRSA verifySignatureData:data signature:digestSignature publicKeyPEM:pubString digestMethod:hashingMethods[i] error:&error];
+        VerificationResult* result = [SwiftyRSA verifySignatureData:data signature:digestSignature publicKeyPEM:pubString digestMethod:hashingMethods[i]];
         XCTAssertNil(error);
-        XCTAssert(result.boolValue);
+        XCTAssertTrue(result.isSuccessful);
         
         NSString *digestString = [SwiftyRSA signString:testString privateKeyPEM:privString digestMethod:hashingMethods[i] error:&error];
         XCTAssertNil(error);
         
-        result = [SwiftyRSA verifySignatureString:testString signature:digestString publicKeyPEM:pubString digestMethod:hashingMethods[i] error:&error];
+        result = [SwiftyRSA verifySignatureString:testString signature:digestString publicKeyPEM:pubString digestMethod:hashingMethods[i]];
         XCTAssertNil(error);
-        XCTAssert(result.boolValue);
+        XCTAssertTrue(result.isSuccessful);
         
-        result = [SwiftyRSA verifySignatureString:testString signature:digestString publicKeyDER:pubData digestMethod:hashingMethods[i] error:&error];
+        result = [SwiftyRSA verifySignatureString:testString signature:digestString publicKeyDER:pubData digestMethod:hashingMethods[i]];
         XCTAssertNil(error);
-        XCTAssert(result.boolValue);
+        XCTAssertTrue(result.isSuccessful);
     }
     
     
@@ -181,30 +182,30 @@
     
     XCTAssertNil(error);
     
-    VerificationResult* result = [rsa verifySHA1SignatureData:digest signature:digestSignature publicKey:pubKey error:&error];
+    VerificationResult* result = [rsa verifySHA1SignatureData:digest signature:digestSignature publicKey:pubKey];
     
     XCTAssertNil(error);
-    XCTAssert(result.boolValue);
+    XCTAssertTrue(result.isSuccessful);
 
     digest = [data SwiftyRSASHA224];
     digestSignature = [rsa signDigest:digest privateKey:privKey digestMethod:DigestTypeSHA224 error:&error];
     
     XCTAssertNil(error);
     
-    result = [rsa verifySignatureData:digest signature:digestSignature publicKey:pubKey digestMethod:DigestTypeSHA224 error:&error];
+    result = [rsa verifySignatureData:digest signature:digestSignature publicKey:pubKey digestMethod:DigestTypeSHA224];
     
     XCTAssertNil(error);
-    XCTAssert(result.boolValue);
+    XCTAssertTrue(result.isSuccessful);
     
     digest = [data SwiftyRSASHA256];
     digestSignature = [rsa signDigest:digest privateKey:privKey digestMethod:DigestTypeSHA256 error:&error];
     
     XCTAssertNil(error);
     
-    result = [rsa verifySignatureData:digest signature:digestSignature publicKey:pubKey digestMethod:DigestTypeSHA256 error:&error];
+    result = [rsa verifySignatureData:digest signature:digestSignature publicKey:pubKey digestMethod:DigestTypeSHA256];
     
     XCTAssertNil(error);
-    XCTAssert(result.boolValue);
+    XCTAssertTrue(result.isSuccessful);
     
     digest = [data SwiftyRSASHA384];
 
@@ -212,10 +213,10 @@
     
     XCTAssertNil(error);
     
-    result = [rsa verifySignatureData:digest signature:digestSignature publicKey:pubKey digestMethod:DigestTypeSHA384 error:&error];
+    result = [rsa verifySignatureData:digest signature:digestSignature publicKey:pubKey digestMethod:DigestTypeSHA384];
     
     XCTAssertNil(error);
-    XCTAssert(result.boolValue);
+    XCTAssertTrue(result.isSuccessful);
     
     digest = [data SwiftyRSASHA512];
 
@@ -223,10 +224,10 @@
     
     XCTAssertNil(error);
     
-    result = [rsa verifySignatureData:digest signature:digestSignature publicKey:pubKey digestMethod:DigestTypeSHA512 error:&error];
+    result = [rsa verifySignatureData:digest signature:digestSignature publicKey:pubKey digestMethod:DigestTypeSHA512];
     
     XCTAssertNil(error);
-    XCTAssert(result.boolValue);
+    XCTAssertTrue(result.isSuccessful);
     
 }
 

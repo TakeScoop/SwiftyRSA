@@ -83,7 +83,7 @@ class SwiftyRSATests: XCTestCase {
     }
     
     func testLongString() {
-        let str = [String](count: 9999, repeatedValue: "a").joinWithSeparator("")
+        let str = [String](repeating: "a", count: 9999).joined(separator: "")
         
         let pubString = TestUtils.pemKeyString(name: "swiftyrsa-public")
         let privString = TestUtils.pemKeyString(name: "swiftyrsa-private")
@@ -95,8 +95,10 @@ class SwiftyRSATests: XCTestCase {
     }
     
     func testDataEncryptDecrypt() {
-        let bytes = [UInt32](count: 2048, repeatedValue: 0).map { _ in arc4random() }
-        let data = NSData(bytes: bytes, length: bytes.count * sizeof(UInt32))
+        let bytes = [UInt32](repeating: 0, count: 2048).map { _ in arc4random() }
+        let capacity = bytes.count * MemoryLayout<UInt32>.size
+        let int8Bytes = UnsafeRawPointer(UnsafePointer<UInt32>(bytes)).bindMemory(to: UInt8.self, capacity: capacity)
+        let data = Data(bytes: int8Bytes, count: capacity)
         
         let pubString = TestUtils.pemKeyString(name: "swiftyrsa-public")
         let privString = TestUtils.pemKeyString(name: "swiftyrsa-private")
@@ -108,20 +110,22 @@ class SwiftyRSATests: XCTestCase {
     }
     
     func testNoPaddingEncryptDecrypt() {
-        let bytes = [UInt32](count: 32, repeatedValue: 0).map { _ in arc4random() }
-        let data = NSData(bytes: bytes, length: bytes.count * sizeof(UInt32))
+        let bytes = [UInt32](repeating: 0, count: 32).map { _ in arc4random() }
+        let capacity = bytes.count * MemoryLayout<UInt32>.size
+        let int8Bytes = UnsafeRawPointer(UnsafePointer<UInt32>(bytes)).bindMemory(to: UInt8.self, capacity: capacity)
+        let data = Data(bytes: int8Bytes, count: capacity)
         
         let pubString = TestUtils.pemKeyString(name: "swiftyrsa-public")
         let privString = TestUtils.pemKeyString(name: "swiftyrsa-private")
         
-        let encrypted = try! SwiftyRSA.encryptData(data, publicKeyPEM: pubString, padding: .None)
-        let encrypted2 = try! SwiftyRSA.encryptData(encrypted, publicKeyPEM: pubString, padding: .None)
+        let encrypted = try! SwiftyRSA.encryptData(data, publicKeyPEM: pubString, padding: [])
+        let encrypted2 = try! SwiftyRSA.encryptData(encrypted, publicKeyPEM: pubString, padding: [])
         
-        XCTAssertTrue(encrypted.length==encrypted2.length);
-        XCTAssertTrue(encrypted.length==128);
+        XCTAssertEqual(encrypted.count, encrypted2.count)
+        XCTAssertEqual(encrypted.count, 128)
         
-        let decrypted1 = try! SwiftyRSA.decryptData(encrypted2, privateKeyPEM: privString, padding: .None)
-        let decrypted = try! SwiftyRSA.decryptData(decrypted1, privateKeyPEM: privString, padding: .None)
+        let decrypted1 = try! SwiftyRSA.decryptData(encrypted2, privateKeyPEM: privString, padding: [])
+        let decrypted = try! SwiftyRSA.decryptData(decrypted1, privateKeyPEM: privString, padding: [])
         
         XCTAssertEqual(data, decrypted)
     }
@@ -129,8 +133,10 @@ class SwiftyRSATests: XCTestCase {
     func testSignVerify() {
         
         
-        let bytes = [UInt32](count: 2048, repeatedValue: 0).map { _ in arc4random() }
-        let data = NSData(bytes: bytes, length: bytes.count * sizeof(UInt32))
+        let bytes = [UInt32](repeating: 0, count: 2048).map { _ in arc4random() }
+        let capacity = bytes.count * MemoryLayout<UInt32>.size
+        let int8Bytes = UnsafeRawPointer(UnsafePointer<UInt32>(bytes)).bindMemory(to: UInt8.self, capacity: capacity)
+        let data = Data(bytes: int8Bytes, count: capacity)
         
         let testString = "Lorum Ipsum Ipso Facto Ad Astra Ixnay Onay Ayway"
         
@@ -148,66 +154,68 @@ class SwiftyRSATests: XCTestCase {
         
         for method in hashingMethods {
             let digestSignature = try! SwiftyRSA.signData(data, privateKeyPEM: privString, digestMethod: method)
-            var result = try! SwiftyRSA.verifySignatureData(data, signature: digestSignature, publicKeyPEM: pubString, digestMethod: method)
-            XCTAssert(result)
+            var result = SwiftyRSA.verifySignatureData(data, signature: digestSignature, publicKeyPEM: pubString, digestMethod: method)
+            XCTAssertTrue(result.isSuccessful)
             
             let signatureString = try! SwiftyRSA.signString(testString, privateKeyPEM: privString, digestMethod: method)
-            result = try! SwiftyRSA.verifySignatureString(testString, signature: signatureString, publicKeyPEM: pubString, digestMethod: method)
-            XCTAssert(result)
-            
-            result = try! SwiftyRSA.verifySignatureString(testString, signature: signatureString, publicKeyDER: pubData, digestMethod: method)
-            XCTAssert(result)
+            result = SwiftyRSA.verifySignatureString(testString, signature: signatureString, publicKeyPEM: pubString, digestMethod: method)
+            XCTAssertTrue(result.isSuccessful)
+                        
+            result = SwiftyRSA.verifySignatureString(testString, signature: signatureString, publicKeyDER: pubData, digestMethod: method)
+            XCTAssertTrue(result.isSuccessful)
         }
         
         let signature = try! SwiftyRSA.signData(data, privateKeyPEM: privString)
         
-        var result = try! SwiftyRSA.verifySignatureData(data, signature: signature, publicKeyPEM: pubString)
-        XCTAssert(result)
+        var result = SwiftyRSA.verifySignatureData(data, signature: signature, publicKeyPEM: pubString)
+        XCTAssertTrue(result.isSuccessful)
         
-        result = try! SwiftyRSA.verifySignatureData(data, signature:  signature, publicKeyDER:  pubData)
-        XCTAssert(result)
+        result = SwiftyRSA.verifySignatureData(data, signature:  signature, publicKeyDER:  pubData)
+        XCTAssertTrue(result.isSuccessful)
         
-        let badBytes = [UInt32](count: 16, repeatedValue: 0).map { _ in arc4random() }
-        let badData = NSData(bytes: badBytes, length: badBytes.count * sizeof(UInt32))
+        let badBytes = [UInt32](repeating: 0, count: 16).map { _ in arc4random() }
+        let badCapacity = badBytes.count * MemoryLayout<UInt32>.size
+        let badInt8Bytes = UnsafeRawPointer(UnsafePointer<UInt32>(badBytes)).bindMemory(to: UInt8.self, capacity: capacity)
+        let badData = Data(bytes: badInt8Bytes, count: badCapacity)
         
-        result = try! SwiftyRSA.verifySignatureData(badData, signature:  signature, publicKeyPEM: pubString)
-        XCTAssert(!result)
+        result = SwiftyRSA.verifySignatureData(badData, signature:  signature, publicKeyPEM: pubString)
+        XCTAssertFalse(result.isSuccessful)
         
         
-        var digest=data.SwiftyRSASHA1()
+        var digest = data.swiftyRSASHA1
         
         var digestSignature = try! rsa.signSHA1Digest(digest, privateKey: privKey)
         
-        result = try! rsa.verifySHA1SignatureData(digest, signature: digestSignature, publicKey: pubKey)
-        XCTAssert(result)
+        result = rsa.verifySHA1SignatureData(digest, signature: digestSignature, publicKey: pubKey)
+        XCTAssertTrue(result.isSuccessful)
         
-        digest = data.SwiftyRSASHA224()
+        digest = data.swiftyRSASHA224
         
         digestSignature = try! rsa.signDigest(digest, privateKey: privKey, digestMethod: .SHA224)
         
-        result = try! rsa.verifySignatureData(digest, signature: digestSignature, publicKey: pubKey, digestMethod: .SHA224)
-        XCTAssert(result)
+        result = rsa.verifySignatureData(digest, signature: digestSignature, publicKey: pubKey, digestMethod: .SHA224)
+        XCTAssertTrue(result.isSuccessful)
         
-        digest = data.SwiftyRSASHA256()
+        digest = data.swiftyRSASHA256
         
         digestSignature = try! rsa.signDigest(digest, privateKey: privKey, digestMethod: .SHA256)
         
-        result = try! rsa.verifySignatureData(digest, signature: digestSignature, publicKey: pubKey, digestMethod: .SHA256)
-        XCTAssert(result)
+        result = rsa.verifySignatureData(digest, signature: digestSignature, publicKey: pubKey, digestMethod: .SHA256)
+        XCTAssertTrue(result.isSuccessful)
         
-        digest = data.SwiftyRSASHA384()
+        digest = data.swiftyRSASHA384
         
         digestSignature = try! rsa.signDigest(digest, privateKey: privKey, digestMethod: .SHA384)
         
-        result = try! rsa.verifySignatureData(digest, signature: digestSignature, publicKey: pubKey, digestMethod: .SHA384)
-        XCTAssert(result)
+        result = rsa.verifySignatureData(digest, signature: digestSignature, publicKey: pubKey, digestMethod: .SHA384)
+        XCTAssertTrue(result.isSuccessful)
         
-        digest = data.SwiftyRSASHA512()
+        digest = data.swiftyRSASHA512
         
         digestSignature = try! rsa.signDigest(digest, privateKey: privKey, digestMethod: .SHA512)
         
-        result = try! rsa.verifySignatureData(digest, signature: digestSignature, publicKey: pubKey, digestMethod: .SHA512)
-        XCTAssert(result)
+        result = rsa.verifySignatureData(digest, signature: digestSignature, publicKey: pubKey, digestMethod: .SHA512)
+        XCTAssertTrue(result.isSuccessful)
         
     }
     
