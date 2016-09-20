@@ -1,11 +1,11 @@
 SwiftyRSA
 =========
 
-![https://cocoapods.org/pods/SwiftyRSA](https://img.shields.io/cocoapods/v/SwiftyRSA.svg)
+[![](https://img.shields.io/cocoapods/v/SwiftyRSA.svg)](https://cocoapods.org/pods/SwiftyRSA)
 ![](https://img.shields.io/badge/carthage-compatible-brightgreen.svg)
 ![](https://img.shields.io/cocoapods/p/SwiftyRSA.svg)
 ![](https://img.shields.io/badge/language-swift_3.0-brightgreen.svg)
-![https://travis-ci.org/TakeScoop/SwiftyRSA](https://img.shields.io/travis/TakeScoop/SwiftyRSA/master.svg)
+[![](https://img.shields.io/travis/TakeScoop/SwiftyRSA/master.svg)](https://travis-ci.org/TakeScoop/SwiftyRSA)
 
 **Public key RSA encryption in Swift.**
 
