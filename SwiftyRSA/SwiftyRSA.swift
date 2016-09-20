@@ -631,7 +631,7 @@ public class SwiftyRSA: NSObject {
         
         // Decode base64 key
         let base64EncodedKey = lines.joined(separator: "")
-        let keyData = Data(base64Encoded: base64EncodedKey, options: [])
+        let keyData = Data(base64Encoded: base64EncodedKey, options: .ignoreUnknownCharacters)
         
         guard let unwrappedKeyData = keyData, unwrappedKeyData.count != 0 else {
             throw SwiftyRSAError(message: "Couldn't decode PEM key data (base64)")
