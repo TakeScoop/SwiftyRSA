@@ -3,6 +3,9 @@ SwiftyRSA Changelog
 
 # master
 
+# [0.5.0]
+
+ - Migrated source code to Swift 3.0
  - Don't reduce maxmim blocksize when padding is `None` [#29](https://github.com/TakeScoop/SwiftyRSA/issues/29)
 
 # [0.4.0]
@@ -46,7 +49,8 @@ SwiftyRSA Changelog
 
 Initial release.
 
-[master]: https://github.com/TakeScoop/SwiftyRSA/compare/0.4.0...master
+[master]: https://github.com/TakeScoop/SwiftyRSA/compare/0.5.0...master
+[0.5.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.5.0
 [0.4.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.4.0
 [0.3.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.3.0
 [0.2.1]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.2.1

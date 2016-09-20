@@ -59,12 +59,12 @@
 		5AAC360BC9A1D1773D59C8E91186044E /* NSData+SHA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+SHA.h"; sourceTree = "<group>"; };
 		60AF5187A9171539419BB42365422630 /* SwiftyRSATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyRSATests.swift; sourceTree = "<group>"; };
 		6E2D7A1B9C4D58D0887FB023C0E15594 /* swiftyrsa-private-headerless.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-private-headerless.pem"; sourceTree = "<group>"; };
-		7B60EA7F120588E7412901B69B57F0A6 /* SwiftyRSATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = SwiftyRSATests.xctest; path = "/Users/ldiqual/Scoop/SwiftyRSA/build/Debug-appletvos/SwiftyRSATests.xctest"; sourceTree = "<absolute>"; };
 		7DF0A3222330CDFCF12918ED08519EB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		986B7C763D1B85C628621E89E7071B06 /* swiftyrsa-public.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = "swiftyrsa-public.der"; sourceTree = "<group>"; };
 		9E21744A2073DB8AC7BAEB324D36D4DB /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		AC84097FE3BCDEAEE6370ADD41E9AE68 /* swiftyrsa-public-headerless.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-public-headerless.pem"; sourceTree = "<group>"; };
 		AD7F28E3936301CA24DF13E22196C73B /* multiple-keys-testcase.pem */ = {isa = PBXFileReference; lastKnownFileType = text; path = "multiple-keys-testcase.pem"; sourceTree = "<group>"; };
+		C07E297A1D91A8CB002ED141 /* SwiftyRSATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyRSATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0C11A3A1D82375100A2022C /* Data+SHA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+SHA.swift"; sourceTree = "<group>"; };
 		D77B6899031A54A9F698D3430A599421 /* NSData+SHA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+SHA.m"; sourceTree = "<group>"; };
 		ED4E8B99D31B866D5CFA4FDED8461C76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -118,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				158823A80092238A00F1212F366091C9 /* SwiftyRSA.framework */,
+				C07E297A1D91A8CB002ED141 /* SwiftyRSATests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -271,7 +272,7 @@
 			);
 			name = SwiftyRSATests;
 			productName = SwiftyRSATests;
-			productReference = 7B60EA7F120588E7412901B69B57F0A6 /* SwiftyRSATests.xctest */;
+			productReference = C07E297A1D91A8CB002ED141 /* SwiftyRSATests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		A0D4C96F0225BD9340375C73B5AFD981 /* SwiftyRSA iOS */ = {
