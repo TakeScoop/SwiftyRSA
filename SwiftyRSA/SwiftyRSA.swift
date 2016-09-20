@@ -11,33 +11,8 @@ import Security
 
 public typealias Padding = SecPadding
 
-
-public class SwiftyRSAError: NSError {
-    init(message: String) {
-        super.init(domain: "com.takescoop.SwiftyRSA", code: 500, userInfo: [
-            NSLocalizedDescriptionKey: message
-        ])
-    }
-
-
-    @available(*, unavailable)
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-/**
-Represents the result of a signature verification
-*/
-@objc
-public class VerificationResult: NSObject {
-    public let isSuccessful: Bool
-    public let error: NSError?
-    
-    init(isSuccessful: Bool, error: NSError?) {
-        self.isSuccessful = isSuccessful
-        self.error = error
-    }
+struct SwiftyRSAError: Error {
+    let message: String
 }
 
 extension CFString: Hashable {
@@ -51,8 +26,6 @@ extension CFString: Hashable {
 }
 
 enum SwiftyRSA {
-    
-    // MARK: - Private
     
     static func addKey(_ keyData: Data, isPublic: Bool, tag: String) throws ->  SecKey {
         

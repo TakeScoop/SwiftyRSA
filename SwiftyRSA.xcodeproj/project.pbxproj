@@ -45,7 +45,6 @@
 		C096A0141D9086F300E285C2 /* MessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A0131D9086F300E285C2 /* MessageTests.swift */; };
 		C096A0161D9092C700E285C2 /* EncryptDecryptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A0151D9092C700E285C2 /* EncryptDecryptTests.swift */; };
 		C096A0181D90969A00E285C2 /* SignatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A0171D90969A00E285C2 /* SignatureTests.swift */; };
-		C096A01B1D90A0F800E285C2 /* ObjcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C096A01A1D90A0F800E285C2 /* ObjcTests.m */; };
 		C0C11A3C1D82390E00A2022C /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E21744A2073DB8AC7BAEB324D36D4DB /* TestUtils.swift */; };
 		D79A10375E532C520782C3752EE405BB /* SwiftyRSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 158823A80092238A00F1212F366091C9 /* SwiftyRSA.framework */; };
 		DA63152278619961B7E2B992C379F700 /* NSData+SHA.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AAC360BC9A1D1773D59C8E91186044E /* NSData+SHA.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -96,7 +95,6 @@
 		C096A0131D9086F300E285C2 /* MessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTests.swift; sourceTree = "<group>"; };
 		C096A0151D9092C700E285C2 /* EncryptDecryptTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncryptDecryptTests.swift; sourceTree = "<group>"; };
 		C096A0171D90969A00E285C2 /* SignatureTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignatureTests.swift; sourceTree = "<group>"; };
-		C096A01A1D90A0F800E285C2 /* ObjcTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjcTests.m; sourceTree = "<group>"; };
 		D77B6899031A54A9F698D3430A599421 /* NSData+SHA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+SHA.m"; sourceTree = "<group>"; };
 		ED4E8B99D31B866D5CFA4FDED8461C76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF193719CB8D4DDE8D347FF699311D1D /* swiftyrsa-private.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-private.pem"; sourceTree = "<group>"; };
@@ -211,7 +209,6 @@
 				C096A0151D9092C700E285C2 /* EncryptDecryptTests.swift */,
 				C096A0171D90969A00E285C2 /* SignatureTests.swift */,
 				9E21744A2073DB8AC7BAEB324D36D4DB /* TestUtils.swift */,
-				C096A01A1D90A0F800E285C2 /* ObjcTests.m */,
 			);
 			path = SwiftyRSATests;
 			sourceTree = "<group>";
@@ -505,7 +502,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C096A0181D90969A00E285C2 /* SignatureTests.swift in Sources */,
-				C096A01B1D90A0F800E285C2 /* ObjcTests.m in Sources */,
 				C096A0141D9086F300E285C2 /* MessageTests.swift in Sources */,
 				C096A0101D9083D000E285C2 /* KeyTests.swift in Sources */,
 				C0C11A3C1D82390E00A2022C /* TestUtils.swift in Sources */,
