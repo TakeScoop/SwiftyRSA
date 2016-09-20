@@ -28,18 +28,20 @@ public class Signature {
         }
     }
     
-    let data: Data
+    public let data: Data
     
     public init(data: Data) {
         self.data = data
     }
-}
-
-extension Signature {
-    convenience init(base64Encoded base64String: String) throws {
+    
+    public convenience init(base64Encoded base64String: String) throws {
         guard let data = Data(base64Encoded: base64String) else {
             throw SwiftyRSAError(message: "Couldn't decode provided base64 string")
         }
         self.init(data: data)
+    }
+    
+    public var base64String: String {
+        return data.base64EncodedString()
     }
 }

@@ -26,4 +26,21 @@ class SignatureTests: XCTestCase {
             XCTAssertTrue(isSuccessful)
         }
     }
+    
+    func test_base64String() throws {
+        let data = TestUtils.randomData(count: 8192)
+        let message = ClearMessage(data: data)
+        let signature = try message.signed(with: privateKey, digestType: .sha1)
+        XCTAssertEqual(signature.base64String, signature.data.base64EncodedString())
+    }
+    
+    func test_initWithBase64String() throws {
+        let data = TestUtils.randomData(count: 128)
+        let signature = try Signature(base64Encoded: data.base64EncodedString())
+    }
+    
+    func test_initWithData() throws {
+        let data = TestUtils.randomData(count: 128)
+        let signature = try Signature(data: data)
+    }
 }

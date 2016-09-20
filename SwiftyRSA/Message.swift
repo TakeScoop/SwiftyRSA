@@ -14,7 +14,7 @@ public protocol Message {
 }
 
 extension Message {
-    public var base64Encoded: String {
+    public var base64String: String {
         return data.base64EncodedString()
     }
     
@@ -23,20 +23,6 @@ extension Message {
             throw SwiftyRSAError(message: "Couldn't convert base 64 encoded string ")
         }
         self.init(data: data)
-    }
-    
-    public init(string: String, using encoding: String.Encoding) throws {
-        guard let data = string.data(using: encoding) else {
-            throw SwiftyRSAError(message: "Couldn't convert string to data using specified encoding")
-        }
-        self.init(data: data)
-    }
-    
-    public func string(encoding: String.Encoding) throws -> String {
-        guard let str = String(data: data, encoding: encoding) else {
-            throw SwiftyRSAError(message: "Couldn't convert data to string representation")
-        }
-        return str
     }
 }
 
@@ -85,6 +71,20 @@ public class ClearMessage: Message {
     
     public required init(data: Data) {
         self.data = data
+    }
+    
+    public convenience init(string: String, using encoding: String.Encoding) throws {
+        guard let data = string.data(using: encoding) else {
+            throw SwiftyRSAError(message: "Couldn't convert string to data using specified encoding")
+        }
+        self.init(data: data)
+    }
+    
+    public func string(encoding: String.Encoding) throws -> String {
+        guard let str = String(data: data, encoding: encoding) else {
+            throw SwiftyRSAError(message: "Couldn't convert data to string representation")
+        }
+        return str
     }
     
     public func encrypted(with key: PublicKey, padding: Padding) throws -> EncryptedMessage {
