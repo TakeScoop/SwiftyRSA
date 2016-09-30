@@ -14,30 +14,7 @@ public protocol Key {
     init(data: Data) throws
 }
 
-extension Key {
-    public init(base64Encoded base64String: String) throws {
-        guard let data = Data(base64Encoded: base64String) else {
-            throw SwiftyRSAError(message: "Couldn't decode base 64 string")
-        }
-        try self.init(data: data)
-    }
-    
-    public init(pemEncoded pemString: String) throws {
-        let lines = pemString.components(separatedBy: "\n").filter { line in
-            return !line.hasPrefix("-----BEGIN") && !line.hasPrefix("-----END")
-        }
-        
-        guard lines.count != 0 else {
-            throw SwiftyRSAError(message: "Couldn't get data from PEM key: no data available after stripping headers")
-        }
-        
-        let base64String = lines.joined(separator: "")
-        
-        try self.init(base64Encoded: base64String)
-    }
-}
-
-public class PublicKey: Key {
+@objc public class PublicKey: NSObject, Key {
     
     let reference: SecKey
     let tag: String
@@ -46,6 +23,18 @@ public class PublicKey: Key {
         tag = UUID().uuidString
         let data = try SwiftyRSA.stripPublicKeyHeader(keyData: data)
     	reference = try SwiftyRSA.addKey(data, isPublic: true, tag: tag)
+    }
+    
+    public convenience init(base64Encoded base64String: String) throws {
+        guard let data = Data(base64Encoded: base64String) else {
+            throw SwiftyRSAError(message: "Couldn't decode base 64 string")
+        }
+        try self.init(data: data)
+    }
+    
+    public convenience init(pemEncoded pemString: String) throws {
+        let base64String = try SwiftyRSA.base64String(pemEncoded: pemString)
+        try self.init(base64Encoded: base64String)
     }
     
     static let publicKeyRegex : NSRegularExpression? = {
@@ -99,7 +88,7 @@ public class PublicKey: Key {
     }
 }
 
-public class PrivateKey: Key {
+@objc public class PrivateKey: NSObject, Key {
     
     let reference: SecKey
     let tag: String
@@ -107,6 +96,18 @@ public class PrivateKey: Key {
     required public init(data: Data) throws {
         tag = UUID().uuidString
         reference = try SwiftyRSA.addKey(data, isPublic: false, tag: tag)
+    }
+    
+    public convenience init(base64Encoded base64String: String) throws {
+        guard let data = Data(base64Encoded: base64String) else {
+            throw SwiftyRSAError(message: "Couldn't decode base 64 string")
+        }
+        try self.init(data: data)
+    }
+    
+    public convenience init(pemEncoded pemString: String) throws {
+        let base64String = try SwiftyRSA.base64String(pemEncoded: pemString)
+        try self.init(base64Encoded: base64String)
     }
     
     deinit {

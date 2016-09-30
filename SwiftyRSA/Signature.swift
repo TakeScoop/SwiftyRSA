@@ -8,9 +8,9 @@
 
 import Foundation
 
-public class Signature {
+@objc public class Signature: NSObject {
     
-    public enum DigestType {
+    @objc public enum DigestType: Int {
         case sha1
         case sha224
         case sha256

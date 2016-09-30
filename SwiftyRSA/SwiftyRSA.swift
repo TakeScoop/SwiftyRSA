@@ -27,6 +27,18 @@ extension CFString: Hashable {
 
 enum SwiftyRSA {
     
+    static func base64String(pemEncoded pemString: String) throws -> String {
+        let lines = pemString.components(separatedBy: "\n").filter { line in
+            return !line.hasPrefix("-----BEGIN") && !line.hasPrefix("-----END")
+        }
+        
+        guard lines.count != 0 else {
+            throw SwiftyRSAError(message: "Couldn't get data from PEM key: no data available after stripping headers")
+        }
+        
+        return lines.joined(separator: "")
+    }
+    
     static func addKey(_ keyData: Data, isPublic: Bool, tag: String) throws ->  SecKey {
         
         var keyData = keyData

@@ -8,30 +8,36 @@
 
 import Foundation
 
+@objc public class VerificationResult: NSObject {
+    public let isSuccessful: Bool
+    init(isSuccessful: Bool) {
+        self.isSuccessful = isSuccessful
+    }
+}
+
 public protocol Message {
     var data: Data { get }
+    var base64String: String { get }
     init(data: Data)
 }
 
-extension Message {
+@objc public class EncryptedMessage: NSObject, Message {
+    
+    public let data: Data
+    
     public var base64String: String {
         return data.base64EncodedString()
     }
     
-    public init(base64Encoded base64String: String) throws {
+    public required init(data: Data) {
+        self.data = data
+    }
+    
+    public convenience init(base64Encoded base64String: String) throws {
         guard let data = Data(base64Encoded: base64String) else {
             throw SwiftyRSAError(message: "Couldn't convert base 64 encoded string ")
         }
         self.init(data: data)
-    }
-}
-
-public class EncryptedMessage: Message {
-    
-    public let data: Data
-    
-    public required init(data: Data) {
-        self.data = data
     }
     
     public func decrypted(with key: PrivateKey, padding: Padding) throws -> ClearMessage {
@@ -65,17 +71,35 @@ public class EncryptedMessage: Message {
     }
 }
 
-public class ClearMessage: Message {
+@objc public class ClearMessage: NSObject, Message {
     
     public let data: Data
+    
+    public var base64String: String {
+        return data.base64EncodedString()
+    }
     
     public required init(data: Data) {
         self.data = data
     }
     
+    @nonobjc
     public convenience init(string: String, using encoding: String.Encoding) throws {
         guard let data = string.data(using: encoding) else {
             throw SwiftyRSAError(message: "Couldn't convert string to data using specified encoding")
+        }
+        self.init(data: data)
+    }
+    
+    @objc
+    public convenience init(string: String, using rawEncoding: UInt) throws {
+        let encoding = String.Encoding(rawValue: rawEncoding)
+        try self.init(string: string, using: encoding)
+    }
+    
+    public convenience init(base64Encoded base64String: String) throws {
+        guard let data = Data(base64Encoded: base64String) else {
+            throw SwiftyRSAError(message: "Couldn't convert base 64 encoded string ")
         }
         self.init(data: data)
     }
@@ -147,7 +171,7 @@ public class ClearMessage: Message {
         return Signature(data: signatureData)
     }
     
-    public func verify(with key: PublicKey, signature: Signature, digestType: Signature.DigestType) throws -> Bool {
+    public func verify(with key: PublicKey, signature: Signature, digestType: Signature.DigestType) throws -> VerificationResult {
         
         let digest = self.digest(digestType: digestType)
         var verifyDataAsArray = [UInt8](repeating: 0, count: digest.count / MemoryLayout<UInt8>.size)
@@ -159,9 +183,9 @@ public class ClearMessage: Message {
         let status = SecKeyRawVerify(key.reference, digestType.padding, verifyDataAsArray, verifyDataAsArray.count, signatureDataAsArray, signatureDataAsArray.count)
         
         if (status == errSecSuccess) {
-            return true
+            return VerificationResult(isSuccessful: true)
         } else if (status == -9809) {
-            return false
+            return VerificationResult(isSuccessful: false)
         } else {
             throw SwiftyRSAError(message: "Couldn't verify signature - \(status)")
         }

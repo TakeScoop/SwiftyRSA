@@ -31,6 +31,7 @@
 		B0981AE770653C8FE25311592E2BCE5E /* SwiftyRSA.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CB44E2E8BE22C702325440A0F96410A /* SwiftyRSA.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B6099C2AE83C038FCB7FE7E06BC65835 /* swiftyrsa-public-headerless.pem in Resources */ = {isa = PBXBuildFile; fileRef = AC84097FE3BCDEAEE6370ADD41E9AE68 /* swiftyrsa-public-headerless.pem */; };
 		BF52D5FDEDA5DFCA62ECD03992601E82 /* SwiftyRSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E84F551B29670A456D12366AA4C8E5 /* SwiftyRSA.swift */; };
+		C07408AD1D9E1BA800AB6814 /* ObjCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C07408AC1D9E1BA800AB6814 /* ObjCTests.m */; };
 		C0969FFC1D906B5C00E285C2 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0969FFB1D906B5C00E285C2 /* Key.swift */; };
 		C0969FFD1D906B5C00E285C2 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0969FFB1D906B5C00E285C2 /* Key.swift */; };
 		C0969FFE1D906B5C00E285C2 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0969FFB1D906B5C00E285C2 /* Key.swift */; };
@@ -87,6 +88,7 @@
 		9E21744A2073DB8AC7BAEB324D36D4DB /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		AC84097FE3BCDEAEE6370ADD41E9AE68 /* swiftyrsa-public-headerless.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-public-headerless.pem"; sourceTree = "<group>"; };
 		AD7F28E3936301CA24DF13E22196C73B /* multiple-keys-testcase.pem */ = {isa = PBXFileReference; lastKnownFileType = text; path = "multiple-keys-testcase.pem"; sourceTree = "<group>"; };
+		C07408AC1D9E1BA800AB6814 /* ObjCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjCTests.m; sourceTree = "<group>"; };
 		C0969FFB1D906B5C00E285C2 /* Key.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		C096A0071D9071CA00E285C2 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		C096A00B1D90754E00E285C2 /* Signature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signature.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				C096A0151D9092C700E285C2 /* EncryptDecryptTests.swift */,
 				C096A0171D90969A00E285C2 /* SignatureTests.swift */,
 				9E21744A2073DB8AC7BAEB324D36D4DB /* TestUtils.swift */,
+				C07408AC1D9E1BA800AB6814 /* ObjCTests.m */,
 			);
 			path = SwiftyRSATests;
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 				C096A0101D9083D000E285C2 /* KeyTests.swift in Sources */,
 				C0C11A3C1D82390E00A2022C /* TestUtils.swift in Sources */,
 				C096A0161D9092C700E285C2 /* EncryptDecryptTests.swift in Sources */,
+				C07408AD1D9E1BA800AB6814 /* ObjCTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
