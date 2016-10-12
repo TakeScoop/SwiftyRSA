@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "956150159C49E9CA940A963A343CA64F"
+               BlueprintIdentifier = "C076F53C1DADEB90006AF5DB"
                BuildableName = "SwiftyRSATests.xctest"
                BlueprintName = "SwiftyRSATests"
                ReferencedContainer = "container:SwiftyRSA.xcodeproj">
@@ -47,7 +47,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "956150159C49E9CA940A963A343CA64F"
+               BlueprintIdentifier = "C076F53C1DADEB90006AF5DB"
                BuildableName = "SwiftyRSATests.xctest"
                BlueprintName = "SwiftyRSATests"
                ReferencedContainer = "container:SwiftyRSA.xcodeproj">

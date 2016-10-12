@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C076F53C1DADEB90006AF5DB"
+               BuildableName = "SwiftyRSATests.xctest"
+               BlueprintName = "SwiftyRSATests"
+               ReferencedContainer = "container:SwiftyRSA.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "EFE02F454925076C3D6C2F0B0E45892E"
+            BuildableName = "SwiftyRSA.framework"
+            BlueprintName = "SwiftyRSA watchOS"
+            ReferencedContainer = "container:SwiftyRSA.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

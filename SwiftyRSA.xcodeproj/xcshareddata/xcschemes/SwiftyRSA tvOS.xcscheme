@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "38DA68AD7BD05D2F04A76E6838D7171A"
+               BlueprintIdentifier = "C076F53C1DADEB90006AF5DB"
                BuildableName = "SwiftyRSATests.xctest"
-               BlueprintName = "SwiftyRSA tvOSTests"
+               BlueprintName = "SwiftyRSATests"
                ReferencedContainer = "container:SwiftyRSA.xcodeproj">
             </BuildableReference>
          </TestableReference>
