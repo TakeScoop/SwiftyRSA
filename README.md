@@ -31,46 +31,24 @@ Quick Start
 
 ### Encrypt with a public key
 
-#### Summary
-
- - Create a `PublicKey`
- - Create a `ClearMessage`
- - Call `ClearMessage.encrypted(with:padding:)`
- - Use `ClearMessage.data` or `ClearMessage.base64String`
-
-#### Example
-
-```
-let path = Bundle.main.path(forResource: "public", ofType: "pem")!
-let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
-let publicKey = try PublicKey(pemEncoded: keyString)
-
-let decrypted = try ClearMessage(string: "Clear Text", using: .utf8)
+```swift
+let publicKey = try PublicKey(pemNamed: "public")
+let clear = try ClearMessage(string: "Clear Text", using: .utf8)
 let encrypted = try decrypted.encrypted(with: publicKey, padding: .PKCS1)
 
+// Then you can use:
 let data = encrypted.data
 let base64String = encrypted.base64String
 ```
 
 ### Decrypt with a private key
 
-#### Summary
-
- - Create a `PrivateKey`
- - Create an `EncryptedMessage`
- - Call `EncryptedMessage.decrypted(with:padding:)`
- - Use `ClearMessage.data`, `ClearMessage.base64String`, or `ClearMessage.string(using:)`
-
-#### Example
-
-```
-let path = Bundle.main.path(forResource: "private", ofType: "pem")!
-let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
-let privateKey = try PrivateKey(pemEncoded: keyString)
-
+```swift
+let privateKey = try PrivateKey(pemNamed: "private")
 let encrypted = try EncryptedMessage(base64Encoded: "AAA===")
-let decrypted = try encrypted.decrypted(with: privateKey, padding: .PKCS1)
+let clear = try encrypted.decrypted(with: privateKey, padding: .PKCS1)
 
+// Then you can use:
 let data = decrypted.data
 let base64String = decrypted.base64String
 let string = decrypted.string(using: .utf8)
@@ -82,37 +60,42 @@ Advanced Usage
 
 ### Get a public/private key reference
 
-#### With DER Key
+#### With a DER file
 
-```
-let path = Bundle.main.path(forResource: "public", ofType: "der")!
-let data = try Data(contentsOf: URL(fileURLWithPath: path))
-let publicKey = try PublicKey(data: data)
+```swift
+let publicKey = try PublicKey(derNamed: "public")
+let privateKey = try PublicKey(derNamed: "private")
 ```
 
-#### With PEM Key
+#### With a PEM file
 
+```swift
+let publicKey = try PublicKey(pemNamed: "public")
+let privateKey = try PublicKey(pemNamed: "private")
 ```
-let path = Bundle.main.path(forResource: "public", ofType: "pem")!
-let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+
+#### With a PEM string
+
+```swift
 let publicKey = try PublicKey(pemEncoded: str)
+let privateKey = try PrivateKey(pemEncoded: str)
 ```
 
-#### With Base64 Key
+#### With a Base64 string
 
-```
+```swift
 let publicKey = try PublicKey(base64Encoded: base64String)
 ```
 
 #### With data
 
-```
+```swift
 let publicKey = try PublicKey(data: data)
 ```
 
 ### Encrypt with a public key
 
-```
+```swift
 let str = "Clear Text"
 let clearMessage = try ClearMessage(string: str, using: .utf8)    
 let encrypted = try clearMessage.encrypted(with: publicKey, padding: .PKCS1)
@@ -123,7 +106,7 @@ let base64String = encrypted.base64Encoded
 
 ### Decrypt with a private key
 
-```
+```swift
 let encrypted = try EncryptedMessage(base64Encoded: base64String)
 let decrypted = try encrypted.decrypted(with: privateKey, padding: .PKCS1)
 
@@ -136,7 +119,7 @@ let string = try decrypted.string(using: .utf8)
 
 SwiftyRSA can sign data with a private key. SwiftyRSA will calculate a SHA digest of the supplied `String`/`Data` and use this to generate the digital signature.
 
-```
+```swift
 let message = try ClearMessage(string: "Clear Text", using: .utf8)
 let signature = message.signed(with: privateKey, digestType: .sha1)
 
@@ -148,7 +131,7 @@ let base64String = signature.base64String
 
 SwiftyRSA can verify digital signatures with a public key. SwiftyRSA will calculate a digest of the supplied `String`/`Data` and use this to verify the digital signature.
 
-```
+```swift
 let signature = try Signature(base64Encoded: "AAA===")
 let isSuccessful = try message.verify(with: publicKey, signature: signature, digestType: .sha1)
 ```
