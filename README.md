@@ -34,7 +34,7 @@ Quick Start
 ```swift
 let publicKey = try PublicKey(pemNamed: "public")
 let clear = try ClearMessage(string: "Clear Text", using: .utf8)
-let encrypted = try decrypted.encrypted(with: publicKey, padding: .PKCS1)
+let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
 
 // Then you can use:
 let data = encrypted.data
@@ -49,9 +49,9 @@ let encrypted = try EncryptedMessage(base64Encoded: "AAA===")
 let clear = try encrypted.decrypted(with: privateKey, padding: .PKCS1)
 
 // Then you can use:
-let data = decrypted.data
-let base64String = decrypted.base64String
-let string = decrypted.string(using: .utf8)
+let data = clear.data
+let base64String = clear.base64String
+let string = clear.string(using: .utf8)
 ```
 
 
@@ -97,8 +97,8 @@ let publicKey = try PublicKey(data: data)
 
 ```swift
 let str = "Clear Text"
-let clearMessage = try ClearMessage(string: str, using: .utf8)    
-let encrypted = try clearMessage.encrypted(with: publicKey, padding: .PKCS1)
+let clear = try ClearMessage(string: str, using: .utf8)    
+let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
 
 let data = encrypted.data
 let base64String = encrypted.base64Encoded
@@ -108,11 +108,11 @@ let base64String = encrypted.base64Encoded
 
 ```swift
 let encrypted = try EncryptedMessage(base64Encoded: base64String)
-let decrypted = try encrypted.decrypted(with: privateKey, padding: .PKCS1)
+let clear = try encrypted.decrypted(with: privateKey, padding: .PKCS1)
 
-let data = decrypted.data
-let base64String = decrypted.base64Encoded
-let string = try decrypted.string(using: .utf8)
+let data = clear.data
+let base64String = clear.base64Encoded
+let string = try clear.string(using: .utf8)
 ```
 
 ### Sign with a private key
@@ -120,8 +120,8 @@ let string = try decrypted.string(using: .utf8)
 SwiftyRSA can sign data with a private key. SwiftyRSA will calculate a SHA digest of the supplied `String`/`Data` and use this to generate the digital signature.
 
 ```swift
-let message = try ClearMessage(string: "Clear Text", using: .utf8)
-let signature = message.signed(with: privateKey, digestType: .sha1)
+let clear = try ClearMessage(string: "Clear Text", using: .utf8)
+let signature = clear.signed(with: privateKey, digestType: .sha1)
 
 let data = signature.data
 let base64String = signature.base64String
@@ -133,7 +133,7 @@ SwiftyRSA can verify digital signatures with a public key. SwiftyRSA will calcul
 
 ```swift
 let signature = try Signature(base64Encoded: "AAA===")
-let isSuccessful = try message.verify(with: publicKey, signature: signature, digestType: .sha1)
+let isSuccessful = try clear.verify(with: publicKey, signature: signature, digestType: .sha1)
 ```
 
 Create public and private RSA keys
