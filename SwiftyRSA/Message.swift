@@ -23,16 +23,25 @@ public protocol Message {
 
 @objc public class EncryptedMessage: NSObject, Message {
     
+    /// Data of the message
     public let data: Data
     
+    /// Base64-encoded string of the message data
     public var base64String: String {
         return data.base64EncodedString()
     }
     
+    /// Creates an encrypted message with data.
+    ///
+    /// - Parameter data: Data of the encrypted message.
     public required init(data: Data) {
         self.data = data
     }
     
+    /// Creates an encrypted message with a base64-encoded string.
+    ///
+    /// - Parameter base64String: Base64-encoded data of the encrypted message
+    /// - Throws: SwiftyRSAError
     public convenience init(base64Encoded base64String: String) throws {
         guard let data = Data(base64Encoded: base64String) else {
             throw SwiftyRSAError(message: "Couldn't convert base 64 encoded string ")
@@ -40,6 +49,13 @@ public protocol Message {
         self.init(data: data)
     }
     
+    /// Decrypts an encrypted message with a private key and returns a clear message.
+    ///
+    /// - Parameters:
+    ///   - key: Private key to decrypt the mssage with
+    ///   - padding: Padding to use during the decryption
+    /// - Returns: Clear message
+    /// - Throws: SwiftyRSAError
     public func decrypted(with key: PrivateKey, padding: Padding) throws -> ClearMessage {
         let blockSize = SecKeyGetBlockSize(key.reference)
         
@@ -73,16 +89,27 @@ public protocol Message {
 
 @objc public class ClearMessage: NSObject, Message {
     
+    /// Data of the message
     public let data: Data
     
+    /// Base64-encoded string of the message data
     public var base64String: String {
         return data.base64EncodedString()
     }
     
+    /// Creates a clear message with data.
+    ///
+    /// - Parameter data: Data of the clear message
     public required init(data: Data) {
         self.data = data
     }
     
+    /// Creates a clear message from a string, with the specified encoding.
+    ///
+    /// - Parameters:
+    ///   - string: String value of the clear message
+    ///   - encoding: Encoding to use to generate the clear data
+    /// - Throws: SwiftyRSAError
     @nonobjc
     public convenience init(string: String, using encoding: String.Encoding) throws {
         guard let data = string.data(using: encoding) else {
@@ -91,12 +118,22 @@ public protocol Message {
         self.init(data: data)
     }
     
+    /// Creates a clear message from a string, with the specified encoding.
+    ///
+    /// - Parameters:
+    ///   - string: String value of the clear message
+    ///   - rawEncoding: Encoding to use to generate the clear data
+    /// - Throws: SwiftyRSAError
     @objc
     public convenience init(string: String, using rawEncoding: UInt) throws {
         let encoding = String.Encoding(rawValue: rawEncoding)
         try self.init(string: string, using: encoding)
     }
     
+    /// Creates a clear message from a base64-encoded string.
+    ///
+    /// - Parameter base64String: Base64-encoded string of the message data
+    /// - Throws: SwiftyRSAError
     public convenience init(base64Encoded base64String: String) throws {
         guard let data = Data(base64Encoded: base64String) else {
             throw SwiftyRSAError(message: "Couldn't convert base 64 encoded string ")
@@ -104,6 +141,12 @@ public protocol Message {
         self.init(data: data)
     }
     
+    /// Returns the string representation of the clear message using the specified
+    /// string encoding.
+    ///
+    /// - Parameter encoding: Encoding to use during the string conversion
+    /// - Returns: String representation of the clear message
+    /// - Throws: SwiftyRSAError
     public func string(encoding: String.Encoding) throws -> String {
         guard let str = String(data: data, encoding: encoding) else {
             throw SwiftyRSAError(message: "Couldn't convert data to string representation")
@@ -111,6 +154,13 @@ public protocol Message {
         return str
     }
     
+    /// Encrypts a clear message with a public key and returns an encrypted message.
+    ///
+    /// - Parameters:
+    ///   - key: Public key to encrypt the clear message with
+    ///   - padding: Padding to use during the encryption
+    /// - Returns: Encrypted message
+    /// - Throws: SwiftyRSAError
     public func encrypted(with key: PublicKey, padding: Padding) throws -> EncryptedMessage {
         
         let blockSize = SecKeyGetBlockSize(key.reference)
@@ -144,6 +194,15 @@ public protocol Message {
         return EncryptedMessage(data: encryptedData)
     }
     
+    /// Signs a clear message using a private key.
+    /// The clear message will first be hashed using the specified digest type, then signed
+    /// using the provided private key.
+    ///
+    /// - Parameters:
+    ///   - key: Private key to sign the clear message with
+    ///   - digestType: Digest
+    /// - Returns: Signature of the clear message after signing it with the specified digest type.
+    /// - Throws: SwiftyRSAError
     public func signed(with key: PrivateKey, digestType: Signature.DigestType) throws -> Signature {
         
         let digest = self.digest(digestType: digestType)
@@ -171,6 +230,14 @@ public protocol Message {
         return Signature(data: signatureData)
     }
     
+    /// Verifies the signature of a clear message.
+    ///
+    /// - Parameters:
+    ///   - key: Public key to verify the signature with
+    ///   - signature: Signature to verify
+    ///   - digestType: Digest type used for the signature
+    /// - Returns: Result of the verification
+    /// - Throws: SwiftyRSAError
     public func verify(with key: PublicKey, signature: Signature, digestType: Signature.DigestType) throws -> VerificationResult {
         
         let digest = self.digest(digestType: digestType)

@@ -28,12 +28,20 @@ import Foundation
         }
     }
     
+    /// Data of the signature
     public let data: Data
     
+    /// Creates a signature with data.
+    ///
+    /// - Parameter data: Data of the signature
     public init(data: Data) {
         self.data = data
     }
     
+    /// Creates a signature with a base64-encoded string.
+    ///
+    /// - Parameter base64String: Base64-encoded representation of the signature data.
+    /// - Throws: SwiftyRSAError
     public convenience init(base64Encoded base64String: String) throws {
         guard let data = Data(base64Encoded: base64String) else {
             throw SwiftyRSAError(message: "Couldn't decode provided base64 string")
@@ -41,6 +49,7 @@ import Foundation
         self.init(data: data)
     }
     
+    /// Returns the base64 representation of the signature.
     public var base64String: String {
         return data.base64EncodedString()
     }

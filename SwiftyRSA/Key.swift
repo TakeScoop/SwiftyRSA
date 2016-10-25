@@ -19,12 +19,20 @@ public protocol Key {
     let reference: SecKey
     let tag: String
     
+    /// Creates a public with a RSA public key data.
+    ///
+    /// - Parameter data: Public key data
+    /// - Throws: SwiftyRSAError
     required public init(data: Data) throws {
         tag = UUID().uuidString
         let data = try SwiftyRSA.stripPublicKeyHeader(keyData: data)
     	reference = try SwiftyRSA.addKey(data, isPublic: true, tag: tag)
     }
     
+    /// Creates a public key with a base64-encoded string.
+    ///
+    /// - Parameter base64String: Base64-encoded public key data
+    /// - Throws: SwiftyRSAError
     public convenience init(base64Encoded base64String: String) throws {
         guard let data = Data(base64Encoded: base64String, options: [.ignoreUnknownCharacters]) else {
             throw SwiftyRSAError(message: "Couldn't decode base 64 string")
@@ -32,11 +40,21 @@ public protocol Key {
         try self.init(data: data)
     }
     
+    /// Creates a public key with a PEM string.
+    ///
+    /// - Parameter pemString: PEM-encoded public key string
+    /// - Throws: SwiftyRSAError
     public convenience init(pemEncoded pemString: String) throws {
         let base64String = try SwiftyRSA.base64String(pemEncoded: pemString)
         try self.init(base64Encoded: base64String)
     }
     
+    /// Creates a public key with a PEM file.
+    ///
+    /// - Parameters:
+    ///   - pemName: Name of the PEM file
+    ///   - bundle: Bundle in which to look for the PEM file. Defaults to the main bundle.
+    /// - Throws: SwiftyRSAError
     public convenience init(pemNamed pemName: String, in bundle: Bundle = Bundle.main) throws {
         guard let path = bundle.path(forResource: pemName, ofType: "pem") else {
             throw SwiftyRSAError(message: "Couldn't find a PEM file named '\(pemName)'")
@@ -45,6 +63,12 @@ public protocol Key {
         try self.init(pemEncoded: keyString)
     }
     
+    /// Creates a private key with a DER file.
+    ///
+    /// - Parameters:
+    ///   - derName: Name of the DER file
+    ///   - bundle: Bundle in which to look for the DER file. Defaults to the main bundle.
+    /// - Throws: SwiftyRSAError
     public convenience init(derNamed derName: String, in bundle: Bundle = Bundle.main) throws {
         guard let path = bundle.path(forResource: derName, ofType: "der") else {
             throw SwiftyRSAError(message: "Couldn't find a DER file named '\(derName)'")
@@ -109,11 +133,19 @@ public protocol Key {
     let reference: SecKey
     let tag: String
     
+    /// Creates a private key with a RSA public key data.
+    ///
+    /// - Parameter data: Private key data
+    /// - Throws: SwiftyRSAError
     required public init(data: Data) throws {
         tag = UUID().uuidString
         reference = try SwiftyRSA.addKey(data, isPublic: false, tag: tag)
     }
     
+    /// Creates a private key with a base64-encoded string.
+    ///
+    /// - Parameter base64String: Base64-encoded private key data
+    /// - Throws: SwiftyRSAError
     public convenience init(base64Encoded base64String: String) throws {
         guard let data = Data(base64Encoded: base64String, options: [.ignoreUnknownCharacters]) else {
             throw SwiftyRSAError(message: "Couldn't decode base 64 string")
@@ -121,11 +153,21 @@ public protocol Key {
         try self.init(data: data)
     }
     
+    /// Creates a private key with a PEM string.
+    ///
+    /// - Parameter pemString: PEM-encoded private key string
+    /// - Throws: SwiftyRSAError
     public convenience init(pemEncoded pemString: String) throws {
         let base64String = try SwiftyRSA.base64String(pemEncoded: pemString)
         try self.init(base64Encoded: base64String)
     }
     
+    /// Creates a private key with a PEM file.
+    ///
+    /// - Parameters:
+    ///   - pemName: Name of the PEM file
+    ///   - bundle: Bundle in which to look for the PEM file. Defaults to the main bundle.
+    /// - Throws: SwiftyRSAError
     public convenience init(pemNamed pemName: String, in bundle: Bundle = Bundle.main) throws {
         guard let path = bundle.path(forResource: pemName, ofType: "pem") else {
             throw SwiftyRSAError(message: "Couldn't find a PEM file named '\(pemName)'")
@@ -134,6 +176,12 @@ public protocol Key {
         try self.init(pemEncoded: keyString)
     }
     
+    /// Creates a private key with a DER file.
+    ///
+    /// - Parameters:
+    ///   - derName: Name of the DER file
+    ///   - bundle: Bundle in which to look for the DER file. Defaults to the main bundle.
+    /// - Throws: SwiftyRSAError
     public convenience init(derNamed derName: String, in bundle: Bundle = Bundle.main) throws {
         guard let path = bundle.path(forResource: derName, ofType: "der") else {
             throw SwiftyRSAError(message: "Couldn't find a DER file named '\(derName)'")
