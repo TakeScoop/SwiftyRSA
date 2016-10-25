@@ -34,6 +34,16 @@ class PublicKeyTests: XCTestCase {
         XCTAssertNotNil(publicKey)
     }
     
+    func test_initWithPEMName() throws {
+        let message = try? PublicKey(pemNamed: "swiftyrsa-public", in: Bundle(for: TestUtils.self))
+        XCTAssertNotNil(message)
+    }
+    
+    func test_initWithDERName() throws {
+        let message = try? PublicKey(pemNamed: "swiftyrsa-public", in: Bundle(for: TestUtils.self))
+        XCTAssertNotNil(message)
+    }
+    
     func test_initWithPEMStringHeaderless() throws {
         let path = bundle.path(forResource: "swiftyrsa-public-headerless", ofType: "pem")!
         let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
@@ -75,5 +85,15 @@ class PrivateKeyTests: XCTestCase {
         let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
         let privateKey = try? PrivateKey(pemEncoded: str)
         XCTAssertNotNil(privateKey)
+    }
+    
+    func test_initWithPEMName() throws {
+        let message = try? PrivateKey(pemNamed: "swiftyrsa-private", in: Bundle(for: TestUtils.self))
+        XCTAssertNotNil(message)
+    }
+    
+    func test_initWithDERName() throws {
+        let message = try? PrivateKey(pemNamed: "swiftyrsa-private", in: Bundle(for: TestUtils.self))
+        XCTAssertNotNil(message)
     }
 }

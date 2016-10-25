@@ -37,6 +37,22 @@ public protocol Key {
         try self.init(base64Encoded: base64String)
     }
     
+    public convenience init(pemNamed pemName: String, in bundle: Bundle = Bundle.main) throws {
+        guard let path = bundle.path(forResource: pemName, ofType: "pem") else {
+            throw SwiftyRSAError(message: "Couldn't find a PEM file named '\(pemName)'")
+        }
+        let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+        try self.init(pemEncoded: keyString)
+    }
+    
+    public convenience init(derNamed derName: String, in bundle: Bundle = Bundle.main) throws {
+        guard let path = bundle.path(forResource: derName, ofType: "der") else {
+            throw SwiftyRSAError(message: "Couldn't find a DER file named '\(derName)'")
+        }
+        let data = try Data(contentsOf: URL(fileURLWithPath: path))
+        try self.init(data: data)
+    }
+    
     static let publicKeyRegex : NSRegularExpression? = {
         let publicKeyRegex = "(-----BEGIN PUBLIC KEY-----.+?-----END PUBLIC KEY-----)"
         return try? NSRegularExpression(pattern: publicKeyRegex, options: .dotMatchesLineSeparators)
@@ -108,6 +124,22 @@ public protocol Key {
     public convenience init(pemEncoded pemString: String) throws {
         let base64String = try SwiftyRSA.base64String(pemEncoded: pemString)
         try self.init(base64Encoded: base64String)
+    }
+    
+    public convenience init(pemNamed pemName: String, in bundle: Bundle = Bundle.main) throws {
+        guard let path = bundle.path(forResource: pemName, ofType: "pem") else {
+            throw SwiftyRSAError(message: "Couldn't find a PEM file named '\(pemName)'")
+        }
+        let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+        try self.init(pemEncoded: keyString)
+    }
+    
+    public convenience init(derNamed derName: String, in bundle: Bundle = Bundle.main) throws {
+        guard let path = bundle.path(forResource: derName, ofType: "der") else {
+            throw SwiftyRSAError(message: "Couldn't find a DER file named '\(derName)'")
+        }
+        let data = try Data(contentsOf: URL(fileURLWithPath: path))
+        try self.init(data: data)
     }
     
     deinit {

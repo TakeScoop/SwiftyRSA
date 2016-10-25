@@ -27,10 +27,14 @@
     [[PublicKey alloc] initWithData:data error:nil];
     [[PublicKey alloc] initWithPemEncoded:@"test" error:nil];
     [[PublicKey alloc] initWithBase64Encoded:@"test" error:nil];
+    [[PublicKey alloc] initWithPemNamed:@"test" in: [NSBundle bundleForClass:[TestUtils class]] error:nil];
+    [[PublicKey alloc] initWithDerNamed:@"test" in: [NSBundle bundleForClass:[TestUtils class]] error:nil];
     [PublicKey publicKeysWithPemEncoded:@"test"];
     
     [[PrivateKey alloc] initWithData:data error:nil];
     [[PrivateKey alloc] initWithPemEncoded:@"test" error:nil];
+    [[PrivateKey alloc] initWithPemNamed:@"test" in: [NSBundle bundleForClass:[TestUtils class]] error:nil];
+    [[PrivateKey alloc] initWithDerNamed:@"test" in: [NSBundle bundleForClass:[TestUtils class]] error:nil];
     [[PrivateKey alloc] initWithBase64Encoded:@"test" error:nil];
     
     [[Signature alloc] initWithBase64Encoded:@"test" error:nil];
