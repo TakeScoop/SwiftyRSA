@@ -36,11 +36,11 @@ class SignatureTests: XCTestCase {
     
     func test_initWithBase64String() throws {
         let data = TestUtils.randomData(count: 128)
-        let signature = try Signature(base64Encoded: data.base64EncodedString())
+        _ = try Signature(base64Encoded: data.base64EncodedString())
     }
     
     func test_initWithData() throws {
         let data = TestUtils.randomData(count: 128)
-        let signature = try Signature(data: data)
+        _ = Signature(data: data)
     }
 }

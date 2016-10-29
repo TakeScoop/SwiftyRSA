@@ -24,25 +24,33 @@
 - (void)test_smoke {
     NSData* data = [TestUtils randomDataWithCount:128];
     
-    [[PublicKey alloc] initWithData:data error:nil];
-    [[PublicKey alloc] initWithPemEncoded:@"test" error:nil];
-    [[PublicKey alloc] initWithBase64Encoded:@"test" error:nil];
-    [[PublicKey alloc] initWithPemNamed:@"test" in: [NSBundle bundleForClass:[TestUtils class]] error:nil];
-    [[PublicKey alloc] initWithDerNamed:@"test" in: [NSBundle bundleForClass:[TestUtils class]] error:nil];
+    PublicKey* pub;
+    pub = [[PublicKey alloc] initWithData:data error:nil];
+    pub = [[PublicKey alloc] initWithPemEncoded:@"test" error:nil];
+    pub = [[PublicKey alloc] initWithBase64Encoded:@"test" error:nil];
+    pub = [[PublicKey alloc] initWithPemNamed:@"test" in: [NSBundle bundleForClass:[TestUtils class]] error:nil];
+    pub = [[PublicKey alloc] initWithDerNamed:@"test" in: [NSBundle bundleForClass:[TestUtils class]] error:nil];
     [PublicKey publicKeysWithPemEncoded:@"test"];
     
-    [[PrivateKey alloc] initWithData:data error:nil];
-    [[PrivateKey alloc] initWithPemEncoded:@"test" error:nil];
-    [[PrivateKey alloc] initWithPemNamed:@"test" in: [NSBundle bundleForClass:[TestUtils class]] error:nil];
-    [[PrivateKey alloc] initWithDerNamed:@"test" in: [NSBundle bundleForClass:[TestUtils class]] error:nil];
-    [[PrivateKey alloc] initWithBase64Encoded:@"test" error:nil];
+    PrivateKey* priv;
+    priv = [[PrivateKey alloc] initWithData:data error:nil];
+    priv = [[PrivateKey alloc] initWithPemEncoded:@"test" error:nil];
+    priv = [[PrivateKey alloc] initWithPemNamed:@"test" in: [NSBundle bundleForClass:[TestUtils class]] error:nil];
+    priv = [[PrivateKey alloc] initWithDerNamed:@"test" in: [NSBundle bundleForClass:[TestUtils class]] error:nil];
+    priv = [[PrivateKey alloc] initWithBase64Encoded:@"test" error:nil];
     
-    [[Signature alloc] initWithBase64Encoded:@"test" error:nil];
-    [[Signature alloc] initWithData:data];
+    Signature* signature;
+    signature = [[Signature alloc] initWithBase64Encoded:@"test" error:nil];
+    signature = [[Signature alloc] initWithData:data];
     
-    [[ClearMessage alloc] initWithBase64Encoded:@"test" error:nil];
-    [[ClearMessage alloc] initWithData:data];
-    [[ClearMessage alloc] initWithString:@"test" using:NSUTF8StringEncoding error:nil];
+    ClearMessage* clear;
+    clear = [[ClearMessage alloc] initWithBase64Encoded:@"test" error:nil];
+    clear = [[ClearMessage alloc] initWithData:data];
+    clear = [[ClearMessage alloc] initWithString:@"test" using:NSUTF8StringEncoding error:nil];
+    
+    EncryptedMessage* encrypted;
+    encrypted = [[EncryptedMessage alloc] initWithBase64Encoded:@"test" error:nil];
+    encrypted = [[EncryptedMessage alloc] initWithData:data];
     
     {
         PublicKey* publicKey = [TestUtils publicKeyWithName:@"swiftyrsa-public" error:nil];

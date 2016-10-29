@@ -13,7 +13,7 @@ class ClearMessageTests: XCTestCase {
     
     func test_initWithData() {
         let data = TestUtils.randomData(count: 1024)
-        let message = ClearMessage(data: data)
+        _ = ClearMessage(data: data)
         XCTAssertTrue(true, "All good")
     }
     
@@ -47,7 +47,7 @@ class ClearMessageTests: XCTestCase {
 class EncryptedMessageTests: XCTestCase {
     func test_initWithData() {
         let data = TestUtils.randomData(count: 1024)
-        let message = EncryptedMessage(data: data)
+        _ = EncryptedMessage(data: data)
         XCTAssertTrue(true, "All good")
     }
     
