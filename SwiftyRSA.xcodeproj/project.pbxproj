@@ -377,9 +377,11 @@
 					};
 					956150159C49E9CA940A963A343CA64F = {
 						CreatedOnToolsVersion = 6.3;
+						LastSwiftMigration = 0810;
 					};
 					A0D4C96F0225BD9340375C73B5AFD981 = {
 						CreatedOnToolsVersion = 6.3;
+						LastSwiftMigration = 0810;
 					};
 					EFE02F454925076C3D6C2F0B0E45892E = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -536,6 +538,7 @@
 				PRODUCT_NAME = SwiftyRSA;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -577,6 +580,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.takescoop.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -762,6 +766,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.takescoop.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -780,6 +785,7 @@
 				PRODUCT_NAME = SwiftyRSA;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
