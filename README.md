@@ -26,81 +26,118 @@ With Carthage:
 github "TakeScoop/SwiftyRSA"
 ```
 
-Usage
------
+Quick Start
+-----------
 
-### Encrypt
+### Encrypt with a public key
 
-```
-// String
-let encryptedString = try! SwiftyRSA.encryptString(str, publicKeyPEM: pemString)
+```swift
+let publicKey = try PublicKey(pemNamed: "public")
+let clear = try ClearMessage(string: "Clear Text", using: .utf8)
+let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
 
-// Data
-let encryptedData = try! SwiftyRSA.encryptData(data, publicKeyPEM: pemString)
-
-// With a DER key
-let encryptedString = try! SwiftyRSA.encryptString(str, publicKeyDER: derData)
-let encryptedData = try! SwiftyRSA.encryptData(data, publicKeyDER: pemString)
+// Then you can use:
+let data = encrypted.data
+let base64String = encrypted.base64String
 ```
 
-### Decrypt
+### Decrypt with a private key
 
-```
-// String
-let decryptedString = try! SwiftyRSA.decryptString(str, privateKeyPEM: pemString)
+```swift
+let privateKey = try PrivateKey(pemNamed: "private")
+let encrypted = try EncryptedMessage(base64Encoded: "AAA===")
+let clear = try encrypted.decrypted(with: privateKey, padding: .PKCS1)
 
-// Data
-let decryptedData = try! SwiftyRSA.decryptData(data, privateKeyPEM: pemString)
-```
-
-### Sign
-
-SwiftyRSA can sign data with a private key.  SwiftyRSA will calculate an SHA1 digest
-of the supplied `String`/`NSData` and use this to generate the digital signature.
-
-```
-// String
-let signatureString = try! SwiftyRSA.signString(str, privateKeyPEM: pemString)
-
-// Data
-let signatureData = try! SwiftyRSA.signData(data, privateKeyPEM: pemString)
+// Then you can use:
+let data = clear.data
+let base64String = clear.base64String
+let string = clear.string(using: .utf8)
 ```
 
-## Verify
-
-SwiftyRSA can verify digital signatures with a public key.  SwiftyRSA will calculate 
-a digest (default is SHA1) of the supplied `String`/`NSData` and use this to verify the digital 
-signature.
-
-```
-// String
-let verificationResult = try! SwiftyRSA.verifySignatureString(str, signature: sigString, publicKeyPEM: pemString)
-if (verificationResult) {
-    // verification was successful
-}
-
-// Data
-let verificationResult = try! SwiftyRSA.verifySignatureData(data, signature: sigData, publicKeyPEM: String)
-if (verificationResult) {
-    // verification was successful
-}
-
-```
-
-## Alternate digest algorithms
-
-SHA1 is the default digest algorithm. Alternate algorithms can be specified by supplying a value for the `digestMethod` 
-parameter:
-
-```
-let digestSignature = try! rsa.signData(data, privateKey: privKey, digestMethod: .SHA256)
-let result = try! rsa.verifySignatureData(data, signatureData: digestSignature, publicKey: pubKey, digestMethod: .SHA256)
-```
 
 Advanced Usage
 --------------
 
-### Create public and private RSA keys
+### Get a public/private key reference
+
+#### With a DER file
+
+```swift
+let publicKey = try PublicKey(derNamed: "public")
+let privateKey = try PublicKey(derNamed: "private")
+```
+
+#### With a PEM file
+
+```swift
+let publicKey = try PublicKey(pemNamed: "public")
+let privateKey = try PublicKey(pemNamed: "private")
+```
+
+#### With a PEM string
+
+```swift
+let publicKey = try PublicKey(pemEncoded: str)
+let privateKey = try PrivateKey(pemEncoded: str)
+```
+
+#### With a Base64 string
+
+```swift
+let publicKey = try PublicKey(base64Encoded: base64String)
+```
+
+#### With data
+
+```swift
+let publicKey = try PublicKey(data: data)
+```
+
+### Encrypt with a public key
+
+```swift
+let str = "Clear Text"
+let clear = try ClearMessage(string: str, using: .utf8)    
+let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
+
+let data = encrypted.data
+let base64String = encrypted.base64Encoded
+```
+
+### Decrypt with a private key
+
+```swift
+let encrypted = try EncryptedMessage(base64Encoded: base64String)
+let clear = try encrypted.decrypted(with: privateKey, padding: .PKCS1)
+
+let data = clear.data
+let base64String = clear.base64Encoded
+let string = try clear.string(using: .utf8)
+```
+
+### Sign with a private key
+
+SwiftyRSA can sign data with a private key. SwiftyRSA will calculate a SHA digest of the supplied `String`/`Data` and use this to generate the digital signature.
+
+```swift
+let clear = try ClearMessage(string: "Clear Text", using: .utf8)
+let signature = clear.signed(with: privateKey, digestType: .sha1)
+
+let data = signature.data
+let base64String = signature.base64String
+```
+
+### Verify with a public key
+
+SwiftyRSA can verify digital signatures with a public key. SwiftyRSA will calculate a digest of the supplied `String`/`Data` and use this to verify the digital signature.
+
+```swift
+let signature = try Signature(base64Encoded: "AAA===")
+let isSuccessful = try clear.verify(with: publicKey, signature: signature, digestType: .sha1)
+```
+
+Create public and private RSA keys
+----------------------------------
 
 Use `ssh-keygen` to generate a PEM public key and a PEM private key. SwiftyRSA also supports DER public keys.
 
@@ -111,93 +148,6 @@ $ ssh-keygen -f ~/mykey.pub -e -m pem > ~/public.pem
 ```
 
 Your keys are now in `~/public.pem` and `~/private.pem`. Don't forget to move `~/mykey` and `~/mykey.pub` to a secure place.
-
-### Get a key instance
-
-Note that the key reference will only be valid as long as the `SwiftyRSA` instance is alive.
-
-```
-import SwiftyRSA
-
-let rsa = SwiftyRSA()
-
-// Public key (PEM)
-let pubPath   = bundle.pathForResource("public", ofType: "pem")!
-let pubString = NSString(contentsOfFile: pubPath, encoding: NSUTF8StringEncoding, error: nil)! as String
-let pubKey    = try! rsa.publicKeyFromPEMString(pubString)
-
-// Public key (DER)
-let pubPath = bundle.pathForResource("public", ofType: "der")!
-let pubData = NSData(contentsOfFile: pubPath)!
-let pubKey  = try! rsa.publicKeyFromDERData(pubData)
-
-// Private key (PEM)
-let privPath   = bundle.pathForResource("private", ofType: "pem")!
-let privString = NSString(contentsOfFile: privPath, encoding: NSUTF8StringEncoding, error: nil)! as String
-let privKey    = try! rsa.privateKeyFromPEMString(privString)
-```
-
-### Use a key instance to encrypt/decrypt
-
-```
-// Encrypt
-let encryptedString = try! rsa.encryptString(str, publicKey: pubKey)
-let encryptedData = try! rsa.encryptData(data, publicKey: pubKey)
-
-// Decrypt
-let decryptedString = try! rsa.decryptString(str, privateKey: privKey)
-let decryptedData = try! rsa.decryptData(data, privateKey: privKey)
-```
-
-### Sign or verify an existing digest
-
-```
-let rsa = SwiftyRSA()
-let digestSignature = try! rsa.signDigest(digest, privateKey: privKey, digestMethod: .SHA1)
-
-let verificationResult = try! rsa.verifySignatureData(digest, signature: digestSignature, publicKey: pubKey, digestMethod: .SHA1)
-if (verificationResult) {
-    // verification was successful
-}
-```
-
-### Use with Objective-C
-
-```
-@import SwiftyRSA;
-
-NSString* str = @"ClearText";
-
-NSBundle* bundle = [NSBundle bundleForClass:self.class];
-
-NSString* pubPath = [bundle pathForResource:@"swiftyrsa-public" ofType:@"pem"];
-NSString* pubString = [NSString stringWithContentsOfFile:pubPath encoding:NSUTF8StringEncoding error:nil];
-
-NSString* privPath = [bundle pathForResource:@"swiftyrsa-private" ofType:@"pem"];
-NSString* privString = [NSString stringWithContentsOfFile:privPath encoding:NSUTF8StringEncoding error:nil];
-
-NSString* encrypted = [SwiftyRSA encryptString:str publicKeyPEM:pubString padding:kSecPaddingPKCS1 error:nil];
-NSString* decrypted = [SwiftyRSA decryptString:encrypted privateKeyPEM:privString padding:kSecPaddingPKCS1 error:nil];
-
-NSString* signature = [SwiftyRSA signString:str privateKeyPEM:privString digestMethod:DigestTypeSHA256 error:&error];
-VerificationResult* result = [SwiftyRSA verifySignatureString:str signature:signature publicKeyDER:pubData digestMethod:DigestTypeSHA256 error:&error];
-if (result.boolValue) {
-    // verification was successful
-} 
-
-NSData* digestSignature = [rsa signData:data privateKey:privKey digestMethod:DigestTypeSHA256 error:&error];
-VerificationResult* result = [rsa verifySignatureData:data signatureData:digestSignature publicKey:pubKey digestMethod:DigestTypeSHA256 error:&error];
-if (result.boolValue) {
-    // verification was successful
-}   
-
-NSData* digest = [data SHA256];
-NSData* digestSignature = [rsa signDigest:digest privateKey:privKey digestMethod:DigestTypeSHA256 error:&error];
-VerificationResult* result = [rsa verifySignatureData:digest signature:digestSignature publicKey:pubKey digestMethod:DigestTypeSHA256 error:&error];
-if (result.boolValue) {
-    // verification was successful
-}
-```
 
 Under the hood
 --------------
