@@ -27,6 +27,13 @@ class PublicKeyTests: XCTestCase {
         XCTAssertNotNil(publicKey)
     }
     
+    func test_initWithBase64StringWhichContainsNewLines() throws {
+        let path = bundle.path(forResource: "swiftyrsa-public-base64-newlines", ofType: "txt")!
+        let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+        let publicKey = try? PublicKey(base64Encoded: str)
+        XCTAssertNotNil(publicKey)
+    }
+    
     func test_initWithPEMString() throws {
         let path = bundle.path(forResource: "swiftyrsa-public", ofType: "pem")!
         let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)

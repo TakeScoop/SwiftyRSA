@@ -20,6 +20,7 @@
 		A535C69BBF632C0A67A6DD222B7A4760 /* NSData+SHA.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AAC360BC9A1D1773D59C8E91186044E /* NSData+SHA.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B0981AE770653C8FE25311592E2BCE5E /* SwiftyRSA.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CB44E2E8BE22C702325440A0F96410A /* SwiftyRSA.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BF52D5FDEDA5DFCA62ECD03992601E82 /* SwiftyRSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E84F551B29670A456D12366AA4C8E5 /* SwiftyRSA.swift */; };
+		C04D33811DC54D5700D65B05 /* swiftyrsa-public-base64-newlines.txt in Resources */ = {isa = PBXBuildFile; fileRef = C04D33801DC54D5700D65B05 /* swiftyrsa-public-base64-newlines.txt */; };
 		C065ED6F1DBF314500674763 /* swiftyrsa-private.der in Resources */ = {isa = PBXBuildFile; fileRef = C065ED6E1DBF314500674763 /* swiftyrsa-private.der */; };
 		C076F5421DADEB90006AF5DB /* SwiftyRSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 158823A80092238A00F1212F366091C9 /* SwiftyRSA.framework */; };
 		C076F5481DADEBC2006AF5DB /* KeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A00F1D9083D000E285C2 /* KeyTests.swift */; };
@@ -73,6 +74,7 @@
 		9E21744A2073DB8AC7BAEB324D36D4DB /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		AC84097FE3BCDEAEE6370ADD41E9AE68 /* swiftyrsa-public-headerless.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-public-headerless.pem"; sourceTree = "<group>"; };
 		AD7F28E3936301CA24DF13E22196C73B /* multiple-keys-testcase.pem */ = {isa = PBXFileReference; lastKnownFileType = text; path = "multiple-keys-testcase.pem"; sourceTree = "<group>"; };
+		C04D33801DC54D5700D65B05 /* swiftyrsa-public-base64-newlines.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-public-base64-newlines.txt"; sourceTree = "<group>"; };
 		C065ED6E1DBF314500674763 /* swiftyrsa-private.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = "swiftyrsa-private.der"; sourceTree = "<group>"; };
 		C07408AC1D9E1BA800AB6814 /* ObjCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjCTests.m; sourceTree = "<group>"; };
 		C076F53D1DADEB90006AF5DB /* SwiftyRSATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyRSATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -191,6 +193,7 @@
 		D240C55056247A7B270C92143EF30532 /* keys */ = {
 			isa = PBXGroup;
 			children = (
+				C04D33801DC54D5700D65B05 /* swiftyrsa-public-base64-newlines.txt */,
 				C065ED6E1DBF314500674763 /* swiftyrsa-private.der */,
 				C096A0111D9085C100E285C2 /* swiftyrsa-public-base64.txt */,
 				AD7F28E3936301CA24DF13E22196C73B /* multiple-keys-testcase.pem */,
@@ -401,6 +404,7 @@
 				C076F5511DADEC1D006AF5DB /* swiftyrsa-private-headerless.pem in Resources */,
 				C076F5521DADEC1D006AF5DB /* swiftyrsa-private.pem in Resources */,
 				C076F5531DADEC1D006AF5DB /* swiftyrsa-public-headerless.pem in Resources */,
+				C04D33811DC54D5700D65B05 /* swiftyrsa-public-base64-newlines.txt in Resources */,
 				C076F5541DADEC1D006AF5DB /* swiftyrsa-public.der in Resources */,
 				C076F5551DADEC1D006AF5DB /* swiftyrsa-public.pem in Resources */,
 				C065ED6F1DBF314500674763 /* swiftyrsa-private.der in Resources */,

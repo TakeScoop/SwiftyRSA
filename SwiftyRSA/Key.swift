@@ -26,7 +26,7 @@ public protocol Key {
     }
     
     public convenience init(base64Encoded base64String: String) throws {
-        guard let data = Data(base64Encoded: base64String) else {
+        guard let data = Data(base64Encoded: base64String, options: [.ignoreUnknownCharacters]) else {
             throw SwiftyRSAError(message: "Couldn't decode base 64 string")
         }
         try self.init(data: data)
@@ -115,7 +115,7 @@ public protocol Key {
     }
     
     public convenience init(base64Encoded base64String: String) throws {
-        guard let data = Data(base64Encoded: base64String) else {
+        guard let data = Data(base64Encoded: base64String, options: [.ignoreUnknownCharacters]) else {
             throw SwiftyRSAError(message: "Couldn't decode base 64 string")
         }
         try self.init(data: data)
