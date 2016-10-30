@@ -23,6 +23,8 @@ xcuserdata
 *.moved-aside
 *.xcuserstate
 *.xcscmblueprint
+fastlane/test_output
+fastlane/**/*.xml
 
 ## Obj-C/Swift specific
 *.hmap

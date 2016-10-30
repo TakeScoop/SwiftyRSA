@@ -77,7 +77,7 @@ public protocol Key {
         try self.init(data: data)
     }
     
-    static let publicKeyRegex : NSRegularExpression? = {
+    static let publicKeyRegex: NSRegularExpression? = {
         let publicKeyRegex = "(-----BEGIN PUBLIC KEY-----.+?-----END PUBLIC KEY-----)"
         return try? NSRegularExpression(pattern: publicKeyRegex, options: .dotMatchesLineSeparators)
     }()

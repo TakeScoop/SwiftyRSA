@@ -1,0 +1,16 @@
+machine:
+  pre:
+    - brew install ruby swiftlint; brew link --overwrite ruby
+  xcode:
+    version: "8.0"
+  environment:
+    SCAN_OUTPUT_DIRECTORY: $CIRCLE_TEST_REPORTS/junit
+dependencies:
+  override:
+    - sudo gem install bundler
+    - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
+test:
+  override:
+    - instruments -s devices
+    - bundle exec fastlane lint
+    - FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test --verbose

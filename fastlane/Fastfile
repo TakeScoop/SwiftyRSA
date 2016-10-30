@@ -1,0 +1,44 @@
+opt_out_usage
+default_platform :ios
+skip_docs
+
+platform :ios do
+
+  desc "Lints the project"
+  lane :lint do
+    swiftlint
+  end
+
+  desc "Runs all the tests"
+  lane :test do
+
+    # iOS
+    scan(
+        scheme: 'SwiftyRSA iOS',
+        sdk: 'iphonesimulator10.0',
+        custom_report_file_name: 'iOS.xml',
+        devices: [
+            #'iPhone 6 (8.4)',
+            'iPhone 6 (9.0)',
+            'iPhone 6 (10.0)'
+        ]
+    )
+
+    # tvOS
+    scan(
+        scheme: 'SwiftyRSA tvOS',
+        sdk: 'appletvsimulator10.0',
+        custom_report_file_name: 'tvOS.xml',
+        devices: [
+            'Apple TV 1080p (10.0)'
+        ]
+    )
+
+    # watchOS (smoke test)
+    xcodebuild(
+        scheme: 'SwiftyRSA watchOS',
+        sdk: 'watchsimulator3.0',
+        configuration: 'Debug'
+    )
+  end
+end

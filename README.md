@@ -5,7 +5,7 @@ SwiftyRSA
 ![](https://img.shields.io/badge/carthage-compatible-brightgreen.svg)
 ![](https://img.shields.io/cocoapods/p/SwiftyRSA.svg)
 ![](https://img.shields.io/badge/language-swift_3.0-brightgreen.svg)
-[![](https://img.shields.io/travis/TakeScoop/SwiftyRSA/master.svg)](https://travis-ci.org/TakeScoop/SwiftyRSA)
+[![](https://circleci.com/gh/TakeScoop/SwiftyRSA.png?style=shield&circle-token=03e95e0cd05dab2e159cf65d6e62de1d1d84148e)](https://circleci.com/gh/TakeScoop/SwiftyRSA)
 
 **Public key RSA encryption in Swift.**
 

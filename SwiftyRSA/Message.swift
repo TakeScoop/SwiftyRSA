@@ -64,7 +64,7 @@ public protocol Message {
         
         var decryptedDataBytes = [UInt8](repeating: 0, count: 0)
         var idx = 0
-        while (idx < encryptedDataAsArray.count) {
+        while idx < encryptedDataAsArray.count {
             
             let idxEnd = min(idx + blockSize, encryptedDataAsArray.count)
             let chunkData = [UInt8](encryptedDataAsArray[idx..<idxEnd])
@@ -171,7 +171,7 @@ public protocol Message {
         
         var encryptedDataBytes = [UInt8](repeating: 0, count: 0)
         var idx = 0
-        while (idx < decryptedDataAsArray.count) {
+        while idx < decryptedDataAsArray.count {
             
             let idxEnd = min(idx + maxChunkSize, decryptedDataAsArray.count)
             let chunkData = [UInt8](decryptedDataAsArray[idx..<idxEnd])
@@ -209,7 +209,7 @@ public protocol Message {
         let blockSize = SecKeyGetBlockSize(key.reference)
         let maxChunkSize = blockSize - 11
         
-        guard (digest.count / MemoryLayout<UInt8>.size <= maxChunkSize) else {
+        guard digest.count / MemoryLayout<UInt8>.size <= maxChunkSize else {
             throw SwiftyRSAError(message: "data length exceeds \(maxChunkSize)")
         }
         
@@ -220,7 +220,6 @@ public protocol Message {
         var signatureDataLength = blockSize
         
         let status = SecKeyRawSign(key.reference, digestType.padding, signDataAsArray, signDataAsArray.count, &signatureDataBytes, &signatureDataLength)
-        
         
         guard status == noErr else {
             throw SwiftyRSAError(message: "Couldn't sign data \(status)")
@@ -249,9 +248,9 @@ public protocol Message {
         
         let status = SecKeyRawVerify(key.reference, digestType.padding, verifyDataAsArray, verifyDataAsArray.count, signatureDataAsArray, signatureDataAsArray.count)
         
-        if (status == errSecSuccess) {
+        if status == errSecSuccess {
             return VerificationResult(isSuccessful: true)
-        } else if (status == -9809) {
+        } else if status == -9809 {
             return VerificationResult(isSuccessful: false)
         } else {
             throw SwiftyRSAError(message: "Couldn't verify signature - \(status)")
@@ -278,4 +277,3 @@ public protocol Message {
         return digest
     }
 }
-

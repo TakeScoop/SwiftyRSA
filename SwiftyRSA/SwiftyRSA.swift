@@ -101,7 +101,7 @@ enum SwiftyRSA {
                 throw SwiftyRSAError(message: "Couldn't get key reference from the keychain")
             }
             
-            return unwrappedKeyRef as! SecKey
+            return unwrappedKeyRef as! SecKey // swiftlint:disable:this force_cast
         }
     }
     
@@ -150,8 +150,7 @@ enum SwiftyRSA {
         index += 1
         if byteArray[index] > 0x80 {
             index += Int(byteArray[index]) - 0x80 + 1
-        }
-        else {
+        } else {
             index += 1
         }
         
@@ -176,8 +175,7 @@ enum SwiftyRSA {
         index += 1
         if byteArray[index] > 0x80 {
             index += Int(byteArray[index]) - 0x80 + 1
-        }
-        else {
+        } else {
             index += 1
         }
         

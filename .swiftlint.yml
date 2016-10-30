@@ -1,0 +1,12 @@
+disabled_rules:
+  - line_length
+  - trailing_whitespace
+  - file_length
+  - function_parameter_count
+  - cyclomatic_complexity
+opt_in_rules:
+  - force_unwrapping
+included:
+  - SwiftyRSA/
+  - SwiftyRSATests/
+operator_whitespace: error
