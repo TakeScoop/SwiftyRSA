@@ -1,7 +1,19 @@
 SwiftyRSA Changelog
 ===================
 
-# master
+# [master]
+
+# [1.0.0]
+
+### Breaking changes
+
+For its 1.0 version, SwiftyRSA is getting an architecture overhaul to ensure separation of concerns and code clarity. We're introducing the following classes:
+
+ - `PublicKey/PrivateKey` allow to extract a key from a PEM/DER/base64 string and now includes helpers like `PublicKey(pemNamed: "public")`.
+ - `ClearMessage/EncryptedMessage` represents a clear or encrypted message to process through the RSA algorithm.
+ - `Signature` represents a message's signature that can be verified with a public key.
+
+We recommend to check out the new [usage instructions](./README.md) to migrate code from `0.x` versions of SwiftyRSA.
 
 # [0.5.0]
 
@@ -49,7 +61,8 @@ SwiftyRSA Changelog
 
 Initial release.
 
-[master]: https://github.com/TakeScoop/SwiftyRSA/compare/0.5.0...master
+[master]: https://github.com/TakeScoop/SwiftyRSA/tree/master
+[1.0.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/1.0.0
 [0.5.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.5.0
 [0.4.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.4.0
 [0.3.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.3.0
