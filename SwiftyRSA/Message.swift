@@ -59,7 +59,7 @@ public protocol Message {
     public func decrypted(with key: PrivateKey, padding: Padding) throws -> ClearMessage {
         let blockSize = SecKeyGetBlockSize(key.reference)
         
-        var encryptedDataAsArray = [UInt8](repeating: 0, count: data.count / MemoryLayout<UInt8>.size)
+        var encryptedDataAsArray = [UInt8](repeating: 0, count: data.count)
         (data as NSData).getBytes(&encryptedDataAsArray, length: data.count)
         
         var decryptedDataBytes = [UInt8](repeating: 0, count: 0)
@@ -166,7 +166,7 @@ public protocol Message {
         let blockSize = SecKeyGetBlockSize(key.reference)
         let maxChunkSize = (padding == []) ? blockSize : blockSize - 11
         
-        var decryptedDataAsArray = [UInt8](repeating: 0, count: data.count / MemoryLayout<UInt8>.size)
+        var decryptedDataAsArray = [UInt8](repeating: 0, count: data.count)
         (data as NSData).getBytes(&decryptedDataAsArray, length: data.count)
         
         var encryptedDataBytes = [UInt8](repeating: 0, count: 0)
@@ -209,23 +209,23 @@ public protocol Message {
         let blockSize = SecKeyGetBlockSize(key.reference)
         let maxChunkSize = blockSize - 11
         
-        guard digest.count / MemoryLayout<UInt8>.size <= maxChunkSize else {
+        guard digest.count <= maxChunkSize else {
             throw SwiftyRSAError(message: "data length exceeds \(maxChunkSize)")
         }
         
-        var signDataAsArray = [UInt8](repeating: 0, count: digest.count / MemoryLayout<UInt8>.size)
-        (digest as NSData).getBytes(&signDataAsArray, length: digest.count)
+        var digestBytes = [UInt8](repeating: 0, count: digest.count)
+        (digest as NSData).getBytes(&digestBytes, length: digest.count)
         
-        var signatureDataBytes = [UInt8](repeating: 0, count: blockSize)
+        var signatureBytes = [UInt8](repeating: 0, count: blockSize)
         var signatureDataLength = blockSize
         
-        let status = SecKeyRawSign(key.reference, digestType.padding, signDataAsArray, signDataAsArray.count, &signatureDataBytes, &signatureDataLength)
+        let status = SecKeyRawSign(key.reference, digestType.padding, digestBytes, digestBytes.count, &signatureBytes, &signatureDataLength)
         
         guard status == noErr else {
             throw SwiftyRSAError(message: "Couldn't sign data \(status)")
         }
         
-        let signatureData = Data(bytes: UnsafePointer<UInt8>(signatureDataBytes), count: signatureDataBytes.count)
+        let signatureData = Data(bytes: UnsafePointer<UInt8>(signatureBytes), count: signatureBytes.count)
         return Signature(data: signatureData)
     }
     
@@ -240,13 +240,13 @@ public protocol Message {
     public func verify(with key: PublicKey, signature: Signature, digestType: Signature.DigestType) throws -> VerificationResult {
         
         let digest = self.digest(digestType: digestType)
-        var verifyDataAsArray = [UInt8](repeating: 0, count: digest.count / MemoryLayout<UInt8>.size)
-        (digest as NSData).getBytes(&verifyDataAsArray, length: digest.count)
+        var digestBytes = [UInt8](repeating: 0, count: digest.count)
+        (digest as NSData).getBytes(&digestBytes, length: digest.count)
         
-        var signatureDataAsArray = [UInt8](repeating: 0, count: signature.data.count / MemoryLayout<UInt8>.size)
-        (signature.data as NSData).getBytes(&signatureDataAsArray, length: signature.data.count)
+        var signatureBytes = [UInt8](repeating: 0, count: signature.data.count)
+        (signature.data as NSData).getBytes(&signatureBytes, length: signature.data.count)
         
-        let status = SecKeyRawVerify(key.reference, digestType.padding, verifyDataAsArray, verifyDataAsArray.count, signatureDataAsArray, signatureDataAsArray.count)
+        let status = SecKeyRawVerify(key.reference, digestType.padding, digestBytes, digestBytes.count, signatureBytes, signatureBytes.count)
         
         if status == errSecSuccess {
             return VerificationResult(isSuccessful: true)
