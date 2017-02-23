@@ -52,7 +52,7 @@ enum SwiftyRSA {
         // On iOS 10+, we can use SecKeyCreateWithData without going through the keychain
         if #available(iOS 10.0, *), #available(watchOS 3.0, *), #available(tvOS 10.0, *) {
             
-            let sizeInBits = keyData.count * MemoryLayout<UInt8>.size
+            let sizeInBits = keyData.count * 8
             let keyDict: [CFString: Any] = [
                 kSecAttrKeyType: kSecAttrKeyTypeRSA,
                 kSecAttrKeyClass: keyClass,

@@ -3,6 +3,9 @@ SwiftyRSA Changelog
 
 # [master]
 
+ - Fixed a bug that would pass a wrong bit size to `SecKeyCreateWithData` on iOS 10+.
+   [https://github.com/TakeScoop/SwiftyRSA/issues/58](#58)
+
 # [1.0.0]
 
 ### Breaking changes
