@@ -79,8 +79,8 @@ enum SwiftyRSA {
                 kSecAttrAccessible: kSecAttrAccessibleWhenUnlocked
             ]
             
-            var secStatus = SecItemAdd(keyAddDict as CFDictionary, persistKey)
-            if secStatus != noErr && secStatus != errSecDuplicateItem {
+            let secStatus = SecItemAdd(keyAddDict as CFDictionary, persistKey)
+            guard secStatus == errSecSuccess || secStatus == errSecDuplicateItem else {
                 throw SwiftyRSAError(message: "Provided key couldn't be added to the keychain")
             }
             
@@ -95,7 +95,7 @@ enum SwiftyRSA {
             
             // Now fetch the SecKeyRef version of the key
             var keyRef: AnyObject? = nil
-            secStatus = SecItemCopyMatching(keyCopyDict as CFDictionary, &keyRef)
+            _ = SecItemCopyMatching(keyCopyDict as CFDictionary, &keyRef)
             
             guard let unwrappedKeyRef = keyRef else {
                 throw SwiftyRSAError(message: "Couldn't get key reference from the keychain")
