@@ -59,6 +59,46 @@ enum SwiftyRSA {
         return isRSA && isValidClass
     }
     
+    static func data(forKeyReference reference: SecKey) throws -> Data {
+        
+        // On iOS+, we can use `SecKeyCopyExternalRepresentation` directly
+        if #available(iOS 10.0, *) {
+            
+            let data = SecKeyCopyExternalRepresentation(reference, nil)
+            guard let unwrappedData = data as? Data else {
+                throw SwiftyRSAError(message: "Couldn't retrieve key data from the keychain")
+            }
+            return unwrappedData
+        
+        // On iOS 8/9, we need to add the key again to the keychain with a temporary tag, grab the data,
+        // and delete the key again.
+        } else {
+            
+            let temporaryTag = UUID().uuidString
+            let addParams: [CFString: Any] = [
+                kSecValueRef: reference,
+                kSecReturnData: true,
+                kSecClass: kSecClassKey,
+                kSecAttrApplicationTag: temporaryTag
+            ]
+            
+            var data: AnyObject?
+            _ = SecItemAdd(addParams as CFDictionary, &data)
+            guard let unwrappedData = data as? Data else {
+                throw SwiftyRSAError(message: "Couldn't retrieve key data from the keychain")
+            }
+            
+            let deleteParams: [CFString: Any] = [
+                kSecClass: kSecClassKey,
+                kSecAttrApplicationTag: temporaryTag
+            ]
+            
+            _ = SecItemDelete(deleteParams as CFDictionary)
+            
+            return unwrappedData
+        }
+    }
+    
     static func addKey(_ keyData: Data, isPublic: Bool, tag: String) throws ->  SecKey {
         
         var keyData = keyData
@@ -76,7 +116,8 @@ enum SwiftyRSA {
             let keyDict: [CFString: Any] = [
                 kSecAttrKeyType: kSecAttrKeyTypeRSA,
                 kSecAttrKeyClass: keyClass,
-                kSecAttrKeySizeInBits: NSNumber(value: sizeInBits)
+                kSecAttrKeySizeInBits: NSNumber(value: sizeInBits),
+                kSecReturnPersistentRef: true
             ]
             
             guard let key = SecKeyCreateWithData(keyData as CFData, keyDict as CFDictionary, nil) else {
@@ -95,7 +136,7 @@ enum SwiftyRSA {
                 kSecAttrKeyType: kSecAttrKeyTypeRSA,
                 kSecValueData: keyData,
                 kSecAttrKeyClass: keyClass,
-                kSecReturnPersistentRef: NSNumber(value: true),
+                kSecReturnPersistentRef: true,
                 kSecAttrAccessible: kSecAttrAccessibleWhenUnlocked
             ]
             
@@ -110,7 +151,7 @@ enum SwiftyRSA {
                 kSecAttrKeyType: kSecAttrKeyTypeRSA,
                 kSecAttrKeyClass: keyClass,
                 kSecAttrAccessible: kSecAttrAccessibleWhenUnlocked,
-                kSecReturnRef: NSNumber(value: true),
+                kSecReturnRef: true,
             ]
             
             // Now fetch the SecKeyRef version of the key

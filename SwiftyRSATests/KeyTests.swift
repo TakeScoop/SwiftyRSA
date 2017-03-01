@@ -112,7 +112,7 @@ class PublicKeyTests: XCTestCase {
         XCTAssertEqual(keys.count, 0)
     }
     
-    func test_dataProperty() throws {
+    func test_data() throws {
         
         // With header
         do {
@@ -121,8 +121,13 @@ class PublicKeyTests: XCTestCase {
             }
             let data = try Data(contentsOf: URL(fileURLWithPath: path))
             let publicKey = try PublicKey(data: data)
-            XCTAssertEqual(publicKey.data, data)
-            XCTAssertNotEqual(publicKey.dataWithoutHeader, data)
+            
+            guard let dataFromKeychain = try? publicKey.data() else {
+                return XCTFail()
+            }
+            
+            XCTAssertNotEqual(dataFromKeychain, data)
+            XCTAssertEqual(publicKey.originalData, data)
         }
         
         // Headerless
@@ -132,7 +137,8 @@ class PublicKeyTests: XCTestCase {
             }
             let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
             let publicKey = try PublicKey(pemEncoded: str)
-            XCTAssertEqual(publicKey.dataWithoutHeader, publicKey.data)
+            XCTAssertNotNil(publicKey.originalData)
+            XCTAssertNotNil(try? publicKey.data())
         }
     }
 }
@@ -202,6 +208,6 @@ class PrivateKeyTests: XCTestCase {
         }
         let data = try Data(contentsOf: URL(fileURLWithPath: path))
         let publicKey = try PrivateKey(data: data)
-        XCTAssertEqual(publicKey.data, data)
+        XCTAssertEqual(try? publicKey.data(), data)
     }
 }
