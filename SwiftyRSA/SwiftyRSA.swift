@@ -13,6 +13,10 @@ public typealias Padding = SecPadding
 
 struct SwiftyRSAError: Error {
     let message: String
+    
+    init(message: String) {
+        self.message = message
+    }
 }
 
 extension CFString: Hashable {
@@ -37,6 +41,22 @@ enum SwiftyRSA {
         }
         
         return lines.joined(separator: "")
+    }
+    
+    static func isValidKeyReference(_ reference: SecKey, forClass requiredClass: CFString) -> Bool {
+        
+        guard #available(iOS 10.0, *) else {
+            return true
+        }
+        
+        let attributes = SecKeyCopyAttributes(reference) as? [CFString: Any]
+        guard let keyType = attributes?[kSecAttrKeyType] as? String, let keyClass = attributes?[kSecAttrKeyClass] as? String else {
+            return false
+        }
+        
+        let isRSA = keyType == kSecAttrKeyTypeRSA as String
+        let isValidClass = keyClass == requiredClass as String
+        return isRSA && isValidClass
     }
     
     static func addKey(_ keyData: Data, isPublic: Bool, tag: String) throws ->  SecKey {

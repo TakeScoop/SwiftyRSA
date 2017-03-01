@@ -13,6 +13,33 @@ class PublicKeyTests: XCTestCase {
     
     let bundle = Bundle(for: PublicKeyTests.self)
     
+    func test_initWithReference() throws {
+        guard let path = bundle.path(forResource: "swiftyrsa-public", ofType: "der") else {
+            return XCTFail()
+        }
+        let data = try Data(contentsOf: URL(fileURLWithPath: path))
+        let publicKey = try PublicKey(data: data)
+
+        let newPublicKey = try? PublicKey(reference: publicKey.reference)
+        XCTAssertNotNil(newPublicKey)
+    }
+    
+    func test_initWithReference_failsWithPrivateKey() throws {
+        
+        // We can't do key reference checking on iOS 8/9
+        guard #available(iOS 10.0, *) else {
+            return
+        }
+        
+        guard let path = bundle.path(forResource: "swiftyrsa-private", ofType: "pem") else {
+            return XCTFail()
+        }
+        let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+        let privateKey = try PrivateKey(pemEncoded: str)
+        
+        XCTAssertThrowsError(try PublicKey(reference: privateKey.reference))
+    }
+    
     func test_initWithData() throws {
         guard let path = bundle.path(forResource: "swiftyrsa-public", ofType: "der") else {
             return XCTFail()
@@ -113,6 +140,33 @@ class PublicKeyTests: XCTestCase {
 class PrivateKeyTests: XCTestCase {
     
     let bundle = Bundle(for: PublicKeyTests.self)
+    
+    func test_initWithReference() throws {
+        guard let path = bundle.path(forResource: "swiftyrsa-private", ofType: "pem") else {
+            return XCTFail()
+        }
+        let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+        let privateKey = try PrivateKey(pemEncoded: str)
+        
+        let newPrivateKey = try? PrivateKey(reference: privateKey.reference)
+        XCTAssertNotNil(newPrivateKey)
+    }
+    
+    func test_initWithReference_failsWithPublicKey() throws {
+        
+        // We can't do key reference checking on iOS 8/9
+        guard #available(iOS 10.0, *) else {
+            return
+        }
+        
+        guard let path = bundle.path(forResource: "swiftyrsa-public", ofType: "der") else {
+            return XCTFail()
+        }
+        let data = try Data(contentsOf: URL(fileURLWithPath: path))
+        let publicKey = try PublicKey(data: data)
+        
+        XCTAssertThrowsError(try PrivateKey(reference: publicKey.reference))
+    }
     
     func test_initWithPEMString() throws {
         guard let path = bundle.path(forResource: "swiftyrsa-private", ofType: "pem") else {

@@ -20,23 +20,41 @@ public protocol Key {
     public let reference: SecKey
     
     /// Tag of the key within the keychain
-    public let tag: String
+    public let tag: String?
     
     /// Data of the public key without a x509 header.
     /// Since SwiftyRSA strips public key headers, `key.data` might be different then `key.dataWithoutHeader`.
-    public let dataWithoutHeader: Data
+    public let dataWithoutHeader: Data?
     
     /// Data of the public key as provided when creating the key.
     /// Note that it does not contain PEM headers and holds data as bytes, not as a base 64 string.
-    public let data: Data
+    public let data: Data?
     
-    /// Creates a public with a RSA public key data.
+    /// Creates a public key with a keychain key reference.
+    /// This initializer will throw if the provided key reference is not a public RSA key.
+    ///
+    /// - Parameter reference: Reference to the key within the keychain.
+    /// - Throws: SwiftyRSAError
+    public init(reference: SecKey) throws {
+        
+        guard SwiftyRSA.isValidKeyReference(reference, forClass: kSecAttrKeyClassPublic) else {
+            throw SwiftyRSAError(message: "Provided key reference if not a valid RSA public key")
+        }
+        
+        self.reference = reference
+        self.tag = nil
+        self.data = nil
+        self.dataWithoutHeader = nil
+    }
+    
+    /// Creates a public key with a RSA public key data.
     ///
     /// - Parameter data: Public key data
     /// - Throws: SwiftyRSAError
     required public init(data: Data) throws {
         
-        tag = UUID().uuidString
+        let tag = UUID().uuidString
+        self.tag = tag
         
         let dataWithoutHeader = try SwiftyRSA.stripPublicKeyHeader(keyData: data)
         self.dataWithoutHeader = dataWithoutHeader
@@ -140,7 +158,9 @@ public protocol Key {
     }
     
     deinit {
-        SwiftyRSA.removeKey(tag: tag)
+        if let tag = tag {
+            SwiftyRSA.removeKey(tag: tag)
+        }
     }
 }
 
@@ -150,11 +170,27 @@ public protocol Key {
     public let reference: SecKey
     
     /// Tag of the key within the keychain
-    public let tag: String
+    public let tag: String?
     
     /// Original data of the private key.
     /// Note that it does not contain PEM headers and holds data as bytes, not as a base 64 string.
-    public let data: Data
+    public let data: Data?
+    
+    /// Creates a private key with a keychain key reference.
+    /// This initializer will throw if the provided key reference is not a private RSA key.
+    ///
+    /// - Parameter reference: Reference to the key within the keychain.
+    /// - Throws: SwiftyRSAError
+    public init(reference: SecKey) throws {
+        
+        guard SwiftyRSA.isValidKeyReference(reference, forClass: kSecAttrKeyClassPrivate) else {
+            throw SwiftyRSAError(message: "Provided key reference if not a valid RSA private key")
+        }
+        
+        self.reference = reference
+        self.tag = nil
+        self.data = nil
+    }
     
     /// Creates a private key with a RSA public key data.
     ///
@@ -162,7 +198,8 @@ public protocol Key {
     /// - Throws: SwiftyRSAError
     required public init(data: Data) throws {
         self.data = data
-        tag = UUID().uuidString
+        let tag = UUID().uuidString
+        self.tag = tag
         reference = try SwiftyRSA.addKey(data, isPublic: false, tag: tag)
     }
     
@@ -215,6 +252,8 @@ public protocol Key {
     }
     
     deinit {
-        SwiftyRSA.removeKey(tag: tag)
+        if let tag = tag {
+            SwiftyRSA.removeKey(tag: tag)
+        }
     }
 }
