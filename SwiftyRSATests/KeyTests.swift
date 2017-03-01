@@ -84,6 +84,30 @@ class PublicKeyTests: XCTestCase {
         let keys = PublicKey.publicKeys(pemEncoded: input)
         XCTAssertEqual(keys.count, 0)
     }
+    
+    func test_dataProperty() throws {
+        
+        // With header
+        do {
+            guard let path = bundle.path(forResource: "swiftyrsa-public", ofType: "der") else {
+                return XCTFail()
+            }
+            let data = try Data(contentsOf: URL(fileURLWithPath: path))
+            let publicKey = try PublicKey(data: data)
+            XCTAssertEqual(publicKey.data, data)
+            XCTAssertNotEqual(publicKey.dataWithoutHeader, data)
+        }
+        
+        // Headerless
+        do {
+            guard let path = bundle.path(forResource: "swiftyrsa-public-headerless", ofType: "pem") else {
+                return XCTFail()
+            }
+            let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+            let publicKey = try PublicKey(pemEncoded: str)
+            XCTAssertEqual(publicKey.dataWithoutHeader, publicKey.data)
+        }
+    }
 }
 
 class PrivateKeyTests: XCTestCase {
@@ -116,5 +140,14 @@ class PrivateKeyTests: XCTestCase {
     func test_initWithDERName() throws {
         let message = try? PrivateKey(pemNamed: "swiftyrsa-private", in: Bundle(for: TestUtils.self))
         XCTAssertNotNil(message)
+    }
+    
+    func test_dataProperty() throws {
+        guard let path = bundle.path(forResource: "swiftyrsa-private", ofType: "der") else {
+            return XCTFail()
+        }
+        let data = try Data(contentsOf: URL(fileURLWithPath: path))
+        let publicKey = try PrivateKey(data: data)
+        XCTAssertEqual(publicKey.data, data)
     }
 }

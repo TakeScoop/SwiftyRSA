@@ -106,7 +106,7 @@ enum SwiftyRSA {
     }
     
     /**
-     This method strips the x509 from a provided ASN.1 DER public key.
+     This method strips the x509 header from a provided ASN.1 DER public key.
      If the key doesn't contain a header, the DER data is returned as is.
      
      Supported formats are:

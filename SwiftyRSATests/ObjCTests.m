@@ -30,6 +30,8 @@
     pub = [[PublicKey alloc] initWithBase64Encoded:@"test" error:nil];
     pub = [[PublicKey alloc] initWithPemNamed:@"test" in: [NSBundle bundleForClass:[TestUtils class]] error:nil];
     pub = [[PublicKey alloc] initWithDerNamed:@"test" in: [NSBundle bundleForClass:[TestUtils class]] error:nil];
+    [pub data];
+    [pub dataWithoutHeader];
     [PublicKey publicKeysWithPemEncoded:@"test"];
     
     PrivateKey* priv;
@@ -38,6 +40,7 @@
     priv = [[PrivateKey alloc] initWithPemNamed:@"test" in: [NSBundle bundleForClass:[TestUtils class]] error:nil];
     priv = [[PrivateKey alloc] initWithDerNamed:@"test" in: [NSBundle bundleForClass:[TestUtils class]] error:nil];
     priv = [[PrivateKey alloc] initWithBase64Encoded:@"test" error:nil];
+    [priv data];
     
     Signature* signature;
     signature = [[Signature alloc] initWithBase64Encoded:@"test" error:nil];

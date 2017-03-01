@@ -3,6 +3,15 @@ SwiftyRSA Changelog
 
 # [master]
 
+ - `PublicKey` and `PrivateKey` now expose their keychain reference and the data they were created with.
+   [#60](https://github.com/TakeScoop/SwiftyRSA/issues/60)
+   - `PublicKey` now exposes the following fields:
+     - `reference`: reference to the key in the keychain
+     - `data`: data with which the key was created
+     - `dataWithoutHeader`: data with the x509 header
+   - `PrivateKey` now exposes the following fields:
+     - `reference`: reference to the key in the keychain
+     - `data`: data with which the key was created
  - Fixed a bug that would pass a wrong bit size to `SecKeyCreateWithData` on iOS 10+.
    [https://github.com/TakeScoop/SwiftyRSA/issues/58](#58)
 

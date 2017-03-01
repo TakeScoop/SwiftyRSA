@@ -16,17 +16,33 @@ public protocol Key {
 
 @objc public class PublicKey: NSObject, Key {
     
-    let reference: SecKey
-    let tag: String
+    /// Reference to the key within the keychain
+    public let reference: SecKey
+    
+    /// Tag of the key within the keychain
+    public let tag: String
+    
+    /// Data of the public key without a x509 header.
+    /// Since SwiftyRSA strips public key headers, `key.data` might be different then `key.dataWithoutHeader`.
+    public let dataWithoutHeader: Data
+    
+    /// Data of the public key as provided when creating the key.
+    /// Note that it does not contain PEM headers and holds data as bytes, not as a base 64 string.
+    public let data: Data
     
     /// Creates a public with a RSA public key data.
     ///
     /// - Parameter data: Public key data
     /// - Throws: SwiftyRSAError
     required public init(data: Data) throws {
+        
         tag = UUID().uuidString
-        let data = try SwiftyRSA.stripPublicKeyHeader(keyData: data)
-    	reference = try SwiftyRSA.addKey(data, isPublic: true, tag: tag)
+        
+        let dataWithoutHeader = try SwiftyRSA.stripPublicKeyHeader(keyData: data)
+        self.dataWithoutHeader = dataWithoutHeader
+        self.data = data
+        
+    	reference = try SwiftyRSA.addKey(dataWithoutHeader, isPublic: true, tag: tag)
     }
     
     /// Creates a public key with a base64-encoded string.
@@ -130,14 +146,22 @@ public protocol Key {
 
 @objc public class PrivateKey: NSObject, Key {
     
-    let reference: SecKey
-    let tag: String
+    /// Reference to the key within the keychain
+    public let reference: SecKey
+    
+    /// Tag of the key within the keychain
+    public let tag: String
+    
+    /// Original data of the private key.
+    /// Note that it does not contain PEM headers and holds data as bytes, not as a base 64 string.
+    public let data: Data
     
     /// Creates a private key with a RSA public key data.
     ///
     /// - Parameter data: Private key data
     /// - Throws: SwiftyRSAError
     required public init(data: Data) throws {
+        self.data = data
         tag = UUID().uuidString
         reference = try SwiftyRSA.addKey(data, isPublic: false, tag: tag)
     }
