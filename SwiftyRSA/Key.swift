@@ -37,6 +37,16 @@ public protocol Key {
         return try SwiftyRSA.data(forKeyReference: reference)
     }
     
+    /// Returns a PEM representation of the public key.
+    ///
+    /// - Returns: Data of the key, PEM-encoded
+    /// - Throws: SwiftyRSAError
+    @objc public func pemString() throws -> String {
+        let data = try self.data()
+        let pem = SwiftyRSA.format(keyData: data, withPemType: "RSA PUBLIC KEY")
+        return pem
+    }
+    
     /// Creates a public key with a keychain key reference.
     /// This initializer will throw if the provided key reference is not a public RSA key.
     ///
@@ -187,6 +197,16 @@ public protocol Key {
     /// - Throws: SwiftyRSAError
     @objc public func data() throws -> Data {
         return try SwiftyRSA.data(forKeyReference: reference)
+    }
+    
+    /// Returns a PEM representation of the private key.
+    ///
+    /// - Returns: Data of the key, PEM-encoded
+    /// - Throws: SwiftyRSAError
+    @objc public func pemString() throws -> String {
+        let data = try self.data()
+        let pem = SwiftyRSA.format(keyData: data, withPemType: "RSA PRIVATE KEY")
+        return pem
     }
     
     /// Creates a private key with a keychain key reference.

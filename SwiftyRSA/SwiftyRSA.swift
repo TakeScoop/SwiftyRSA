@@ -59,6 +59,27 @@ enum SwiftyRSA {
         return isRSA && isValidClass
     }
     
+    static func format(keyData: Data, withPemType pemType: String) -> String {
+        
+        func split(_ str: String, byChunksOfLength length: Int) -> [String] {
+            return stride(from: 0, to: str.characters.count, by: length).map { i -> String in
+                let startIndex = str.index(str.startIndex, offsetBy: i)
+                let endIndex   = str.index(startIndex, offsetBy: length, limitedBy: str.endIndex) ?? str.endIndex
+                return str[startIndex..<endIndex]
+            }
+        }
+        
+        let chunks = split(keyData.base64EncodedString(), byChunksOfLength: 64)
+        
+        let pem = [
+            "-----BEGIN \(pemType)-----",
+            chunks.joined(separator: "\n"),
+            "-----END \(pemType)-----"
+        ]
+        
+        return pem.joined(separator: "\n")
+    }
+    
     static func data(forKeyReference reference: SecKey) throws -> Data {
         
         // On iOS+, we can use `SecKeyCopyExternalRepresentation` directly
