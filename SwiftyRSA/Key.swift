@@ -47,6 +47,14 @@ public protocol Key {
         return pem
     }
     
+    /// Returns a Base64 representation of the public key.
+    ///
+    /// - Returns: Data of the key, Base64-encoded
+    /// - Throws: SwiftyRSAError
+    @objc public func base64String() throws -> String {
+        return try data().base64EncodedString()
+    }
+    
     /// Creates a public key with a keychain key reference.
     /// This initializer will throw if the provided key reference is not a public RSA key.
     ///
@@ -197,6 +205,14 @@ public protocol Key {
     /// - Throws: SwiftyRSAError
     @objc public func data() throws -> Data {
         return try SwiftyRSA.data(forKeyReference: reference)
+    }
+    
+    /// Returns a Base64 representation of the private key.
+    ///
+    /// - Returns: Data of the key, Base64-encoded
+    /// - Throws: SwiftyRSAError
+    @objc public func base64String() throws -> String {
+        return try data().base64EncodedString()
     }
     
     /// Returns a PEM representation of the private key.
