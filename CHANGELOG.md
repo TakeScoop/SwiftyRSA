@@ -7,6 +7,10 @@ SwiftyRSA Changelog
    [#60](https://github.com/TakeScoop/SwiftyRSA/issues/60)
  - `PublicKey` and `PrivateKey` now have a method `data()` which returns the key data as exported by the keychain.
 	[#60](https://github.com/TakeScoop/SwiftyRSA/issues/60)
+ - `PublicKey` and `PrivateKey` now can be exported to PEM via the `pemString()` method, or base64 via the `base64String()` method.
+   [#60](https://github.com/TakeScoop/SwiftyRSA/issues/60)
+ - `PublicKey` and `PrivateKey` now can be created from a `SecKey` reference.
+   [#48](https://github.com/TakeScoop/SwiftyRSA/issues/48)
  - Fixed a bug that would pass a wrong bit size to `SecKeyCreateWithData` on iOS 10+.
    [https://github.com/TakeScoop/SwiftyRSA/issues/58](#58)
 
