@@ -45,7 +45,7 @@ enum SwiftyRSA {
     
     static func isValidKeyReference(_ reference: SecKey, forClass requiredClass: CFString) -> Bool {
         
-        guard #available(iOS 10.0, *) else {
+        guard #available(iOS 10.0, *), #available(watchOS 3.0, *), #available(tvOS 10.0, *) else {
             return true
         }
         
@@ -83,7 +83,7 @@ enum SwiftyRSA {
     static func data(forKeyReference reference: SecKey) throws -> Data {
         
         // On iOS+, we can use `SecKeyCopyExternalRepresentation` directly
-        if #available(iOS 10.0, *) {
+        if #available(iOS 10.0, *), #available(watchOS 3.0, *), #available(tvOS 10.0, *) {
             
             let data = SecKeyCopyExternalRepresentation(reference, nil)
             guard let unwrappedData = data as? Data else {
