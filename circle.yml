@@ -1,6 +1,6 @@
 machine:
   pre:
-    - brew link --overwrite ruby
+    - brew install ruby; brew link --overwrite ruby
   xcode:
     version: "8.0"
   environment:
@@ -9,6 +9,7 @@ dependencies:
   override:
     - sudo gem install bundler
     - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
+    - diff ./Podfile.lock ./Pods/Manifest.lock > /dev/null || bundle exec pod install
 test:
   override:
     - instruments -s devices
