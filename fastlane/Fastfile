@@ -6,7 +6,7 @@ platform :ios do
 
   desc "Lints the project"
   lane :lint do
-    swiftlint
+    sh 'cd ../ && ./Pods/SwiftLint/swiftlint'
   end
 
   desc "Runs all the tests"
