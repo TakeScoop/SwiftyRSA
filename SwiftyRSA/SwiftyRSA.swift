@@ -54,8 +54,8 @@ enum SwiftyRSA {
             return false
         }
         
-        let isRSA = keyType == kSecAttrKeyTypeRSA as String
-        let isValidClass = keyClass == requiredClass as String
+        let isRSA = keyType == (kSecAttrKeyTypeRSA as String)
+        let isValidClass = keyClass == (requiredClass as String)
         return isRSA && isValidClass
     }
     
