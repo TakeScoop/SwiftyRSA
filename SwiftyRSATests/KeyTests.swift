@@ -147,6 +147,7 @@ class PublicKeyTests: XCTestCase {
         let pemString = try publicKey.pemString()
         let newPublicKey = try PublicKey(pemEncoded: pemString)
         XCTAssertNotNil(newPublicKey)
+        XCTAssertEqual(try? publicKey.data(), try? newPublicKey.data())
     }
     
     func test_base64String() throws {
@@ -154,6 +155,7 @@ class PublicKeyTests: XCTestCase {
         let base64String = try publicKey.base64String()
         let newPublicKey = try PublicKey(base64Encoded: base64String)
         XCTAssertNotNil(newPublicKey)
+        XCTAssertEqual(try? publicKey.data(), try? newPublicKey.data())
     }
 }
 
@@ -230,12 +232,13 @@ class PrivateKeyTests: XCTestCase {
         let pemString = try privateKey.pemString()
         let newPrivateKey = try PrivateKey(pemEncoded: pemString)
         XCTAssertNotNil(newPrivateKey)
+        XCTAssertEqual(try? privateKey.data(), try? newPrivateKey.data())
     }
     
     func test_base64String() throws {
         let privateKey = try PrivateKey(pemNamed: "swiftyrsa-private", in: bundle)
         let base64String = try privateKey.base64String()
         let newPrivateKey = try PrivateKey(base64Encoded: base64String)
-        XCTAssertNotNil(newPrivateKey)
+        XCTAssertEqual(try? privateKey.data(), try? newPrivateKey.data())
     }
 }
