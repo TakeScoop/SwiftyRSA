@@ -62,9 +62,9 @@ enum SwiftyRSA {
     static func format(keyData: Data, withPemType pemType: String) -> String {
         
         func split(_ str: String, byChunksOfLength length: Int) -> [String] {
-            return stride(from: 0, to: str.characters.count, by: length).map { i -> String in
-                let startIndex = str.index(str.startIndex, offsetBy: i)
-                let endIndex   = str.index(startIndex, offsetBy: length, limitedBy: str.endIndex) ?? str.endIndex
+            return stride(from: 0, to: str.characters.count, by: length).map { index -> String in
+                let startIndex = str.index(str.startIndex, offsetBy: index)
+                let endIndex = str.index(startIndex, offsetBy: length, limitedBy: str.endIndex) ?? str.endIndex
                 return str[startIndex..<endIndex]
             }
         }
