@@ -264,6 +264,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A5E4617275E4BCEFBF4D9ED8CF5BC708 /* Build configuration list for PBXNativeTarget "SwiftyRSA tvOS" */;
 			buildPhases = (
+				C0CB618F1E8B96C000185EB6 /* SwiftLint */,
 				EFB1878426040AB3CFD12518057E12DC /* Sources */,
 				79854F71EBDFFF8B4B9C9228CF0A804F /* Frameworks */,
 				A9053DDE8A2335802DA7985C335C9E5E /* Headers */,
@@ -282,6 +283,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6C06D476C5D1FE6F48C7C98984AB02B3 /* Build configuration list for PBXNativeTarget "SwiftyRSA iOS" */;
 			buildPhases = (
+				C0CB61911E8B96F400185EB6 /* SwiftLint */,
 				457A1BFD33FB9E8E03F0BA7CF2E25BD8 /* Sources */,
 				C5C4FB2D7D1A7AE2E21F4CF58CAAE48F /* Frameworks */,
 				887B63BF76CE3645AFA3421FB2D6A6EA /* Headers */,
@@ -318,6 +320,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 98115918AFE87852C5C034851D5FE20D /* Build configuration list for PBXNativeTarget "SwiftyRSA watchOS" */;
 			buildPhases = (
+				C0CB61901E8B96E400185EB6 /* SwiftLint */,
 				1BB4FDBCC83EB492678BDF3D491B1C6E /* Sources */,
 				AEE9B8C42D7293037BC4F4FBB3B829CD /* Frameworks */,
 				F0E07CF6351E7FA2FFA5DBBA8BACEF09 /* Headers */,
@@ -419,6 +422,51 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C0CB618F1E8B96C000185EB6 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/SwiftLint/swiftlint\"";
+		};
+		C0CB61901E8B96E400185EB6 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/SwiftLint/swiftlint\"";
+		};
+		C0CB61911E8B96F400185EB6 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/SwiftLint/swiftlint\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1BB4FDBCC83EB492678BDF3D491B1C6E /* Sources */ = {

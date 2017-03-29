@@ -1,6 +1,6 @@
 machine:
   pre:
-    - brew install ruby swiftlint; brew link --overwrite ruby
+    - brew link --overwrite ruby
   xcode:
     version: "8.0"
   environment:

@@ -4,6 +4,7 @@ disabled_rules:
   - file_length
   - function_parameter_count
   - cyclomatic_complexity
+  - trailing_comma
 opt_in_rules:
   - force_unwrapping
 included:
