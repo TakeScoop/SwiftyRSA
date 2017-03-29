@@ -69,6 +69,9 @@ enum SwiftyRSA {
             }
         }
         
+        // Line length is typically 64 characters, except the last line.
+        // See https://tools.ietf.org/html/rfc7468#page-6 (64base64char)
+        // See https://tools.ietf.org/html/rfc7468#page-11 (example)
         let chunks = split(keyData.base64EncodedString(), byChunksOfLength: 64)
         
         let pem = [
