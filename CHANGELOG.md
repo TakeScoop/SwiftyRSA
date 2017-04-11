@@ -3,6 +3,8 @@ SwiftyRSA Changelog
 
 # [master]
 
+# [1.1.0]
+
  - `PublicKey` and `PrivateKey` now expose their keychain reference and the data they were created with, in the `reference` and `originalData` fields.
    [#60](https://github.com/TakeScoop/SwiftyRSA/issues/60)
  - `PublicKey` and `PrivateKey` now have a method `data()` which returns the key data as exported by the keychain.
@@ -73,6 +75,7 @@ We recommend to check out the new [usage instructions](./README.md) to migrate c
 Initial release.
 
 [master]: https://github.com/TakeScoop/SwiftyRSA/tree/master
+[1.1.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/1.1.0
 [1.0.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/1.0.0
 [0.5.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.5.0
 [0.4.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.4.0
