@@ -59,4 +59,77 @@ class EncryptDecryptTests: XCTestCase {
         
         XCTAssertEqual(decrypted.data, data)
     }
+    
+    func test_keyReferences() throws {
+        let data = TestUtils.randomData(count: 2048)
+        let clearMessage = ClearMessage(data: data)
+        
+        let newPublicKey = try PublicKey(reference: publicKey.reference)
+        let newPrivateKey = try PrivateKey(reference: privateKey.reference)
+        
+        // Encrypt with old public key, decrypt with old private key
+        do {
+            let encrypted = try clearMessage.encrypted(with: publicKey, padding: .PKCS1)
+            let decrypted = try encrypted.decrypted(with: privateKey, padding: .PKCS1)
+            XCTAssertEqual(decrypted.data, data)
+        }
+        
+        // Encrypt with old public key, decrypt with new private key
+        do {
+            let encrypted = try clearMessage.encrypted(with: publicKey, padding: .PKCS1)
+            let decrypted = try encrypted.decrypted(with: newPrivateKey, padding: .PKCS1)
+            XCTAssertEqual(decrypted.data, data)
+        }
+        
+        // Encrypt with new public key, decrypt with old private key
+        do {
+            let encrypted = try clearMessage.encrypted(with: newPublicKey, padding: .PKCS1)
+            let decrypted = try encrypted.decrypted(with: privateKey, padding: .PKCS1)
+            XCTAssertEqual(decrypted.data, data)
+        }
+        
+        // Encrypt with new public key, decrypt with new private key
+        do {
+            let encrypted = try clearMessage.encrypted(with: newPublicKey, padding: .PKCS1)
+            let decrypted = try encrypted.decrypted(with: newPrivateKey, padding: .PKCS1)
+            XCTAssertEqual(decrypted.data, data)
+        }
+    }
+    
+    func test_keyData() throws {
+        
+        let data = TestUtils.randomData(count: 2048)
+        let clearMessage = ClearMessage(data: data)
+        
+        let newPublicKey = try PublicKey(data: try publicKey.data())
+        let newPrivateKey = try PrivateKey(data: try privateKey.data())
+        
+        // Encrypt with old public key, decrypt with old private key
+        do {
+            let encrypted = try clearMessage.encrypted(with: publicKey, padding: .PKCS1)
+            let decrypted = try encrypted.decrypted(with: privateKey, padding: .PKCS1)
+            XCTAssertEqual(decrypted.data, data)
+        }
+        
+        // Encrypt with old public key, decrypt with new private key
+        do {
+            let encrypted = try clearMessage.encrypted(with: publicKey, padding: .PKCS1)
+            let decrypted = try encrypted.decrypted(with: newPrivateKey, padding: .PKCS1)
+            XCTAssertEqual(decrypted.data, data)
+        }
+        
+        // Encrypt with new public key, decrypt with old private key
+        do {
+            let encrypted = try clearMessage.encrypted(with: newPublicKey, padding: .PKCS1)
+            let decrypted = try encrypted.decrypted(with: privateKey, padding: .PKCS1)
+            XCTAssertEqual(decrypted.data, data)
+        }
+        
+        // Encrypt with new public key, decrypt with new private key
+        do {
+            let encrypted = try clearMessage.encrypted(with: newPublicKey, padding: .PKCS1)
+            let decrypted = try encrypted.decrypted(with: newPrivateKey, padding: .PKCS1)
+            XCTAssertEqual(decrypted.data, data)
+        }
+    }
 }

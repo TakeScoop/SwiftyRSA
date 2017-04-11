@@ -68,7 +68,7 @@ let string = clear.string(using: .utf8)
 Advanced Usage
 --------------
 
-### Get a public/private key reference
+### Create a public/private key representation
 
 #### With a DER file
 
@@ -95,12 +95,21 @@ let privateKey = try PrivateKey(pemEncoded: str)
 
 ```swift
 let publicKey = try PublicKey(base64Encoded: base64String)
+let privateKey = try PrivateKey(base64Encoded: base64String)
 ```
 
 #### With data
 
 ```swift
 let publicKey = try PublicKey(data: data)
+let privateKey = try PrivateKey(data: data)
+```
+
+#### With a SecKey
+
+```swift
+let publicKey = try PublicKey(reference: secKey)
+let privateKey = try PrivateKey(reference: secKey)
 ```
 
 ### Encrypt with a public key
@@ -146,6 +155,16 @@ let signature = try Signature(base64Encoded: "AAA===")
 let isSuccessful = try clear.verify(with: publicKey, signature: signature, digestType: .sha1)
 ```
 
+### Export a key or access its content
+
+```swift
+let pem = try key.pemString()
+let base64 = try key.base64String()
+let data = try key.data()
+let reference = key.reference
+let originalData = key.originalData
+```
+
 Create public and private RSA keys
 ----------------------------------
 
@@ -162,26 +181,30 @@ Your keys are now in `~/public.pem` and `~/private.pem`. Don't forget to move `~
 Under the hood
 --------------
 
+To enable using public/private RSA keys on iOS, SwiftyRSA uses a couple techniques like X.509 header stripping so that the keychain accepts them.
+
+<details>
+	<summary>Click here for more details</summary>
+
 When encrypting using a public key:
 
- - If the key is in PEM format, get rid of meta data and convert to NSData
- - Strip the ASN.1 data from the public key header (otherwise the keychain won't accept it)
- - Add the public key to the app keychain, with a random tag
+ - If the key is in PEM format, get rid of its meta data and convert it to Data
+ - Strip the public key X.509 header, otherwise the keychain won't accept it
+ - Add the public key to the keychain, with a random tag
  - Get a reference on the key using the key tag
- - Convert clear text to NSData using UTF8
- - Encrypt data with `SecKeyEncrypt` using the key reference
- - Convert the resulting data to base64 and return it
- - Delete public key from keychain using tag
+ - Use `SecKeyEncrypt` to encrypt a `ClearMessage` using the key reference and the message data.
+ - Store the resulting encrypted data to an `EncryptedMessage`
+ - When the key gets deallocated, delete the public key from the keychain using its tag
 
 When decrypting using a private key:
 
- - Get rid of PEM meta data and convert to NSData
+ - Get rid of PEM meta data and convert to Data
  - Add the private key to the app keychain, with a random tag
  - Get a reference on the key using the key tag
- - Convert encrypted text to NSData from base64 string
- - Decrypt data with `SecKeyDecrypt` using the key reference
- - Convert the resulting data to String using UTF8
+ - Use `SecKeyDecrypt` to decrypt an `EncryptedMessage` using the key reference and the encrypted message data
+ - Store the resulting decrypted data to a `ClearMessage`
  - Delete private key from keychain using tag
+</details>
 
 Inspired from
 -------------
