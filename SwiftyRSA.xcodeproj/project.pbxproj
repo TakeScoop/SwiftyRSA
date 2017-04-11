@@ -464,7 +464,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint autocorrect\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed. Install using brew update && brew install swiftlint or download from https://github.com/realm/SwiftLint.\"\nfi";
+			shellScript = "\"${SRCROOT}/Pods/SwiftLint/swiftlint\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
