@@ -21,6 +21,9 @@
  * These acts essentially as smoke tests to ensure that all the following methods are available in an ObjC context.
  * The actual unit tests are done in Swift in the same target.
  */
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-result"
 - (void)test_smoke {
     NSData* data = [TestUtils randomDataWithCount:128];
     
@@ -77,5 +80,6 @@
         [encryptedMessage decryptedWith:privateKey padding:kSecPaddingNone error:nil];
     }
 }
+#pragma clang diagnostic pop
 
 @end

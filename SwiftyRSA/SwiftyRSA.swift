@@ -89,7 +89,7 @@ enum SwiftyRSA {
         if #available(iOS 10.0, *), #available(watchOS 3.0, *), #available(tvOS 10.0, *) {
             
             let data = SecKeyCopyExternalRepresentation(reference, nil)
-            guard let unwrappedData = data as? Data else {
+            guard let unwrappedData = data as Data? else {
                 throw SwiftyRSAError(message: "Couldn't retrieve key data from the keychain")
             }
             return unwrappedData
