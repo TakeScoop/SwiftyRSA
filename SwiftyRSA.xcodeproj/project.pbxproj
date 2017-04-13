@@ -436,7 +436,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/SwiftLint/swiftlint\"";
+			shellScript = "SWIFTLINT=\"${SRCROOT}/Pods/SwiftLint/swiftlint\"\nif test -x \"${SWIFTLINT}\"; then\n    ${SWIFTLINT}\nfi";
 		};
 		C0CB61901E8B96E400185EB6 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -450,7 +450,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/SwiftLint/swiftlint\"";
+			shellScript = "SWIFTLINT=\"${SRCROOT}/Pods/SwiftLint/swiftlint\"\nif test -x \"${SWIFTLINT}\"; then\n    ${SWIFTLINT}\nfi";
 		};
 		C0CB61911E8B96F400185EB6 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -464,7 +464,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/SwiftLint/swiftlint\"";
+			shellScript = "SWIFTLINT=\"${SRCROOT}/Pods/SwiftLint/swiftlint\"\nif test -x \"${SWIFTLINT}\"; then\n    ${SWIFTLINT}\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 

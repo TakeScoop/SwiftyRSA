@@ -3,6 +3,10 @@ SwiftyRSA Changelog
 
 # [master]
 
+ - Fixed Carthage integration by running SwiftLint only if it exists in a Pods directory.
+   [#66](https://github.com/TakeScoop/SwiftyRSA/issues/66)
+   [#65](https://github.com/TakeScoop/SwiftyRSA/issues/65)
+   
 # [1.1.0]
 
  - `PublicKey` and `PrivateKey` now expose their keychain reference and the data they were created with, in the `reference` and `originalData` fields.
