@@ -14,4 +14,5 @@ test:
   override:
     - instruments -s devices
     - bundle exec fastlane lint
+    - bundle exec fastlane test_carthage
     - FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test --verbose

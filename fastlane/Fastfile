@@ -9,6 +9,14 @@ platform :ios do
     sh 'cd ../ && ./Pods/SwiftLint/swiftlint'
   end
 
+  desc "Ensures that SwiftyRSA can be integrated with Carthage"
+  lane :test_carthage do
+    commit = last_git_commit()[:commit_hash]
+    sh "echo 'git \"..\" \"#{commit}\"' > ../CarthageIntegrationTest/Cartfile"
+    carthage(project_directory: './CarthageIntegrationTest')
+    xcodebuild(project: './CarthageIntegrationTest/CarthageIntegrationTest.xcodeproj')
+  end
+
   desc "Runs all the tests"
   lane :test do
 

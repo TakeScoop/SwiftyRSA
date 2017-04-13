@@ -10,5 +10,5 @@ import Foundation
 import SwiftyRSA
 
 func main() {
-    print("\(SwiftyRSA.self)")
+    print("\(PrivateKey.self)")
 }
