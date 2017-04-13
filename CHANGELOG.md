@@ -3,6 +3,8 @@ SwiftyRSA Changelog
 
 # [master]
 
+# [1.1.1]
+
  - Fixed Carthage integration by running SwiftLint only if it exists in a Pods directory.
    [#66](https://github.com/TakeScoop/SwiftyRSA/issues/66)
    [#65](https://github.com/TakeScoop/SwiftyRSA/issues/65)
@@ -79,6 +81,7 @@ We recommend to check out the new [usage instructions](./README.md) to migrate c
 Initial release.
 
 [master]: https://github.com/TakeScoop/SwiftyRSA/tree/master
+[1.1.1]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/1.1.1
 [1.1.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/1.1.0
 [1.0.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/1.0.0
 [0.5.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/0.5.0
