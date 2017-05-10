@@ -250,7 +250,6 @@ public protocol Key {
         let tag = UUID().uuidString
         self.tag = tag
         let dataWithoutHeader = try SwiftyRSA.stripKeyHeader(keyData: data)
-        print(dataWithoutHeader.hex)
         reference = try SwiftyRSA.addKey(dataWithoutHeader, isPublic: false, tag: tag)
     }
     
