@@ -243,10 +243,6 @@ class PrivateKeyTests: XCTestCase {
     }
     
     func test_headerAndOctetString() throws {
-        do {
-            try PrivateKey(pemNamed: "swiftyrsa-private-header-octetstring", in: bundle)
-        } catch {
-            print(error)
-        }
+        _ = try PrivateKey(pemNamed: "swiftyrsa-private-header-octetstring", in: bundle)
     }
 }
