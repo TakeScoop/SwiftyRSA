@@ -81,7 +81,7 @@ public protocol Key {
         self.tag = tag
         
         self.originalData = data
-        let dataWithoutHeader = try SwiftyRSA.stripPublicKeyHeader(keyData: data)
+        let dataWithoutHeader = try SwiftyRSA.stripKeyHeader(keyData: data)
         
     	reference = try SwiftyRSA.addKey(dataWithoutHeader, isPublic: true, tag: tag)
     }
