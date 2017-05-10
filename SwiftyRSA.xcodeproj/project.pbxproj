@@ -41,6 +41,7 @@
 		C076F5531DADEC1D006AF5DB /* swiftyrsa-public-headerless.pem in Resources */ = {isa = PBXBuildFile; fileRef = AC84097FE3BCDEAEE6370ADD41E9AE68 /* swiftyrsa-public-headerless.pem */; };
 		C076F5541DADEC1D006AF5DB /* swiftyrsa-public.der in Resources */ = {isa = PBXBuildFile; fileRef = 986B7C763D1B85C628621E89E7071B06 /* swiftyrsa-public.der */; };
 		C076F5551DADEC1D006AF5DB /* swiftyrsa-public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 3831A3C8228AFD8B386036394F642FB0 /* swiftyrsa-public.pem */; };
+		C084A72A1EC3034B003F79ED /* swiftyrsa-private-header-octetstring.pem in Resources */ = {isa = PBXBuildFile; fileRef = C084A7291EC3034B003F79ED /* swiftyrsa-private-header-octetstring.pem */; };
 		C0969FFC1D906B5C00E285C2 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0969FFB1D906B5C00E285C2 /* Key.swift */; };
 		C0969FFD1D906B5C00E285C2 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0969FFB1D906B5C00E285C2 /* Key.swift */; };
 		C0969FFE1D906B5C00E285C2 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0969FFB1D906B5C00E285C2 /* Key.swift */; };
@@ -85,6 +86,7 @@
 		C07408AC1D9E1BA800AB6814 /* ObjCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjCTests.m; sourceTree = "<group>"; };
 		C076F53D1DADEB90006AF5DB /* SwiftyRSATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyRSATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C076F5411DADEB90006AF5DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C084A7291EC3034B003F79ED /* swiftyrsa-private-header-octetstring.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-private-header-octetstring.pem"; sourceTree = "<group>"; };
 		C0969FFB1D906B5C00E285C2 /* Key.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		C096A0071D9071CA00E285C2 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		C096A00B1D90754E00E285C2 /* Signature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signature.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				AC84097FE3BCDEAEE6370ADD41E9AE68 /* swiftyrsa-public-headerless.pem */,
 				986B7C763D1B85C628621E89E7071B06 /* swiftyrsa-public.der */,
 				3831A3C8228AFD8B386036394F642FB0 /* swiftyrsa-public.pem */,
+				C084A7291EC3034B003F79ED /* swiftyrsa-private-header-octetstring.pem */,
 			);
 			path = keys;
 			sourceTree = "<group>";
@@ -416,6 +419,7 @@
 				C076F5521DADEC1D006AF5DB /* swiftyrsa-private.pem in Resources */,
 				C076F5531DADEC1D006AF5DB /* swiftyrsa-public-headerless.pem in Resources */,
 				C04D33811DC54D5700D65B05 /* swiftyrsa-public-base64-newlines.txt in Resources */,
+				C084A72A1EC3034B003F79ED /* swiftyrsa-private-header-octetstring.pem in Resources */,
 				C076F5541DADEC1D006AF5DB /* swiftyrsa-public.der in Resources */,
 				C076F5551DADEC1D006AF5DB /* swiftyrsa-public.pem in Resources */,
 				C065ED6F1DBF314500674763 /* swiftyrsa-private.der in Resources */,

@@ -141,8 +141,7 @@ public enum Asn1Parser {
         // Octet String
         if firstByte == 0x04 {
             let length = try scanner.consumeLength()
-            _ = try scanner.consume(length: 1)
-            let data = try scanner.consume(length: length - 1)
+            let data = try scanner.consume(length: length)
             return .octetString(data: data)
         }
         
