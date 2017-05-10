@@ -82,7 +82,7 @@ private extension Data {
     }
 }
 
-public enum Asn1Parser {
+enum Asn1Parser {
     
     enum Node {
         case sequence(nodes: [Node])

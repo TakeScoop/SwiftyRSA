@@ -234,7 +234,7 @@ enum SwiftyRSA {
         
         // Detect whether the sequence only has integers, in which case it's a headerless key
         let onlyHasIntegers = nodes.filter { node -> Bool in
-            if case .integer(_) = node {
+            if case .integer(_) = node { // swiftlint:disable:this unused_optional_binding
                 return false
             }
             return true
