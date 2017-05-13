@@ -12,7 +12,8 @@ platform :ios do
   desc "Ensures that SwiftyRSA can be integrated with Carthage"
   lane :test_carthage do
     commit = last_git_commit()[:commit_hash]
-    sh "echo 'git \"..\" \"#{commit}\"' > ../CarthageIntegrationTest/Cartfile"
+    git_repo_path = File.expand_path('..', File.dirname(__FILE__))
+    sh "echo 'git \"file://#{git_repo_path}\" \"#{commit}\"' > ../CarthageIntegrationTest/Cartfile"
     carthage(project_directory: './CarthageIntegrationTest')
     xcodebuild(project: './CarthageIntegrationTest/CarthageIntegrationTest.xcodeproj')
   end
