@@ -3,6 +3,11 @@ SwiftyRSA Changelog
 
 # [master]
 
+ - Fixed an issue that prevented private keys from loading if they contained an ASN1 header.
+   [#71](https://github.com/TakeScoop/SwiftyRSA/issues/71)
+ - Fixed an issue that prevented public/private keys from loading if their integers were represented with an Octet String ASN1 node.
+   [#70](https://github.com/TakeScoop/SwiftyRSA/issues/70)
+
 # [1.1.1]
 
  - Fixed Carthage integration by running SwiftLint only if it exists in a Pods directory.

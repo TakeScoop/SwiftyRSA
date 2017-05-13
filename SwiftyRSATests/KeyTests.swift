@@ -241,4 +241,8 @@ class PrivateKeyTests: XCTestCase {
         let newPrivateKey = try PrivateKey(base64Encoded: base64String)
         XCTAssertEqual(try? privateKey.data(), try? newPrivateKey.data())
     }
+    
+    func test_headerAndOctetString() throws {
+        _ = try PrivateKey(pemNamed: "swiftyrsa-private-header-octetstring", in: bundle)
+    }
 }
