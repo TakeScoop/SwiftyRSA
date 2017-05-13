@@ -3,6 +3,15 @@ SwiftyRSA Changelog
 
 # [master]
 
+ - **Breaking**: SwiftyRSA ObjC was refactored under the hood to offer a better experience with both Swift and ObjC runtimes. To use SwiftyRSA with Objective-C use the following pod:
+
+   ```
+   pod 'SwiftyRSA/ObjC'
+   ```
+
+    - Other methods of integration – like Carthage – are unaffected.
+    - In Swift, `ClearMessage.verify` now returns a boolean instead of a `VerificationResult`.
+ 
  - Fixed an issue that prevented private keys from loading if they contained an ASN1 header.
    [#71](https://github.com/TakeScoop/SwiftyRSA/issues/71)
  - Fixed an issue that prevented public/private keys from loading if their integers were represented with an Octet String ASN1 node.

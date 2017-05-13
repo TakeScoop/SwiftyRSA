@@ -29,6 +29,7 @@ struct TestError: Error {
         return (try! Data(contentsOf: URL(fileURLWithPath: pubPath)))
     }
     
+    @nonobjc
     static public func publicKey(name: String) throws -> PublicKey {
         guard let path = bundle.path(forResource: name, ofType: "pem") else {
             throw TestError(description: "Couldn't load key for provided path")
@@ -37,12 +38,31 @@ struct TestError: Error {
         return try PublicKey(pemEncoded: pemString)
     }
     
+    @objc(publicKeyWithName:error:)
+    static public func _objc_publicKey(name: String) throws -> _objc_PublicKey { // swiftlint:disable:this identifier_name
+        guard let path = bundle.path(forResource: name, ofType: "pem") else {
+            throw TestError(description: "Couldn't load key for provided path")
+        }
+        let pemString = try String(contentsOf: URL(fileURLWithPath: path))
+        return try _objc_PublicKey(pemEncoded: pemString)
+    }
+    
+    @nonobjc
     static public func privateKey(name: String) throws -> PrivateKey {
         guard let path = bundle.path(forResource: name, ofType: "pem") else {
             throw TestError(description: "Couldn't load key for provided path")
         }
         let pemString = try String(contentsOf: URL(fileURLWithPath: path))
         return try PrivateKey(pemEncoded: pemString)
+    }
+    
+    @objc(privateKeyWithName:error:)
+    static public func _objc_privateKey(name: String) throws -> _objc_PrivateKey { // swiftlint:disable:this identifier_name
+        guard let path = bundle.path(forResource: name, ofType: "pem") else {
+            throw TestError(description: "Couldn't load key for provided path")
+        }
+        let pemString = try String(contentsOf: URL(fileURLWithPath: path))
+        return try _objc_PrivateKey(pemEncoded: pemString)
     }
     
     static public func randomData(count: Int) -> Data {

@@ -23,6 +23,9 @@
 		C034317B1EC2D7E30019B7E8 /* Asn1Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C034317A1EC2D7E30019B7E8 /* Asn1Parser.swift */; };
 		C034317C1EC2D7E30019B7E8 /* Asn1Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C034317A1EC2D7E30019B7E8 /* Asn1Parser.swift */; };
 		C034317D1EC2D7E30019B7E8 /* Asn1Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C034317A1EC2D7E30019B7E8 /* Asn1Parser.swift */; };
+		C03AF73A1EC7031900DE8166 /* SwiftyRSA+ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */; };
+		C03AF73B1EC7031A00DE8166 /* SwiftyRSA+ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */; };
+		C03AF73C1EC7031A00DE8166 /* SwiftyRSA+ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */; };
 		C04D33811DC54D5700D65B05 /* swiftyrsa-public-base64-newlines.txt in Resources */ = {isa = PBXBuildFile; fileRef = C04D33801DC54D5700D65B05 /* swiftyrsa-public-base64-newlines.txt */; };
 		C065ED6F1DBF314500674763 /* swiftyrsa-private.der in Resources */ = {isa = PBXBuildFile; fileRef = C065ED6E1DBF314500674763 /* swiftyrsa-private.der */; };
 		C076F5421DADEB90006AF5DB /* SwiftyRSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 158823A80092238A00F1212F366091C9 /* SwiftyRSA.framework */; };
@@ -81,6 +84,7 @@
 		C034317A1EC2D7E30019B7E8 /* Asn1Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asn1Parser.swift; sourceTree = "<group>"; };
 		C04D33801DC54D5700D65B05 /* swiftyrsa-public-base64-newlines.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-public-base64-newlines.txt"; sourceTree = "<group>"; };
 		C065ED6E1DBF314500674763 /* swiftyrsa-private.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = "swiftyrsa-private.der"; sourceTree = "<group>"; };
+		C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SwiftyRSA+ObjC.swift"; sourceTree = "<group>"; };
 		C07408AC1D9E1BA800AB6814 /* ObjCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjCTests.m; sourceTree = "<group>"; };
 		C076F53D1DADEB90006AF5DB /* SwiftyRSATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyRSATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C076F5411DADEB90006AF5DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -161,6 +165,7 @@
 				C096A0071D9071CA00E285C2 /* Message.swift */,
 				C096A00B1D90754E00E285C2 /* Signature.swift */,
 				C034317A1EC2D7E30019B7E8 /* Asn1Parser.swift */,
+				C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */,
 			);
 			path = SwiftyRSA;
 			sourceTree = "<group>";
@@ -487,6 +492,7 @@
 				C0969FFD1D906B5C00E285C2 /* Key.swift in Sources */,
 				C096A00D1D90754E00E285C2 /* Signature.swift in Sources */,
 				C096A0091D9071CA00E285C2 /* Message.swift in Sources */,
+				C03AF73B1EC7031A00DE8166 /* SwiftyRSA+ObjC.swift in Sources */,
 				C034317C1EC2D7E30019B7E8 /* Asn1Parser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -500,6 +506,7 @@
 				C096A0081D9071CA00E285C2 /* Message.swift in Sources */,
 				C0969FFC1D906B5C00E285C2 /* Key.swift in Sources */,
 				BF52D5FDEDA5DFCA62ECD03992601E82 /* SwiftyRSA.swift in Sources */,
+				C03AF73A1EC7031900DE8166 /* SwiftyRSA+ObjC.swift in Sources */,
 				C034317B1EC2D7E30019B7E8 /* Asn1Parser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -526,6 +533,7 @@
 				C0969FFE1D906B5C00E285C2 /* Key.swift in Sources */,
 				C096A00E1D90754E00E285C2 /* Signature.swift in Sources */,
 				C096A00A1D9071CA00E285C2 /* Message.swift in Sources */,
+				C03AF73C1EC7031A00DE8166 /* SwiftyRSA+ObjC.swift in Sources */,
 				C034317D1EC2D7E30019B7E8 /* Asn1Parser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,45 +8,42 @@
 
 import Foundation
 
-@objc public class VerificationResult: NSObject {
-    public let isSuccessful: Bool
-    init(isSuccessful: Bool) {
-        self.isSuccessful = isSuccessful
-    }
-}
-
 public protocol Message {
     var data: Data { get }
     var base64String: String { get }
     init(data: Data)
+    init(base64Encoded base64String: String) throws
 }
 
-@objc public class EncryptedMessage: NSObject, Message {
-    
-    /// Data of the message
-    public let data: Data
+public extension Message {
     
     /// Base64-encoded string of the message data
-    public var base64String: String {
+    var base64String: String {
         return data.base64EncodedString()
-    }
-    
-    /// Creates an encrypted message with data.
-    ///
-    /// - Parameter data: Data of the encrypted message.
-    public required init(data: Data) {
-        self.data = data
     }
     
     /// Creates an encrypted message with a base64-encoded string.
     ///
     /// - Parameter base64String: Base64-encoded data of the encrypted message
     /// - Throws: SwiftyRSAError
-    public convenience init(base64Encoded base64String: String) throws {
+    init(base64Encoded base64String: String) throws {
         guard let data = Data(base64Encoded: base64String) else {
             throw SwiftyRSAError(message: "Couldn't convert base 64 encoded string ")
         }
         self.init(data: data)
+    }
+}
+
+public class EncryptedMessage: Message {
+    
+    /// Data of the message
+    public let data: Data    
+    
+    /// Creates an encrypted message with data.
+    ///
+    /// - Parameter data: Data of the encrypted message.
+    public required init(data: Data) {
+        self.data = data
     }
     
     /// Decrypts an encrypted message with a private key and returns a clear message.
@@ -87,15 +84,10 @@ public protocol Message {
     }
 }
 
-@objc public class ClearMessage: NSObject, Message {
+public class ClearMessage: Message {
     
     /// Data of the message
     public let data: Data
-    
-    /// Base64-encoded string of the message data
-    public var base64String: String {
-        return data.base64EncodedString()
-    }
     
     /// Creates a clear message with data.
     ///
@@ -110,33 +102,9 @@ public protocol Message {
     ///   - string: String value of the clear message
     ///   - encoding: Encoding to use to generate the clear data
     /// - Throws: SwiftyRSAError
-    @nonobjc
     public convenience init(string: String, using encoding: String.Encoding) throws {
         guard let data = string.data(using: encoding) else {
             throw SwiftyRSAError(message: "Couldn't convert string to data using specified encoding")
-        }
-        self.init(data: data)
-    }
-    
-    /// Creates a clear message from a string, with the specified encoding.
-    ///
-    /// - Parameters:
-    ///   - string: String value of the clear message
-    ///   - rawEncoding: Encoding to use to generate the clear data
-    /// - Throws: SwiftyRSAError
-    @objc
-    public convenience init(string: String, using rawEncoding: UInt) throws {
-        let encoding = String.Encoding(rawValue: rawEncoding)
-        try self.init(string: string, using: encoding)
-    }
-    
-    /// Creates a clear message from a base64-encoded string.
-    ///
-    /// - Parameter base64String: Base64-encoded string of the message data
-    /// - Throws: SwiftyRSAError
-    public convenience init(base64Encoded base64String: String) throws {
-        guard let data = Data(base64Encoded: base64String) else {
-            throw SwiftyRSAError(message: "Couldn't convert base 64 encoded string ")
         }
         self.init(data: data)
     }
@@ -237,7 +205,7 @@ public protocol Message {
     ///   - digestType: Digest type used for the signature
     /// - Returns: Result of the verification
     /// - Throws: SwiftyRSAError
-    public func verify(with key: PublicKey, signature: Signature, digestType: Signature.DigestType) throws -> VerificationResult {
+    public func verify(with key: PublicKey, signature: Signature, digestType: Signature.DigestType) throws -> Bool {
         
         let digest = self.digest(digestType: digestType)
         var digestBytes = [UInt8](repeating: 0, count: digest.count)
@@ -249,9 +217,9 @@ public protocol Message {
         let status = SecKeyRawVerify(key.reference, digestType.padding, digestBytes, digestBytes.count, signatureBytes, signatureBytes.count)
         
         if status == errSecSuccess {
-            return VerificationResult(isSuccessful: true)
+            return true
         } else if status == -9809 {
-            return VerificationResult(isSuccessful: false)
+            return false
         } else {
             throw SwiftyRSAError(message: "Couldn't verify signature - \(status)")
         }

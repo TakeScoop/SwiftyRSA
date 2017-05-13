@@ -14,11 +14,15 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/TakeScoop/SwiftyRSA.git", :tag => s.version }
   s.source_files = "SwiftyRSA/*.{swift,m,h}"
+  s.exclude_files = "SwiftyRSA/SwiftyRSA+ObjC.swift"
   s.framework    = "Security"
-
   s.requires_arc = true
+  
+  s.ios.deployment_target = "8.3"
+  s.tvos.deployment_target = "9.2"
+  s.watchos.deployment_target = "2.2"
 
-  s.ios.deployment_target = '8.3'
-  s.tvos.deployment_target = '9.2'
-  s.watchos.deployment_target = '2.2'
+  subspec "ObjC" do |sp|
+    sp.source_files = "SwiftyRSA/SwiftyRSA+ObjC.swift"
+  end
 end

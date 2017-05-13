@@ -22,8 +22,8 @@ class SignatureTests: XCTestCase {
             let data = TestUtils.randomData(count: 8192)
             let message = ClearMessage(data: data)
             let signature = try message.signed(with: privateKey, digestType: digestType)
-            let verificationResult = try message.verify(with: publicKey, signature: signature, digestType: digestType)
-            XCTAssertTrue(verificationResult.isSuccessful)
+            let isSuccessful = try message.verify(with: publicKey, signature: signature, digestType: digestType)
+            XCTAssertTrue(isSuccessful)
         }
     }
     
