@@ -36,6 +36,13 @@ The `swift-2.3` branch is built out of SwiftRSA 0.4.0 and is not actively mainta
 pod 'SwiftyRSA', :git => 'git@github.com:TakeScoop/SwiftyRSA.git', :branch => 'swift-2.3'
 ```
 
+### Objective-C
+
+```
+pod 'SwiftyRSA/ObjC'
+```
+
+
 Quick Start
 -----------
 
