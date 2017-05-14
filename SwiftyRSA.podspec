@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = "9.2"
   s.watchos.deployment_target = "2.2"
 
-  subspec "ObjC" do |sp|
-    sp.source_files = "SwiftyRSA/SwiftyRSA+ObjC.swift"
+  s.subspec "ObjC" do |sp|
+    sp.source_files = "SwiftyRSA/*.{swift,m,h}"
   end
 end
