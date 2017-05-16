@@ -46,7 +46,7 @@ public extension Key {
     /// - Throws: SwiftyRSAError
     init(base64Encoded base64String: String) throws {
         guard let data = Data(base64Encoded: base64String, options: [.ignoreUnknownCharacters]) else {
-            throw SwiftyRSAError(message: "Couldn't decode base 64 string")
+            throw SwiftyRSAError.invalidBase64String
         }
         try self.init(data: data)
     }
@@ -68,7 +68,7 @@ public extension Key {
     /// - Throws: SwiftyRSAError
     init(pemNamed pemName: String, in bundle: Bundle = Bundle.main) throws {
         guard let path = bundle.path(forResource: pemName, ofType: "pem") else {
-            throw SwiftyRSAError(message: "Couldn't find a PEM file named '\(pemName)'")
+            throw SwiftyRSAError.pemFileNotFound(name: pemName)
         }
         let keyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
         try self.init(pemEncoded: keyString)
@@ -82,7 +82,7 @@ public extension Key {
     /// - Throws: SwiftyRSAError
     init(derNamed derName: String, in bundle: Bundle = Bundle.main) throws {
         guard let path = bundle.path(forResource: derName, ofType: "der") else {
-            throw SwiftyRSAError(message: "Couldn't find a DER file named '\(derName)'")
+            throw SwiftyRSAError.derFileNotFound(name: derName)
         }
         let data = try Data(contentsOf: URL(fileURLWithPath: path))
         try self.init(data: data)
@@ -120,7 +120,7 @@ public class PublicKey: Key {
     public required init(reference: SecKey) throws {
         
         guard SwiftyRSA.isValidKeyReference(reference, forClass: kSecAttrKeyClassPublic) else {
-            throw SwiftyRSAError(message: "Provided key reference if not a valid RSA public key")
+            throw SwiftyRSAError.notAPublicKey
         }
         
         self.reference = reference
@@ -226,7 +226,7 @@ public class PrivateKey: Key {
     public required init(reference: SecKey) throws {
         
         guard SwiftyRSA.isValidKeyReference(reference, forClass: kSecAttrKeyClassPrivate) else {
-            throw SwiftyRSAError(message: "Provided key reference if not a valid RSA private key")
+            throw SwiftyRSAError.notAPrivateKey
         }
         
         self.reference = reference

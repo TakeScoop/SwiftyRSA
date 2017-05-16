@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyRSA
+import XCTest
 
 struct TestError: Error {
     let description: String
@@ -72,6 +73,49 @@ struct TestError: Error {
         }
         return data
     }
+    
+    static func assertThrows(type: SwiftyRSAError, file: StaticString = #file, line: UInt = #line, block: (Void) throws ->  Void) {
+        do {
+            try block()
+            XCTFail("The line above should fail", file: file, line: line)
+        } catch {
+            guard let swiftyRsaError = error as? SwiftyRSAError else {
+                return XCTFail("Error is not a SwiftyRSAError", file: file, line: line)
+            }
+            XCTAssertEqual(swiftyRsaError, type, file: file, line: line)
+        }
+    }
 }
 // swiftlint:enable force_try
 // swiftlint:enable force_unwrapping
+
+extension SwiftyRSAError: Equatable {
+    public static func == (lhs: SwiftyRSAError, rhs: SwiftyRSAError) -> Bool {
+        switch (lhs, rhs) {
+        case
+            (.pemDoesNotContainKey, .pemDoesNotContainKey),
+            (.keyRepresentationFailed(_), .keyRepresentationFailed(_)),
+            (.keyAddFailed(_), .keyAddFailed(_)),
+            (.keyCopyFailed(_), .keyCopyFailed(_)),
+            (.tagEncodingFailed, .tagEncodingFailed),
+            (.asn1ParsingFailed, .asn1ParsingFailed),
+            (.invalidAsn1RootNode, .invalidAsn1RootNode),
+            (.invalidAsn1Structure, .invalidAsn1Structure),
+            (.invalidBase64String, .invalidBase64String),
+            (.chunkDecryptFailed(_), .chunkDecryptFailed(_)),
+            (.chunkEncryptFailed(_), .chunkEncryptFailed(_)),
+            (.stringToDataConversionFailed, .stringToDataConversionFailed),
+            (.dataToStringConversionFailed, .dataToStringConversionFailed),
+            (.invalidDigestSize(_), .invalidDigestSize(_)),
+            (.signatureCreateFailed(_), .signatureCreateFailed(_)),
+            (.signatureVerifyFailed(_), .signatureVerifyFailed(_)),
+            (.pemFileNotFound(_), .pemFileNotFound(_)),
+            (.derFileNotFound(_), .derFileNotFound(_)),
+            (.notAPublicKey, .notAPublicKey),
+            (.notAPrivateKey, .notAPrivateKey):
+            return true
+        default:
+            return false
+        }
+    }
+}

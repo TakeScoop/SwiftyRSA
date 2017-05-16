@@ -26,6 +26,9 @@
 		C03AF73A1EC7031900DE8166 /* SwiftyRSA+ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */; };
 		C03AF73B1EC7031A00DE8166 /* SwiftyRSA+ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */; };
 		C03AF73C1EC7031A00DE8166 /* SwiftyRSA+ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */; };
+		C03AF73E1ECAB2FC00DE8166 /* SwiftyRSAError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03AF73D1ECAB2FC00DE8166 /* SwiftyRSAError.swift */; };
+		C03AF73F1ECAB2FC00DE8166 /* SwiftyRSAError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03AF73D1ECAB2FC00DE8166 /* SwiftyRSAError.swift */; };
+		C03AF7401ECAB2FC00DE8166 /* SwiftyRSAError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03AF73D1ECAB2FC00DE8166 /* SwiftyRSAError.swift */; };
 		C04D33811DC54D5700D65B05 /* swiftyrsa-public-base64-newlines.txt in Resources */ = {isa = PBXBuildFile; fileRef = C04D33801DC54D5700D65B05 /* swiftyrsa-public-base64-newlines.txt */; };
 		C065ED6F1DBF314500674763 /* swiftyrsa-private.der in Resources */ = {isa = PBXBuildFile; fileRef = C065ED6E1DBF314500674763 /* swiftyrsa-private.der */; };
 		C076F5421DADEB90006AF5DB /* SwiftyRSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 158823A80092238A00F1212F366091C9 /* SwiftyRSA.framework */; };
@@ -82,6 +85,7 @@
 		AC84097FE3BCDEAEE6370ADD41E9AE68 /* swiftyrsa-public-headerless.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-public-headerless.pem"; sourceTree = "<group>"; };
 		AD7F28E3936301CA24DF13E22196C73B /* multiple-keys-testcase.pem */ = {isa = PBXFileReference; lastKnownFileType = text; path = "multiple-keys-testcase.pem"; sourceTree = "<group>"; };
 		C034317A1EC2D7E30019B7E8 /* Asn1Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asn1Parser.swift; sourceTree = "<group>"; };
+		C03AF73D1ECAB2FC00DE8166 /* SwiftyRSAError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyRSAError.swift; sourceTree = "<group>"; };
 		C04D33801DC54D5700D65B05 /* swiftyrsa-public-base64-newlines.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-public-base64-newlines.txt"; sourceTree = "<group>"; };
 		C065ED6E1DBF314500674763 /* swiftyrsa-private.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = "swiftyrsa-private.der"; sourceTree = "<group>"; };
 		C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SwiftyRSA+ObjC.swift"; sourceTree = "<group>"; };
@@ -166,6 +170,7 @@
 				C096A00B1D90754E00E285C2 /* Signature.swift */,
 				C034317A1EC2D7E30019B7E8 /* Asn1Parser.swift */,
 				C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */,
+				C03AF73D1ECAB2FC00DE8166 /* SwiftyRSAError.swift */,
 			);
 			path = SwiftyRSA;
 			sourceTree = "<group>";
@@ -492,6 +497,7 @@
 				C0969FFD1D906B5C00E285C2 /* Key.swift in Sources */,
 				C096A00D1D90754E00E285C2 /* Signature.swift in Sources */,
 				C096A0091D9071CA00E285C2 /* Message.swift in Sources */,
+				C03AF73F1ECAB2FC00DE8166 /* SwiftyRSAError.swift in Sources */,
 				C03AF73B1EC7031A00DE8166 /* SwiftyRSA+ObjC.swift in Sources */,
 				C034317C1EC2D7E30019B7E8 /* Asn1Parser.swift in Sources */,
 			);
@@ -506,6 +512,7 @@
 				C096A0081D9071CA00E285C2 /* Message.swift in Sources */,
 				C0969FFC1D906B5C00E285C2 /* Key.swift in Sources */,
 				BF52D5FDEDA5DFCA62ECD03992601E82 /* SwiftyRSA.swift in Sources */,
+				C03AF73E1ECAB2FC00DE8166 /* SwiftyRSAError.swift in Sources */,
 				C03AF73A1EC7031900DE8166 /* SwiftyRSA+ObjC.swift in Sources */,
 				C034317B1EC2D7E30019B7E8 /* Asn1Parser.swift in Sources */,
 			);
@@ -533,6 +540,7 @@
 				C0969FFE1D906B5C00E285C2 /* Key.swift in Sources */,
 				C096A00E1D90754E00E285C2 /* Signature.swift in Sources */,
 				C096A00A1D9071CA00E285C2 /* Message.swift in Sources */,
+				C03AF7401ECAB2FC00DE8166 /* SwiftyRSAError.swift in Sources */,
 				C03AF73C1EC7031A00DE8166 /* SwiftyRSA+ObjC.swift in Sources */,
 				C034317D1EC2D7E30019B7E8 /* Asn1Parser.swift in Sources */,
 			);

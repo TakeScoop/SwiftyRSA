@@ -3,6 +3,9 @@ SwiftyRSA Changelog
 
 # [master]
 
+ - SwiftyRSAError is now exposed as an enum so that it can be introspected.
+   [#68](https://github.com/TakeScoop/SwiftyRSA/issues/68)
+
 # [1.2.0]
 
  - **Breaking**: SwiftyRSA ObjC was refactored under the hood to offer a better experience with both Swift and ObjC runtimes. To use SwiftyRSA with Objective-C use the following pod:

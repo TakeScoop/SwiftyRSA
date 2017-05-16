@@ -11,14 +11,6 @@ import Security
 
 public typealias Padding = SecPadding
 
-struct SwiftyRSAError: Error {
-    let message: String
-    
-    init(message: String) {
-        self.message = message
-    }
-}
-
 extension CFString: Hashable {
     public var hashValue: Int {
         return (self as String).hashValue
@@ -43,7 +35,7 @@ enum SwiftyRSA {
         }
         
         guard lines.count != 0 else {
-            throw SwiftyRSAError(message: "Couldn't get data from PEM key: no data available after stripping headers")
+            throw SwiftyRSAError.pemDoesNotContainKey
         }
         
         return lines.joined(separator: "")
@@ -94,9 +86,10 @@ enum SwiftyRSA {
         // On iOS+, we can use `SecKeyCopyExternalRepresentation` directly
         if #available(iOS 10.0, *), #available(watchOS 3.0, *), #available(tvOS 10.0, *) {
             
-            let data = SecKeyCopyExternalRepresentation(reference, nil)
+            var error: Unmanaged<CFError>? = nil
+            let data = SecKeyCopyExternalRepresentation(reference, &error)
             guard let unwrappedData = data as Data? else {
-                throw SwiftyRSAError(message: "Couldn't retrieve key data from the keychain")
+                throw SwiftyRSAError.keyRepresentationFailed(error: error?.takeRetainedValue())
             }
             return unwrappedData
         
@@ -113,9 +106,9 @@ enum SwiftyRSA {
             ]
             
             var data: AnyObject?
-            _ = SecItemAdd(addParams as CFDictionary, &data)
+            let addStatus = SecItemAdd(addParams as CFDictionary, &data)
             guard let unwrappedData = data as? Data else {
-                throw SwiftyRSAError(message: "Couldn't retrieve key data from the keychain")
+                throw SwiftyRSAError.keyAddFailed(status: addStatus)
             }
             
             let deleteParams: [CFString: Any] = [
@@ -134,7 +127,7 @@ enum SwiftyRSA {
         var keyData = keyData
         
         guard let tagData = tag.data(using: .utf8) else {
-            throw SwiftyRSAError(message: "Couldn't create tag data for key")
+            throw SwiftyRSAError.tagEncodingFailed
         }
         
         let keyClass = isPublic ? kSecAttrKeyClassPublic : kSecAttrKeyClassPrivate
@@ -150,8 +143,9 @@ enum SwiftyRSA {
                 kSecReturnPersistentRef: true
             ]
             
-            guard let key = SecKeyCreateWithData(keyData as CFData, keyDict as CFDictionary, nil) else {
-                throw SwiftyRSAError(message: "Couldn't create key reference from key data")
+            var error: Unmanaged<CFError>?
+            guard let key = SecKeyCreateWithData(keyData as CFData, keyDict as CFDictionary, &error) else {
+                throw SwiftyRSAError.keyCreateFailed(error: error?.takeRetainedValue())
             }
             return key
             
@@ -170,9 +164,9 @@ enum SwiftyRSA {
                 kSecAttrAccessible: kSecAttrAccessibleWhenUnlocked
             ]
             
-            let secStatus = SecItemAdd(keyAddDict as CFDictionary, persistKey)
-            guard secStatus == errSecSuccess || secStatus == errSecDuplicateItem else {
-                throw SwiftyRSAError(message: "Provided key couldn't be added to the keychain")
+            let addStatus = SecItemAdd(keyAddDict as CFDictionary, persistKey)
+            guard addStatus == errSecSuccess || addStatus == errSecDuplicateItem else {
+                throw SwiftyRSAError.keyAddFailed(status: addStatus)
             }
             
             let keyCopyDict: [CFString: Any] = [
@@ -186,10 +180,10 @@ enum SwiftyRSA {
             
             // Now fetch the SecKeyRef version of the key
             var keyRef: AnyObject? = nil
-            _ = SecItemCopyMatching(keyCopyDict as CFDictionary, &keyRef)
+            let copyStatus = SecItemCopyMatching(keyCopyDict as CFDictionary, &keyRef)
             
             guard let unwrappedKeyRef = keyRef else {
-                throw SwiftyRSAError(message: "Couldn't get key reference from the keychain")
+                throw SwiftyRSAError.keyCopyFailed(status: copyStatus)
             }
             
             return unwrappedKeyRef as! SecKey // swiftlint:disable:this force_cast
@@ -225,11 +219,16 @@ enum SwiftyRSA {
      */
     static func stripKeyHeader(keyData: Data) throws -> Data {
         
-        let node = try Asn1Parser.parse(data: keyData)
+        let node: Asn1Parser.Node
+        do {
+            node = try Asn1Parser.parse(data: keyData)
+        } catch {
+            throw SwiftyRSAError.asn1ParsingFailed
+        }
         
         // Ensure the raw data is an ASN1 sequence
         guard case .sequence(let nodes) = node else {
-            throw SwiftyRSAError(message: "Provided public key does not contain an ASN1 sequence")
+            throw SwiftyRSAError.invalidAsn1RootNode
         }
         
         // Detect whether the sequence only has integers, in which case it's a headerless key
@@ -256,7 +255,7 @@ enum SwiftyRSA {
         }
         
         // Unable to extract bit/octet string or raw integer sequence
-        throw SwiftyRSAError(message: "Couldn't extract public/private key from raw key")
+        throw SwiftyRSAError.invalidAsn1Structure
     }
     
     static func removeKey(tag: String) {

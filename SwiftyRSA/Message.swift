@@ -28,7 +28,7 @@ public extension Message {
     /// - Throws: SwiftyRSAError
     init(base64Encoded base64String: String) throws {
         guard let data = Data(base64Encoded: base64String) else {
-            throw SwiftyRSAError(message: "Couldn't convert base 64 encoded string ")
+            throw SwiftyRSAError.invalidBase64String
         }
         self.init(data: data)
     }
@@ -71,7 +71,7 @@ public class EncryptedMessage: Message {
             
             let status = SecKeyDecrypt(key.reference, padding, chunkData, idxEnd-idx, &decryptedDataBuffer, &decryptedDataLength)
             guard status == noErr else {
-                throw SwiftyRSAError(message: "Couldn't decrypt chunk at index \(idx)")
+                throw SwiftyRSAError.chunkDecryptFailed(index: idx)
             }
             
             decryptedDataBytes += [UInt8](decryptedDataBuffer[0..<decryptedDataLength])
@@ -104,7 +104,7 @@ public class ClearMessage: Message {
     /// - Throws: SwiftyRSAError
     public convenience init(string: String, using encoding: String.Encoding) throws {
         guard let data = string.data(using: encoding) else {
-            throw SwiftyRSAError(message: "Couldn't convert string to data using specified encoding")
+            throw SwiftyRSAError.stringToDataConversionFailed
         }
         self.init(data: data)
     }
@@ -117,7 +117,7 @@ public class ClearMessage: Message {
     /// - Throws: SwiftyRSAError
     public func string(encoding: String.Encoding) throws -> String {
         guard let str = String(data: data, encoding: encoding) else {
-            throw SwiftyRSAError(message: "Couldn't convert data to string representation")
+            throw SwiftyRSAError.dataToStringConversionFailed
         }
         return str
     }
@@ -150,7 +150,7 @@ public class ClearMessage: Message {
             let status = SecKeyEncrypt(key.reference, padding, chunkData, chunkData.count, &encryptedDataBuffer, &encryptedDataLength)
             
             guard status == noErr else {
-                throw SwiftyRSAError(message: "Couldn't encrypt chunk at index \(idx)")
+                throw SwiftyRSAError.chunkEncryptFailed(index: idx)
             }
             
             encryptedDataBytes += encryptedDataBuffer
@@ -178,7 +178,7 @@ public class ClearMessage: Message {
         let maxChunkSize = blockSize - 11
         
         guard digest.count <= maxChunkSize else {
-            throw SwiftyRSAError(message: "data length exceeds \(maxChunkSize)")
+            throw SwiftyRSAError.invalidDigestSize(digestSize: digest.count, maxChunkSize: maxChunkSize)
         }
         
         var digestBytes = [UInt8](repeating: 0, count: digest.count)
@@ -190,7 +190,7 @@ public class ClearMessage: Message {
         let status = SecKeyRawSign(key.reference, digestType.padding, digestBytes, digestBytes.count, &signatureBytes, &signatureDataLength)
         
         guard status == noErr else {
-            throw SwiftyRSAError(message: "Couldn't sign data \(status)")
+            throw SwiftyRSAError.signatureCreateFailed(status: status)
         }
         
         let signatureData = Data(bytes: UnsafePointer<UInt8>(signatureBytes), count: signatureBytes.count)
@@ -221,7 +221,7 @@ public class ClearMessage: Message {
         } else if status == -9809 {
             return false
         } else {
-            throw SwiftyRSAError(message: "Couldn't verify signature - \(status)")
+            throw SwiftyRSAError.signatureVerifyFailed(status: status)
         }
     }
     

@@ -44,7 +44,7 @@ public class Signature {
     /// - Throws: SwiftyRSAError
     public convenience init(base64Encoded base64String: String) throws {
         guard let data = Data(base64Encoded: base64String) else {
-            throw SwiftyRSAError(message: "Couldn't decode provided base64 string")
+            throw SwiftyRSAError.invalidBase64String
         }
         self.init(data: data)
     }
