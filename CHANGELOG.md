@@ -3,6 +3,8 @@ SwiftyRSA Changelog
 
 # [master]
 
+# [1.2.0]
+
  - **Breaking**: SwiftyRSA ObjC was refactored under the hood to offer a better experience with both Swift and ObjC runtimes. To use SwiftyRSA with Objective-C use the following pod:
 
    ```
@@ -95,6 +97,7 @@ We recommend to check out the new [usage instructions](./README.md) to migrate c
 Initial release.
 
 [master]: https://github.com/TakeScoop/SwiftyRSA/tree/master
+[1.2.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/1.2.0
 [1.1.1]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/1.1.1
 [1.1.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/1.1.0
 [1.0.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/1.0.0
