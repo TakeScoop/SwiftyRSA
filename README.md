@@ -81,14 +81,14 @@ Advanced Usage
 
 ```swift
 let publicKey = try PublicKey(derNamed: "public")
-let privateKey = try PublicKey(derNamed: "private")
+let privateKey = try PrivateKey(derNamed: "private")
 ```
 
 #### With a PEM file
 
 ```swift
 let publicKey = try PublicKey(pemNamed: "public")
-let privateKey = try PublicKey(pemNamed: "private")
+let privateKey = try PrivateKey(pemNamed: "private")
 ```
 
 #### With a PEM string
