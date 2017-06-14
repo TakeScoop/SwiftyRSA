@@ -103,7 +103,7 @@ public class PublicKey: Key {
             
             let thisKey = pemString[range]
             
-            return try? PublicKey(pemEncoded: thisKey)
+            return try? PublicKey(pemEncoded: String(thisKey))
         }
         
         return keys
