@@ -2,7 +2,7 @@ machine:
   pre:
     - brew install ruby; brew link --overwrite ruby
   xcode:
-    version: "8.0"
+    version: "9.0"
   environment:
     SCAN_OUTPUT_DIRECTORY: $CIRCLE_TEST_REPORTS/junit
 dependencies:
@@ -15,4 +15,5 @@ test:
     - instruments -s devices
     - bundle exec fastlane lint
     - bundle exec fastlane test_carthage
-    - FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test --verbose
+    - SWIFT_VERSION=4.0 FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test --verbose
+    - SWIFT_VERSION=3.0 FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test --verbose
