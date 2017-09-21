@@ -21,7 +21,7 @@ platform :ios do
   desc "Runs all the tests"
   lane :test do
     
-    swift_versions = ['3.2', '4.0']
+    swift_versions = ['4.0']
     
     for swift_version in swift_versions do
       # iOS
@@ -31,9 +31,9 @@ platform :ios do
           custom_report_file_name: 'iOS.xml',
           xcargs: "SWIFT_VERSION='#{swift_version}'",
           devices: [
-              'iPhone 6 (8.4)',
-              'iPhone 6 (9.0)',
-              'iPhone 6 (10.0)',
+              #'iPhone 6 (8.4)',
+              #'iPhone 6 (9.0)',
+              #'iPhone 6 (10.0)',
               'iPhone 6 (11.0)'
           ]
       )
@@ -45,7 +45,7 @@ platform :ios do
           custom_report_file_name: 'tvOS.xml',
           xcargs: "SWIFT_VERSION='#{swift_version}'",
           devices: [
-              'Apple TV 1080p (10.0)',
+              #'Apple TV 1080p (10.0)',
               'Apple TV 1080p (11.0)',
           ]
       )
