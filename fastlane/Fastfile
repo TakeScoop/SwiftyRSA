@@ -28,12 +28,11 @@ platform :ios do
       scan(
           scheme: 'SwiftyRSA iOS',
           sdk: 'iphonesimulator11.0',
-          custom_report_file_name: 'iOS.xml',
+          output_types: 'junit',
+          output_files: 'iOS.xml',
           xcargs: "SWIFT_VERSION='#{swift_version}'",
           devices: [
-              'iPhone 6 (8.4)',
-              'iPhone 6 (9.0)',
-              'iPhone 6 (10.0)',
+              'iPhone 6 (10.3.1)',
               'iPhone 6 (11.0)'
           ]
       )
@@ -42,10 +41,11 @@ platform :ios do
       scan(
           scheme: 'SwiftyRSA tvOS',
           sdk: 'appletvsimulator11.0',
-          custom_report_file_name: 'tvOS.xml',
+          output_types: 'junit',
+          output_files: 'tvOS.xml',
           xcargs: "SWIFT_VERSION='#{swift_version}'",
           devices: [
-              'Apple TV 1080p (10.0)',
+              'Apple TV 1080p (10.3.1)',
               'Apple TV 1080p (11.0)',
           ]
       )
