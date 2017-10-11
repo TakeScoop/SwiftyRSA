@@ -32,8 +32,11 @@ platform :ios do
           output_files: 'iOS.xml',
           xcargs: "SWIFT_VERSION='#{swift_version}'",
           devices: [
-              'iPhone 6 (10.3.1)',
-              'iPhone 6 (11.0)'
+              'iPhone 6',
+              
+              # Disabled because of https://github.com/fastlane/fastlane/issues/10338
+              # 'iPhone 6 (10.3.1)',
+              # 'iPhone 6 (11.0)'
           ]
       )
 
@@ -45,8 +48,11 @@ platform :ios do
           output_files: 'tvOS.xml',
           xcargs: "SWIFT_VERSION='#{swift_version}'",
           devices: [
-              'Apple TV 1080p (10.3.1)',
-              'Apple TV 1080p (11.0)',
+              'Apple TV 1080p',
+              
+              # Disabled because of https://github.com/fastlane/fastlane/issues/10338
+              # 'Apple TV 1080p (10.3.1)',
+              # 'Apple TV 1080p (11.0)',
           ]
       )
 
