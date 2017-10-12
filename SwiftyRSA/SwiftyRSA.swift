@@ -63,7 +63,7 @@ enum SwiftyRSA {
             return stride(from: 0, to: str.characters.count, by: length).map { index -> String in
                 let startIndex = str.index(str.startIndex, offsetBy: index)
                 let endIndex = str.index(startIndex, offsetBy: length, limitedBy: str.endIndex) ?? str.endIndex
-                return str[startIndex..<endIndex]
+                return String(str[startIndex..<endIndex])
             }
         }
         

@@ -66,6 +66,7 @@ struct TestError: Error {
         return try _objc_PrivateKey(pemEncoded: pemString)
     }
     
+    @objc
     static public func randomData(count: Int) -> Data {
         var data = Data(capacity: count)
         data.withUnsafeMutableBytes { (bytes: UnsafeMutablePointer<UInt8>) -> Void in
@@ -74,7 +75,7 @@ struct TestError: Error {
         return data
     }
     
-    static func assertThrows(type: SwiftyRSAError, file: StaticString = #file, line: UInt = #line, block: (Void) throws ->  Void) {
+    static func assertThrows(type: SwiftyRSAError, file: StaticString = #file, line: UInt = #line, block: () throws ->  Void) {
         do {
             try block()
             XCTFail("The line above should fail", file: file, line: line)

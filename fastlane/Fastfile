@@ -20,34 +20,51 @@ platform :ios do
 
   desc "Runs all the tests"
   lane :test do
+    
+    swift_versions = ['3.2', '4.0']
+    
+    for swift_version in swift_versions do
+      # iOS
+      scan(
+          scheme: 'SwiftyRSA iOS',
+          sdk: 'iphonesimulator11.0',
+          output_types: 'junit',
+          output_files: 'iOS.xml',
+          xcargs: "SWIFT_VERSION='#{swift_version}'",
+          include_simulator_logs: false, # https://github.com/fastlane/fastlane/issues/8909
+          devices: [
+              'iPhone 6',
+              
+              # Disabled because of https://github.com/fastlane/fastlane/issues/10338
+              # 'iPhone 6 (10.3.1)',
+              # 'iPhone 6 (11.0)'
+          ]
+      )
 
-    # iOS
-    scan(
-        scheme: 'SwiftyRSA iOS',
-        sdk: 'iphonesimulator10.0',
-        custom_report_file_name: 'iOS.xml',
-        devices: [
-            #'iPhone 6 (8.4)',
-            'iPhone 6 (9.0)',
-            'iPhone 6 (10.0)'
-        ]
-    )
+      # tvOS
+      scan(
+          scheme: 'SwiftyRSA tvOS',
+          sdk: 'appletvsimulator11.0',
+          output_types: 'junit',
+          output_files: 'tvOS.xml',
+          xcargs: "SWIFT_VERSION='#{swift_version}'",
+          include_simulator_logs: false, # https://github.com/fastlane/fastlane/issues/8909
+          devices: [
+              'Apple TV 1080p',
+              
+              # Disabled because of https://github.com/fastlane/fastlane/issues/10338
+              # 'Apple TV 1080p (10.3.1)',
+              # 'Apple TV 1080p (11.0)',
+          ]
+      )
 
-    # tvOS
-    scan(
-        scheme: 'SwiftyRSA tvOS',
-        sdk: 'appletvsimulator10.0',
-        custom_report_file_name: 'tvOS.xml',
-        devices: [
-            'Apple TV 1080p (10.0)'
-        ]
-    )
-
-    # watchOS (smoke test)
-    xcodebuild(
-        scheme: 'SwiftyRSA watchOS',
-        sdk: 'watchsimulator3.0',
-        configuration: 'Debug'
-    )
+      # watchOS (smoke test)
+      xcodebuild(
+          scheme: 'SwiftyRSA watchOS',
+          sdk: 'watchsimulator4.0',
+          configuration: 'Debug',
+          xcargs: "SWIFT_VERSION='#{swift_version}'"
+      )
+    end
   end
 end

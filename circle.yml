@@ -2,7 +2,7 @@ machine:
   pre:
     - brew install ruby; brew link --overwrite ruby
   xcode:
-    version: "8.0"
+    version: "9.0"
   environment:
     SCAN_OUTPUT_DIRECTORY: $CIRCLE_TEST_REPORTS/junit
 dependencies:

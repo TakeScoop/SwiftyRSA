@@ -27,55 +27,55 @@ public class _objc_PublicKey: NSObject, Key, ObjcBridgeable { // swiftlint:disab
     
     fileprivate let swiftValue: PublicKey
     
-    public var reference: SecKey {
+    @objc public var reference: SecKey {
         return swiftValue.reference
     }
     
-    public var originalData: Data? {
+    @objc public var originalData: Data? {
         return swiftValue.originalData
     }
     
-    public func pemString() throws -> String {
+    @objc public func pemString() throws -> String {
         return try swiftValue.pemString()
     }
     
-    public func data() throws -> Data {
+    @objc public func data() throws -> Data {
         return try swiftValue.data()
     }
     
-    public func base64String() throws -> String {
+    @objc public func base64String() throws -> String {
         return try swiftValue.base64String()
     }
     
-    public required init(swiftValue: PublicKey) {
+    required public init(swiftValue: PublicKey) {
         self.swiftValue = swiftValue
     }
     
-    required public init(data: Data) throws {
+    @objc required public init(data: Data) throws {
         self.swiftValue = try PublicKey(data: data)
     }
     
-    public required init(reference: SecKey) throws {
+    @objc public required init(reference: SecKey) throws {
         self.swiftValue = try PublicKey(reference: reference)
     }
     
-    public required init(base64Encoded base64String: String) throws {
+    @objc public required init(base64Encoded base64String: String) throws {
         self.swiftValue = try PublicKey(base64Encoded: base64String)
     }
     
-    public required init(pemEncoded pemString: String) throws {
+    @objc public required init(pemEncoded pemString: String) throws {
         self.swiftValue = try PublicKey(pemEncoded: pemString)
     }
     
-    public required init(pemNamed pemName: String, in bundle: Bundle) throws {
+    @objc public required init(pemNamed pemName: String, in bundle: Bundle) throws {
         self.swiftValue = try PublicKey(pemNamed: pemName, in: bundle)
     }
     
-    public required init(derNamed derName: String, in bundle: Bundle) throws {
+    @objc public required init(derNamed derName: String, in bundle: Bundle) throws {
         self.swiftValue = try PublicKey(derNamed: derName, in: bundle)
     }
     
-    public static func publicKeys(pemEncoded pemString: String) -> [_objc_PublicKey] {
+    @objc public static func publicKeys(pemEncoded pemString: String) -> [_objc_PublicKey] {
         return PublicKey.publicKeys(pemEncoded: pemString).map { _objc_PublicKey(swiftValue: $0) }
     }
 }
@@ -87,23 +87,23 @@ public class _objc_PrivateKey: NSObject, Key, ObjcBridgeable { // swiftlint:disa
     
     fileprivate let swiftValue: PrivateKey
     
-    public var reference: SecKey {
+    @objc public var reference: SecKey {
         return swiftValue.reference
     }
     
-    public var originalData: Data? {
+    @objc public var originalData: Data? {
         return swiftValue.originalData
     }
     
-    public func pemString() throws -> String {
+    @objc public func pemString() throws -> String {
         return try swiftValue.pemString()
     }
     
-    public func data() throws -> Data {
+    @objc public func data() throws -> Data {
         return try swiftValue.data()
     }
     
-    public func base64String() throws -> String {
+    @objc public func base64String() throws -> String {
         return try swiftValue.base64String()
     }
     
@@ -111,27 +111,27 @@ public class _objc_PrivateKey: NSObject, Key, ObjcBridgeable { // swiftlint:disa
         self.swiftValue = swiftValue
     }
     
-    public required init(data: Data) throws {
+    @objc public required init(data: Data) throws {
         self.swiftValue = try PrivateKey(data: data)
     }
     
-    public required init(reference: SecKey) throws {
+    @objc public required init(reference: SecKey) throws {
         self.swiftValue = try PrivateKey(reference: reference)
     }
     
-    public required init(base64Encoded base64String: String) throws {
+    @objc public required init(base64Encoded base64String: String) throws {
         self.swiftValue = try PrivateKey(base64Encoded: base64String)
     }
     
-    public required init(pemEncoded pemString: String) throws {
+    @objc public required init(pemEncoded pemString: String) throws {
         self.swiftValue = try PrivateKey(pemEncoded: pemString)
     }
     
-    public required init(pemNamed pemName: String, in bundle: Bundle) throws {
+    @objc public required init(pemNamed pemName: String, in bundle: Bundle) throws {
         self.swiftValue = try PrivateKey(pemNamed: pemName, in: bundle)
     }
     
-    public required init(derNamed derName: String, in bundle: Bundle) throws {
+    @objc public required init(derNamed derName: String, in bundle: Bundle) throws {
         self.swiftValue = try PrivateKey(derNamed: derName, in: bundle)
     }
 }
@@ -140,7 +140,7 @@ public class _objc_PrivateKey: NSObject, Key, ObjcBridgeable { // swiftlint:disa
 
 @objc(VerificationResult)
 public class _objc_VerificationResult: NSObject { // swiftlint:disable:this type_name
-    public let isSuccessful: Bool
+    @objc public let isSuccessful: Bool
     init(isSuccessful: Bool) {
         self.isSuccessful = isSuccessful
     }
@@ -153,11 +153,11 @@ public class _objc_ClearMessage: NSObject, Message, ObjcBridgeable { // swiftlin
     
     fileprivate let swiftValue: ClearMessage
     
-    public var base64String: String {
+    @objc public var base64String: String {
         return swiftValue.base64String
     }
     
-    public var data: Data {
+    @objc public var data: Data {
         return swiftValue.data
     }
     
@@ -165,34 +165,35 @@ public class _objc_ClearMessage: NSObject, Message, ObjcBridgeable { // swiftlin
         self.swiftValue = swiftValue
     }
     
-    public required init(data: Data) {
+    @objc public required init(data: Data) {
         self.swiftValue = ClearMessage(data: data)
     }
     
-    public required init(string: String, using rawEncoding: UInt) throws {
+    @objc public required init(string: String, using rawEncoding: UInt) throws {
         let encoding = String.Encoding(rawValue: rawEncoding)
         self.swiftValue = try ClearMessage(string: string, using: encoding)
     }
     
-    public required init(base64Encoded base64String: String) throws {
+    @objc public required init(base64Encoded base64String: String) throws {
         self.swiftValue = try ClearMessage(base64Encoded: base64String)
     }
     
-    public func string(encoding: String.Encoding) throws -> String {
+    @objc public func string(encoding rawEncoding: UInt) throws -> String {
+        let encoding = String.Encoding(rawValue: rawEncoding)
         return try swiftValue.string(encoding: encoding)
     }
     
-    public func encrypted(with key: _objc_PublicKey, padding: Padding) throws -> _objc_EncryptedMessage {
+    @objc public func encrypted(with key: _objc_PublicKey, padding: Padding) throws -> _objc_EncryptedMessage {
         let encryptedMessage = try swiftValue.encrypted(with: key.swiftValue, padding: padding)
         return _objc_EncryptedMessage(swiftValue: encryptedMessage)
     }
     
-    public func signed(with key: _objc_PrivateKey, digestType: _objc_Signature.DigestType) throws -> _objc_Signature {
+    @objc public func signed(with key: _objc_PrivateKey, digestType: _objc_Signature.DigestType) throws -> _objc_Signature {
         let signature = try swiftValue.signed(with: key.swiftValue, digestType: digestType.swiftValue)
         return _objc_Signature(swiftValue: signature)
     }
     
-    public func verify(with key: _objc_PublicKey, signature: _objc_Signature, digestType: _objc_Signature.DigestType) throws -> _objc_VerificationResult {
+    @objc public func verify(with key: _objc_PublicKey, signature: _objc_Signature, digestType: _objc_Signature.DigestType) throws -> _objc_VerificationResult {
         let isSuccessful = try swiftValue.verify(with: key.swiftValue, signature: signature.swiftValue, digestType: digestType.swiftValue)
         return _objc_VerificationResult(isSuccessful: isSuccessful)
     }
@@ -205,11 +206,11 @@ public class _objc_EncryptedMessage: NSObject, Message, ObjcBridgeable { // swif
     
     fileprivate let swiftValue: EncryptedMessage
     
-    public var base64String: String {
+    @objc public var base64String: String {
         return swiftValue.base64String
     }
     
-    public var data: Data {
+    @objc public var data: Data {
         return swiftValue.data
     }
     
@@ -217,15 +218,15 @@ public class _objc_EncryptedMessage: NSObject, Message, ObjcBridgeable { // swif
         self.swiftValue = swiftValue
     }
     
-    public required init(data: Data) {
+    @objc public required init(data: Data) {
         self.swiftValue = EncryptedMessage(data: data)
     }
     
-    public required init(base64Encoded base64String: String) throws {
+    @objc public required init(base64Encoded base64String: String) throws {
         self.swiftValue = try EncryptedMessage(base64Encoded: base64String)
     }
     
-    public func decrypted(with key: _objc_PrivateKey, padding: Padding) throws -> _objc_ClearMessage {
+    @objc public func decrypted(with key: _objc_PrivateKey, padding: Padding) throws -> _objc_ClearMessage {
         let clearMessage = try swiftValue.decrypted(with: key.swiftValue, padding: padding)
         return _objc_ClearMessage(swiftValue: clearMessage)
     }
@@ -257,11 +258,11 @@ public class _objc_Signature: NSObject, ObjcBridgeable { // swiftlint:disable:th
     
     fileprivate let swiftValue: Signature
     
-    public var base64String: String {
+    @objc public var base64String: String {
         return swiftValue.base64String
     }
     
-    public var data: Data {
+    @objc public var data: Data {
         return swiftValue.data
     }
     
@@ -269,11 +270,11 @@ public class _objc_Signature: NSObject, ObjcBridgeable { // swiftlint:disable:th
         self.swiftValue = swiftValue
     }
     
-    public init(data: Data) {
+    @objc public init(data: Data) {
         self.swiftValue = Signature(data: data)
     }
     
-    public required init(base64Encoded base64String: String) throws {
+    @objc public required init(base64Encoded base64String: String) throws {
         self.swiftValue = try Signature(base64Encoded: base64String)
     }
 }

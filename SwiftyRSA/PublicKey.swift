@@ -95,7 +95,13 @@ public class PublicKey: Key {
         )
         
         let keys = matches.flatMap { result -> PublicKey? in
+            
+            #if swift(>=4.0)
+            let match = result.range(at: 1)
+            #else
             let match = result.rangeAt(1)
+            #endif
+            
             let start = pemString.characters.index(pemString.startIndex, offsetBy: match.location)
             let end = pemString.characters.index(start, offsetBy: match.length)
             
@@ -103,7 +109,7 @@ public class PublicKey: Key {
             
             let thisKey = pemString[range]
             
-            return try? PublicKey(pemEncoded: thisKey)
+            return try? PublicKey(pemEncoded: String(thisKey))
         }
         
         return keys
