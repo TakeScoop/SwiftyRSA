@@ -3,6 +3,8 @@ SwiftyRSA Changelog
 
 # [master]
 
+# [1.3.0]
+
  - Added Swift 3.2 and 4.0 support.
  - SwiftyRSAError is now exposed as an enum so that it can be introspected.
    [#68](https://github.com/TakeScoop/SwiftyRSA/issues/68)
@@ -101,6 +103,7 @@ We recommend to check out the new [usage instructions](./README.md) to migrate c
 Initial release.
 
 [master]: https://github.com/TakeScoop/SwiftyRSA/tree/master
+[1.3.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/1.3.0
 [1.2.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/1.2.0
 [1.1.1]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/1.1.1
 [1.1.0]: https://github.com/TakeScoop/SwiftyRSA/releases/tag/1.1.0
