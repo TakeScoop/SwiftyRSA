@@ -68,11 +68,12 @@ struct TestError: Error {
     
     @objc
     static public func randomData(count: Int) -> Data {
-        var data = Data(capacity: count)
-        data.withUnsafeMutableBytes { (bytes: UnsafeMutablePointer<UInt8>) -> Void in
-            _ = SecRandomCopyBytes(kSecRandomDefault, count, bytes)
+        var randomBytes = [UInt8](repeating: 0, count: count)
+        let status = SecRandomCopyBytes(kSecRandomDefault, count, &randomBytes)
+        if status != errSecSuccess {
+             XCTFail("Couldn't create random data")
         }
-        return data
+        return Data(bytes: randomBytes)
     }
     
     static func assertThrows(type: SwiftyRSAError, file: StaticString = #file, line: UInt = #line, block: () throws ->  Void) {

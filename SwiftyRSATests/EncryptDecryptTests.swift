@@ -60,6 +60,16 @@ class EncryptDecryptTests: XCTestCase {
         XCTAssertEqual(decrypted.data, data)
     }
     
+    func test_OAEP() throws {
+        let data = TestUtils.randomData(count: 2048)
+        let clearMessage = ClearMessage(data: data)
+        
+        let encrypted = try clearMessage.encrypted(with: publicKey, padding: .OAEP)
+        let decrypted = try encrypted.decrypted(with: privateKey, padding: .OAEP)
+        
+        XCTAssertEqual(decrypted.data, data)
+    }
+    
     func test_keyReferences() throws {
         let data = TestUtils.randomData(count: 2048)
         let clearMessage = ClearMessage(data: data)
