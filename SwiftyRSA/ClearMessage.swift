@@ -56,7 +56,16 @@ public class ClearMessage: Message {
     public func encrypted(with key: PublicKey, padding: Padding) throws -> EncryptedMessage {
         
         let blockSize = SecKeyGetBlockSize(key.reference)
-        let maxChunkSize = (padding == []) ? blockSize : blockSize - 11
+        
+        var maxChunkSize: Int
+        switch padding {
+        case []:
+            maxChunkSize = blockSize
+        case .OAEP:
+            maxChunkSize = blockSize - 42
+        default:
+            maxChunkSize = blockSize - 11
+        }
         
         var decryptedDataAsArray = [UInt8](repeating: 0, count: data.count)
         (data as NSData).getBytes(&decryptedDataAsArray, length: data.count)
