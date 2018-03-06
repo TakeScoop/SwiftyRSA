@@ -3,6 +3,8 @@ SwiftyRSA Changelog
 
 # [master]
 
+ - Fixed compilation warnings for Xcode 9.1 / 9.2.
+
 # [1.3.0]
 
  - Added Swift 3.2 and 4.0 support.
