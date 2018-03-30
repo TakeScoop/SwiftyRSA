@@ -92,9 +92,9 @@ enum SwiftyRSA {
                 throw SwiftyRSAError.keyRepresentationFailed(error: error?.takeRetainedValue())
             }
             return unwrappedData
-        
-        // On iOS 8/9, we need to add the key again to the keychain with a temporary tag, grab the data,
-        // and delete the key again.
+            
+            // On iOS 8/9, we need to add the key again to the keychain with a temporary tag, grab the data,
+            // and delete the key again.
         } else {
             
             let temporaryTag = UUID().uuidString
@@ -120,6 +120,33 @@ enum SwiftyRSA {
             
             return unwrappedData
         }
+    }
+    
+    @available(iOS 10.0, *)
+    static func generateRSAKeyPair(tag: String, sizeInBits size: Int, storeInKeyChain permanent: Bool) throws -> (privateKey: PrivateKey, publicKey: PublicKey) {
+        
+        guard let tagData = tag.data(using: .utf8) else {
+            throw SwiftyRSAError.stringToDataConversionFailed
+        }
+        
+        let attributes: [String: Any] = [
+            kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
+            kSecAttrKeySizeInBits as String: size,
+            kSecPrivateKeyAttrs as String:
+                [
+                    kSecAttrIsPermanent as String: permanent,
+                    kSecAttrApplicationTag as String: tagData
+            ]
+        ]
+        var error: Unmanaged<CFError>?
+        guard let privKey = SecKeyCreateRandomKey(attributes as CFDictionary, &error),
+            let pubKey = SecKeyCopyPublicKey(privKey) else {
+            throw SwiftyRSAError.keyGenerationFailed(error: error?.takeRetainedValue())
+        }
+        let privateKey = try PrivateKey(reference: privKey)
+        let publicKey = try PublicKey(reference: pubKey)
+        
+        return (privateKey: privateKey, publicKey: publicKey)
     }
     
     static func addKey(_ keyData: Data, isPublic: Bool, tag: String) throws ->  SecKey {
@@ -149,7 +176,7 @@ enum SwiftyRSA {
             }
             return key
             
-        // On iOS 9 and earlier, add a persistent version of the key to the system keychain
+            // On iOS 9 and earlier, add a persistent version of the key to the system keychain
         } else {
             
             let persistKey = UnsafeMutablePointer<AnyObject?>(mutating: nil)
@@ -176,7 +203,7 @@ enum SwiftyRSA {
                 kSecAttrKeyClass: keyClass,
                 kSecAttrAccessible: kSecAttrAccessibleWhenUnlocked,
                 kSecReturnRef: true,
-            ]
+                ]
             
             // Now fetch the SecKeyRef version of the key
             var keyRef: AnyObject? = nil
@@ -198,18 +225,18 @@ enum SwiftyRSA {
      
      Headerless:
      SEQUENCE
-        INTEGER (1024 or 2048 bit) -- modulo
-        INTEGER -- public exponent
+     INTEGER (1024 or 2048 bit) -- modulo
+     INTEGER -- public exponent
      
      With x509 header:
      SEQUENCE
-        SEQUENCE
-            OBJECT IDENTIFIER 1.2.840.113549.1.1.1
-            NULL
-        BIT STRING
-            SEQUENCE
-            INTEGER (1024 or 2048 bit) -- modulo
-            INTEGER -- public exponent
+     SEQUENCE
+     OBJECT IDENTIFIER 1.2.840.113549.1.1.1
+     NULL
+     BIT STRING
+     SEQUENCE
+     INTEGER (1024 or 2048 bit) -- modulo
+     INTEGER -- public exponent
      
      Example of headerless key:
      https://lapo.it/asn1js/#3082010A0282010100C1A0DFA367FBC2A5FD6ED5A071E02A4B0617E19C6B5AD11BB61192E78D212F10A7620084A3CED660894134D4E475BAD7786FA1D40878683FD1B7A1AD9C0542B7A666457A270159DAC40CE25B2EAE7CCD807D31AE725CA394F90FBB5C5BA500545B99C545A9FE08EFF00A5F23457633E1DB84ED5E908EF748A90F8DFCCAFF319CB0334705EA012AF15AA090D17A9330159C9AFC9275C610BB9B7C61317876DC7386C723885C100F774C19830F475AD1E9A9925F9CA9A69CE0181A214DF2EB75FD13E6A546B8C8ED699E33A8521242B7E42711066AEC22D25DD45D56F94D3170D6F2C25164D2DACED31C73963BA885ADCB706F40866B8266433ED5161DC50E4B3B0203010001
@@ -237,7 +264,7 @@ enum SwiftyRSA {
                 return false
             }
             return true
-        }.isEmpty
+            }.isEmpty
         
         // Headerless key
         if onlyHasIntegers {
@@ -268,7 +295,7 @@ enum SwiftyRSA {
             kSecClass: kSecClassKey,
             kSecAttrKeyType: kSecAttrKeyTypeRSA,
             kSecAttrApplicationTag: tagData,
-        ]
+            ]
         
         SecItemDelete(keyRemoveDict as CFDictionary)
     }

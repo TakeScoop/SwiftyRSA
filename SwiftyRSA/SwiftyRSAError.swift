@@ -12,6 +12,7 @@ public enum SwiftyRSAError: Error {
     
     case pemDoesNotContainKey
     case keyRepresentationFailed(error: CFError?)
+    case keyGenerationFailed(error: CFError?)
     case keyCreateFailed(error: CFError?)
     case keyAddFailed(status: OSStatus)
     case keyCopyFailed(status: OSStatus)
@@ -38,6 +39,8 @@ public enum SwiftyRSAError: Error {
             return "Couldn't get data from PEM key: no data available after stripping headers"
         case .keyRepresentationFailed(let error):
             return "Couldn't retrieve key data from the keychain: CFError \(String(describing: error))"
+        case .keyGenerationFailed(let error):
+            return "Couldn't generate key pair: CFError: \(String(describing: error))"
         case .keyCreateFailed(let error):
             return "Couldn't create key reference from key data: CFError \(String(describing: error))"
         case .keyAddFailed(let status):
