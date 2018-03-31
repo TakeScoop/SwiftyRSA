@@ -27,7 +27,7 @@ extension Data {
     }
 }
 
-enum SwiftyRSA {
+public enum SwiftyRSA {
     
     static func base64String(pemEncoded pemString: String) throws -> String {
         let lines = pemString.components(separatedBy: "\n").filter { line in
@@ -122,8 +122,6 @@ enum SwiftyRSA {
         }
     }
     
-    
-    @available(iOS 10.0, *)
     /// Wlll generate a new private and public key
     ///
     /// - Parameters:
@@ -132,7 +130,8 @@ enum SwiftyRSA {
     ///   - permanent: Whether to store it in the keychain or not
     /// - Returns: A touple of a private and public key
     /// - Throws: Throws and error if the tag cant be parsed or if keygeneration fails
-    static func generateRSAKeyPair(tag: String, sizeInBits size: Int, storeInKeyChain permanent: Bool) throws -> (privateKey: PrivateKey, publicKey: PublicKey) {
+    @available(iOS 10.0, *)
+    public static func generateRSAKeyPair(tag: String, sizeInBits size: Int, storeInKeyChain permanent: Bool) throws -> (privateKey: PrivateKey, publicKey: PublicKey) {
         
         guard let tagData = tag.data(using: .utf8) else {
             throw SwiftyRSAError.stringToDataConversionFailed
