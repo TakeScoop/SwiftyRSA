@@ -119,6 +119,14 @@ let publicKey = try PublicKey(reference: secKey)
 let privateKey = try PrivateKey(reference: secKey)
 ```
 
+### Create a public/private RSA key pair
+```swift
+let tag = "\(BUNDLE_IDENTIFIER).PrivateKey"
+let keyPair = SwiftRSA.generateRSAKeyPair(tag: tag, sizeInBits: 2048, storeInKeyChain: true)
+let privateKey = keyPair.privateKey
+let publicKey = keyPair.publicKey
+```
+
 ### Encrypt with a public key
 
 ```swift
