@@ -93,8 +93,8 @@ public enum SwiftyRSA {
             }
             return unwrappedData
             
-            // On iOS 8/9, we need to add the key again to the keychain with a temporary tag, grab the data,
-            // and delete the key again.
+        // On iOS 8/9, we need to add the key again to the keychain with a temporary tag, grab the data,
+        // and delete the key again.
         } else {
             
             let temporaryTag = UUID().uuidString
