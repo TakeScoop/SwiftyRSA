@@ -257,7 +257,7 @@ class PrivateKeyTests: XCTestCase {
         let tag = "com.takescoop.SwiftyRSA.PrivateKey"
         let size = 2048
         
-        let keyPair = try SwiftyRSA.generateRSAKeyPair(tag: tag, sizeInBits: size, storeInKeyChain: true)
+        let keyPair = try SwiftyRSA.generateRSAKeyPair(sizeInBits: size)
         XCTAssertNotNil(keyPair)
         
         let algorithm: SecKeyAlgorithm = .rsaEncryptionOAEPSHA512

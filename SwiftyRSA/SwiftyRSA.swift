@@ -125,25 +125,27 @@ public enum SwiftyRSA {
     /// Wlll generate a new private and public key
     ///
     /// - Parameters:
-    ///   - tag: A string representing a 'tag' in the keychaing. Usually your bundle identifier
-    ///   - size: Indicates the total number of bits in this cryptographic key.
-    ///   - permanent: Whether to store it in the keychain or not
+    ///   - size: Indicates the total number of bits in this cryptographic key
     /// - Returns: A touple of a private and public key
     /// - Throws: Throws and error if the tag cant be parsed or if keygeneration fails
     @available(iOS 10.0, *)
-    public static func generateRSAKeyPair(tag: String, sizeInBits size: Int, storeInKeyChain permanent: Bool) throws -> (privateKey: PrivateKey, publicKey: PublicKey) {
-        
+    public static func generateRSAKeyPair(sizeInBits size: Int) throws -> (privateKey: PrivateKey, publicKey: PublicKey) {
+      
+        guard let tag = Bundle.main.bundleIdentifier else {
+            throw SwiftyRSAError.tagEncodingFailed
+        }
+      
         guard let tagData = tag.data(using: .utf8) else {
             throw SwiftyRSAError.stringToDataConversionFailed
         }
         
-        let attributes: [String: Any] = [
-            kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
-            kSecAttrKeySizeInBits as String: size,
-            kSecPrivateKeyAttrs as String:
+        let attributes: [CFString: Any] = [
+            kSecAttrKeyType: kSecAttrKeyTypeRSA,
+            kSecAttrKeySizeInBits: size,
+            kSecPrivateKeyAttrs:
                 [
-                    kSecAttrIsPermanent as String: permanent,
-                    kSecAttrApplicationTag as String: tagData
+                    kSecAttrIsPermanent: true,
+                    kSecAttrApplicationTag: tagData
             ]
         ]
         var error: Unmanaged<CFError>?
