@@ -94,7 +94,7 @@ public class PublicKey: Key {
             range: all
         )
         
-        let keys = matches.flatMap { result -> PublicKey? in
+        let keys = matches.compactMap { result -> PublicKey? in
             
             #if swift(>=4.0)
             let match = result.range(at: 1)
