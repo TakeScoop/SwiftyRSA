@@ -122,7 +122,7 @@ public enum SwiftyRSA {
         }
     }
     
-    /// Wlll generate a new private and public key
+    /// Will generate a new private and public key
     ///
     /// - Parameters:
     ///   - size: Indicates the total number of bits in this cryptographic key
@@ -142,10 +142,9 @@ public enum SwiftyRSA {
         let attributes: [CFString: Any] = [
             kSecAttrKeyType: kSecAttrKeyTypeRSA,
             kSecAttrKeySizeInBits: size,
-            kSecPrivateKeyAttrs:
-                [
-                    kSecAttrIsPermanent: true,
-                    kSecAttrApplicationTag: tagData
+            kSecPrivateKeyAttrs: [
+                kSecAttrIsPermanent: true,
+                kSecAttrApplicationTag: tagData
             ]
         ]
         var error: Unmanaged<CFError>?
@@ -186,7 +185,7 @@ public enum SwiftyRSA {
             }
             return key
             
-            // On iOS 9 and earlier, add a persistent version of the key to the system keychain
+        // On iOS 9 and earlier, add a persistent version of the key to the system keychain
         } else {
             
             let persistKey = UnsafeMutablePointer<AnyObject?>(mutating: nil)
@@ -213,7 +212,7 @@ public enum SwiftyRSA {
                 kSecAttrKeyClass: keyClass,
                 kSecAttrAccessible: kSecAttrAccessibleWhenUnlocked,
                 kSecReturnRef: true,
-                ]
+            ]
             
             // Now fetch the SecKeyRef version of the key
             var keyRef: AnyObject? = nil
@@ -274,7 +273,7 @@ public enum SwiftyRSA {
                 return false
             }
             return true
-            }.isEmpty
+        }.isEmpty
         
         // Headerless key
         if onlyHasIntegers {
@@ -305,7 +304,7 @@ public enum SwiftyRSA {
             kSecClass: kSecClassKey,
             kSecAttrKeyType: kSecAttrKeyTypeRSA,
             kSecAttrApplicationTag: tagData,
-            ]
+          ]
         
         SecItemDelete(keyRemoveDict as CFDictionary)
     }

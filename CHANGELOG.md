@@ -5,9 +5,7 @@ SwiftyRSA Changelog
 
  - Fixed compilation warnings for Xcode 9.1 / 9.2.
 
-# [1.4.0]
-
-- Added `generateRSAKeyPair` to SwiftyRSA enum. [#106](https://github.com/TakeScoop/SwiftyRSA/issues/106)
+ - Added `generateRSAKeyPair` to SwiftyRSA enum. [#106](https://github.com/TakeScoop/SwiftyRSA/issues/106)
 
 # [1.3.0]
 

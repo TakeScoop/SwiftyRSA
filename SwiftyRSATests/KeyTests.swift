@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import SwiftyRSA
+import SwiftyRSA
 
 class PublicKeyTests: XCTestCase {
     
@@ -19,7 +19,6 @@ class PublicKeyTests: XCTestCase {
         }
         let data = try Data(contentsOf: URL(fileURLWithPath: path))
         let publicKey = try PublicKey(data: data)
-        
         let newPublicKey = try? PublicKey(reference: publicKey.reference)
         XCTAssertNotNil(newPublicKey)
     }
