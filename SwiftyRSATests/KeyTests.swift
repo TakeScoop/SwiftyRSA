@@ -19,7 +19,6 @@ class PublicKeyTests: XCTestCase {
         }
         let data = try Data(contentsOf: URL(fileURLWithPath: path))
         let publicKey = try PublicKey(data: data)
-
         let newPublicKey = try? PublicKey(reference: publicKey.reference)
         XCTAssertNotNil(newPublicKey)
     }
@@ -248,5 +247,27 @@ class PrivateKeyTests: XCTestCase {
     
     func test_headerAndOctetString() throws {
         _ = try PrivateKey(pemNamed: "swiftyrsa-private-header-octetstring", in: bundle)
+    }
+    
+    //This test will fail and thus has been disabled in the test scheme
+    //it is believed to be because of this bug http://www.openradar.me/36809637
+    @available(iOS 10.0, *)
+    func test_generateKeyPair() throws {
+        let tag = "com.takescoop.SwiftyRSA.PrivateKey"
+        let size = 2048
+        
+        let keyPair = try SwiftyRSA.generateRSAKeyPair(sizeInBits: size)
+        XCTAssertNotNil(keyPair)
+        
+        let algorithm: SecKeyAlgorithm = .rsaEncryptionOAEPSHA512
+        guard SecKeyIsAlgorithmSupported(keyPair.privateKey.reference, .decrypt, algorithm) else {
+            XCTFail("Key cannot be used for decryption")
+            return
+        }
+        
+        guard SecKeyIsAlgorithmSupported(keyPair.publicKey.reference, .encrypt, algorithm) else {
+            XCTFail("Key cannot be used for encryption")
+            return
+        }
     }
 }
