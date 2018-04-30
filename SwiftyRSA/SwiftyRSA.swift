@@ -92,7 +92,7 @@ public enum SwiftyRSA {
                 throw SwiftyRSAError.keyRepresentationFailed(error: error?.takeRetainedValue())
             }
             return unwrappedData
-            
+        
         // On iOS 8/9, we need to add the key again to the keychain with a temporary tag, grab the data,
         // and delete the key again.
         } else {
@@ -130,23 +130,30 @@ public enum SwiftyRSA {
     /// - Throws: Throws and error if the tag cant be parsed or if keygeneration fails
     @available(iOS 10.0, *)
     public static func generateRSAKeyPair(sizeInBits size: Int) throws -> (privateKey: PrivateKey, publicKey: PublicKey) {
+        return try generateRSAKeyPair(sizeInBits: size, applyUnitTestWorkaround: false)
+    }
+    
+    @available(iOS 10.0, *)
+    static func generateRSAKeyPair(sizeInBits size: Int, applyUnitTestWorkaround: Bool = false) throws -> (privateKey: PrivateKey, publicKey: PublicKey) {
       
-        guard let tag = Bundle.main.bundleIdentifier else {
-            throw SwiftyRSAError.tagEncodingFailed
-        }
-      
-        guard let tagData = tag.data(using: .utf8) else {
+        guard let tagData = UUID().uuidString.data(using: .utf8) else {
             throw SwiftyRSAError.stringToDataConversionFailed
         }
+        
+        // @hack Don't store permanently when running unit tests, otherwise we'll get a key creation error (NSOSStatusErrorDomain -50)
+        // @see http://www.openradar.me/36809637
+        // @see https://stackoverflow.com/q/48414685/646960
+        let isPermanent = applyUnitTestWorkaround ? false : true
         
         let attributes: [CFString: Any] = [
             kSecAttrKeyType: kSecAttrKeyTypeRSA,
             kSecAttrKeySizeInBits: size,
             kSecPrivateKeyAttrs: [
-                kSecAttrIsPermanent: true,
+                kSecAttrIsPermanent: isPermanent,
                 kSecAttrApplicationTag: tagData
             ]
         ]
+        
         var error: Unmanaged<CFError>?
         guard let privKey = SecKeyCreateRandomKey(attributes as CFDictionary, &error),
             let pubKey = SecKeyCopyPublicKey(privKey) else {
@@ -304,7 +311,7 @@ public enum SwiftyRSA {
             kSecClass: kSecClassKey,
             kSecAttrKeyType: kSecAttrKeyTypeRSA,
             kSecAttrApplicationTag: tagData,
-          ]
+        ]
         
         SecItemDelete(keyRemoveDict as CFDictionary)
     }

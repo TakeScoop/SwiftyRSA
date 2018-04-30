@@ -7,7 +7,9 @@
 //
 
 import XCTest
-import SwiftyRSA
+
+// Using @testable here so we can call `SwiftyRSA.generateRSAKeyPair(sizeInBits:applyUnitTestWorkaround)`
+@testable import SwiftyRSA
 
 class PublicKeyTests: XCTestCase {
     
@@ -249,15 +251,10 @@ class PrivateKeyTests: XCTestCase {
         _ = try PrivateKey(pemNamed: "swiftyrsa-private-header-octetstring", in: bundle)
     }
     
-    //This test will fail and thus has been disabled in the test scheme
-    //it is believed to be because of this bug http://www.openradar.me/36809637
     @available(iOS 10.0, *)
     func test_generateKeyPair() throws {
-        let tag = "com.takescoop.SwiftyRSA.PrivateKey"
-        let size = 2048
         
-        let keyPair = try SwiftyRSA.generateRSAKeyPair(sizeInBits: size)
-        XCTAssertNotNil(keyPair)
+        let keyPair = try SwiftyRSA.generateRSAKeyPair(sizeInBits: 2048, applyUnitTestWorkaround: true)
         
         let algorithm: SecKeyAlgorithm = .rsaEncryptionOAEPSHA512
         guard SecKeyIsAlgorithmSupported(keyPair.privateKey.reference, .decrypt, algorithm) else {
@@ -269,5 +266,13 @@ class PrivateKeyTests: XCTestCase {
             XCTFail("Key cannot be used for encryption")
             return
         }
+        
+        let str = "Clear Text"
+        let clearMessage = try ClearMessage(string: str, using: .utf8)
+        
+        let encrypted = try clearMessage.encrypted(with: keyPair.publicKey, padding: .PKCS1)
+        let decrypted = try encrypted.decrypted(with: keyPair.privateKey, padding: .PKCS1)
+        
+        XCTAssertEqual(try? decrypted.string(encoding: .utf8), str)
     }
 }

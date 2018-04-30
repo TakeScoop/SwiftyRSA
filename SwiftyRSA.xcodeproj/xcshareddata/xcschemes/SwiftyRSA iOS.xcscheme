@@ -52,11 +52,6 @@
                BlueprintName = "SwiftyRSATests"
                ReferencedContainer = "container:SwiftyRSA.xcodeproj">
             </BuildableReference>
-            <SkippedTests>
-               <Test
-                  Identifier = "PrivateKeyTests/test_generateKeyPair()">
-               </Test>
-            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>
