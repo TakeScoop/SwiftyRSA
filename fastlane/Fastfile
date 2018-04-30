@@ -13,6 +13,7 @@ platform :ios do
   lane :test_carthage do
     commit = last_git_commit()[:commit_hash]
     git_repo_path = File.expand_path('..', File.dirname(__FILE__))
+    sh "rm ../CarthageIntegrationTest/Cartfile* || true"
     sh "echo 'git \"file://#{git_repo_path}\" \"#{commit}\"' > ../CarthageIntegrationTest/Cartfile"
     carthage(project_directory: './CarthageIntegrationTest')
     xcodebuild(project: './CarthageIntegrationTest/CarthageIntegrationTest.xcodeproj')
