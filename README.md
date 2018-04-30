@@ -119,14 +119,6 @@ let publicKey = try PublicKey(reference: secKey)
 let privateKey = try PrivateKey(reference: secKey)
 ```
 
-### Create a public/private RSA key pair
-```swift
-let tag = "\(BUNDLE_IDENTIFIER).PrivateKey"
-let keyPair = SwiftRSA.generateRSAKeyPair(tag: tag, sizeInBits: 2048, storeInKeyChain: true)
-let privateKey = keyPair.privateKey
-let publicKey = keyPair.publicKey
-```
-
 ### Encrypt with a public key
 
 ```swift
@@ -168,6 +160,14 @@ SwiftyRSA can verify digital signatures with a public key. SwiftyRSA will calcul
 ```swift
 let signature = try Signature(base64Encoded: "AAA===")
 let isSuccessful = try clear.verify(with: publicKey, signature: signature, digestType: .sha1)
+```
+
+### Create a public/private RSA key pair
+
+```swift
+let keyPair = SwiftRSA.generateRSAKeyPair(sizeInBits: 2048)
+let privateKey = keyPair.privateKey
+let publicKey = keyPair.publicKey
 ```
 
 ### Export a key or access its content
