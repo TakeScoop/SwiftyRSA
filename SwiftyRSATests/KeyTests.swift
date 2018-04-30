@@ -7,7 +7,9 @@
 //
 
 import XCTest
-import SwiftyRSA
+
+// Using @testable here so we can call `SwiftyRSA.generateRSAKeyPair(sizeInBits:applyUnitTestWorkaround)`
+@testable import SwiftyRSA
 
 class PublicKeyTests: XCTestCase {
     
@@ -19,7 +21,6 @@ class PublicKeyTests: XCTestCase {
         }
         let data = try Data(contentsOf: URL(fileURLWithPath: path))
         let publicKey = try PublicKey(data: data)
-
         let newPublicKey = try? PublicKey(reference: publicKey.reference)
         XCTAssertNotNil(newPublicKey)
     }
@@ -248,5 +249,30 @@ class PrivateKeyTests: XCTestCase {
     
     func test_headerAndOctetString() throws {
         _ = try PrivateKey(pemNamed: "swiftyrsa-private-header-octetstring", in: bundle)
+    }
+    
+    @available(iOS 10.0, *) @available(watchOS 3.0, *) @available(tvOS 10.0, *)
+    func test_generateKeyPair() throws {
+        
+        let keyPair = try SwiftyRSA.generateRSAKeyPair(sizeInBits: 2048, applyUnitTestWorkaround: true)
+        
+        let algorithm: SecKeyAlgorithm = .rsaEncryptionOAEPSHA512
+        guard SecKeyIsAlgorithmSupported(keyPair.privateKey.reference, .decrypt, algorithm) else {
+            XCTFail("Key cannot be used for decryption")
+            return
+        }
+        
+        guard SecKeyIsAlgorithmSupported(keyPair.publicKey.reference, .encrypt, algorithm) else {
+            XCTFail("Key cannot be used for encryption")
+            return
+        }
+        
+        let str = "Clear Text"
+        let clearMessage = try ClearMessage(string: str, using: .utf8)
+        
+        let encrypted = try clearMessage.encrypted(with: keyPair.publicKey, padding: .PKCS1)
+        let decrypted = try encrypted.decrypted(with: keyPair.privateKey, padding: .PKCS1)
+        
+        XCTAssertEqual(try? decrypted.string(encoding: .utf8), str)
     }
 }

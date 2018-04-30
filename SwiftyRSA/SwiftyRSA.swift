@@ -27,7 +27,7 @@ extension Data {
     }
 }
 
-enum SwiftyRSA {
+public enum SwiftyRSA {
     
     static func base64String(pemEncoded pemString: String) throws -> String {
         let lines = pemString.components(separatedBy: "\n").filter { line in
@@ -122,6 +122,49 @@ enum SwiftyRSA {
         }
     }
     
+    /// Will generate a new private and public key
+    ///
+    /// - Parameters:
+    ///   - size: Indicates the total number of bits in this cryptographic key
+    /// - Returns: A touple of a private and public key
+    /// - Throws: Throws and error if the tag cant be parsed or if keygeneration fails
+    @available(iOS 10.0, *) @available(watchOS 3.0, *) @available(tvOS 10.0, *)
+    public static func generateRSAKeyPair(sizeInBits size: Int) throws -> (privateKey: PrivateKey, publicKey: PublicKey) {
+        return try generateRSAKeyPair(sizeInBits: size, applyUnitTestWorkaround: false)
+    }
+    
+    @available(iOS 10.0, *) @available(watchOS 3.0, *) @available(tvOS 10.0, *)
+    static func generateRSAKeyPair(sizeInBits size: Int, applyUnitTestWorkaround: Bool = false) throws -> (privateKey: PrivateKey, publicKey: PublicKey) {
+      
+        guard let tagData = UUID().uuidString.data(using: .utf8) else {
+            throw SwiftyRSAError.stringToDataConversionFailed
+        }
+        
+        // @hack Don't store permanently when running unit tests, otherwise we'll get a key creation error (NSOSStatusErrorDomain -50)
+        // @see http://www.openradar.me/36809637
+        // @see https://stackoverflow.com/q/48414685/646960
+        let isPermanent = applyUnitTestWorkaround ? false : true
+        
+        let attributes: [CFString: Any] = [
+            kSecAttrKeyType: kSecAttrKeyTypeRSA,
+            kSecAttrKeySizeInBits: size,
+            kSecPrivateKeyAttrs: [
+                kSecAttrIsPermanent: isPermanent,
+                kSecAttrApplicationTag: tagData
+            ]
+        ]
+        
+        var error: Unmanaged<CFError>?
+        guard let privKey = SecKeyCreateRandomKey(attributes as CFDictionary, &error),
+            let pubKey = SecKeyCopyPublicKey(privKey) else {
+            throw SwiftyRSAError.keyGenerationFailed(error: error?.takeRetainedValue())
+        }
+        let privateKey = try PrivateKey(reference: privKey)
+        let publicKey = try PublicKey(reference: pubKey)
+        
+        return (privateKey: privateKey, publicKey: publicKey)
+    }
+    
     static func addKey(_ keyData: Data, isPublic: Bool, tag: String) throws ->  SecKey {
         
         var keyData = keyData
@@ -198,18 +241,18 @@ enum SwiftyRSA {
      
      Headerless:
      SEQUENCE
-        INTEGER (1024 or 2048 bit) -- modulo
-        INTEGER -- public exponent
+         INTEGER (1024 or 2048 bit) -- modulo
+         INTEGER -- public exponent
      
      With x509 header:
      SEQUENCE
-        SEQUENCE
-            OBJECT IDENTIFIER 1.2.840.113549.1.1.1
-            NULL
-        BIT STRING
-            SEQUENCE
-            INTEGER (1024 or 2048 bit) -- modulo
-            INTEGER -- public exponent
+         SEQUENCE
+         OBJECT IDENTIFIER 1.2.840.113549.1.1.1
+         NULL
+         BIT STRING
+         SEQUENCE
+         INTEGER (1024 or 2048 bit) -- modulo
+         INTEGER -- public exponent
      
      Example of headerless key:
      https://lapo.it/asn1js/#3082010A0282010100C1A0DFA367FBC2A5FD6ED5A071E02A4B0617E19C6B5AD11BB61192E78D212F10A7620084A3CED660894134D4E475BAD7786FA1D40878683FD1B7A1AD9C0542B7A666457A270159DAC40CE25B2EAE7CCD807D31AE725CA394F90FBB5C5BA500545B99C545A9FE08EFF00A5F23457633E1DB84ED5E908EF748A90F8DFCCAFF319CB0334705EA012AF15AA090D17A9330159C9AFC9275C610BB9B7C61317876DC7386C723885C100F774C19830F475AD1E9A9925F9CA9A69CE0181A214DF2EB75FD13E6A546B8C8ED699E33A8521242B7E42711066AEC22D25DD45D56F94D3170D6F2C25164D2DACED31C73963BA885ADCB706F40866B8266433ED5161DC50E4B3B0203010001

@@ -162,6 +162,14 @@ let signature = try Signature(base64Encoded: "AAA===")
 let isSuccessful = try clear.verify(with: publicKey, signature: signature, digestType: .sha1)
 ```
 
+### Create a public/private RSA key pair
+
+```swift
+let keyPair = SwiftRSA.generateRSAKeyPair(sizeInBits: 2048)
+let privateKey = keyPair.privateKey
+let publicKey = keyPair.publicKey
+```
+
 ### Export a key or access its content
 
 ```swift

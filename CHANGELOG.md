@@ -4,6 +4,8 @@ SwiftyRSA Changelog
 # [master]
 
  - Fixed compilation warnings for Xcode 9.1 / 9.2.
+ - Added ability to generate a RSA key pair by using `SwiftyRSA.generateRSAKeyPair`.
+   [#106](https://github.com/TakeScoop/SwiftyRSA/issues/106)
 
 # [1.3.0]
 

@@ -13,6 +13,7 @@ platform :ios do
   lane :test_carthage do
     commit = last_git_commit()[:commit_hash]
     git_repo_path = File.expand_path('..', File.dirname(__FILE__))
+    sh "rm ../CarthageIntegrationTest/Cartfile* || true"
     sh "echo 'git \"file://#{git_repo_path}\" \"#{commit}\"' > ../CarthageIntegrationTest/Cartfile"
     carthage(project_directory: './CarthageIntegrationTest')
     xcodebuild(project: './CarthageIntegrationTest/CarthageIntegrationTest.xcodeproj')
@@ -27,7 +28,7 @@ platform :ios do
       # iOS
       scan(
           scheme: 'SwiftyRSA iOS',
-          sdk: 'iphonesimulator11.0',
+          sdk: 'iphonesimulator11.2',
           output_types: 'junit',
           output_files: 'iOS.xml',
           xcargs: "SWIFT_VERSION='#{swift_version}'",
@@ -37,14 +38,14 @@ platform :ios do
               
               # Disabled because of https://github.com/fastlane/fastlane/issues/10338
               # 'iPhone 6 (10.3.1)',
-              # 'iPhone 6 (11.0)'
+              # 'iPhone 6 (11.2)'
           ]
       )
 
       # tvOS
       scan(
           scheme: 'SwiftyRSA tvOS',
-          sdk: 'appletvsimulator11.0',
+          sdk: 'appletvsimulator11.2',
           output_types: 'junit',
           output_files: 'tvOS.xml',
           xcargs: "SWIFT_VERSION='#{swift_version}'",
@@ -54,14 +55,14 @@ platform :ios do
               
               # Disabled because of https://github.com/fastlane/fastlane/issues/10338
               # 'Apple TV 1080p (10.3.1)',
-              # 'Apple TV 1080p (11.0)',
+              # 'Apple TV 1080p (11.2)',
           ]
       )
 
       # watchOS (smoke test)
       xcodebuild(
           scheme: 'SwiftyRSA watchOS',
-          sdk: 'watchsimulator4.0',
+          sdk: 'watchsimulator4.2',
           configuration: 'Debug',
           xcargs: "SWIFT_VERSION='#{swift_version}'"
       )
