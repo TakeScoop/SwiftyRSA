@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  dependencies:
+  build:
     macos:
       xcode: "9.3.0"
     environment:
