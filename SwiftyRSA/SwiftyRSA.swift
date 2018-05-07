@@ -316,3 +316,19 @@ public enum SwiftyRSA {
         SecItemDelete(keyRemoveDict as CFDictionary)
     }
 }
+
+#if !swift(>=4.1)
+extension Array {
+    func compactMap<ElementOfResult>(_ transform: (Element) throws -> ElementOfResult?) rethrows -> [ElementOfResult] {
+        return try self.flatMap(transform)
+    }
+}
+#endif
+
+#if !swift(>=4.0)
+extension NSTextCheckingResult {
+    func range(at idx: Int) -> NSRange {
+        return self.rangeAt(1)
+    }
+}
+#endif

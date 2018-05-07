@@ -1,0 +1,35 @@
+version: 2
+jobs:
+  build:
+    macos:
+      xcode: "9.3.0"
+    environment:
+      LC_ALL: en_US.UTF-8
+      LANG: en_US.UTF-8
+      BUNDLE_PATH: vendor/bundle
+    shell: /bin/bash --login -eo pipefail
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "Podfile.lock" }}
+      - run:
+          name: Install Ruby dependencies
+          command: bundle check || bundle install --jobs 4 --retry 3
+      - run:
+          name: Install Cocoapods dependencies
+          command: |
+              function pod_install {
+                  curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
+                  bundle exec pod install
+              }
+              diff ./Podfile.lock ./Pods/Manifest.lock > /dev/null || pod_install
+      - save_cache:
+          key: dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "Podfile.lock" }}
+          paths:
+            - vendor/bundle/
+            - Pods/
+      - run: instruments -s devices
+      - run: bundle exec fastlane lint
+      - run: bundle exec fastlane test_carthage
+      - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test --verbose
+      

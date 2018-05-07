@@ -22,47 +22,43 @@ platform :ios do
   desc "Runs all the tests"
   lane :test do
     
-    swift_versions = ['3.2', '4.0']
+    swift_versions = ['3.2', '4.1']
     
     for swift_version in swift_versions do
+      
       # iOS
       scan(
           scheme: 'SwiftyRSA iOS',
-          sdk: 'iphonesimulator11.2',
+          sdk: 'iphonesimulator11.3',
           output_types: 'junit',
           output_files: 'iOS.xml',
           xcargs: "SWIFT_VERSION='#{swift_version}'",
           include_simulator_logs: false, # https://github.com/fastlane/fastlane/issues/8909
           devices: [
-              'iPhone 6',
-              
-              # Disabled because of https://github.com/fastlane/fastlane/issues/10338
-              # 'iPhone 6 (10.3.1)',
-              # 'iPhone 6 (11.2)'
+              'iPhone 6 (10.3.1)',
+              'iPhone 6 (11.2)',
+              'iPhone 6 (11.3)',
           ]
       )
 
       # tvOS
       scan(
           scheme: 'SwiftyRSA tvOS',
-          sdk: 'appletvsimulator11.2',
+          sdk: 'appletvsimulator11.3',
           output_types: 'junit',
           output_files: 'tvOS.xml',
           xcargs: "SWIFT_VERSION='#{swift_version}'",
           include_simulator_logs: false, # https://github.com/fastlane/fastlane/issues/8909
           devices: [
-              'Apple TV 1080p',
-              
-              # Disabled because of https://github.com/fastlane/fastlane/issues/10338
-              # 'Apple TV 1080p (10.3.1)',
-              # 'Apple TV 1080p (11.2)',
+              'Apple TV (11.2)',
+              'Apple TV (11.3)',
           ]
       )
 
       # watchOS (smoke test)
       xcodebuild(
           scheme: 'SwiftyRSA watchOS',
-          sdk: 'watchsimulator4.2',
+          sdk: 'watchsimulator4.3',
           configuration: 'Debug',
           xcargs: "SWIFT_VERSION='#{swift_version}'"
       )
