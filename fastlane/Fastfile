@@ -22,13 +22,13 @@ platform :ios do
   desc "Runs all the tests"
   lane :test do
     
-    swift_versions = ['3.2', '4.0']
+    swift_versions = ['3.2', '4.1']
     
     for swift_version in swift_versions do
       # iOS
       scan(
           scheme: 'SwiftyRSA iOS',
-          sdk: 'iphonesimulator11.2',
+          sdk: 'iphonesimulator11.3',
           output_types: 'junit',
           output_files: 'iOS.xml',
           xcargs: "SWIFT_VERSION='#{swift_version}'",
@@ -45,7 +45,7 @@ platform :ios do
       # tvOS
       scan(
           scheme: 'SwiftyRSA tvOS',
-          sdk: 'appletvsimulator11.2',
+          sdk: 'appletvsimulator11.3',
           output_types: 'junit',
           output_files: 'tvOS.xml',
           xcargs: "SWIFT_VERSION='#{swift_version}'",
@@ -62,7 +62,7 @@ platform :ios do
       # watchOS (smoke test)
       xcodebuild(
           scheme: 'SwiftyRSA watchOS',
-          sdk: 'watchsimulator4.2',
+          sdk: 'watchsimulator4.3',
           configuration: 'Debug',
           xcargs: "SWIFT_VERSION='#{swift_version}'"
       )
