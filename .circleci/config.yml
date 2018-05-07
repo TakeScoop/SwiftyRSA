@@ -18,8 +18,11 @@ jobs:
       - run:
           name: Install Cocoapods dependencies
           command: |
-              curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
-              diff ./Podfile.lock ./Pods/Manifest.lock > /dev/null || bundle exec pod install
+              function pod_install {
+                  curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
+                  bundle exec pod install
+              }
+              diff ./Podfile.lock ./Pods/Manifest.lock > /dev/null || pod_install
       - save_cache:
           key: dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "Podfile.lock" }}
           paths:
