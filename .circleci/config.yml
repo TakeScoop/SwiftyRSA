@@ -25,6 +25,7 @@ jobs:
           paths:
             - vendor/bundle/
             - Pods/
+      - run: instruments -s devices
       - run: bundle exec fastlane lint
       - run: bundle exec fastlane test_carthage
       - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test --verbose
