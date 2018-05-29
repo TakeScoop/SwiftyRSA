@@ -165,7 +165,7 @@ let isSuccessful = try clear.verify(with: publicKey, signature: signature, diges
 ### Create a public/private RSA key pair
 
 ```swift
-let keyPair = SwiftRSA.generateRSAKeyPair(sizeInBits: 2048)
+let keyPair = SwiftyRSA.generateRSAKeyPair(sizeInBits: 2048)
 let privateKey = keyPair.privateKey
 let publicKey = keyPair.publicKey
 ```
