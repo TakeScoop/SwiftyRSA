@@ -2,6 +2,7 @@ SwiftyRSA Changelog
 ===================
 
 # [master]
+- Made compatible with Swift 4.2 and Xcode 10
 
 # [1.4.0]
 
