@@ -1,6 +1,8 @@
 SwiftyRSA
 =========
 
+**Maintainer(s):** [@ldiqual](https://github.com/ldiqual)
+
 [![](https://img.shields.io/cocoapods/v/SwiftyRSA.svg)](https://cocoapods.org/pods/SwiftyRSA)
 ![](https://img.shields.io/badge/carthage-compatible-brightgreen.svg)
 ![](https://img.shields.io/cocoapods/p/SwiftyRSA.svg)
