@@ -11,22 +11,6 @@ import Security
 
 public typealias Padding = SecPadding
 
-extension CFString: Hashable {
-    public var hashValue: Int {
-        return (self as String).hashValue
-    }
-    
-    static public func == (lhs: CFString, rhs: CFString) -> Bool {
-        return lhs as String == rhs as String
-    }
-}
-
-extension Data {
-    var hex: String {
-        return map { String(format: "%02hhx", $0) }.joined(separator: " ")
-    }
-}
-
 public enum SwiftyRSA {
     
     static func base64String(pemEncoded pemString: String) throws -> String {
@@ -128,12 +112,12 @@ public enum SwiftyRSA {
     ///   - size: Indicates the total number of bits in this cryptographic key
     /// - Returns: A touple of a private and public key
     /// - Throws: Throws and error if the tag cant be parsed or if keygeneration fails
-    @available(iOS 10.0, *) @available(watchOS 3.0, *) @available(tvOS 10.0, *)
+    @available(iOS 10.0, watchOS 3.0, tvOS 10.0, *)
     public static func generateRSAKeyPair(sizeInBits size: Int) throws -> (privateKey: PrivateKey, publicKey: PublicKey) {
         return try generateRSAKeyPair(sizeInBits: size, applyUnitTestWorkaround: false)
     }
     
-    @available(iOS 10.0, *) @available(watchOS 3.0, *) @available(tvOS 10.0, *)
+    @available(iOS 10.0, watchOS 3.0, tvOS 10.0, *)
     static func generateRSAKeyPair(sizeInBits size: Int, applyUnitTestWorkaround: Bool = false) throws -> (privateKey: PrivateKey, publicKey: PublicKey) {
       
         guard let tagData = UUID().uuidString.data(using: .utf8) else {

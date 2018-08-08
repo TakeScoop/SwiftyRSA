@@ -251,8 +251,11 @@ class PrivateKeyTests: XCTestCase {
         _ = try PrivateKey(pemNamed: "swiftyrsa-private-header-octetstring", in: bundle)
     }
     
-    @available(iOS 10.0, *) @available(watchOS 3.0, *) @available(tvOS 10.0, *)
     func test_generateKeyPair() throws {
+        
+        guard #available(iOS 10.0, watchOS 3.0, tvOS 10.0, *) else {
+            return
+        }
         
         let keyPair = try SwiftyRSA.generateRSAKeyPair(sizeInBits: 2048, applyUnitTestWorkaround: true)
         
