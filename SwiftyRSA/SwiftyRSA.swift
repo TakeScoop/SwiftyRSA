@@ -188,7 +188,7 @@ public enum SwiftyRSA {
                 kSecValueData: keyData,
                 kSecAttrKeyClass: keyClass,
                 kSecReturnPersistentRef: true,
-                kSecAttrAccessible: kSecAttrAccessibleWhenUnlocked
+                kSecAttrAccessible: kSecAttrAccessibleAfterFirstUnlock
             ]
             
             let addStatus = SecItemAdd(keyAddDict as CFDictionary, persistKey)
@@ -201,7 +201,7 @@ public enum SwiftyRSA {
                 kSecAttrApplicationTag: tagData,
                 kSecAttrKeyType: kSecAttrKeyTypeRSA,
                 kSecAttrKeyClass: keyClass,
-                kSecAttrAccessible: kSecAttrAccessibleWhenUnlocked,
+                kSecAttrAccessible: kSecAttrAccessibleAfterFirstUnlock,
                 kSecReturnRef: true,
             ]
             
