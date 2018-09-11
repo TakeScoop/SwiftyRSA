@@ -100,7 +100,8 @@ public class PublicKey: Key {
             let start = pemString.index(pemString.startIndex, offsetBy: match.location)
             let end = pemString.index(start, offsetBy: match.length)
             
-            let thisKey = pemString[start..<end]
+            let range: Range<String.Index> = start..<end
+            let thisKey = pemString[range]
             
             return try? PublicKey(pemEncoded: String(thisKey))
         }
