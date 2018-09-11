@@ -6,6 +6,7 @@ SwiftyRSA Changelog
  - Made compatible with Swift 4.2 and Xcode 10
  - Fixed a potential crash when building dictionaries with `CFString` values
    [#107](https://github.com/TakeScoop/SwiftyRSA/issues/107)
+- Fixed getting `SwiftyRSA.SwiftyRSAError.keyAddFailed(-50)` error when the device is locked on iOS 8 / 9.
 
 # [1.4.0]
 
