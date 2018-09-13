@@ -17,8 +17,8 @@ Pod::Spec.new do |s|
   s.exclude_files = "SwiftyRSA/SwiftyRSA+ObjC.swift"
   s.framework = "Security"
   s.requires_arc = true
-  
-  s.swift_version = "4.1"
+
+  s.swift_version = "4.2"
   s.ios.deployment_target = "8.3"
   s.tvos.deployment_target = "9.2"
   s.watchos.deployment_target = "2.2"
