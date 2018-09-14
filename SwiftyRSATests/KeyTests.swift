@@ -160,6 +160,18 @@ class PublicKeyTests: XCTestCase {
         XCTAssertNotNil(newPublicKey)
         XCTAssertEqual(try? publicKey.data(), try? newPublicKey.data())
     }
+    
+    func test_sshString() throws {
+        let publicKey = try PublicKey(pemNamed: "swiftyrsa-public", in: bundle)
+        let sshString = try publicKey.sshString()
+        
+        guard let path = bundle.path(forResource: "swiftyrsa-public", ofType: "pub") else {
+            return XCTFail()
+        }
+        
+        let expectedKeyString = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+        XCTAssertEqual(sshString, expectedKeyString)
+    }
 }
 
 class PrivateKeyTests: XCTestCase {

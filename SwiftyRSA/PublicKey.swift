@@ -31,6 +31,65 @@ public class PublicKey: Key {
         return pem
     }
     
+    /// Returns an OpenSSH representation of the public key.
+    ///
+    /// - Returns: Data of the key, OpenSSH encoded
+    /// - Throws: SwiftyRSAError
+    public func sshString() throws -> String{
+        let data = try self.data()
+        let node = try! Asn1Parser.parse(data: data)
+        
+        // Ensure the raw data is an ASN1 sequence
+        guard case .sequence(let nodes) = node else {
+            throw SwiftyRSAError.invalidAsn1Structure
+        }
+        
+        let RSA_HEADER = "ssh-rsa"
+        
+        var ssh:String = RSA_HEADER + " "
+        var rsaBytes:Data = Data()
+        
+        // Get size of the header
+        var byteCount: UInt32 = UInt32(RSA_HEADER.count).bigEndian
+        var sizeData = Data(bytes: &byteCount, count: MemoryLayout.size(ofValue: byteCount))
+        
+        // Append size of header and content of header
+        rsaBytes.append(sizeData)
+        rsaBytes += RSA_HEADER.data(using: .utf8)!
+        
+        // Get the exponent
+        if let exp = nodes.last, case .integer(let exponent) = exp {
+            // Get size of exponent
+            byteCount = UInt32(exponent.count).bigEndian
+            sizeData = Data(bytes: &byteCount, count: MemoryLayout.size(ofValue: byteCount))
+            
+            // Append size of exponent and content of exponent
+            rsaBytes.append(sizeData)
+            rsaBytes += exponent
+        }
+        else{
+            throw SwiftyRSAError.invalidAsn1Structure
+        }
+        
+        // Get the modulus
+        if let mod = nodes.first, case .integer(let modulus) = mod {
+            // Get size of modulus
+            byteCount = UInt32(modulus.count).bigEndian
+            sizeData = Data(bytes: &byteCount, count: MemoryLayout.size(ofValue: byteCount))
+            
+            // Append size of modulus and content of modulus
+            rsaBytes.append(sizeData)
+            rsaBytes += modulus
+        }
+        else{
+            throw SwiftyRSAError.invalidAsn1Structure
+        }
+        
+        ssh += rsaBytes.base64EncodedString() + "\n"
+        return ssh
+        
+    }
+    
     /// Creates a public key with a keychain key reference.
     /// This initializer will throw if the provided key reference is not a public RSA key.
     ///
