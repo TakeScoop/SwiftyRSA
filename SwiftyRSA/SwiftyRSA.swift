@@ -27,7 +27,7 @@ public enum SwiftyRSA {
     
     static func isValidKeyReference(_ reference: SecKey, forClass requiredClass: CFString) -> Bool {
         
-        guard #available(iOS 10.0, *), #available(watchOS 3.0, *), #available(tvOS 10.0, *) else {
+        guard #available(macOS 10.12, *), #available(iOS 10.0, *), #available(watchOS 3.0, *), #available(tvOS 10.0, *) else {
             return true
         }
         
@@ -68,7 +68,7 @@ public enum SwiftyRSA {
     static func data(forKeyReference reference: SecKey) throws -> Data {
         
         // On iOS+, we can use `SecKeyCopyExternalRepresentation` directly
-        if #available(iOS 10.0, *), #available(watchOS 3.0, *), #available(tvOS 10.0, *) {
+        if #available(macOS 10.12, *), #available(iOS 10.0, *), #available(watchOS 3.0, *), #available(tvOS 10.0, *) {
             
             var error: Unmanaged<CFError>? = nil
             let data = SecKeyCopyExternalRepresentation(reference, &error)
@@ -112,12 +112,12 @@ public enum SwiftyRSA {
     ///   - size: Indicates the total number of bits in this cryptographic key
     /// - Returns: A touple of a private and public key
     /// - Throws: Throws and error if the tag cant be parsed or if keygeneration fails
-    @available(iOS 10.0, watchOS 3.0, tvOS 10.0, *)
+    @available(macOS 10.12, iOS 10.0, watchOS 3.0, tvOS 10.0, *)
     public static func generateRSAKeyPair(sizeInBits size: Int) throws -> (privateKey: PrivateKey, publicKey: PublicKey) {
         return try generateRSAKeyPair(sizeInBits: size, applyUnitTestWorkaround: false)
     }
     
-    @available(iOS 10.0, watchOS 3.0, tvOS 10.0, *)
+    @available(macOS 10.12, iOS 10.0, watchOS 3.0, tvOS 10.0, *)
     static func generateRSAKeyPair(sizeInBits size: Int, applyUnitTestWorkaround: Bool = false) throws -> (privateKey: PrivateKey, publicKey: PublicKey) {
       
         guard let tagData = UUID().uuidString.data(using: .utf8) else {
@@ -160,7 +160,7 @@ public enum SwiftyRSA {
         let keyClass = isPublic ? kSecAttrKeyClassPublic : kSecAttrKeyClassPrivate
         
         // On iOS 10+, we can use SecKeyCreateWithData without going through the keychain
-        if #available(iOS 10.0, *), #available(watchOS 3.0, *), #available(tvOS 10.0, *) {
+        if #available(macOS 10.12, *), #available(iOS 10.0, *), #available(watchOS 3.0, *), #available(tvOS 10.0, *) {
             
             let sizeInBits = keyData.count * 8
             let keyDict: [CFString: Any] = [

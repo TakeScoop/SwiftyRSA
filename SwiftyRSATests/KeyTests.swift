@@ -253,7 +253,7 @@ class PrivateKeyTests: XCTestCase {
     
     func test_generateKeyPair() throws {
         
-        guard #available(iOS 10.0, watchOS 3.0, tvOS 10.0, *) else {
+        guard #available(macOS 10.12, *), #available(iOS 10.0, watchOS 3.0, tvOS 10.0, *) else {
             return
         }
         

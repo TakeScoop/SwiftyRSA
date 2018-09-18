@@ -26,6 +26,17 @@ public class Signature {
             case .sha512: return .PKCS1SHA512
             }
         }
+        
+        @available(macOS 10.12, iOS 10.0, watchOS 3.0, tvOS 10.0, *)
+        public var algorithm: SecKeyAlgorithm {
+            switch self {
+            case .sha1: return .rsaEncryptionOAEPSHA1AESGCM
+            case .sha224: return .rsaEncryptionOAEPSHA224AESGCM
+            case .sha256: return .rsaEncryptionOAEPSHA256AESGCM
+            case .sha384: return .rsaEncryptionOAEPSHA384AESGCM
+            case .sha512: return .rsaEncryptionOAEPSHA512AESGCM
+            }
+        }
     }
     
     /// Data of the signature
