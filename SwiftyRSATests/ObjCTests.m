@@ -7,7 +7,12 @@
 //
 
 #import <XCTest/XCTest.h>
+
+#if TARGET_OS_IPHONE
 #import "SwiftyRSATests-Swift.h"
+#else
+#import "SwiftyRSATests_macOS-Swift.h"
+#endif
 
 @import SwiftyRSA;
 
