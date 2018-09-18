@@ -29,13 +29,17 @@ public class EncryptedMessage: Message {
     /// - Throws: SwiftyRSAError
     public func decrypted(with key: PrivateKey, padding: Padding) throws -> ClearMessage {
         #if os(macOS)
+        
+        let algorithm: SecKeyAlgorithm = .rsaEncryptionOAEPSHA256AESGCM // TODO: Offer more algorithms
         var error: Unmanaged<CFError>? = nil
-        let decryptedData = SecKeyCreateDecryptedData(key.reference, SecKeyAlgorithm.rsaEncryptionOAEPSHA256, self.data as CFData, &error)
+        let decryptedData = SecKeyCreateDecryptedData(key.reference, algorithm, self.data as CFData, &error)
         guard let unwrappedData = decryptedData as Data? else {
             throw SwiftyRSAError.keyRepresentationFailed(error: error?.takeRetainedValue())
         }
         return ClearMessage(data: unwrappedData)
+        
         #else
+        
         let blockSize = SecKeyGetBlockSize(key.reference)
         
         var encryptedDataAsArray = [UInt8](repeating: 0, count: data.count)
@@ -64,6 +68,7 @@ public class EncryptedMessage: Message {
         let decryptedData = Data(bytes: UnsafePointer<UInt8>(decryptedDataBytes), count: decryptedDataBytes.count)
         
         return ClearMessage(data: decryptedData)
+        
         #endif
     }
 }

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DA036D472151A83500AA7E7D"
-               BuildableName = "SwiftyRSA_macOS.framework"
+               BuildableName = "SwiftyRSA.framework"
                BlueprintName = "SwiftyRSA macOS"
                ReferencedContainer = "container:SwiftyRSA.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DA036D472151A83500AA7E7D"
-            BuildableName = "SwiftyRSA_macOS.framework"
+            BuildableName = "SwiftyRSA.framework"
             BlueprintName = "SwiftyRSA macOS"
             ReferencedContainer = "container:SwiftyRSA.xcodeproj">
          </BuildableReference>
@@ -65,7 +65,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DA036D472151A83500AA7E7D"
-            BuildableName = "SwiftyRSA_macOS.framework"
+            BuildableName = "SwiftyRSA.framework"
             BlueprintName = "SwiftyRSA macOS"
             ReferencedContainer = "container:SwiftyRSA.xcodeproj">
          </BuildableReference>
@@ -83,7 +83,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DA036D472151A83500AA7E7D"
-            BuildableName = "SwiftyRSA_macOS.framework"
+            BuildableName = "SwiftyRSA.framework"
             BlueprintName = "SwiftyRSA macOS"
             ReferencedContainer = "container:SwiftyRSA.xcodeproj">
          </BuildableReference>

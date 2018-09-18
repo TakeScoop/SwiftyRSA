@@ -56,8 +56,9 @@ public class ClearMessage: Message {
     public func encrypted(with key: PublicKey, padding: Padding) throws -> EncryptedMessage {
         #if os(macOS)
         
+        let algorithm: SecKeyAlgorithm = .rsaEncryptionOAEPSHA256AESGCM // TODO: Offer more algorithms
         var error: Unmanaged<CFError>? = nil
-        let encryptedData = SecKeyCreateEncryptedData(key.reference, SecKeyAlgorithm.rsaEncryptionOAEPSHA256, self.data as CFData, &error)
+        let encryptedData = SecKeyCreateEncryptedData(key.reference, algorithm, self.data as CFData, &error)
         guard let unwrappedData = encryptedData as Data? else {
             throw SwiftyRSAError.keyRepresentationFailed(error: error?.takeRetainedValue()) // TODO: Implement proper error
         }
