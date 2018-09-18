@@ -17,7 +17,7 @@ class PublicKeyTests: XCTestCase {
     
     func test_initWithReference() throws {
         guard let path = bundle.path(forResource: "swiftyrsa-public", ofType: "der") else {
-            return XCTFail()
+            return XCTFail("file not found in bundle")
         }
         let data = try Data(contentsOf: URL(fileURLWithPath: path))
         let publicKey = try PublicKey(data: data)
@@ -33,7 +33,7 @@ class PublicKeyTests: XCTestCase {
         }
         
         guard let path = bundle.path(forResource: "swiftyrsa-private", ofType: "pem") else {
-            return XCTFail()
+            return XCTFail("file not found in bundle")
         }
         let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
         let privateKey = try PrivateKey(pemEncoded: str)
@@ -45,7 +45,7 @@ class PublicKeyTests: XCTestCase {
     
     func test_initWithData() throws {
         guard let path = bundle.path(forResource: "swiftyrsa-public", ofType: "der") else {
-            return XCTFail()
+            return XCTFail("file not found in bundle")
         }
         let data = try Data(contentsOf: URL(fileURLWithPath: path))
         let publicKey = try? PublicKey(data: data)
@@ -54,7 +54,7 @@ class PublicKeyTests: XCTestCase {
     
     func test_initWithBase64String() throws {
         guard let path = bundle.path(forResource: "swiftyrsa-public-base64", ofType: "txt") else {
-            return XCTFail()
+            return XCTFail("file not found in bundle")
         }
         let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
         let publicKey = try? PublicKey(base64Encoded: str)
@@ -63,7 +63,7 @@ class PublicKeyTests: XCTestCase {
     
     func test_initWithBase64StringWhichContainsNewLines() throws {
         guard let path = bundle.path(forResource: "swiftyrsa-public-base64-newlines", ofType: "txt") else {
-            return XCTFail()
+            return XCTFail("file not found in bundle")
         }
         let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
         let publicKey = try? PublicKey(base64Encoded: str)
@@ -72,7 +72,7 @@ class PublicKeyTests: XCTestCase {
     
     func test_initWithPEMString() throws {
         guard let path = bundle.path(forResource: "swiftyrsa-public", ofType: "pem") else {
-            return XCTFail()
+            return XCTFail("file not found in bundle")
         }
         let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
         let publicKey = try? PublicKey(pemEncoded: str)
@@ -91,7 +91,7 @@ class PublicKeyTests: XCTestCase {
     
     func test_initWithPEMStringHeaderless() throws {
         guard let path = bundle.path(forResource: "swiftyrsa-public-headerless", ofType: "pem") else {
-            return XCTFail()
+            return XCTFail("file not found in bundle")
         }
         let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
         let publicKey = try? PublicKey(pemEncoded: str)
@@ -120,13 +120,13 @@ class PublicKeyTests: XCTestCase {
         // With header
         do {
             guard let path = bundle.path(forResource: "swiftyrsa-public", ofType: "der") else {
-                return XCTFail()
+                return XCTFail("file not found in bundle")
             }
             let data = try Data(contentsOf: URL(fileURLWithPath: path))
             let publicKey = try PublicKey(data: data)
             
             guard let dataFromKeychain = try? publicKey.data() else {
-                return XCTFail()
+                return XCTFail("file not found in bundle")
             }
             
             XCTAssertNotEqual(dataFromKeychain, data)
@@ -136,7 +136,7 @@ class PublicKeyTests: XCTestCase {
         // Headerless
         do {
             guard let path = bundle.path(forResource: "swiftyrsa-public-headerless", ofType: "pem") else {
-                return XCTFail()
+                return XCTFail("file not found in bundle")
             }
             let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
             let publicKey = try PublicKey(pemEncoded: str)
@@ -168,7 +168,7 @@ class PrivateKeyTests: XCTestCase {
     
     func test_initWithReference() throws {
         guard let path = bundle.path(forResource: "swiftyrsa-private", ofType: "pem") else {
-            return XCTFail()
+            return XCTFail("file not found in bundle")
         }
         let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
         let privateKey = try PrivateKey(pemEncoded: str)
@@ -185,7 +185,7 @@ class PrivateKeyTests: XCTestCase {
         }
         
         guard let path = bundle.path(forResource: "swiftyrsa-public", ofType: "der") else {
-            return XCTFail()
+            return XCTFail("file not found in bundle")
         }
         let data = try Data(contentsOf: URL(fileURLWithPath: path))
         let publicKey = try PublicKey(data: data)
@@ -197,7 +197,7 @@ class PrivateKeyTests: XCTestCase {
     
     func test_initWithPEMString() throws {
         guard let path = bundle.path(forResource: "swiftyrsa-private", ofType: "pem") else {
-            return XCTFail()
+            return XCTFail("file not found in bundle")
         }
         let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
         let privateKey = try? PrivateKey(pemEncoded: str)
@@ -206,7 +206,7 @@ class PrivateKeyTests: XCTestCase {
     
     func test_initWithPEMStringHeaderless() throws {
         guard let path = bundle.path(forResource: "swiftyrsa-private-headerless", ofType: "pem") else {
-            return XCTFail()
+            return XCTFail("file not found in bundle")
         }
         let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
         let privateKey = try? PrivateKey(pemEncoded: str)
@@ -225,7 +225,7 @@ class PrivateKeyTests: XCTestCase {
     
     func test_data() throws {
         guard let path = bundle.path(forResource: "swiftyrsa-private", ofType: "der") else {
-            return XCTFail()
+            return XCTFail("file not found in bundle")
         }
         let data = try Data(contentsOf: URL(fileURLWithPath: path))
         let publicKey = try PrivateKey(data: data)

@@ -14,7 +14,7 @@ import Foundation
 /// They are exposed under the same name to the ObjC runtime, and all methods are present – they're just delegated
 /// to the wrapped swift value.
 
-fileprivate protocol ObjcBridgeable {
+private protocol ObjcBridgeable {
     associatedtype SwiftType
     var swiftValue: SwiftType { get }
     init(swiftValue: SwiftType)
