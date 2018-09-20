@@ -57,7 +57,7 @@ jobs:
           key: *dependencies-cache-key
       - run: instruments -s devices
       - run: bundle exec fastlane test_carthage
-      - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_xcode10 --verbose
+      - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_xcode9 --verbose
   test-xcode10:
     macos:
       xcode: "10.0.0"
