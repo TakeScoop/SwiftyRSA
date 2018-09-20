@@ -44,21 +44,23 @@ class EncryptDecryptTests: XCTestCase {
         XCTAssertEqual(decrypted.data, data)
     }
     
-    func test_noPadding() throws {
-        let data = TestUtils.randomData(count: 128)
-        let clearMessage = ClearMessage(data: data)
-        let encrypted = try clearMessage.encrypted(with: publicKey, padding: [])
-        
-        let clearMessage2 = ClearMessage(data: encrypted.data)
-        let encrypted2 = try clearMessage2.encrypted(with: publicKey, padding: [])
-        
-        XCTAssertEqual(data.count, encrypted.data.count)
-        XCTAssertEqual(data.count, encrypted2.data.count)
-        
-        let decrypted = try encrypted.decrypted(with: privateKey, padding: [])
-        
-        XCTAssertEqual(decrypted.data, data)
-    }
+    // See https://github.com/TakeScoop/SwiftyRSA/issues/135
+//    func test_noPadding() throws {
+//
+//        let data = TestUtils.randomData(count: 128)
+//        let clearMessage = ClearMessage(data: data)
+//        let encrypted = try clearMessage.encrypted(with: publicKey, padding: [])
+//
+//        let clearMessage2 = ClearMessage(data: encrypted.data)
+//        let encrypted2 = try clearMessage2.encrypted(with: publicKey, padding: [])
+//
+//        XCTAssertEqual(data.count, encrypted.data.count)
+//        XCTAssertEqual(data.count, encrypted2.data.count)
+//
+//        let decrypted = try encrypted.decrypted(with: privateKey, padding: [])
+//
+//        XCTAssertEqual(decrypted.data, data)
+//    }
     
     func test_OAEP() throws {
         let data = TestUtils.randomData(count: 2048)
