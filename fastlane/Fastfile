@@ -77,8 +77,8 @@ platform :ios do
         xcargs: "SWIFT_VERSION='#{swift_version}'",
         include_simulator_logs: false, # https://github.com/fastlane/fastlane/issues/8909
         devices: [
-            'iPhone 6 (10.3.1)',
-            'iPhone 6 (11.2)',
+            # 'iPhone 6 (10.3.1)',
+            # 'iPhone 6 (11.2)',
             'iPhone 6 (12.0)',
         ]
     )
@@ -92,7 +92,7 @@ platform :ios do
         xcargs: "SWIFT_VERSION='#{swift_version}'",
         include_simulator_logs: false, # https://github.com/fastlane/fastlane/issues/8909
         devices: [
-            'Apple TV (11.2)',
+            # 'Apple TV (11.2)',
             'Apple TV (12.0)',
         ]
     )
