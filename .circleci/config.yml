@@ -32,18 +32,17 @@ jobs:
             - Pods/
   lint:
     macos:
-      macos:
-        xcode: "9.3.0"
-      environment:
-        LC_ALL: en_US.UTF-8
-        LANG: en_US.UTF-8
-        BUNDLE_PATH: vendor/bundle
-      shell: /bin/bash --login -eo pipefail
-      steps:
-        - checkout
-        - restore_cache:
-            key: *dependencies-cache-key
-        - run: bundle exec fastlane lint
+      xcode: "9.3.0"
+    environment:
+      LC_ALL: en_US.UTF-8
+      LANG: en_US.UTF-8
+      BUNDLE_PATH: vendor/bundle
+    shell: /bin/bash --login -eo pipefail
+    steps:
+      - checkout
+      - restore_cache:
+          key: *dependencies-cache-key
+      - run: bundle exec fastlane lint
   test-xcode9:
     macos:
       xcode: "9.3.0"
