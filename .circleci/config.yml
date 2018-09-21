@@ -72,7 +72,7 @@ jobs:
           key: *dependencies-cache-key
       - run: instruments -s devices
       - run: bundle exec fastlane test_carthage
-      - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_xcode10 --verbose
+      - run: bundle exec fastlane test_xcode10 --verbose
 workflows:
   version: 2
   build-and-deploy:
