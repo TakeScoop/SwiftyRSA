@@ -7,31 +7,62 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		04722FE47977D098FCA72B5DFD504FF9 /* SwiftyRSA.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CB44E2E8BE22C702325440A0F96410A /* SwiftyRSA.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		239599E759885825A7AFC6F2C8446821 /* NSData+SHA.m in Sources */ = {isa = PBXBuildFile; fileRef = D77B6899031A54A9F698D3430A599421 /* NSData+SHA.m */; };
-		2601A3DF45E695FA19E7D1335EAD83AD /* SwiftyRSA.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CB44E2E8BE22C702325440A0F96410A /* SwiftyRSA.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2C9144BB1528A03A53582ADA158D7F71 /* NSData+SHA.m in Sources */ = {isa = PBXBuildFile; fileRef = D77B6899031A54A9F698D3430A599421 /* NSData+SHA.m */; };
-		3D7671945BD59D6CC1CB799435D358A6 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CEBB75D7D70F1A095D22C1D7BFD8773 /* Security.framework */; };
 		47C6D29039697B1E71B856F957188617 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CEBB75D7D70F1A095D22C1D7BFD8773 /* Security.framework */; };
-		48461D06FA57F540A6140BC66F457877 /* SwiftyRSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E84F551B29670A456D12366AA4C8E5 /* SwiftyRSA.swift */; };
-		54EC57310DAFFE47CAA52CAED8F387B9 /* SwiftyRSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E84F551B29670A456D12366AA4C8E5 /* SwiftyRSA.swift */; };
-		61C3EEC5859298BF282B0BA572B8FCAC /* NSData+SHA.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AAC360BC9A1D1773D59C8E91186044E /* NSData+SHA.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8E6B4DE19F56FBA2DEEE318C4EEEA1C6 /* NSData+SHA.m in Sources */ = {isa = PBXBuildFile; fileRef = D77B6899031A54A9F698D3430A599421 /* NSData+SHA.m */; };
-		A535C69BBF632C0A67A6DD222B7A4760 /* NSData+SHA.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AAC360BC9A1D1773D59C8E91186044E /* NSData+SHA.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B0981AE770653C8FE25311592E2BCE5E /* SwiftyRSA.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CB44E2E8BE22C702325440A0F96410A /* SwiftyRSA.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		61C3EEC5859298BF282B0BA572B8FCAC /* NSData+SHA.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AAC360BC9A1D1773D59C8E91186044E /* NSData+SHA.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		B0981AE770653C8FE25311592E2BCE5E /* SwiftyRSA.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CB44E2E8BE22C702325440A0F96410A /* SwiftyRSA.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		BF52D5FDEDA5DFCA62ECD03992601E82 /* SwiftyRSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E84F551B29670A456D12366AA4C8E5 /* SwiftyRSA.swift */; };
 		C034317B1EC2D7E30019B7E8 /* Asn1Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C034317A1EC2D7E30019B7E8 /* Asn1Parser.swift */; };
-		C034317C1EC2D7E30019B7E8 /* Asn1Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C034317A1EC2D7E30019B7E8 /* Asn1Parser.swift */; };
-		C034317D1EC2D7E30019B7E8 /* Asn1Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C034317A1EC2D7E30019B7E8 /* Asn1Parser.swift */; };
 		C03AF73A1EC7031900DE8166 /* SwiftyRSA+ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */; };
-		C03AF73B1EC7031A00DE8166 /* SwiftyRSA+ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */; };
-		C03AF73C1EC7031A00DE8166 /* SwiftyRSA+ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */; };
 		C03AF73E1ECAB2FC00DE8166 /* SwiftyRSAError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03AF73D1ECAB2FC00DE8166 /* SwiftyRSAError.swift */; };
-		C03AF73F1ECAB2FC00DE8166 /* SwiftyRSAError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03AF73D1ECAB2FC00DE8166 /* SwiftyRSAError.swift */; };
-		C03AF7401ECAB2FC00DE8166 /* SwiftyRSAError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03AF73D1ECAB2FC00DE8166 /* SwiftyRSAError.swift */; };
 		C04D33811DC54D5700D65B05 /* swiftyrsa-public-base64-newlines.txt in Resources */ = {isa = PBXBuildFile; fileRef = C04D33801DC54D5700D65B05 /* swiftyrsa-public-base64-newlines.txt */; };
+		C057922321545CB00057F401 /* ClearMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83E081ECD7F3000E9D63C /* ClearMessage.swift */; };
+		C057922421545CB00057F401 /* Asn1Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C034317A1EC2D7E30019B7E8 /* Asn1Parser.swift */; };
+		C057922521545CB00057F401 /* EncryptedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83E0C1ECD7F4200E9D63C /* EncryptedMessage.swift */; };
+		C057922621545CB00057F401 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0969FFB1D906B5C00E285C2 /* Key.swift */; };
+		C057922721545CB00057F401 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A0071D9071CA00E285C2 /* Message.swift */; };
+		C057922921545CB00057F401 /* NSData+SHA.m in Sources */ = {isa = PBXBuildFile; fileRef = D77B6899031A54A9F698D3430A599421 /* NSData+SHA.m */; };
+		C057922A21545CB00057F401 /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83E041ECD7DC400E9D63C /* PrivateKey.swift */; };
+		C057922B21545CB00057F401 /* PublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83DFC1ECD7DA300E9D63C /* PublicKey.swift */; };
+		C057922C21545CB00057F401 /* Signature.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A00B1D90754E00E285C2 /* Signature.swift */; };
+		C057922D21545CB00057F401 /* SwiftyRSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E84F551B29670A456D12366AA4C8E5 /* SwiftyRSA.swift */; };
+		C057922E21545CB00057F401 /* SwiftyRSA+ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */; };
+		C057922F21545CB00057F401 /* SwiftyRSAError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03AF73D1ECAB2FC00DE8166 /* SwiftyRSAError.swift */; };
+		C057923021545CD00057F401 /* NSData+SHA.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AAC360BC9A1D1773D59C8E91186044E /* NSData+SHA.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C0579231215464470057F401 /* SwiftyRSA.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CB44E2E8BE22C702325440A0F96410A /* SwiftyRSA.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C0579240215465350057F401 /* ClearMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83E081ECD7F3000E9D63C /* ClearMessage.swift */; };
+		C0579241215465350057F401 /* Asn1Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C034317A1EC2D7E30019B7E8 /* Asn1Parser.swift */; };
+		C0579242215465350057F401 /* EncryptedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83E0C1ECD7F4200E9D63C /* EncryptedMessage.swift */; };
+		C0579243215465350057F401 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0969FFB1D906B5C00E285C2 /* Key.swift */; };
+		C0579244215465350057F401 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A0071D9071CA00E285C2 /* Message.swift */; };
+		C0579245215465350057F401 /* NSData+SHA.m in Sources */ = {isa = PBXBuildFile; fileRef = D77B6899031A54A9F698D3430A599421 /* NSData+SHA.m */; };
+		C0579246215465350057F401 /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83E041ECD7DC400E9D63C /* PrivateKey.swift */; };
+		C0579247215465350057F401 /* PublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83DFC1ECD7DA300E9D63C /* PublicKey.swift */; };
+		C0579248215465350057F401 /* Signature.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A00B1D90754E00E285C2 /* Signature.swift */; };
+		C0579249215465350057F401 /* SwiftyRSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E84F551B29670A456D12366AA4C8E5 /* SwiftyRSA.swift */; };
+		C057924A215465350057F401 /* SwiftyRSA+ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */; };
+		C057924B215465350057F401 /* SwiftyRSAError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03AF73D1ECAB2FC00DE8166 /* SwiftyRSAError.swift */; };
+		C057924C215465390057F401 /* NSData+SHA.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AAC360BC9A1D1773D59C8E91186044E /* NSData+SHA.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C057924D2154653F0057F401 /* SwiftyRSA.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CB44E2E8BE22C702325440A0F96410A /* SwiftyRSA.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C0579257215465750057F401 /* SwiftyRSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0579238215465040057F401 /* SwiftyRSA.framework */; };
+		C057925D2154659B0057F401 /* KeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A00F1D9083D000E285C2 /* KeyTests.swift */; };
+		C057925E2154659B0057F401 /* MessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A0131D9086F300E285C2 /* MessageTests.swift */; };
+		C057925F2154659B0057F401 /* EncryptDecryptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A0151D9092C700E285C2 /* EncryptDecryptTests.swift */; };
+		C05792602154659B0057F401 /* SignatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A0171D90969A00E285C2 /* SignatureTests.swift */; };
+		C05792612154659B0057F401 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E21744A2073DB8AC7BAEB324D36D4DB /* TestUtils.swift */; };
+		C05792622154659B0057F401 /* ObjCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C07408AC1D9E1BA800AB6814 /* ObjCTests.m */; };
+		C0579263215465A60057F401 /* swiftyrsa-public-base64-newlines.txt in Resources */ = {isa = PBXBuildFile; fileRef = C04D33801DC54D5700D65B05 /* swiftyrsa-public-base64-newlines.txt */; };
+		C0579264215465A60057F401 /* swiftyrsa-private.der in Resources */ = {isa = PBXBuildFile; fileRef = C065ED6E1DBF314500674763 /* swiftyrsa-private.der */; };
+		C0579265215465A60057F401 /* swiftyrsa-public-base64.txt in Resources */ = {isa = PBXBuildFile; fileRef = C096A0111D9085C100E285C2 /* swiftyrsa-public-base64.txt */; };
+		C0579266215465A60057F401 /* multiple-keys-testcase.pem in Resources */ = {isa = PBXBuildFile; fileRef = AD7F28E3936301CA24DF13E22196C73B /* multiple-keys-testcase.pem */; };
+		C0579267215465A60057F401 /* multiple-keys-testcase.sh in Resources */ = {isa = PBXBuildFile; fileRef = 47807FD4AF81104758D4EA9B778F5186 /* multiple-keys-testcase.sh */; };
+		C0579268215465A60057F401 /* swiftyrsa-private-headerless.pem in Resources */ = {isa = PBXBuildFile; fileRef = 6E2D7A1B9C4D58D0887FB023C0E15594 /* swiftyrsa-private-headerless.pem */; };
+		C0579269215465A60057F401 /* swiftyrsa-private.pem in Resources */ = {isa = PBXBuildFile; fileRef = EF193719CB8D4DDE8D347FF699311D1D /* swiftyrsa-private.pem */; };
+		C057926A215465A60057F401 /* swiftyrsa-public-headerless.pem in Resources */ = {isa = PBXBuildFile; fileRef = AC84097FE3BCDEAEE6370ADD41E9AE68 /* swiftyrsa-public-headerless.pem */; };
+		C057926B215465A60057F401 /* swiftyrsa-public.der in Resources */ = {isa = PBXBuildFile; fileRef = 986B7C763D1B85C628621E89E7071B06 /* swiftyrsa-public.der */; };
+		C057926C215465A60057F401 /* swiftyrsa-public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 3831A3C8228AFD8B386036394F642FB0 /* swiftyrsa-public.pem */; };
+		C057926D215465A60057F401 /* swiftyrsa-private-header-octetstring.pem in Resources */ = {isa = PBXBuildFile; fileRef = C084A7291EC3034B003F79ED /* swiftyrsa-private-header-octetstring.pem */; };
 		C065ED6F1DBF314500674763 /* swiftyrsa-private.der in Resources */ = {isa = PBXBuildFile; fileRef = C065ED6E1DBF314500674763 /* swiftyrsa-private.der */; };
-		C076F5421DADEB90006AF5DB /* SwiftyRSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 158823A80092238A00F1212F366091C9 /* SwiftyRSA.framework */; };
 		C076F5481DADEBC2006AF5DB /* KeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A00F1D9083D000E285C2 /* KeyTests.swift */; };
 		C076F5491DADEBC2006AF5DB /* MessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A0131D9086F300E285C2 /* MessageTests.swift */; };
 		C076F54A1DADEBC2006AF5DB /* EncryptDecryptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A0151D9092C700E285C2 /* EncryptDecryptTests.swift */; };
@@ -48,30 +79,22 @@
 		C076F5551DADEC1D006AF5DB /* swiftyrsa-public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 3831A3C8228AFD8B386036394F642FB0 /* swiftyrsa-public.pem */; };
 		C084A72A1EC3034B003F79ED /* swiftyrsa-private-header-octetstring.pem in Resources */ = {isa = PBXBuildFile; fileRef = C084A7291EC3034B003F79ED /* swiftyrsa-private-header-octetstring.pem */; };
 		C0969FFC1D906B5C00E285C2 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0969FFB1D906B5C00E285C2 /* Key.swift */; };
-		C0969FFD1D906B5C00E285C2 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0969FFB1D906B5C00E285C2 /* Key.swift */; };
-		C0969FFE1D906B5C00E285C2 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0969FFB1D906B5C00E285C2 /* Key.swift */; };
 		C096A0081D9071CA00E285C2 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A0071D9071CA00E285C2 /* Message.swift */; };
-		C096A0091D9071CA00E285C2 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A0071D9071CA00E285C2 /* Message.swift */; };
-		C096A00A1D9071CA00E285C2 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A0071D9071CA00E285C2 /* Message.swift */; };
 		C096A00C1D90754E00E285C2 /* Signature.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A00B1D90754E00E285C2 /* Signature.swift */; };
-		C096A00D1D90754E00E285C2 /* Signature.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A00B1D90754E00E285C2 /* Signature.swift */; };
-		C096A00E1D90754E00E285C2 /* Signature.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A00B1D90754E00E285C2 /* Signature.swift */; };
 		C0E83DFD1ECD7DA300E9D63C /* PublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83DFC1ECD7DA300E9D63C /* PublicKey.swift */; };
-		C0E83DFE1ECD7DA300E9D63C /* PublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83DFC1ECD7DA300E9D63C /* PublicKey.swift */; };
-		C0E83DFF1ECD7DA300E9D63C /* PublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83DFC1ECD7DA300E9D63C /* PublicKey.swift */; };
 		C0E83E051ECD7DC400E9D63C /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83E041ECD7DC400E9D63C /* PrivateKey.swift */; };
-		C0E83E061ECD7DC400E9D63C /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83E041ECD7DC400E9D63C /* PrivateKey.swift */; };
-		C0E83E071ECD7DC400E9D63C /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83E041ECD7DC400E9D63C /* PrivateKey.swift */; };
 		C0E83E091ECD7F3000E9D63C /* ClearMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83E081ECD7F3000E9D63C /* ClearMessage.swift */; };
-		C0E83E0A1ECD7F3000E9D63C /* ClearMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83E081ECD7F3000E9D63C /* ClearMessage.swift */; };
-		C0E83E0B1ECD7F3000E9D63C /* ClearMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83E081ECD7F3000E9D63C /* ClearMessage.swift */; };
 		C0E83E0D1ECD7F4200E9D63C /* EncryptedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83E0C1ECD7F4200E9D63C /* EncryptedMessage.swift */; };
-		C0E83E0E1ECD7F4200E9D63C /* EncryptedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83E0C1ECD7F4200E9D63C /* EncryptedMessage.swift */; };
-		C0E83E0F1ECD7F4200E9D63C /* EncryptedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83E0C1ECD7F4200E9D63C /* EncryptedMessage.swift */; };
-		DA63152278619961B7E2B992C379F700 /* NSData+SHA.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AAC360BC9A1D1773D59C8E91186044E /* NSData+SHA.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		C0579258215465750057F401 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B78A2BC98EF258D8332FA3186D365144 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C0579237215465040057F401;
+			remoteInfo = "SwiftyRSA tvOS";
+		};
 		C076F5431DADEB90006AF5DB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B78A2BC98EF258D8332FA3186D365144 /* Project object */;
@@ -82,10 +105,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		158823A80092238A00F1212F366091C9 /* SwiftyRSA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyRSA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB44E2E8BE22C702325440A0F96410A /* SwiftyRSA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyRSA.h; sourceTree = "<group>"; };
 		1CEBB75D7D70F1A095D22C1D7BFD8773 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.2.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
-		3446B0F1DD8AEDD775BCB3C8092963F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3831A3C8228AFD8B386036394F642FB0 /* swiftyrsa-public.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-public.pem"; sourceTree = "<group>"; };
 		38E84F551B29670A456D12366AA4C8E5 /* SwiftyRSA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyRSA.swift; sourceTree = "<group>"; };
 		47807FD4AF81104758D4EA9B778F5186 /* multiple-keys-testcase.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "multiple-keys-testcase.sh"; sourceTree = "<group>"; };
@@ -99,10 +120,15 @@
 		C034317A1EC2D7E30019B7E8 /* Asn1Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asn1Parser.swift; sourceTree = "<group>"; };
 		C03AF73D1ECAB2FC00DE8166 /* SwiftyRSAError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyRSAError.swift; sourceTree = "<group>"; };
 		C04D33801DC54D5700D65B05 /* swiftyrsa-public-base64-newlines.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-public-base64-newlines.txt"; sourceTree = "<group>"; };
+		C057921421545B600057F401 /* SwiftyRSA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyRSA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C057921A21545C790057F401 /* SwiftyRSA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyRSA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0579232215464E20057F401 /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
+		C0579238215465040057F401 /* SwiftyRSA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyRSA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0579252215465750057F401 /* SwiftyRSA tvOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SwiftyRSA tvOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C065ED6E1DBF314500674763 /* swiftyrsa-private.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = "swiftyrsa-private.der"; sourceTree = "<group>"; };
 		C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SwiftyRSA+ObjC.swift"; sourceTree = "<group>"; };
 		C07408AC1D9E1BA800AB6814 /* ObjCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjCTests.m; sourceTree = "<group>"; };
-		C076F53D1DADEB90006AF5DB /* SwiftyRSATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyRSATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C076F53D1DADEB90006AF5DB /* SwiftyRSA iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SwiftyRSA iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C076F5411DADEB90006AF5DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C084A7291EC3034B003F79ED /* swiftyrsa-private-header-octetstring.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-private-header-octetstring.pem"; sourceTree = "<group>"; };
 		C0969FFB1D906B5C00E285C2 /* Key.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
@@ -118,23 +144,29 @@
 		C0E83E081ECD7F3000E9D63C /* ClearMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearMessage.swift; sourceTree = "<group>"; };
 		C0E83E0C1ECD7F4200E9D63C /* EncryptedMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncryptedMessage.swift; sourceTree = "<group>"; };
 		D77B6899031A54A9F698D3430A599421 /* NSData+SHA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+SHA.m"; sourceTree = "<group>"; };
-		ED4E8B99D31B866D5CFA4FDED8461C76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF193719CB8D4DDE8D347FF699311D1D /* swiftyrsa-private.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-private.pem"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		79854F71EBDFFF8B4B9C9228CF0A804F /* Frameworks */ = {
+		C057921721545C790057F401 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D7671945BD59D6CC1CB799435D358A6 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AEE9B8C42D7293037BC4F4FBB3B829CD /* Frameworks */ = {
+		C0579235215465040057F401 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C057924F215465750057F401 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C0579257215465750057F401 /* SwiftyRSA.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,7 +174,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C076F5421DADEB90006AF5DB /* SwiftyRSA.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,13 +199,16 @@
 		345E780D70779A01AA3BAA5CB4CE6558 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				158823A80092238A00F1212F366091C9 /* SwiftyRSA.framework */,
-				C076F53D1DADEB90006AF5DB /* SwiftyRSATests.xctest */,
+				C076F53D1DADEB90006AF5DB /* SwiftyRSA iOS Tests.xctest */,
+				C057921421545B600057F401 /* SwiftyRSA.framework */,
+				C057921A21545C790057F401 /* SwiftyRSA.framework */,
+				C0579238215465040057F401 /* SwiftyRSA.framework */,
+				C0579252215465750057F401 /* SwiftyRSA tvOS Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		93F299DFFB42687BDAA5C1E7ADCC955B /* SwiftyRSA */ = {
+		93F299DFFB42687BDAA5C1E7ADCC955B /* Source */ = {
 			isa = PBXGroup;
 			children = (
 				96EA18F422C03E377636BC2399DDD2C7 /* Supporting Files */,
@@ -192,27 +226,20 @@
 				C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */,
 				C03AF73D1ECAB2FC00DE8166 /* SwiftyRSAError.swift */,
 			);
-			path = SwiftyRSA;
+			path = Source;
 			sourceTree = "<group>";
 		};
 		96EA18F422C03E377636BC2399DDD2C7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C0579232215464E20057F401 /* Info-tvOS.plist */,
 				1CB44E2E8BE22C702325440A0F96410A /* SwiftyRSA.h */,
 				7DF0A3222330CDFCF12918ED08519EB9 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		AB1D70C3DCEA991B53B2CA106F451515 /* SwiftyRSA watchOS */ = {
-			isa = PBXGroup;
-			children = (
-				3446B0F1DD8AEDD775BCB3C8092963F2 /* Info.plist */,
-			);
-			path = "SwiftyRSA watchOS";
-			sourceTree = "<group>";
-		};
-		C076F53E1DADEB90006AF5DB /* SwiftyRSATests */ = {
+		C076F53E1DADEB90006AF5DB /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				D240C55056247A7B270C92143EF30532 /* keys */,
@@ -224,7 +251,7 @@
 				C07408AC1D9E1BA800AB6814 /* ObjCTests.m */,
 				C076F5411DADEB90006AF5DB /* Info.plist */,
 			);
-			path = SwiftyRSATests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		D240C55056247A7B270C92143EF30532 /* keys */ = {
@@ -250,19 +277,9 @@
 			children = (
 				2E9BA9B6A0F26B6E10630895F0FF31B0 /* Linked Frameworks */,
 				345E780D70779A01AA3BAA5CB4CE6558 /* Products */,
-				93F299DFFB42687BDAA5C1E7ADCC955B /* SwiftyRSA */,
-				EF57A433B99C838088510121457C901C /* SwiftyRSA tvOS */,
-				AB1D70C3DCEA991B53B2CA106F451515 /* SwiftyRSA watchOS */,
-				C076F53E1DADEB90006AF5DB /* SwiftyRSATests */,
+				93F299DFFB42687BDAA5C1E7ADCC955B /* Source */,
+				C076F53E1DADEB90006AF5DB /* Tests */,
 			);
-			sourceTree = "<group>";
-		};
-		EF57A433B99C838088510121457C901C /* SwiftyRSA tvOS */ = {
-			isa = PBXGroup;
-			children = (
-				ED4E8B99D31B866D5CFA4FDED8461C76 /* Info.plist */,
-			);
-			path = "SwiftyRSA tvOS";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -277,46 +294,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A9053DDE8A2335802DA7985C335C9E5E /* Headers */ = {
+		C057921521545C790057F401 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A535C69BBF632C0A67A6DD222B7A4760 /* NSData+SHA.h in Headers */,
-				04722FE47977D098FCA72B5DFD504FF9 /* SwiftyRSA.h in Headers */,
+				C0579231215464470057F401 /* SwiftyRSA.h in Headers */,
+				C057923021545CD00057F401 /* NSData+SHA.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F0E07CF6351E7FA2FFA5DBBA8BACEF09 /* Headers */ = {
+		C0579233215465040057F401 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA63152278619961B7E2B992C379F700 /* NSData+SHA.h in Headers */,
-				2601A3DF45E695FA19E7D1335EAD83AD /* SwiftyRSA.h in Headers */,
+				C057924C215465390057F401 /* NSData+SHA.h in Headers */,
+				C057924D2154653F0057F401 /* SwiftyRSA.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		5C30B6AA1CC916F3D0BF39F8143CC530 /* SwiftyRSA tvOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = A5E4617275E4BCEFBF4D9ED8CF5BC708 /* Build configuration list for PBXNativeTarget "SwiftyRSA tvOS" */;
-			buildPhases = (
-				C0CB618F1E8B96C000185EB6 /* SwiftLint */,
-				EFB1878426040AB3CFD12518057E12DC /* Sources */,
-				79854F71EBDFFF8B4B9C9228CF0A804F /* Frameworks */,
-				A9053DDE8A2335802DA7985C335C9E5E /* Headers */,
-				E3F902F476E2D13B53CFFC256EE3CA1B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "SwiftyRSA tvOS";
-			productName = "SwiftyRSA tvOS";
-			productReference = 158823A80092238A00F1212F366091C9 /* SwiftyRSA.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		A0D4C96F0225BD9340375C73B5AFD981 /* SwiftyRSA iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6C06D476C5D1FE6F48C7C98984AB02B3 /* Build configuration list for PBXNativeTarget "SwiftyRSA iOS" */;
@@ -333,12 +331,66 @@
 			);
 			name = "SwiftyRSA iOS";
 			productName = SwiftyRSA;
-			productReference = 158823A80092238A00F1212F366091C9 /* SwiftyRSA.framework */;
+			productReference = C057921421545B600057F401 /* SwiftyRSA.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		C076F53C1DADEB90006AF5DB /* SwiftyRSATests */ = {
+		C057921921545C790057F401 /* SwiftyRSA watchOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C076F5451DADEB90006AF5DB /* Build configuration list for PBXNativeTarget "SwiftyRSATests" */;
+			buildConfigurationList = C057921F21545C790057F401 /* Build configuration list for PBXNativeTarget "SwiftyRSA watchOS" */;
+			buildPhases = (
+				C057921521545C790057F401 /* Headers */,
+				C057921621545C790057F401 /* Sources */,
+				C057921721545C790057F401 /* Frameworks */,
+				C057921821545C790057F401 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SwiftyRSA watchOS";
+			productName = "SwiftyRSA watchOS";
+			productReference = C057921A21545C790057F401 /* SwiftyRSA.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C0579237215465040057F401 /* SwiftyRSA tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C057923D215465040057F401 /* Build configuration list for PBXNativeTarget "SwiftyRSA tvOS" */;
+			buildPhases = (
+				C0579233215465040057F401 /* Headers */,
+				C0579234215465040057F401 /* Sources */,
+				C0579235215465040057F401 /* Frameworks */,
+				C0579236215465040057F401 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SwiftyRSA tvOS";
+			productName = "SwiftyRSA tvOS";
+			productReference = C0579238215465040057F401 /* SwiftyRSA.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C0579251215465750057F401 /* SwiftyRSA tvOS Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C057925A215465750057F401 /* Build configuration list for PBXNativeTarget "SwiftyRSA tvOS Tests" */;
+			buildPhases = (
+				C057924E215465750057F401 /* Sources */,
+				C057924F215465750057F401 /* Frameworks */,
+				C0579250215465750057F401 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C0579259215465750057F401 /* PBXTargetDependency */,
+			);
+			name = "SwiftyRSA tvOS Tests";
+			productName = "SwiftyRSA tvOS Tests";
+			productReference = C0579252215465750057F401 /* SwiftyRSA tvOS Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C076F53C1DADEB90006AF5DB /* SwiftyRSA iOS Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C076F5451DADEB90006AF5DB /* Build configuration list for PBXNativeTarget "SwiftyRSA iOS Tests" */;
 			buildPhases = (
 				C076F5391DADEB90006AF5DB /* Sources */,
 				C076F53A1DADEB90006AF5DB /* Frameworks */,
@@ -349,29 +401,10 @@
 			dependencies = (
 				C076F5441DADEB90006AF5DB /* PBXTargetDependency */,
 			);
-			name = SwiftyRSATests;
+			name = "SwiftyRSA iOS Tests";
 			productName = SwiftyRSATests;
-			productReference = C076F53D1DADEB90006AF5DB /* SwiftyRSATests.xctest */;
+			productReference = C076F53D1DADEB90006AF5DB /* SwiftyRSA iOS Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		EFE02F454925076C3D6C2F0B0E45892E /* SwiftyRSA watchOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 98115918AFE87852C5C034851D5FE20D /* Build configuration list for PBXNativeTarget "SwiftyRSA watchOS" */;
-			buildPhases = (
-				C0CB61901E8B96E400185EB6 /* SwiftLint */,
-				1BB4FDBCC83EB492678BDF3D491B1C6E /* Sources */,
-				AEE9B8C42D7293037BC4F4FBB3B829CD /* Frameworks */,
-				F0E07CF6351E7FA2FFA5DBBA8BACEF09 /* Headers */,
-				3F6EB99D6716A806720811F7C411CAF9 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "SwiftyRSA watchOS";
-			productName = "SwiftyRSA watchOS";
-			productReference = 158823A80092238A00F1212F366091C9 /* SwiftyRSA.framework */;
-			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -379,27 +412,30 @@
 		B78A2BC98EF258D8332FA3186D365144 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0800;
+				LastSwiftUpdateCheck = 1000;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = Scoop;
 				TargetAttributes = {
-					5C30B6AA1CC916F3D0BF39F8143CC530 = {
-						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0900;
-					};
 					A0D4C96F0225BD9340375C73B5AFD981 = {
 						CreatedOnToolsVersion = 6.3;
 						LastSwiftMigration = 0900;
 					};
+					C057921921545C790057F401 = {
+						CreatedOnToolsVersion = 10.0;
+						ProvisioningStyle = Manual;
+					};
+					C0579237215465040057F401 = {
+						CreatedOnToolsVersion = 10.0;
+						ProvisioningStyle = Manual;
+					};
+					C0579251215465750057F401 = {
+						CreatedOnToolsVersion = 10.0;
+						ProvisioningStyle = Manual;
+					};
 					C076F53C1DADEB90006AF5DB = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = H7TK3C9688;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
-					};
-					EFE02F454925076C3D6C2F0B0E45892E = {
-						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0900;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -416,25 +452,51 @@
 			projectRoot = "";
 			targets = (
 				A0D4C96F0225BD9340375C73B5AFD981 /* SwiftyRSA iOS */,
-				EFE02F454925076C3D6C2F0B0E45892E /* SwiftyRSA watchOS */,
-				5C30B6AA1CC916F3D0BF39F8143CC530 /* SwiftyRSA tvOS */,
-				C076F53C1DADEB90006AF5DB /* SwiftyRSATests */,
+				C076F53C1DADEB90006AF5DB /* SwiftyRSA iOS Tests */,
+				C0579237215465040057F401 /* SwiftyRSA tvOS */,
+				C0579251215465750057F401 /* SwiftyRSA tvOS Tests */,
+				C057921921545C790057F401 /* SwiftyRSA watchOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		3F6EB99D6716A806720811F7C411CAF9 /* Resources */ = {
+		56C07A38CCAB1DB577DE4EA0F3244DDD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		56C07A38CCAB1DB577DE4EA0F3244DDD /* Resources */ = {
+		C057921821545C790057F401 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C0579236215465040057F401 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C0579250215465750057F401 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C0579266215465A60057F401 /* multiple-keys-testcase.pem in Resources */,
+				C0579264215465A60057F401 /* swiftyrsa-private.der in Resources */,
+				C0579263215465A60057F401 /* swiftyrsa-public-base64-newlines.txt in Resources */,
+				C0579267215465A60057F401 /* multiple-keys-testcase.sh in Resources */,
+				C057926A215465A60057F401 /* swiftyrsa-public-headerless.pem in Resources */,
+				C0579268215465A60057F401 /* swiftyrsa-private-headerless.pem in Resources */,
+				C057926C215465A60057F401 /* swiftyrsa-public.pem in Resources */,
+				C057926D215465A60057F401 /* swiftyrsa-private-header-octetstring.pem in Resources */,
+				C0579269215465A60057F401 /* swiftyrsa-private.pem in Resources */,
+				C057926B215465A60057F401 /* swiftyrsa-public.der in Resources */,
+				C0579265215465A60057F401 /* swiftyrsa-public-base64.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,44 +518,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E3F902F476E2D13B53CFFC256EE3CA1B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		C0CB618F1E8B96C000185EB6 /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "SWIFTLINT=\"${SRCROOT}/Pods/SwiftLint/swiftlint\"\nif test -x \"${SWIFTLINT}\"; then\n    ${SWIFTLINT}\nfi";
-		};
-		C0CB61901E8B96E400185EB6 /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "SWIFTLINT=\"${SRCROOT}/Pods/SwiftLint/swiftlint\"\nif test -x \"${SWIFTLINT}\"; then\n    ${SWIFTLINT}\nfi";
-		};
 		C0CB61911E8B96F400185EB6 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -511,25 +538,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		1BB4FDBCC83EB492678BDF3D491B1C6E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C0E83E0E1ECD7F4200E9D63C /* EncryptedMessage.swift in Sources */,
-				239599E759885825A7AFC6F2C8446821 /* NSData+SHA.m in Sources */,
-				48461D06FA57F540A6140BC66F457877 /* SwiftyRSA.swift in Sources */,
-				C0969FFD1D906B5C00E285C2 /* Key.swift in Sources */,
-				C096A00D1D90754E00E285C2 /* Signature.swift in Sources */,
-				C096A0091D9071CA00E285C2 /* Message.swift in Sources */,
-				C03AF73F1ECAB2FC00DE8166 /* SwiftyRSAError.swift in Sources */,
-				C03AF73B1EC7031A00DE8166 /* SwiftyRSA+ObjC.swift in Sources */,
-				C0E83DFE1ECD7DA300E9D63C /* PublicKey.swift in Sources */,
-				C034317C1EC2D7E30019B7E8 /* Asn1Parser.swift in Sources */,
-				C0E83E061ECD7DC400E9D63C /* PrivateKey.swift in Sources */,
-				C0E83E0A1ECD7F3000E9D63C /* ClearMessage.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		457A1BFD33FB9E8E03F0BA7CF2E25BD8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -549,6 +557,57 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C057921621545C790057F401 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C057922321545CB00057F401 /* ClearMessage.swift in Sources */,
+				C057922421545CB00057F401 /* Asn1Parser.swift in Sources */,
+				C057922521545CB00057F401 /* EncryptedMessage.swift in Sources */,
+				C057922621545CB00057F401 /* Key.swift in Sources */,
+				C057922721545CB00057F401 /* Message.swift in Sources */,
+				C057922921545CB00057F401 /* NSData+SHA.m in Sources */,
+				C057922A21545CB00057F401 /* PrivateKey.swift in Sources */,
+				C057922B21545CB00057F401 /* PublicKey.swift in Sources */,
+				C057922C21545CB00057F401 /* Signature.swift in Sources */,
+				C057922D21545CB00057F401 /* SwiftyRSA.swift in Sources */,
+				C057922E21545CB00057F401 /* SwiftyRSA+ObjC.swift in Sources */,
+				C057922F21545CB00057F401 /* SwiftyRSAError.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C0579234215465040057F401 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C0579242215465350057F401 /* EncryptedMessage.swift in Sources */,
+				C057924A215465350057F401 /* SwiftyRSA+ObjC.swift in Sources */,
+				C0579243215465350057F401 /* Key.swift in Sources */,
+				C0579249215465350057F401 /* SwiftyRSA.swift in Sources */,
+				C0579247215465350057F401 /* PublicKey.swift in Sources */,
+				C057924B215465350057F401 /* SwiftyRSAError.swift in Sources */,
+				C0579248215465350057F401 /* Signature.swift in Sources */,
+				C0579244215465350057F401 /* Message.swift in Sources */,
+				C0579240215465350057F401 /* ClearMessage.swift in Sources */,
+				C0579241215465350057F401 /* Asn1Parser.swift in Sources */,
+				C0579245215465350057F401 /* NSData+SHA.m in Sources */,
+				C0579246215465350057F401 /* PrivateKey.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C057924E215465750057F401 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C05792612154659B0057F401 /* TestUtils.swift in Sources */,
+				C05792602154659B0057F401 /* SignatureTests.swift in Sources */,
+				C057925E2154659B0057F401 /* MessageTests.swift in Sources */,
+				C057925D2154659B0057F401 /* KeyTests.swift in Sources */,
+				C05792622154659B0057F401 /* ObjCTests.m in Sources */,
+				C057925F2154659B0057F401 /* EncryptDecryptTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C076F5391DADEB90006AF5DB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -562,28 +621,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EFB1878426040AB3CFD12518057E12DC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C0E83E0F1ECD7F4200E9D63C /* EncryptedMessage.swift in Sources */,
-				8E6B4DE19F56FBA2DEEE318C4EEEA1C6 /* NSData+SHA.m in Sources */,
-				54EC57310DAFFE47CAA52CAED8F387B9 /* SwiftyRSA.swift in Sources */,
-				C0969FFE1D906B5C00E285C2 /* Key.swift in Sources */,
-				C096A00E1D90754E00E285C2 /* Signature.swift in Sources */,
-				C096A00A1D9071CA00E285C2 /* Message.swift in Sources */,
-				C03AF7401ECAB2FC00DE8166 /* SwiftyRSAError.swift in Sources */,
-				C03AF73C1EC7031A00DE8166 /* SwiftyRSA+ObjC.swift in Sources */,
-				C0E83DFF1ECD7DA300E9D63C /* PublicKey.swift in Sources */,
-				C034317D1EC2D7E30019B7E8 /* Asn1Parser.swift in Sources */,
-				C0E83E071ECD7DC400E9D63C /* PrivateKey.swift in Sources */,
-				C0E83E0B1ECD7F3000E9D63C /* ClearMessage.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		C0579259215465750057F401 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C0579237215465040057F401 /* SwiftyRSA tvOS */;
+			targetProxy = C0579258215465750057F401 /* PBXContainerItemProxy */;
+		};
 		C076F5441DADEB90006AF5DB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A0D4C96F0225BD9340375C73B5AFD981 /* SwiftyRSA iOS */;
@@ -595,13 +640,12 @@
 		1D29907DE6801857B21DD3E7B442DC87 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = SwiftyRSA/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.takescoop.$(PRODUCT_NAME:rfc1034identifier)";
@@ -609,34 +653,8 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
-		};
-		251104977188508D8A4CDCE271E64871 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "SwiftyRSA tvOS/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.takescoop.SwiftyRSA-tvOS";
-				PRODUCT_NAME = SwiftyRSA;
-				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
-			};
-			name = Release;
 		};
 		486D378195D779F5618867E83061350A /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -683,7 +701,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -691,82 +709,196 @@
 			};
 			name = Release;
 		};
-		4D22D2E9A6CF9DCC60E6E46EE14D2F70 /* Release */ = {
+		C057922021545C790057F401 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "SwiftyRSA watchOS/Info.plist";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.takescoop.SwiftyRSA-watchOS";
 				PRODUCT_NAME = SwiftyRSA;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		C057922121545C790057F401 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.takescoop.SwiftyRSA-watchOS";
+				PRODUCT_NAME = SwiftyRSA;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.2;
 			};
 			name = Release;
 		};
-		660DDA3385FAEBCE84B7592607BAE53C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "SwiftyRSA watchOS/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.takescoop.SwiftyRSA-watchOS";
-				PRODUCT_NAME = SwiftyRSA;
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.2;
-			};
-			name = Debug;
-		};
-		AB82B11B98591637E06CB67C898E890B /* Debug */ = {
+		C057923E215465040057F401 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "SwiftyRSA tvOS/Info.plist";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "$(SRCROOT)/Source/Info-tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.takescoop.SwiftyRSA-tvOS";
 				PRODUCT_NAME = SwiftyRSA;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
 			name = Debug;
+		};
+		C057923F215465040057F401 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "$(SRCROOT)/Source/Info-tvOS.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.takescoop.SwiftyRSA-tvOS";
+				PRODUCT_NAME = SwiftyRSA;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Release;
+		};
+		C057925B215465750057F401 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.takescoop.SwiftyRSA-tvOS-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "SwiftyRSATests-Swift.h";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
+			};
+			name = Debug;
+		};
+		C057925C215465750057F401 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.takescoop.SwiftyRSA-tvOS-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = appletvos;
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "SwiftyRSATests-Swift.h";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
+			};
+			name = Release;
 		};
 		C076F5461DADEB90006AF5DB /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -775,16 +907,19 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				INFOPLIST_FILE = SwiftyRSATests/Info.plist;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.takescoop.SwiftyRSATests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos appletvsimulator appletvos watchos watchsimulator";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "SwiftyRSATests-Swift.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -795,14 +930,17 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				INFOPLIST_FILE = SwiftyRSATests/Info.plist;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.takescoop.SwiftyRSATests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos appletvsimulator appletvos watchos watchsimulator";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "SwiftyRSATests-Swift.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -859,7 +997,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -869,13 +1007,12 @@
 		E9654A97E2EB9CF7CAECB0B96DEC0E9D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = SwiftyRSA/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.takescoop.$(PRODUCT_NAME:rfc1034identifier)";
@@ -883,7 +1020,6 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -908,25 +1044,34 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		98115918AFE87852C5C034851D5FE20D /* Build configuration list for PBXNativeTarget "SwiftyRSA watchOS" */ = {
+		C057921F21545C790057F401 /* Build configuration list for PBXNativeTarget "SwiftyRSA watchOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				660DDA3385FAEBCE84B7592607BAE53C /* Debug */,
-				4D22D2E9A6CF9DCC60E6E46EE14D2F70 /* Release */,
+				C057922021545C790057F401 /* Debug */,
+				C057922121545C790057F401 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A5E4617275E4BCEFBF4D9ED8CF5BC708 /* Build configuration list for PBXNativeTarget "SwiftyRSA tvOS" */ = {
+		C057923D215465040057F401 /* Build configuration list for PBXNativeTarget "SwiftyRSA tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AB82B11B98591637E06CB67C898E890B /* Debug */,
-				251104977188508D8A4CDCE271E64871 /* Release */,
+				C057923E215465040057F401 /* Debug */,
+				C057923F215465040057F401 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C076F5451DADEB90006AF5DB /* Build configuration list for PBXNativeTarget "SwiftyRSATests" */ = {
+		C057925A215465750057F401 /* Build configuration list for PBXNativeTarget "SwiftyRSA tvOS Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C057925B215465750057F401 /* Debug */,
+				C057925C215465750057F401 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C076F5451DADEB90006AF5DB /* Build configuration list for PBXNativeTarget "SwiftyRSA iOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C076F5461DADEB90006AF5DB /* Debug */,

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5C30B6AA1CC916F3D0BF39F8143CC530"
+               BlueprintIdentifier = "C0579237215465040057F401"
                BuildableName = "SwiftyRSA.framework"
                BlueprintName = "SwiftyRSA tvOS"
                ReferencedContainer = "container:SwiftyRSA.xcodeproj">
@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C076F53C1DADEB90006AF5DB"
-               BuildableName = "SwiftyRSATests.xctest"
-               BlueprintName = "SwiftyRSATests"
+               BlueprintIdentifier = "C0579251215465750057F401"
+               BuildableName = "SwiftyRSA tvOS Tests.xctest"
+               BlueprintName = "SwiftyRSA tvOS Tests"
                ReferencedContainer = "container:SwiftyRSA.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -42,7 +42,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5C30B6AA1CC916F3D0BF39F8143CC530"
+            BlueprintIdentifier = "C0579237215465040057F401"
             BuildableName = "SwiftyRSA.framework"
             BlueprintName = "SwiftyRSA tvOS"
             ReferencedContainer = "container:SwiftyRSA.xcodeproj">
@@ -64,7 +64,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5C30B6AA1CC916F3D0BF39F8143CC530"
+            BlueprintIdentifier = "C0579237215465040057F401"
             BuildableName = "SwiftyRSA.framework"
             BlueprintName = "SwiftyRSA tvOS"
             ReferencedContainer = "container:SwiftyRSA.xcodeproj">
@@ -82,7 +82,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5C30B6AA1CC916F3D0BF39F8143CC530"
+            BlueprintIdentifier = "C0579237215465040057F401"
             BuildableName = "SwiftyRSA.framework"
             BlueprintName = "SwiftyRSA tvOS"
             ReferencedContainer = "container:SwiftyRSA.xcodeproj">

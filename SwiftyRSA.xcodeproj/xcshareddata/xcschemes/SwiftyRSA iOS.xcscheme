@@ -29,8 +29,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C076F53C1DADEB90006AF5DB"
-               BuildableName = "SwiftyRSATests.xctest"
-               BlueprintName = "SwiftyRSATests"
+               BuildableName = "SwiftyRSA iOS Tests.xctest"
+               BlueprintName = "SwiftyRSA iOS Tests"
                ReferencedContainer = "container:SwiftyRSA.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -48,8 +48,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C076F53C1DADEB90006AF5DB"
-               BuildableName = "SwiftyRSATests.xctest"
-               BlueprintName = "SwiftyRSATests"
+               BuildableName = "SwiftyRSA iOS Tests.xctest"
+               BlueprintName = "SwiftyRSA iOS Tests"
                ReferencedContainer = "container:SwiftyRSA.xcodeproj">
             </BuildableReference>
          </TestableReference>

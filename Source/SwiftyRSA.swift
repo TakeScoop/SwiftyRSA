@@ -70,7 +70,7 @@ public enum SwiftyRSA {
         // On iOS+, we can use `SecKeyCopyExternalRepresentation` directly
         if #available(iOS 10.0, *), #available(watchOS 3.0, *), #available(tvOS 10.0, *) {
             
-            var error: Unmanaged<CFError>? = nil
+            var error: Unmanaged<CFError>?
             let data = SecKeyCopyExternalRepresentation(reference, &error)
             guard let unwrappedData = data as Data? else {
                 throw SwiftyRSAError.keyRepresentationFailed(error: error?.takeRetainedValue())
@@ -206,7 +206,7 @@ public enum SwiftyRSA {
             ]
             
             // Now fetch the SecKeyRef version of the key
-            var keyRef: AnyObject? = nil
+            var keyRef: AnyObject?
             let copyStatus = SecItemCopyMatching(keyCopyDict as CFDictionary, &keyRef)
             
             guard let unwrappedKeyRef = keyRef else {
@@ -260,7 +260,7 @@ public enum SwiftyRSA {
         
         // Detect whether the sequence only has integers, in which case it's a headerless key
         let onlyHasIntegers = nodes.filter { node -> Bool in
-            if case .integer(_) = node { // swiftlint:disable:this unused_optional_binding
+            if case .integer = node {
                 return false
             }
             return true
