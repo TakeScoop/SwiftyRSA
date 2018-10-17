@@ -30,7 +30,18 @@ public class EncryptedMessage: Message {
     public func decrypted(with key: PrivateKey, padding: Padding) throws -> ClearMessage {
         #if os(macOS)
         
-        let algorithm: SecKeyAlgorithm = .rsaEncryptionOAEPSHA256AESGCM // TODO: Offer more algorithms
+        var algorithm: SecKeyAlgorithm = .rsaEncryptionPKCS1 // TODO: Offer more algorithms
+        /*
+         iOS's SecKeyDecrypt function has the following documentation discussion:
+         
+         @discussion If the padding argument is kSecPaddingPKCS1 or kSecPaddingOAEP,
+         the corresponding padding will be removed after decryption.
+         If this argument is kSecPaddingNone, the decrypted data will be returned "as is".
+         */
+        if padding == SecPadding.OAEP || padding == SecPadding.PKCS1 {
+            algorithm = .rsaEncryptionPKCS1
+        }
+        
         var error: Unmanaged<CFError>? = nil
         let decryptedData = SecKeyCreateDecryptedData(key.reference, algorithm, self.data as CFData, &error)
         guard let unwrappedData = decryptedData as Data? else {

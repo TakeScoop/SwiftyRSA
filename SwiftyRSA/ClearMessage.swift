@@ -56,7 +56,26 @@ public class ClearMessage: Message {
     public func encrypted(with key: PublicKey, padding: Padding) throws -> EncryptedMessage {
         #if os(macOS)
         
-        let algorithm: SecKeyAlgorithm = .rsaEncryptionOAEPSHA256AESGCM // TODO: Offer more algorithms
+        var algorithm: SecKeyAlgorithm = .rsaEncryptionPKCS1 // TODO: Offer more algorithms
+        /*
+         iOS's SecKeyEncrypt function has the following documentation discussion:
+         
+         @discussion If the padding argument is kSecPaddingPKCS1 or kSecPaddingOAEP,
+         PKCS1 (respectively kSecPaddingOAEP) padding will be performed prior to encryption.
+         If this argument is kSecPaddingNone, the incoming data will be encrypted "as is".
+         kSecPaddingOAEP is the recommended value. Other value are not recommended
+         for security reason (Padding attack or malleability).
+         
+         When PKCS1 padding is performed, the maximum length of data that can
+         be encrypted is the value returned by SecKeyGetBlockSize() - 11.
+         
+         When memory usage is a critical issue, note that the input buffer
+         (plainText) can be the same as the output buffer (cipherText).
+         */
+        if padding == SecPadding.OAEP || padding == SecPadding.PKCS1 {
+            algorithm = .rsaEncryptionPKCS1
+        }
+        
         var error: Unmanaged<CFError>? = nil
         let encryptedData = SecKeyCreateEncryptedData(key.reference, algorithm, self.data as CFData, &error)
         guard let unwrappedData = encryptedData as Data? else {
