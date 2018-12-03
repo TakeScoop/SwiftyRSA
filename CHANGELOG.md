@@ -3,6 +3,9 @@ SwiftyRSA Changelog
 
 # [master]
 
+ - Added Objective-C `[SwiftyRSA generateRSAKeyPairWithSizeInBits:error:]`
+   [#143](https://github.com/TakeScoop/SwiftyRSA/issues/143)
+
 # [1.5.0]
 
  - Made compatible with Swift 4.2 and Xcode 10

@@ -82,6 +82,12 @@
         [encryptedMessage base64String];
         [encryptedMessage decryptedWith:privateKey padding:kSecPaddingNone error:nil];
     }
+    
+    {
+        KeyPair* keyPair = [SwiftyRSA generateRSAKeyPairWithSizeInBits:1024 error:nil];
+        [keyPair publicKey];
+        [keyPair privateKey];
+    }
 }
 #pragma clang diagnostic pop
 

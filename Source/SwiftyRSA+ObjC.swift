@@ -20,6 +20,33 @@ private protocol ObjcBridgeable {
     init(swiftValue: SwiftType)
 }
 
+// MARK: – SwiftyRSA
+
+@objc(KeyPair)
+public class _objc_KeyPair: NSObject { // swiftlint:disable:this type_name
+    
+    @objc public let privateKey: _objc_PrivateKey
+    @objc public let publicKey: _objc_PublicKey
+    
+    init(privateKey: _objc_PrivateKey, publicKey: _objc_PublicKey) {
+        self.privateKey = privateKey
+        self.publicKey = publicKey
+    }
+}
+
+@objc(SwiftyRSA)
+public class _objc_SwiftyRSA: NSObject { // swiftlint:disable:this type_name
+    
+    @available(iOS 10.0, watchOS 3.0, tvOS 10.0, *)
+    @objc public class func generateRSAKeyPair(sizeInBits size: Int) throws -> _objc_KeyPair {
+        let (privateKey, publicKey) = try SwiftyRSA.generateRSAKeyPair(sizeInBits: size)
+        return _objc_KeyPair(
+            privateKey: _objc_PrivateKey(swiftValue: privateKey),
+            publicKey: _objc_PublicKey(swiftValue: publicKey)
+        )
+    }
+}
+
 // MARK: - PublicKey
 
 @objc(PublicKey)
