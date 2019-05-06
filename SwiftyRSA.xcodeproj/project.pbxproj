@@ -418,7 +418,7 @@
 				TargetAttributes = {
 					A0D4C96F0225BD9340375C73B5AFD981 = {
 						CreatedOnToolsVersion = 6.3;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1020;
 					};
 					C057921921545C790057F401 = {
 						CreatedOnToolsVersion = 10.0;
@@ -434,7 +434,7 @@
 					};
 					C076F53C1DADEB90006AF5DB = {
 						CreatedOnToolsVersion = 8.0;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -444,6 +444,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = E64764973D14B1FBBFB2CE3C0E1BAE8A;
@@ -652,7 +653,7 @@
 				PRODUCT_NAME = SwiftyRSA;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -919,7 +920,7 @@
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos appletvsimulator appletvos watchos watchsimulator";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "SwiftyRSATests-Swift.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -940,7 +941,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos appletvsimulator appletvos watchos watchsimulator";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "SwiftyRSATests-Swift.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1019,7 +1020,7 @@
 				PRODUCT_NAME = SwiftyRSA;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
