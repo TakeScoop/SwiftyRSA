@@ -15,6 +15,7 @@ public enum SwiftyRSA {
     
     static func base64String(pemEncoded pemString: String) throws -> String {
         let lines = pemString.components(separatedBy: "\n").filter { line in
+            
             return !line.hasPrefix("-----BEGIN") && !line.hasPrefix("-----END")
         }
         
