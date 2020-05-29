@@ -1,5 +1,3 @@
-dependencies-cache-key: &dependencies-cache-key dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "Podfile.lock" }}
-
 version: 2
 jobs:
   dependencies:
@@ -14,7 +12,7 @@ jobs:
       - checkout
       - run: echo '2.6.3' > .ruby-version
       - restore_cache:
-          key: *dependencies-cache-key
+          key: dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "Podfile.lock" }}
       - run:
           name: Install Ruby dependencies
           command: bundle check || bundle install --jobs 4 --retry 3
@@ -26,7 +24,7 @@ jobs:
               }
               diff ./Podfile.lock ./Pods/Manifest.lock > /dev/null || pod_install
       - save_cache:
-          key: *dependencies-cache-key
+          key: dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "Podfile.lock" }}
           paths:
             - vendor/bundle/
             - Pods/
@@ -42,7 +40,7 @@ jobs:
       - checkout
       - run: echo '2.6.3' > .ruby-version
       - restore_cache:
-          key: *dependencies-cache-key
+          key: dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "Podfile.lock" }}
       - run: bundle exec fastlane lint
   test-xcode9:
     macos:
@@ -56,7 +54,7 @@ jobs:
       - checkout
       - run: echo '2.6.3' > .ruby-version
       - restore_cache:
-          key: *dependencies-cache-key
+          key: dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "Podfile.lock" }}
       - run: bundle exec fastlane test_carthage
       - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_xcode9 --verbose
   test-xcode10:
@@ -71,7 +69,7 @@ jobs:
       - checkout
       - run: echo '2.6.3' > .ruby-version
       - restore_cache:
-          key: *dependencies-cache-key
+          key: dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "Podfile.lock" }}
       - run: bundle exec fastlane test_carthage
       - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_xcode10 --verbose
   test-xcode11:
@@ -86,9 +84,9 @@ jobs:
       - checkout
       - run: echo '2.6.3' > .ruby-version
       - restore_cache:
-          key: *dependencies-cache-key
+          key: dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "Podfile.lock" }}
       - run: bundle exec fastlane test_carthage
-      - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_xcode10 --verbose
+      - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_xcode11 --verbose
 workflows:
   version: 2
   build-and-deploy:
