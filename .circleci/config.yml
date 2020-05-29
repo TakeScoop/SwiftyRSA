@@ -74,6 +74,21 @@ jobs:
           key: *dependencies-cache-key
       - run: bundle exec fastlane test_carthage
       - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_xcode10 --verbose
+  test-xcode11:
+    macos:
+      xcode: "11.3.0"
+    environment:
+      LC_ALL: en_US.UTF-8
+      LANG: en_US.UTF-8
+      BUNDLE_PATH: vendor/bundle
+    shell: /bin/bash --login -eo pipefail
+    steps:
+      - checkout
+      - run: echo '2.6.3' > .ruby-version
+      - restore_cache:
+          key: *dependencies-cache-key
+      - run: bundle exec fastlane test_carthage
+      - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_xcode10 --verbose
 workflows:
   version: 2
   build-and-deploy:
