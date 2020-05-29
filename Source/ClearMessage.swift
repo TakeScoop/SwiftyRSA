@@ -91,7 +91,7 @@ public class ClearMessage: Message {
             idx += maxChunkSize
         }
         
-        let encryptedData = Data(bytes: UnsafePointer<UInt8>(encryptedDataBytes), count: encryptedDataBytes.count)
+        let encryptedData = Data(bytes: encryptedDataBytes, count: encryptedDataBytes.count)
         return EncryptedMessage(data: encryptedData)
     }
     
@@ -126,7 +126,7 @@ public class ClearMessage: Message {
             throw SwiftyRSAError.signatureCreateFailed(status: status)
         }
         
-        let signatureData = Data(bytes: UnsafePointer<UInt8>(signatureBytes), count: signatureBytes.count)
+        let signatureData = Data(bytes: signatureBytes, count: signatureBytes.count)
         return Signature(data: signatureData)
     }
     
