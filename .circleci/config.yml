@@ -22,7 +22,6 @@ jobs:
           name: Install Cocoapods dependencies
           command: |
               function pod_install {
-                  curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
                   bundle exec pod install
               }
               diff ./Podfile.lock ./Pods/Manifest.lock > /dev/null || pod_install
