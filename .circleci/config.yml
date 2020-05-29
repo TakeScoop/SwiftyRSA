@@ -19,9 +19,7 @@ jobs:
       - run:
           name: Install Cocoapods dependencies
           command: |
-              function pod_install {
-                  bundle exec pod install
-              }
+              bundle exec pod install
               diff ./Podfile.lock ./Pods/Manifest.lock > /dev/null || pod_install
       - save_cache:
           key: dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "Podfile.lock" }}
