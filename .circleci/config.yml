@@ -103,4 +103,7 @@ workflows:
       - test-xcode10:
           requires:
             - dependencies
+      - test-xcode11:
+          requires:
+            - dependencies
               
