@@ -87,6 +87,43 @@ platform :ios do
   end
 end
 
+  desc "Runs all the tests for Xcode 11"
+  lane :test_xcode11 do
+    
+    swift_version = '4.2'
+    
+    # iOS
+    test_ios(
+      sdk: 'iphonesimulator13.3',
+      swift_version: swift_version,
+      devices: [
+        'iPhone 6 (10.3.1)',
+        'iPhone 6 (11.2)',
+        'iPhone 6 (12.0)',
+        'iPhone 6 (13.3)',
+      ]
+    )
+    
+    # tvOS
+    test_tvos(
+      sdk: 'appletvsimulator12.0',
+      swift_version: swift_version,
+      devices: [
+        'Apple TV (11.2)',
+        'Apple TV (12.0)',
+        'Apple TV (13.3)',
+      ]
+    )
+
+    # watchOS (smoke test)
+    test_watchos(
+      sdk: 'watchsimulator6.1.1',
+      swift_version: swift_version
+    )
+  end
+end
+
+
 private_lane :test_ios do |params|
   scan(
     scheme: 'SwiftyRSA iOS',
