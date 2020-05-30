@@ -14,7 +14,7 @@ jobs:
       - checkout
       - run: echo '2.6.3' > .ruby-version
       - restore_cache:
-          key: dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "Podfile.lock" }}
+          key: *dependencies-cache-key
       - run:
           name: Install Ruby dependencies
           command: bundle check || bundle install --jobs 4 --retry 3
