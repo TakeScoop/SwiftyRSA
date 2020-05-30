@@ -85,7 +85,6 @@ platform :ios do
       swift_version: swift_version
     )
   end
-end
 
   desc "Runs all the tests for Xcode 11"
   lane :test_xcode11 do
