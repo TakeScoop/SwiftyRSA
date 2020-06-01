@@ -44,7 +44,7 @@ jobs:
       - run: bundle exec fastlane lint
   test-xcode10:
     macos:
-      xcode: "10.0.0"
+      xcode: "10.4.0"
     environment:
       LC_ALL: en_US.UTF-8
       LANG: en_US.UTF-8
@@ -52,7 +52,7 @@ jobs:
     shell: /bin/bash --login -eo pipefail
     steps:
       - checkout
-      - run: echo '2.3' > .ruby-version
+      - run: echo '2.6.3' > .ruby-version
       - restore_cache:
           key: *dependencies-cache-key
       - run: instruments -s devices
