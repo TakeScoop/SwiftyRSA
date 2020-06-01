@@ -59,7 +59,7 @@ platform :ios do
     
     # iOS
     test_ios(
-      sdk: 'iphonesimulator13.0',
+      sdk: 'iphonesimulator13.3',
       swift_version: swift_version,
       devices: [
         'iPhone 6 (10.3.1)',
