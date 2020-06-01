@@ -54,6 +54,9 @@ jobs:
           key: *dependencies-cache-key
       - run: instruments -s devices
       - run: xcodebuild -sdk -version
+      - run:
+          name: Install Ruby dependencies
+          command: bundle check || bundle install --jobs 4 --retry 3
       - run: bundle exec fastlane test_carthage
       - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_xcode10 --verbose
   test-xcode11:
