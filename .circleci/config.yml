@@ -52,7 +52,8 @@ jobs:
     shell: /bin/bash --login -eo pipefail
     steps:
       - checkout
-      - run: echo '2.4.4' > .ruby-version
+      - run: ruby-install ruby 2.6.3
+      - run: echo '2.6.3' > .ruby-version
       - restore_cache:
           key: *dependencies-cache-key
       - run: instruments -s devices
