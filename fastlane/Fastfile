@@ -80,7 +80,7 @@ platform :ios do
 
     # watchOS (smoke test)
     test_watchos(
-      sdk: 'watchsimulator6.0',
+      sdk: 'watchsimulator6.1',
       swift_version: swift_version
     )
   end
