@@ -50,7 +50,7 @@ jobs:
     shell: /bin/bash --login -eo pipefail
     steps:
       - checkout
-      - run: echo '2.4.6' > .ruby-version
+    #  - run: echo '2.4.6' > .ruby-version
       - restore_cache:
           key: *dependencies-cache-key
       - run: instruments -s devices
