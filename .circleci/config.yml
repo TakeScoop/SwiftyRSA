@@ -12,7 +12,6 @@ jobs:
     shell: /bin/bash --login -eo pipefail
     steps:
       - checkout
-      - run: echo '2.6.3' > .ruby-version
       - restore_cache:
           key: *dependencies-cache-key
       - run:
@@ -38,7 +37,6 @@ jobs:
     shell: /bin/bash --login -eo pipefail
     steps:
       - checkout
-      - run: echo '2.6.3' > .ruby-version
       - restore_cache:
           key: *dependencies-cache-key
       - run: bundle exec fastlane lint
@@ -52,7 +50,6 @@ jobs:
     shell: /bin/bash --login -eo pipefail
     steps:
       - checkout
-      - run: echo '2.5.5' > .ruby-version
       - restore_cache:
           key: *dependencies-cache-key
       - run: instruments -s devices
@@ -69,7 +66,6 @@ jobs:
     shell: /bin/bash --login -eo pipefail
     steps:
       - checkout
-      - run: echo '2.6.3' > .ruby-version
       - restore_cache:
           key: *dependencies-cache-key
       - run: instruments -s devices
