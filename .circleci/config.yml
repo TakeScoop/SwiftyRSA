@@ -51,10 +51,8 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Set ruby version to 2.6.3
-        command: |
-                  rvm install 2.6.3
-                  echo . $(rvm 2.6.3 do rvm env --path) >> $BASH_ENV
+          name: Set ruby version to 2.6.3
+          command: rvm install 2.6.3 && echo . $(rvm 2.6.3 do rvm env --path) >> $BASH_ENV
       - restore_cache:
           key: *dependencies-cache-key
       - run: instruments -s devices
