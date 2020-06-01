@@ -42,7 +42,7 @@ jobs:
       - run: bundle exec fastlane lint
   test-xcode10:
     macos:
-      xcode: "10.2.1"
+      xcode: "10.3"
     environment:
       LC_ALL: en_US.UTF-8
       LANG: en_US.UTF-8
@@ -50,9 +50,6 @@ jobs:
     shell: /bin/bash --login -eo pipefail
     steps:
       - checkout
-      - run:
-          name: Set ruby version to 2.6.3
-          command: rvm install 2.6.3 && echo . $(rvm 2.6.3 do rvm env --path) >> $BASH_ENV
       - restore_cache:
           key: *dependencies-cache-key
       - run: instruments -s devices

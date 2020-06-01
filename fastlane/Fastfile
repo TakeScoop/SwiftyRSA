@@ -26,27 +26,25 @@ platform :ios do
     
     # iOS
     test_ios(
-      sdk: 'iphonesimulator12.2',
+      sdk: 'iphonesimulator12.4',
       swift_version: swift_version,
       devices: [
-        'iPhone 6 (10.3)',
-        'iPhone 6 (11.4)',
-        'iPhone 6 (12.2)',
+        'iPhone 6 (12.4)',
       ]
     )
     
     # tvOS
     test_tvos(
-      sdk: 'appletvsimulator12.2',
+      sdk: 'appletvsimulator12.4',
       swift_version: swift_version,
       devices: [
-        'Apple TV (12.2)',
+        'Apple TV (12.4)',
       ]
     )
 
     # watchOS (smoke test)
     test_watchos(
-      sdk: 'watchsimulator5.2',
+      sdk: 'watchsimulator5.3',
       swift_version: swift_version
     )
   end
