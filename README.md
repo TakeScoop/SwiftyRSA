@@ -16,7 +16,7 @@ SwiftyRSA is used in the [Scoop](https://www.takescoop.com/) [iOS app](https://i
 Installation
 ------------
 
-### Swift 3.2 / 4.0+
+### Swift 5.0+
 
 With Cocoapods:
 
@@ -32,7 +32,7 @@ github "TakeScoop/SwiftyRSA"
 
 ### Swift 2.3
 
-The `swift-2.3` branch is built out of SwiftRSA 0.4.0 and is not actively maintained. If you'd like to use the latest features of SwiftyRSA, please use swift 3.0.
+The `swift-2.3` branch is built out of SwiftRSA 0.4.0 and is not actively maintained. If you'd like to use the latest features of SwiftyRSA, please use swift 5.0.
 
 ```
 pod 'SwiftyRSA', :git => 'git@github.com:TakeScoop/SwiftyRSA.git', :branch => 'swift-2.3'
