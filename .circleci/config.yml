@@ -1,4 +1,4 @@
-dependencies-cache-key: &dependencies-cache-key dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "Podfile.lock" }}
+dependencies-cache-key: &dependencies-cache-key dependencies--{{ checksum "Gemfile.lock" }}-{{ checksum "Podfile.lock" }}
 
 version: 2
 jobs:
