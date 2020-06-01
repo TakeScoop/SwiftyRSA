@@ -59,7 +59,7 @@ platform :ios do
     
     # iOS
     test_ios(
-      sdk: 'iphonesimulator13.3',
+      sdk: 'iphonesimulator13.4',
       swift_version: swift_version,
       devices: [
         'iPhone 6 (12.2)',
@@ -70,7 +70,7 @@ platform :ios do
     
     # tvOS
     test_tvos(
-      sdk: 'appletvsimulator12.0',
+      sdk: 'appletvsimulator13.4',
       swift_version: swift_version,
       devices: [
         'Apple TV (12.4)',
