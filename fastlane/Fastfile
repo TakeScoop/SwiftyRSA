@@ -22,7 +22,7 @@ platform :ios do
   desc "Runs all the tests for Xcode 10"
   lane :test_xcode10 do
     
-    swift_version = '4.2'
+    swift_version = '5.0'
     
     # iOS
     test_ios(
@@ -52,7 +52,7 @@ platform :ios do
   desc "Runs all the tests for Xcode 11"
   lane :test_xcode11 do
     
-    swift_version = '4.2'
+    swift_version = '5.0'
     
     # iOS
     test_ios(
