@@ -18,7 +18,7 @@ Installation
 
 ### Swift 5.0+
 
-SwiftyRSA uses Swift 5.0 and requires Xcode 10+.
+SwiftyRSA uses Swift 5.0 and requires Xcode 10.2+.
 
 With Cocoapods:
 

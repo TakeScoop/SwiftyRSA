@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name = "SwiftyRSA"
-  s.version = "1.5.0"
+  s.version = "1.6.0"
   s.summary = "Public key RSA encryption in Swift."
 
   s.description = <<-DESC
@@ -18,10 +18,10 @@ Pod::Spec.new do |s|
   s.framework = "Security"
   s.requires_arc = true
 
-  s.swift_version = "4.1"
-  s.ios.deployment_target = "8.3"
-  s.tvos.deployment_target = "9.2"
-  s.watchos.deployment_target = "2.2"
+  s.swift_version = "5.0"
+  s.ios.deployment_target = "11.0"
+  s.tvos.deployment_target = "11.0"
+  s.watchos.deployment_target = "5.0"
 
   s.subspec "ObjC" do |sp|
     sp.source_files = "Source/*.{swift,m,h}"
