@@ -18,74 +18,71 @@ platform :ios do
     carthage(project_directory: './CarthageIntegrationTest')
     xcodebuild(project: './CarthageIntegrationTest/CarthageIntegrationTest.xcodeproj')
   end
-
-  desc "Runs all the tests for Xcode 9"
-  lane :test_xcode9 do
-    swift_versions = ['3.2', '4.1']
-    for swift_version in swift_versions do
-      
-      # iOS
-      test_ios(
-        sdk: 'iphonesimulator11.4',
-        swift_version: swift_version,
-        devices: [
-          'iPhone 6 (10.3.1)',
-          'iPhone 6 (11.2)',
-          'iPhone 6 (11.4)',
-        ]
-      )
-      
-      # tvOS
-      test_tvos(
-        sdk: 'appletvsimulator11.4',
-        swift_version: swift_version,
-        devices: [
-          'Apple TV (11.2)',
-          'Apple TV (11.4)',
-        ]
-      )
-
-      # watchOS (smoke test)
-      test_watchos(
-        sdk: 'watchsimulator4.3',
-        swift_version: swift_version
-      )
-    end
-  end
   
   desc "Runs all the tests for Xcode 10"
   lane :test_xcode10 do
     
-    swift_version = '4.2'
+    swift_version = '5.0'
     
     # iOS
     test_ios(
-      sdk: 'iphonesimulator12.0',
+      sdk: 'iphonesimulator12.4',
       swift_version: swift_version,
       devices: [
-        'iPhone 6 (10.3.1)',
-        'iPhone 6 (11.2)',
-        'iPhone 6 (12.0)',
+        'iPhone 6 (12.4)',
       ]
     )
     
     # tvOS
     test_tvos(
-      sdk: 'appletvsimulator12.0',
+      sdk: 'appletvsimulator12.4',
       swift_version: swift_version,
       devices: [
-        'Apple TV (11.2)',
-        'Apple TV (12.0)',
+        'Apple TV (12.4)',
       ]
     )
 
     # watchOS (smoke test)
     test_watchos(
-      sdk: 'watchsimulator5.0',
+      sdk: 'watchsimulator5.3',
+      swift_version: swift_version
+    )
+  end
+
+  desc "Runs all the tests for Xcode 11"
+  lane :test_xcode11 do
+    
+    swift_version = '5.0'
+    
+    # iOS
+    test_ios(
+      sdk: 'iphonesimulator13.4',
+      swift_version: swift_version,
+      devices: [
+        'iPhone 6 (12.2)',
+        'iPhone 6 (12.4)',
+        'iPhone 8 (13.4)',
+      ]
+    )
+    
+    # tvOS
+    test_tvos(
+      sdk: 'appletvsimulator13.4',
+      swift_version: swift_version,
+      devices: [
+        'Apple TV (12.4)',
+        'Apple TV (13.4)',
+      ]
+    )
+
+    # watchOS (smoke test)
+    test_watchos(
+      sdk: 'watchsimulator6.2',
       swift_version: swift_version
     )
   end
 end
+
 
 private_lane :test_ios do |params|
   scan(

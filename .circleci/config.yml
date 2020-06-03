@@ -1,10 +1,10 @@
-dependencies-cache-key: &dependencies-cache-key dependencies-{{ checksum "Gemfile.lock" }}-{{ checksum "Podfile.lock" }}
+dependencies-cache-key: &dependencies-cache-key dependencies--{{ checksum "Gemfile.lock" }}-{{ checksum "Podfile.lock" }}
 
 version: 2
 jobs:
   dependencies:
     macos:
-      xcode: "10.0.0"
+      xcode: "11.4.0"
     environment:
       LC_ALL: en_US.UTF-8
       LANG: en_US.UTF-8
@@ -20,10 +20,7 @@ jobs:
       - run:
           name: Install Cocoapods dependencies
           command: |
-              function pod_install {
-                  curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
-                  bundle exec pod install
-              }
+              bundle exec pod install
               diff ./Podfile.lock ./Pods/Manifest.lock > /dev/null || pod_install
       - save_cache:
           key: *dependencies-cache-key
@@ -32,7 +29,7 @@ jobs:
             - Pods/
   lint:
     macos:
-      xcode: "10.0.0"
+      xcode: "11.4.0"
     environment:
       LC_ALL: en_US.UTF-8
       LANG: en_US.UTF-8
@@ -43,24 +40,9 @@ jobs:
       - restore_cache:
           key: *dependencies-cache-key
       - run: bundle exec fastlane lint
-  test-xcode9:
-    macos:
-      xcode: "9.4.1"
-    environment:
-      LC_ALL: en_US.UTF-8
-      LANG: en_US.UTF-8
-      BUNDLE_PATH: vendor/bundle
-    shell: /bin/bash --login -eo pipefail
-    steps:
-      - checkout
-      - restore_cache:
-          key: *dependencies-cache-key
-      - run: instruments -s devices
-      - run: bundle exec fastlane test_carthage
-      - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_xcode9 --verbose
   test-xcode10:
     macos:
-      xcode: "10.0.0"
+      xcode: "10.3.0"
     environment:
       LC_ALL: en_US.UTF-8
       LANG: en_US.UTF-8
@@ -71,8 +53,29 @@ jobs:
       - restore_cache:
           key: *dependencies-cache-key
       - run: instruments -s devices
+      - run: xcodebuild -sdk -version
+      # Some different versions are installed on the Xcode 10 server, so we need to re-install ruby gems.
+      - run:
+          name: Install Ruby dependencies
+          command: bundle check || bundle install --jobs 4 --retry 3
       - run: bundle exec fastlane test_carthage
       - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_xcode10 --verbose
+  test-xcode11:
+    macos:
+      xcode: "11.4.0"
+    environment:
+      LC_ALL: en_US.UTF-8
+      LANG: en_US.UTF-8
+      BUNDLE_PATH: vendor/bundle
+    shell: /bin/bash --login -eo pipefail
+    steps:
+      - checkout
+      - restore_cache:
+          key: *dependencies-cache-key
+      - run: instruments -s devices
+      - run: xcodebuild -sdk -version
+      - run: bundle exec fastlane test_carthage
+      - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_xcode11 --verbose
 workflows:
   version: 2
   build-and-deploy:
@@ -81,10 +84,10 @@ workflows:
       - lint:
           requires:
             - dependencies
-      - test-xcode9:
+      - test-xcode10:
           requires:
             - dependencies
-      - test-xcode10:
+      - test-xcode11:
           requires:
             - dependencies
               
