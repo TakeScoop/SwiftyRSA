@@ -19,8 +19,8 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.swift_version = "5.0"
-  s.ios.deployment_target = "11.0"
-  s.tvos.deployment_target = "11.0"
+  s.ios.deployment_target = "10.0"
+  s.tvos.deployment_target = "10.0"
   s.watchos.deployment_target = "5.0"
 
   s.subspec "ObjC" do |sp|
