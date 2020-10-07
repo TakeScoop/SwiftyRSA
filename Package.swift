@@ -6,6 +6,7 @@ let package = Package(
     products: [
         .library(
             name: "SwiftyRSA",
+            type: .dynamic,
             targets: ["SwiftyRSA"]),
     ],
     dependencies: [
