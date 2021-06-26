@@ -2,10 +2,6 @@ SwiftyRSA
 =========
 
 **Maintainer(s):** [@starback](https://github.com/starback)
-**Contributor:** [@devNathan](https://github.com/devNathan)
-About this fork
-------------
-This fork is (for now) the only one supporting X509 certificates for public key, with the possibility to prepend the X509 header to a headerless public key.
 
 [![](https://img.shields.io/cocoapods/v/SwiftyRSA.svg)](https://cocoapods.org/pods/SwiftyRSA)
 ![](https://img.shields.io/badge/carthage-compatible-brightgreen.svg)
