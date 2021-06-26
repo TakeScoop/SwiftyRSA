@@ -3,6 +3,7 @@
 //  SwiftyRSA
 //
 //  Created by Loïs Di Qual on 7/2/15.
+//  Contributions by Stchepinsky Nathan on 24/06/2021
 //  Copyright (c) 2015 Scoop Technologies, Inc. All rights reserved.
 //
 
@@ -283,6 +284,54 @@ public enum SwiftyRSA {
         
         // Unable to extract bit/octet string or raw integer sequence
         throw SwiftyRSAError.invalidAsn1Structure
+    }
+    
+    /**
+        This method prepend the x509 header to the given PublicKey data.
+        If the key already contain a x509 header, the given data is returned as is.
+            It letterally does the opposite of the previous method :
+            From a given headerless key :
+                    SEQUENCE
+                        INTEGER (1024 or 2048 bit) -- modulo
+                        INTEGER -- public exponent
+            the key is returned following the X509 header :
+                    SEQUENCE
+                        SEQUENCE
+                        OBJECT IDENTIFIER 1.2.840.113549.1.1.1
+                        NULL
+                        BIT STRING
+                        SEQUENCE
+                        INTEGER (1024 or 2048 bit) -- modulo
+                        INTEGER -- public exponent
+     */
+    
+    static func prependX509KeyHeader(keyData : Data) throws ->  Data{
+        let node: Asn1Parser.Node
+        do {
+            node = try Asn1Parser.parse(data: keyData)
+        } catch {
+            throw SwiftyRSAError.asn1ParsingFailed
+        }
+        
+        // Ensure the raw data is an ASN1 sequence
+        guard case .sequence(let nodes) = node else {
+            throw SwiftyRSAError.invalidAsn1RootNode
+        }
+        
+        let onlyHasIntegers = nodes.filter { node -> Bool in
+            if case .integer = node {
+                return false
+            }
+            return true
+        }.isEmpty
+        
+        // The key already contains an header
+        if !onlyHasIntegers {
+            return keyData
+        }
+        
+        let x509certificate : Data = keyData.prependx509Header()
+        return x509certificate
     }
     
     static func removeKey(tag: String) {
