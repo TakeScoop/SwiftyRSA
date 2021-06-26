@@ -64,7 +64,7 @@ private extension NSInteger {
 extension Data{
     // This code source come from Heimdall project https://github.com/henrinormak/Heimdall published under MIT Licence
     
-    /// This method prepend the X509 header to a giver public key
+    /// This method prepend the X509 header to a given public key
     func prependx509Header() -> Data {
         let result = NSMutableData()
                 
