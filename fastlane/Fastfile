@@ -96,22 +96,6 @@ platform :ios do
         'iPhone 12 (14.4)'
       ]
     )
-    
-    # tvOS
-    test_tvos(
-      sdk: 'appletvsimulator14.4',
-      swift_version: swift_version,
-      devices: [
-        'Apple TV (13.4)',
-        'Apple TV (14.4)',
-      ]
-    )
-
-    # watchOS (smoke test)
-    test_watchos(
-      sdk: 'watchsimulator6.2',
-      swift_version: swift_version
-    )
   end
 end
 
