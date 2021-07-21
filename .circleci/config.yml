@@ -43,6 +43,11 @@ jobs:
       - run:
           name: Install Ruby dependencies
           command: bundle check || bundle install --jobs 4 --retry 3
+      - run:
+          name: Install Cocoapods dependencies
+          command: |
+              bundle exec pod install
+              diff ./Podfile.lock ./Pods/Manifest.lock > /dev/null || pod_install
       - run: bundle exec fastlane lint
   test-xcode10:
     macos:
