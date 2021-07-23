@@ -39,6 +39,15 @@ jobs:
       - checkout
       - restore_cache:
           key: *dependencies-cache-key
+      # Some different versions are installed on the Xcode 10 server, so we need to re-install ruby gems.
+      - run:
+          name: Install Ruby dependencies
+          command: bundle check || bundle install --jobs 4 --retry 3
+      - run:
+          name: Install Cocoapods dependencies
+          command: |
+              bundle exec pod install
+              diff ./Podfile.lock ./Pods/Manifest.lock > /dev/null || pod_install
       - run: bundle exec fastlane lint
   test-xcode10:
     macos:
@@ -74,8 +83,31 @@ jobs:
           key: *dependencies-cache-key
       - run: instruments -s devices
       - run: xcodebuild -sdk -version
+      # Some different versions are installed on the Xcode server, so we need to re-install ruby gems.
+      - run:
+          name: Install Ruby dependencies
+          command: bundle check || bundle install --jobs 4 --retry 3
       - run: bundle exec fastlane test_carthage
       - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_xcode11 --verbose
+  test-xcode12:
+    macos:
+      xcode: "12.4.0"
+    environment:
+      LC_ALL: en_US.UTF-8
+      LANG: en_US.UTF-8
+      BUNDLE_PATH: vendor/bundle
+    shell: /bin/bash --login -eo pipefail
+    steps:
+      - checkout
+      - restore_cache:
+          key: *dependencies-cache-key
+      - run: instruments -s devices
+      - run: xcodebuild -sdk -version
+      # Some different versions are installed on the Xcode server, so we need to re-install ruby gems.
+      - run:
+          name: Install Ruby dependencies
+          command: bundle check || bundle install --jobs 4 --retry 3
+      - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_xcode12 --verbose
 workflows:
   version: 2
   build-and-deploy:
@@ -90,4 +122,6 @@ workflows:
       - test-xcode11:
           requires:
             - dependencies
-              
+      - test-xcode12:
+          requires:
+            - dependencies
