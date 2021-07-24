@@ -176,6 +176,21 @@ let reference = key.reference
 let originalData = key.originalData
 ```
 
+### Use X.509 certificate 
+SwiftyRSA supports X.509 certificate for public keys. SwiftyRSA can add the X.509 header to a headerless public key, or on the contrary  strip it to get a key without a header.
+#### Add an X.509 header to a public key 
+```swift
+let publicKey = PublicKey(data: data)
+let publicKeyData = try publicKey.data()
+let publicKey_with_X509_header = try SwiftyRSA.prependX509KeyHeader(keyData: publicKeyData)
+```
+#### Strip the X.509 header from a public key 
+```swift
+let publicKey_headerLess: Data = try SwiftyRSA.stripKeyHeader(keyData: publicKey_with_X509_header)
+```
+
+**Warning** : Storing  (with SwiftyRSA's methods) or creating a ```PublicKey``` instance will automatically strip the header from the key. For more info, see *Under the hood* above.
+
 Create public and private RSA keys
 ----------------------------------
 
