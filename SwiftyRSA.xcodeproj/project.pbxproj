@@ -13,6 +13,10 @@
 		902623FE2687278D00489B07 /* X509Certificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902623FD2687278D00489B07 /* X509Certificate.swift */; };
 		902623FF2687278D00489B07 /* X509Certificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902623FD2687278D00489B07 /* X509Certificate.swift */; };
 		902624002687278D00489B07 /* X509Certificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902623FD2687278D00489B07 /* X509Certificate.swift */; };
+		90EBFC8526AB093B002B30E9 /* X509Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90EBFC8326AB08DF002B30E9 /* X509Tests.swift */; };
+		90EBFC8626AB093C002B30E9 /* X509Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90EBFC8326AB08DF002B30E9 /* X509Tests.swift */; };
+		90EBFC8926AC32B3002B30E9 /* swiftyrsa-public-base64-X509-format.txt in Resources */ = {isa = PBXBuildFile; fileRef = 90EBFC8726AC32B2002B30E9 /* swiftyrsa-public-base64-X509-format.txt */; };
+		90EBFC8A26AC32B3002B30E9 /* swiftyrsa-public-base64-X509-format.txt in Resources */ = {isa = PBXBuildFile; fileRef = 90EBFC8726AC32B2002B30E9 /* swiftyrsa-public-base64-X509-format.txt */; };
 		B0981AE770653C8FE25311592E2BCE5E /* SwiftyRSA.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CB44E2E8BE22C702325440A0F96410A /* SwiftyRSA.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		BF52D5FDEDA5DFCA62ECD03992601E82 /* SwiftyRSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E84F551B29670A456D12366AA4C8E5 /* SwiftyRSA.swift */; };
 		C034317B1EC2D7E30019B7E8 /* Asn1Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C034317A1EC2D7E30019B7E8 /* Asn1Parser.swift */; };
@@ -117,6 +121,8 @@
 		6E2D7A1B9C4D58D0887FB023C0E15594 /* swiftyrsa-private-headerless.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-private-headerless.pem"; sourceTree = "<group>"; };
 		7DF0A3222330CDFCF12918ED08519EB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		902623FD2687278D00489B07 /* X509Certificate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X509Certificate.swift; sourceTree = "<group>"; };
+		90EBFC8326AB08DF002B30E9 /* X509Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X509Tests.swift; sourceTree = "<group>"; };
+		90EBFC8726AC32B2002B30E9 /* swiftyrsa-public-base64-X509-format.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-public-base64-X509-format.txt"; sourceTree = "<group>"; };
 		986B7C763D1B85C628621E89E7071B06 /* swiftyrsa-public.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = "swiftyrsa-public.der"; sourceTree = "<group>"; };
 		9E21744A2073DB8AC7BAEB324D36D4DB /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		AC84097FE3BCDEAEE6370ADD41E9AE68 /* swiftyrsa-public-headerless.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "swiftyrsa-public-headerless.pem"; sourceTree = "<group>"; };
@@ -249,6 +255,7 @@
 			children = (
 				D240C55056247A7B270C92143EF30532 /* keys */,
 				C096A00F1D9083D000E285C2 /* KeyTests.swift */,
+				90EBFC8326AB08DF002B30E9 /* X509Tests.swift */,
 				C096A0131D9086F300E285C2 /* MessageTests.swift */,
 				C096A0151D9092C700E285C2 /* EncryptDecryptTests.swift */,
 				C096A0171D90969A00E285C2 /* SignatureTests.swift */,
@@ -266,6 +273,7 @@
 				C065ED6E1DBF314500674763 /* swiftyrsa-private.der */,
 				C096A0111D9085C100E285C2 /* swiftyrsa-public-base64.txt */,
 				AD7F28E3936301CA24DF13E22196C73B /* multiple-keys-testcase.pem */,
+				90EBFC8726AC32B2002B30E9 /* swiftyrsa-public-base64-X509-format.txt */,
 				47807FD4AF81104758D4EA9B778F5186 /* multiple-keys-testcase.sh */,
 				6E2D7A1B9C4D58D0887FB023C0E15594 /* swiftyrsa-private-headerless.pem */,
 				EF193719CB8D4DDE8D347FF699311D1D /* swiftyrsa-private.pem */,
@@ -500,6 +508,7 @@
 				C0579268215465A60057F401 /* swiftyrsa-private-headerless.pem in Resources */,
 				C057926C215465A60057F401 /* swiftyrsa-public.pem in Resources */,
 				C057926D215465A60057F401 /* swiftyrsa-private-header-octetstring.pem in Resources */,
+				90EBFC8A26AC32B3002B30E9 /* swiftyrsa-public-base64-X509-format.txt in Resources */,
 				C0579269215465A60057F401 /* swiftyrsa-private.pem in Resources */,
 				C057926B215465A60057F401 /* swiftyrsa-public.der in Resources */,
 				C0579265215465A60057F401 /* swiftyrsa-public-base64.txt in Resources */,
@@ -518,6 +527,7 @@
 				C076F5531DADEC1D006AF5DB /* swiftyrsa-public-headerless.pem in Resources */,
 				C04D33811DC54D5700D65B05 /* swiftyrsa-public-base64-newlines.txt in Resources */,
 				C084A72A1EC3034B003F79ED /* swiftyrsa-private-header-octetstring.pem in Resources */,
+				90EBFC8926AC32B3002B30E9 /* swiftyrsa-public-base64-X509-format.txt in Resources */,
 				C076F5541DADEC1D006AF5DB /* swiftyrsa-public.der in Resources */,
 				C076F5551DADEC1D006AF5DB /* swiftyrsa-public.pem in Resources */,
 				C065ED6F1DBF314500674763 /* swiftyrsa-private.der in Resources */,
@@ -611,6 +621,7 @@
 				C05792612154659B0057F401 /* TestUtils.swift in Sources */,
 				C05792602154659B0057F401 /* SignatureTests.swift in Sources */,
 				C057925E2154659B0057F401 /* MessageTests.swift in Sources */,
+				90EBFC8626AB093C002B30E9 /* X509Tests.swift in Sources */,
 				C057925D2154659B0057F401 /* KeyTests.swift in Sources */,
 				C05792622154659B0057F401 /* ObjCTests.m in Sources */,
 				C057925F2154659B0057F401 /* EncryptDecryptTests.swift in Sources */,
@@ -624,6 +635,7 @@
 				C076F5481DADEBC2006AF5DB /* KeyTests.swift in Sources */,
 				C076F5491DADEBC2006AF5DB /* MessageTests.swift in Sources */,
 				C076F54A1DADEBC2006AF5DB /* EncryptDecryptTests.swift in Sources */,
+				90EBFC8526AB093B002B30E9 /* X509Tests.swift in Sources */,
 				C076F54B1DADEBC2006AF5DB /* SignatureTests.swift in Sources */,
 				C076F54C1DADEBC2006AF5DB /* TestUtils.swift in Sources */,
 				C076F54D1DADEBC2006AF5DB /* ObjCTests.m in Sources */,
