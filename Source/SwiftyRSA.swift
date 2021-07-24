@@ -306,32 +306,14 @@ public enum SwiftyRSA {
      */
     
     static func prependX509KeyHeader(keyData : Data) throws ->  Data{
-        let node: Asn1Parser.Node
-        do {
-            node = try Asn1Parser.parse(data: keyData)
-        } catch {
-            throw SwiftyRSAError.asn1ParsingFailed
-        }
-        
-        // Ensure the raw data is an ASN1 sequence
-        guard case .sequence(let nodes) = node else {
-            throw SwiftyRSAError.invalidAsn1RootNode
-        }
-        
-        let onlyHasIntegers = nodes.filter { node -> Bool in
-            if case .integer = node {
-                return false
-            }
-            return true
-        }.isEmpty
-        
-        // The key already contains an header
-        if !onlyHasIntegers {
+        if try keyData.isAnHeaderlessKey(){
+            let x509certificate : Data = keyData.prependx509Header()
+            return x509certificate
+        } else if  try keyData.hasX509Header()  {
             return keyData
+        } else { // invalideHeader
+            throw SwiftyRSAError.x509CertificateFailed
         }
-        
-        let x509certificate : Data = keyData.prependx509Header()
-        return x509certificate
     }
     
     static func removeKey(tag: String) {

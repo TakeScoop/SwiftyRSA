@@ -61,7 +61,7 @@ private extension NSInteger {
 
 
 
-extension Data{
+public extension Data{
     // This code source come from Heimdall project https://github.com/henrinormak/Heimdall published under MIT Licence
     
     /// This method prepend the X509 header to a given public key
@@ -94,5 +94,78 @@ extension Data{
         result.append(self)
                 
         return result as Data
+    }
+    
+    func hasX509Header() throws -> Bool{
+        let node: Asn1Parser.Node
+        do {
+            node = try Asn1Parser.parse(data: self)
+        } catch {
+            throw SwiftyRSAError.asn1ParsingFailed
+        }
+        
+        
+        // Ensure the raw data is an ASN1 sequence
+        guard case .sequence(let nodes) = node else {
+            return false
+        }
+        
+        // Must contain 2 elements, a sequence and a bit string
+        if nodes.count != 2 {
+            return false
+        }
+        
+        // Ensure the first node is an ASN1 sequence
+        guard case .sequence(let firstNode) =  nodes[0] else {
+            return false
+        }
+        
+        // Must contain 2 elements, an object id and NULL
+        if firstNode.count != 2 {
+            return false
+        }
+        
+        guard case .objectIdentifier(_) = firstNode[0] else {
+            return false
+        }
+        
+        guard case .null = firstNode[1] else {
+            return false
+        }
+        
+        // The 2sd child has to be a bit string containing a sequence of 2 int
+        
+        
+        let last = nodes[1]
+        if case .bitString(let secondChildSequence) = last {
+            return try secondChildSequence.isAnHeaderlessKey()
+        } else {
+            return false
+        }
+    }
+    
+    func isAnHeaderlessKey() throws -> Bool{
+        let node: Asn1Parser.Node
+        do {
+            node = try Asn1Parser.parse(data: self)
+        } catch {
+            throw SwiftyRSAError.asn1ParsingFailed
+        }
+        
+        // Ensure the raw data is an ASN1 sequence
+        guard case .sequence(let nodes) = node else {
+            return false
+        }
+        
+        // Detect whether the sequence only has integers, in which case it's a headerless key
+        let onlyHasIntegers = nodes.filter { node -> Bool in
+            if case .integer = node {
+                return false
+            }
+            return true
+        }.isEmpty
+        
+        // Headerless key
+        return onlyHasIntegers
     }
 }
