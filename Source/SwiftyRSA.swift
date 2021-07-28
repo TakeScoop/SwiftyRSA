@@ -3,7 +3,7 @@
 //  SwiftyRSA
 //
 //  Created by Loïs Di Qual on 7/2/15.
-//  Contributions by Stchepinsky Nathan on 24/06/2021
+//
 //  Copyright (c) 2015 Scoop Technologies, Inc. All rights reserved.
 //
 
@@ -305,11 +305,11 @@ public enum SwiftyRSA {
                         INTEGER -- public exponent
      */
     
-    static func prependX509KeyHeader(keyData : Data) throws ->  Data{
-        if try keyData.isAnHeaderlessKey(){
-            let x509certificate : Data = keyData.prependx509Header()
+    static func prependX509KeyHeader(keyData: Data) throws -> Data {
+        if try keyData.isAnHeaderlessKey() {
+            let x509certificate: Data = keyData.prependx509Header()
             return x509certificate
-        } else if  try keyData.hasX509Header()  {
+        } else if try keyData.hasX509Header() {
             return keyData
         } else { // invalideHeader
             throw SwiftyRSAError.x509CertificateFailed

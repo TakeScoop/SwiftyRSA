@@ -8,23 +8,20 @@
 
 import Foundation
 
-
-///
 /// Encoding/Decoding lengths as octets
-///
 private extension NSInteger {
     func encodedOctets() -> [CUnsignedChar] {
         // Short form
         if self < 128 {
-            return [CUnsignedChar(self)];
+            return [CUnsignedChar(self)]
         }
         
         // Long form
-        let i = Int(log2(Double(self)) / 8 + 1)
+        let long = Int(log2(Double(self)) / 8 + 1)
         var len = self
-        var result: [CUnsignedChar] = [CUnsignedChar(i + 0x80)]
+        var result: [CUnsignedChar] = [CUnsignedChar(long + 0x80)]
         
-        for _ in 0..<i {
+        for _ in 0..<long {
             result.insert(CUnsignedChar(len & 0xFF), at: 1)
             len = len >> 8
         }
@@ -48,9 +45,9 @@ private extension NSInteger {
             
             var result = UInt64(0)
             
-            for j in 1...octets {
+            for octet in 1...octets {
                 result = (result << 8)
-                result = result + UInt64(octetBytes[startIdx + j])
+                result = result + UInt64(octetBytes[startIdx + octet])
             }
             
             startIdx += 1 + octets
@@ -59,9 +56,7 @@ private extension NSInteger {
     }
 }
 
-
-
-public extension Data{
+public extension Data {
     // This code source come from Heimdall project https://github.com/henrinormak/Heimdall published under MIT Licence
     
     /// This method prepend the X509 header to a given public key
@@ -96,14 +91,13 @@ public extension Data{
         return result as Data
     }
     
-    func hasX509Header() throws -> Bool{
+    func hasX509Header() throws -> Bool {
         let node: Asn1Parser.Node
         do {
             node = try Asn1Parser.parse(data: self)
         } catch {
             throw SwiftyRSAError.asn1ParsingFailed
         }
-        
         
         // Ensure the raw data is an ASN1 sequence
         guard case .sequence(let nodes) = node else {
@@ -134,8 +128,6 @@ public extension Data{
         }
         
         // The 2sd child has to be a bit string containing a sequence of 2 int
-        
-        
         let last = nodes[1]
         if case .bitString(let secondChildSequence) = last {
             return try secondChildSequence.isAnHeaderlessKey()
@@ -144,7 +136,7 @@ public extension Data{
         }
     }
     
-    func isAnHeaderlessKey() throws -> Bool{
+    func isAnHeaderlessKey() throws -> Bool {
         let node: Asn1Parser.Node
         do {
             node = try Asn1Parser.parse(data: self)
