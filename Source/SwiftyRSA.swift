@@ -3,7 +3,7 @@
 //  SwiftyRSA
 //
 //  Created by Loïs Di Qual on 7/2/15.
-//  Contributions by Stchepinsky Nathan on 24/06/2021
+//
 //  Copyright (c) 2015 Scoop Technologies, Inc. All rights reserved.
 //
 

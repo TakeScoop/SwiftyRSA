@@ -8,9 +8,7 @@
 
 import Foundation
 
-///
 /// Encoding/Decoding lengths as octets
-///
 private extension NSInteger {
     func encodedOctets() -> [CUnsignedChar] {
         // Short form
