@@ -305,11 +305,11 @@ public enum SwiftyRSA {
                         INTEGER -- public exponent
      */
     
-    static func prependX509KeyHeader(keyData : Data) throws ->  Data{
-        if try keyData.isAnHeaderlessKey(){
-            let x509certificate : Data = keyData.prependx509Header()
+    static func prependX509KeyHeader(keyData: Data) throws -> Data {
+        if try keyData.isAnHeaderlessKey() {
+            let x509certificate: Data = keyData.prependx509Header()
             return x509certificate
-        } else if  try keyData.hasX509Header()  {
+        } else if try keyData.hasX509Header() {
             return keyData
         } else { // invalideHeader
             throw SwiftyRSAError.x509CertificateFailed

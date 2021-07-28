@@ -19,36 +19,40 @@ class X509CertificateTests: XCTestCase {
     
     /// Verify the ASN1 sruc with the ASN1 parser (private key)
     func testX509CertificateValidityPrivateKey() throws {
-        let privateKeyData : Data = try! privateKey.data()
-        let privateKeyX509 : Data = try SwiftyRSA.prependX509KeyHeader(keyData: privateKeyData)
+        guard let privateKeyData = try? privateKey.data() else {
+            return XCTFail("invalid data")
+        }
+        
+        let privateKeyX509: Data = try SwiftyRSA.prependX509KeyHeader(keyData: privateKeyData)
         
         XCTAssertTrue(try privateKeyX509.hasX509Header())
     }
     
     /// Test the function in charge of verifying if a key is headerless or not
     func testHeaderlessKeyVerificationFunc() throws {
-        let publicKeyData : Data = try! publicKey.data()
-        let privateKeyData : Data = try! privateKey.data()
+        guard let publicKeyData = try? publicKey.data(), let privateKeyData = try? privateKey.data() else {
+            return XCTFail("invalid data")
+        }
         
         // Correct key
         XCTAssertTrue(try publicKeyData.isAnHeaderlessKey())
         XCTAssertTrue(try privateKeyData.isAnHeaderlessKey())
         
         // Example of incorrect key (here with a X509 header)
-        let publicKeyX509 : Data = try SwiftyRSA.prependX509KeyHeader(keyData: publicKeyData)
-        let privateKeyX509 : Data = try SwiftyRSA.prependX509KeyHeader(keyData: privateKeyData)
+        let publicKeyX509 = try SwiftyRSA.prependX509KeyHeader(keyData: publicKeyData)
+        let privateKeyX509 = try SwiftyRSA.prependX509KeyHeader(keyData: privateKeyData)
         XCTAssertFalse(try publicKeyX509.isAnHeaderlessKey())
         XCTAssertFalse(try privateKeyX509.isAnHeaderlessKey())
     }
     
     /// Verify that the header added corresponds to the X509 key
-    func testX509HeaderVerificationPublicKey() throws{
+    func testX509HeaderVerificationPublicKey() throws {
         // Generated on https://www.devglan.com/online-tools/rsa-encryption-decryption which uses X.509 certificate for public key
         guard let path = bundle.path(forResource: "swiftyrsa-public-base64-X509-format", ofType: "txt") else {
             return XCTFail("file not found in bundle")
         }
         let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
-        if let publicKey = try? PublicKey(base64Encoded: str){ // Creating a public key strip the X509 header
+        if let publicKey = try? PublicKey(base64Encoded: str) { // Creating a public key strip the X509 header
             let publicKey509 = try SwiftyRSA.prependX509KeyHeader(keyData: publicKey.data())
             let publicKey509Base64 = publicKey509.base64EncodedString()
             XCTAssertEqual(publicKey509Base64, str)
@@ -59,33 +63,40 @@ class X509CertificateTests: XCTestCase {
     
     /// Test if the key's format is correct with the hasX509Header func
     func testX509KeyHeader() throws {
-        let publicKeyData : Data = try! publicKey.data()
-        let publicKeyX509 : Data = try SwiftyRSA.prependX509KeyHeader(keyData: publicKeyData)
-        let privateKeyData : Data = try! privateKey.data()
-        let privateKeyX509 : Data = try SwiftyRSA.prependX509KeyHeader(keyData: privateKeyData)
+        guard let publicKeyData = try? publicKey.data(), let privateKeyData = try? privateKey.data() else {
+            return XCTFail("invalid data")
+        }
+
+        let publicKeyX509 = try SwiftyRSA.prependX509KeyHeader(keyData: publicKeyData)
+        let privateKeyX509 = try SwiftyRSA.prependX509KeyHeader(keyData: privateKeyData)
         
         XCTAssertTrue(try publicKeyX509.hasX509Header())
         XCTAssertTrue(try privateKeyX509.hasX509Header())
     }
     
     /// Verify if the X509 header can be stripped
-    func testStripX509HeaderPrivateKey() throws{
-        let privateKeyData : Data = try! privateKey.data()
-        let privateKeyX509 : Data = try SwiftyRSA.prependX509KeyHeader(keyData: privateKeyData)
+    func testStripX509HeaderPrivateKey() throws {
+        guard let privateKeyData = try? privateKey.data() else {
+            return XCTFail("invalid data")
+        }
         
-        let privateKeyStripped : Data = try! SwiftyRSA.stripKeyHeader(keyData: privateKeyX509)
+        let privateKeyX509 = try SwiftyRSA.prependX509KeyHeader(keyData: privateKeyData)
+        
+        let privateKeyStripped = try SwiftyRSA.stripKeyHeader(keyData: privateKeyX509)
         XCTAssertEqual(privateKeyData, privateKeyStripped)
     }
     
     /// Test if a key with X509 header can encrypt and decrypt a given simple message
-    func testEncryptionDecryptionSimple() throws{
-        let privateKeyData : Data = try! privateKey.data()
-        let privateKeyX509 : Data = try SwiftyRSA.prependX509KeyHeader(keyData: privateKeyData)
-        let publicKeyData : Data = try! publicKey.data()
-        let publicKeyX509 : Data = try SwiftyRSA.prependX509KeyHeader(keyData: publicKeyData)
+    func testEncryptionDecryptionSimple() throws {
+        guard let publicKeyData = try? publicKey.data(), let privateKeyData = try? privateKey.data() else {
+            return XCTFail("invalid data")
+        }
         
-        let clear : String = "Hello world !"
-        let clearMessage : ClearMessage = try ClearMessage(string: clear, using: .utf8)
+        let privateKeyX509 = try SwiftyRSA.prependX509KeyHeader(keyData: privateKeyData)
+        let publicKeyX509 = try SwiftyRSA.prependX509KeyHeader(keyData: publicKeyData)
+        
+        let clear = "Hello world !"
+        let clearMessage = try ClearMessage(string: clear, using: .utf8)
         
         let encrypted = try clearMessage.encrypted(with: PublicKey(data: publicKeyX509), padding: .PKCS1)
         let decrypted = try encrypted.decrypted(with: PrivateKey(data: privateKeyX509), padding: .PKCS1)
@@ -94,14 +105,16 @@ class X509CertificateTests: XCTestCase {
     }
     
     /// Test if a key with X509 header can encrypt and decrypt a given long message
-    func testEncryptionDecryptionLong() throws{
-        let privateKeyData : Data = try! privateKey.data()
-        let privateKeyX509 : Data = try SwiftyRSA.prependX509KeyHeader(keyData: privateKeyData)
-        let publicKeyData : Data = try! publicKey.data()
-        let publicKeyX509 : Data = try SwiftyRSA.prependX509KeyHeader(keyData: publicKeyData)
+    func testEncryptionDecryptionLong() throws {
+        guard let publicKeyData = try? publicKey.data(), let privateKeyData = try? privateKey.data() else {
+            return XCTFail("invalid data")
+        }
+        
+        let privateKeyX509 = try SwiftyRSA.prependX509KeyHeader(keyData: privateKeyData)
+        let publicKeyX509 = try SwiftyRSA.prependX509KeyHeader(keyData: publicKeyData)
         
         let clear = [String](repeating: "a", count: 9999).joined(separator: "")
-        let clearMessage : ClearMessage = try ClearMessage(string: clear, using: .utf8)
+        let clearMessage = try ClearMessage(string: clear, using: .utf8)
         
         let encrypted = try clearMessage.encrypted(with: PublicKey(data: publicKeyX509), padding: .PKCS1)
         let decrypted = try encrypted.decrypted(with: PrivateKey(data: privateKeyX509), padding: .PKCS1)
@@ -111,10 +124,12 @@ class X509CertificateTests: XCTestCase {
     
     /// Test if a key with X509 header can encrypt and decrypt a given random message
     func testEncryptionDecryptionRandomBytes() throws {
-        let privateKeyData : Data = try! privateKey.data()
-        let privateKeyX509 : Data = try SwiftyRSA.prependX509KeyHeader(keyData: privateKeyData)
-        let publicKeyData : Data = try! publicKey.data()
-        let publicKeyX509 : Data = try SwiftyRSA.prependX509KeyHeader(keyData: publicKeyData)
+        guard let publicKeyData = try? publicKey.data(), let privateKeyData = try? privateKey.data() else {
+            return XCTFail("invalid data")
+        }
+        
+        let privateKeyX509 = try SwiftyRSA.prependX509KeyHeader(keyData: privateKeyData)
+        let publicKeyX509 = try SwiftyRSA.prependX509KeyHeader(keyData: publicKeyData)
         
         let data = TestUtils.randomData(count: 2048)
         let clearMessage = ClearMessage(data: data)
@@ -124,6 +139,4 @@ class X509CertificateTests: XCTestCase {
         
         XCTAssertEqual(decrypted.data, data)
     }
-    
-    
 }
