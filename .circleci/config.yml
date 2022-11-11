@@ -4,7 +4,7 @@ version: 2
 jobs:
   dependencies:
     macos:
-      xcode: "11.4.0"
+      xcode: "13.2.1"
     environment:
       LC_ALL: en_US.UTF-8
       LANG: en_US.UTF-8
@@ -29,7 +29,7 @@ jobs:
             - Pods/
   lint:
     macos:
-      xcode: "11.4.0"
+      xcode: "13.2.1"
     environment:
       LC_ALL: en_US.UTF-8
       LANG: en_US.UTF-8
