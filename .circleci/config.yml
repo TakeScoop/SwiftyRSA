@@ -61,14 +61,13 @@ jobs:
       - checkout
       - restore_cache:
           key: *dependencies-cache-key
-      # - run: instruments -s devices
       - run: xcodebuild -sdk -version
       # Some different versions are installed on the Xcode 10 server, so we need to re-install ruby gems.
       - run:
           name: Install Ruby dependencies
           command: bundle check || bundle install --jobs 4 --retry 3
       - run: bundle exec fastlane test_carthage
-      - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_xcode13 --verbose
+      - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_latest_xcode --verbose
 
 workflows:
   version: 2

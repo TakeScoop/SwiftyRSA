@@ -104,8 +104,8 @@ platform :ios do
     )
   end
   
-  desc "Runs all the tests for Xcode 13"
-  lane :test_xcode13 do
+  desc "Runs all the tests for Xcode 13.2.1"
+  lane :test_latest_xcode do
     
     swift_version = '5.0'
     
@@ -117,6 +117,21 @@ platform :ios do
         'iPhone 8',
         'iPhone 12'
       ]
+    )
+    
+    # tvOS
+    test_tvos(
+      sdk: 'appletvsimulator',
+      swift_version: swift_version,
+      devices: [
+        'Apple TV',
+      ]
+    )
+
+    # watchOS (smoke test)
+    test_watchos(
+      sdk: 'watchsimulator',
+      swift_version: swift_version
     )
   end
 end
