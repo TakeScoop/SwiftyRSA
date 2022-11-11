@@ -206,7 +206,7 @@ Create public and private RSA keys
 Use `ssh-keygen` to generate a PEM public key and a PEM private key. SwiftyRSA also supports DER public keys.
 
 ```
-$ ssh-keygen -t rsa -f ~/mykey -N ''
+$ ssh-keygen -t rsa -m PEM -f ~/mykey -N ''
 $ cat ~/mykey > ~/private.pem
 $ ssh-keygen -f ~/mykey.pub -e -m pem > ~/public.pem
 ```
