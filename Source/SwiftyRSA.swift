@@ -3,6 +3,7 @@
 //  SwiftyRSA
 //
 //  Created by Loïs Di Qual on 7/2/15.
+//
 //  Copyright (c) 2015 Scoop Technologies, Inc. All rights reserved.
 //
 
@@ -151,7 +152,7 @@ public enum SwiftyRSA {
     
     static func addKey(_ keyData: Data, isPublic: Bool, tag: String) throws ->  SecKey {
         
-        var keyData = keyData
+        let keyData = keyData
         
         guard let tagData = tag.data(using: .utf8) else {
             throw SwiftyRSAError.tagEncodingFailed
@@ -283,6 +284,36 @@ public enum SwiftyRSA {
         
         // Unable to extract bit/octet string or raw integer sequence
         throw SwiftyRSAError.invalidAsn1Structure
+    }
+    
+    /**
+        This method prepend the x509 header to the given PublicKey data.
+        If the key already contain a x509 header, the given data is returned as is.
+            It letterally does the opposite of the previous method :
+            From a given headerless key :
+                    SEQUENCE
+                        INTEGER (1024 or 2048 bit) -- modulo
+                        INTEGER -- public exponent
+            the key is returned following the X509 header :
+                    SEQUENCE
+                        SEQUENCE
+                        OBJECT IDENTIFIER 1.2.840.113549.1.1.1
+                        NULL
+                        BIT STRING
+                        SEQUENCE
+                        INTEGER (1024 or 2048 bit) -- modulo
+                        INTEGER -- public exponent
+     */
+    
+    static func prependX509KeyHeader(keyData: Data) throws -> Data {
+        if try keyData.isAnHeaderlessKey() {
+            let x509certificate: Data = keyData.prependx509Header()
+            return x509certificate
+        } else if try keyData.hasX509Header() {
+            return keyData
+        } else { // invalideHeader
+            throw SwiftyRSAError.x509CertificateFailed
+        }
     }
     
     static func removeKey(tag: String) {

@@ -3,6 +3,7 @@
 //  SwiftyRSA
 //
 //  Created by Lois Di Qual on 5/15/17.
+//  Contributions by Stchepinsky Nathan on 24/06/2021
 //  Copyright © 2017 Scoop. All rights reserved.
 //
 
@@ -32,6 +33,7 @@ public enum SwiftyRSAError: Error {
     case derFileNotFound(name: String)
     case notAPublicKey
     case notAPrivateKey
+    case x509CertificateFailed
     
     var localizedDescription: String {
         switch self {
@@ -79,6 +81,8 @@ public enum SwiftyRSAError: Error {
             return "Provided key is not a valid RSA public key"
         case .notAPrivateKey:
             return "Provided key is not a valid RSA pivate key"
+        case .x509CertificateFailed :
+            return "Couldn't prepend the provided key because it has an unexpected structure"
         }
     }
 }

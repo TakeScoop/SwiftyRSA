@@ -73,7 +73,7 @@ struct TestError: Error {
         if status != errSecSuccess {
              XCTFail("Couldn't create random data")
         }
-        return Data(bytes: randomBytes)
+        return Data(randomBytes)
     }
     
     static func assertThrows(type: SwiftyRSAError, file: StaticString = #file, line: UInt = #line, block: () throws ->  Void) {

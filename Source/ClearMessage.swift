@@ -91,7 +91,7 @@ public class ClearMessage: Message {
             idx += maxChunkSize
         }
         
-        let encryptedData = Data(bytes: UnsafePointer<UInt8>(encryptedDataBytes), count: encryptedDataBytes.count)
+        let encryptedData = Data(bytes: encryptedDataBytes, count: encryptedDataBytes.count)
         return EncryptedMessage(data: encryptedData)
     }
     
@@ -126,7 +126,7 @@ public class ClearMessage: Message {
             throw SwiftyRSAError.signatureCreateFailed(status: status)
         }
         
-        let signatureData = Data(bytes: UnsafePointer<UInt8>(signatureBytes), count: signatureBytes.count)
+        let signatureData = Data(bytes: signatureBytes, count: signatureBytes.count)
         return Signature(data: signatureData)
     }
     
@@ -164,15 +164,15 @@ public class ClearMessage: Message {
         
         switch digestType {
         case .sha1:
-            digest = (data as NSData).swiftyRSASHA1()
+            digest = data.swiftyRSASHA1()
         case .sha224:
-            digest = (data as NSData).swiftyRSASHA224()
+            digest = data.swiftyRSASHA224()
         case .sha256:
-            digest = (data as NSData).swiftyRSASHA256()
+            digest = data.swiftyRSASHA256()
         case .sha384:
-            digest = (data as NSData).swiftyRSASHA384()
+            digest = data.swiftyRSASHA384()
         case .sha512:
-            digest = (data as NSData).swiftyRSASHA512()
+            digest = data.swiftyRSASHA512()
         }
         
         return digest
