@@ -79,13 +79,13 @@ public class PublicKey: Key {
     public static func publicKeys(pemEncoded pemString: String) -> [PublicKey] {
         
         // If our regexp isn't valid, or the input string is empty, we can't move forward…
-        guard let publicKeyRegexp = publicKeyRegex, pemString.characters.count > 0 else {
+        guard let publicKeyRegexp = publicKeyRegex, pemString.count > 0 else {
             return []
         }
         
         let all = NSRange(
             location: 0,
-            length: pemString.characters.count
+            length: pemString.count
         )
         
         let matches = publicKeyRegexp.matches(
@@ -93,8 +93,8 @@ public class PublicKey: Key {
             options: NSRegularExpression.MatchingOptions(rawValue: 0),
             range: all
         )
-        
-        let keys = matches.flatMap { result -> PublicKey? in
+
+        let keys = matches.compactMap { result -> PublicKey? in
             
             #if swift(>=4.0)
             let match = result.range(at: 1)
@@ -102,12 +102,9 @@ public class PublicKey: Key {
             let match = result.rangeAt(1)
             #endif
             
-            let start = pemString.characters.index(pemString.startIndex, offsetBy: match.location)
-            let end = pemString.characters.index(start, offsetBy: match.length)
-            
-            let range = Range<String.Index>(start..<end)
-            
-            let thisKey = pemString[range]
+            let start = pemString.index(pemString.startIndex, offsetBy: match.location)
+            let end = pemString.index(start, offsetBy: match.length)
+            let thisKey = pemString[start..<end]
             
             return try? PublicKey(pemEncoded: String(thisKey))
         }
