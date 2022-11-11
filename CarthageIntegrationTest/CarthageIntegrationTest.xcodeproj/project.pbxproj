@@ -3,21 +3,21 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FE9A19F291EC32D00FB6CEF /* SwiftyRSA.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE9A19E291EC32D00FB6CEF /* SwiftyRSA.xcframework */; };
 		C0646A5A1CAF644800587FF1 /* CarthageIntegrationTest.h in Headers */ = {isa = PBXBuildFile; fileRef = C0646A591CAF644800587FF1 /* CarthageIntegrationTest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C0646A621CAF647900587FF1 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0646A611CAF647900587FF1 /* Main.swift */; };
-		C0646A641CAF667600587FF1 /* SwiftyRSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0646A631CAF667600587FF1 /* SwiftyRSA.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0FE9A19E291EC32D00FB6CEF /* SwiftyRSA.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = SwiftyRSA.xcframework; sourceTree = "<group>"; };
 		C0646A561CAF644800587FF1 /* CarthageIntegrationTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CarthageIntegrationTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0646A591CAF644800587FF1 /* CarthageIntegrationTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CarthageIntegrationTest.h; sourceTree = "<group>"; };
 		C0646A5B1CAF644800587FF1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C0646A611CAF647900587FF1 /* Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
-		C0646A631CAF667600587FF1 /* SwiftyRSA.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyRSA.framework; path = Carthage/Build/iOS/SwiftyRSA.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -25,7 +25,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0646A641CAF667600587FF1 /* SwiftyRSA.framework in Frameworks */,
+				0FE9A19F291EC32D00FB6CEF /* SwiftyRSA.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -35,7 +35,6 @@
 		C0646A4C1CAF644800587FF1 = {
 			isa = PBXGroup;
 			children = (
-				C0646A631CAF667600587FF1 /* SwiftyRSA.framework */,
 				C0646A581CAF644800587FF1 /* CarthageIntegrationTest */,
 				C0646A571CAF644800587FF1 /* Products */,
 			);
@@ -52,6 +51,7 @@
 		C0646A581CAF644800587FF1 /* CarthageIntegrationTest */ = {
 			isa = PBXGroup;
 			children = (
+				0FE9A19E291EC32D00FB6CEF /* SwiftyRSA.xcframework */,
 				C0646A591CAF644800587FF1 /* CarthageIntegrationTest.h */,
 				C0646A5B1CAF644800587FF1 /* Info.plist */,
 				C0646A611CAF647900587FF1 /* Main.swift */,
@@ -254,7 +254,11 @@
 				INFOPLIST_FILE = CarthageIntegrationTest/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.loisdiqual.CarthageIntegrationTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -280,7 +284,11 @@
 				INFOPLIST_FILE = CarthageIntegrationTest/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.loisdiqual.CarthageIntegrationTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

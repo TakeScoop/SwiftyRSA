@@ -16,6 +16,7 @@ platform :ios do
     sh "rm ../CarthageIntegrationTest/Cartfile* || true"
     sh "echo 'git \"file://#{git_repo_path}\" \"#{commit}\"' > ../CarthageIntegrationTest/Cartfile"
     carthage(project_directory: './CarthageIntegrationTest', use_xcframeworks: true, platform: 'iOS')
+    sh "cp -R ../CarthageIntegrationTest/Carthage/Build/SwiftyRSA.xcframework ../CarthageIntegrationTest/CarthageIntegrationTest/"
     gym(
         project: './CarthageIntegrationTest/CarthageIntegrationTest.xcodeproj',
         export_method: 'ad-hoc',
