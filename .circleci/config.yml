@@ -61,7 +61,7 @@ jobs:
       - checkout
       - restore_cache:
           key: *dependencies-cache-key
-      - run: instruments -s devices
+      # - run: instruments -s devices
       - run: xcodebuild -sdk -version
       # Some different versions are installed on the Xcode 10 server, so we need to re-install ruby gems.
       - run:
