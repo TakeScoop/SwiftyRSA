@@ -15,8 +15,13 @@ platform :ios do
     git_repo_path = File.expand_path('..', File.dirname(__FILE__))
     sh "rm ../CarthageIntegrationTest/Cartfile* || true"
     sh "echo 'git \"file://#{git_repo_path}\" \"#{commit}\"' > ../CarthageIntegrationTest/Cartfile"
-    carthage(project_directory: './CarthageIntegrationTest')
-    xcodebuild(project: './CarthageIntegrationTest/CarthageIntegrationTest.xcodeproj')
+    carthage(project_directory: './CarthageIntegrationTest', use_xcframeworks: true, platform: 'iOS')
+    gym(
+        project: './CarthageIntegrationTest/CarthageIntegrationTest.xcodeproj',
+        export_method: 'ad-hoc',
+        skip_codesigning: true,
+        skip_archive: true
+    )
   end
   
   desc "Runs all the tests for Xcode 10"
