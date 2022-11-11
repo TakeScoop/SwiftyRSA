@@ -68,7 +68,7 @@ jobs:
           name: Install Ruby dependencies
           command: bundle check || bundle install --jobs 4 --retry 3
       - run: bundle exec fastlane test_carthage
-      - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_xcode10 --verbose
+      - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_xcode13 --verbose
 
 workflows:
   version: 2
