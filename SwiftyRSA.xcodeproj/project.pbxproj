@@ -15,7 +15,6 @@
 		90EBFC8626AB093C002B30E9 /* X509Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90EBFC8326AB08DF002B30E9 /* X509Tests.swift */; };
 		90EBFC8926AC32B3002B30E9 /* swiftyrsa-public-base64-X509-format.txt in Resources */ = {isa = PBXBuildFile; fileRef = 90EBFC8726AC32B2002B30E9 /* swiftyrsa-public-base64-X509-format.txt */; };
 		90EBFC8A26AC32B3002B30E9 /* swiftyrsa-public-base64-X509-format.txt in Resources */ = {isa = PBXBuildFile; fileRef = 90EBFC8726AC32B2002B30E9 /* swiftyrsa-public-base64-X509-format.txt */; };
-		B0981AE770653C8FE25311592E2BCE5E /* SwiftyRSA.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CB44E2E8BE22C702325440A0F96410A /* SwiftyRSA.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		9B4E2EB8252D8A0B0085F2B9 /* Data+SHA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4E2EB7252D8A0B0085F2B9 /* Data+SHA.swift */; };
 		9B4E2EB9252D8A0B0085F2B9 /* Data+SHA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4E2EB7252D8A0B0085F2B9 /* Data+SHA.swift */; };
 		9B4E2EBA252D8A0B0085F2B9 /* Data+SHA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4E2EB7252D8A0B0085F2B9 /* Data+SHA.swift */; };
@@ -35,7 +34,6 @@
 		C057922D21545CB00057F401 /* SwiftyRSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E84F551B29670A456D12366AA4C8E5 /* SwiftyRSA.swift */; };
 		C057922E21545CB00057F401 /* SwiftyRSA+ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */; };
 		C057922F21545CB00057F401 /* SwiftyRSAError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03AF73D1ECAB2FC00DE8166 /* SwiftyRSAError.swift */; };
-		C0579231215464470057F401 /* SwiftyRSA.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CB44E2E8BE22C702325440A0F96410A /* SwiftyRSA.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C0579240215465350057F401 /* ClearMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83E081ECD7F3000E9D63C /* ClearMessage.swift */; };
 		C0579241215465350057F401 /* Asn1Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C034317A1EC2D7E30019B7E8 /* Asn1Parser.swift */; };
 		C0579242215465350057F401 /* EncryptedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E83E0C1ECD7F4200E9D63C /* EncryptedMessage.swift */; };
@@ -47,7 +45,6 @@
 		C0579249215465350057F401 /* SwiftyRSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E84F551B29670A456D12366AA4C8E5 /* SwiftyRSA.swift */; };
 		C057924A215465350057F401 /* SwiftyRSA+ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A33DA1E6E815A000EE6DC /* SwiftyRSA+ObjC.swift */; };
 		C057924B215465350057F401 /* SwiftyRSAError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03AF73D1ECAB2FC00DE8166 /* SwiftyRSAError.swift */; };
-		C057924D2154653F0057F401 /* SwiftyRSA.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CB44E2E8BE22C702325440A0F96410A /* SwiftyRSA.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C0579257215465750057F401 /* SwiftyRSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0579238215465040057F401 /* SwiftyRSA.framework */; };
 		C057925D2154659B0057F401 /* KeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A00F1D9083D000E285C2 /* KeyTests.swift */; };
 		C057925E2154659B0057F401 /* MessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C096A0131D9086F300E285C2 /* MessageTests.swift */; };
@@ -304,7 +301,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0579231215464470057F401 /* SwiftyRSA.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,7 +308,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C057924D2154653F0057F401 /* SwiftyRSA.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
