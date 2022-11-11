@@ -39,13 +39,17 @@ jobs:
       - checkout
       - restore_cache:
           key: *dependencies-cache-key
+      # Some different versions are installed on the Xcode 10 server, so we need to re-install ruby gems.
+      - run:
+          name: Install Ruby dependencies
+          command: bundle check || bundle install --jobs 4 --retry 3
       - run:
           name: Install Cocoapods dependencies
           command: |
               bundle exec pod install
               diff ./Podfile.lock ./Pods/Manifest.lock > /dev/null || pod_install
       - run: bundle exec fastlane lint
-  unit-test:
+  test-xcode13:
     macos:
       xcode: "13.2.1"
     environment:
@@ -58,6 +62,10 @@ jobs:
       - restore_cache:
           key: *dependencies-cache-key
       - run: xcodebuild -sdk -version
+      # Some different versions are installed on the Xcode 10 server, so we need to re-install ruby gems.
+      - run:
+          name: Install Ruby dependencies
+          command: bundle check || bundle install --jobs 4 --retry 3
       - run: bundle exec fastlane test_carthage
       - run: FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test_latest_xcode --verbose
 
@@ -69,6 +77,6 @@ workflows:
       - lint:
           requires:
             - dependencies
-      - unit-test:
+      - test-xcode13:
           requires:
             - dependencies
