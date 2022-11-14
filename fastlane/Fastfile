@@ -15,86 +15,44 @@ platform :ios do
     git_repo_path = File.expand_path('..', File.dirname(__FILE__))
     sh "rm ../CarthageIntegrationTest/Cartfile* || true"
     sh "echo 'git \"file://#{git_repo_path}\" \"#{commit}\"' > ../CarthageIntegrationTest/Cartfile"
-    carthage(project_directory: './CarthageIntegrationTest')
-    xcodebuild(project: './CarthageIntegrationTest/CarthageIntegrationTest.xcodeproj')
+    carthage(project_directory: './CarthageIntegrationTest', use_xcframeworks: true, platform: 'iOS')
+    sh "cp -R ../CarthageIntegrationTest/Carthage/Build/SwiftyRSA.xcframework ../CarthageIntegrationTest/CarthageIntegrationTest/"
+    gym(
+        project: './CarthageIntegrationTest/CarthageIntegrationTest.xcodeproj',
+        export_method: 'ad-hoc',
+        skip_codesigning: true,
+        skip_archive: true
+    )
   end
   
-  desc "Runs all the tests for Xcode 10"
-  lane :test_xcode10 do
+  desc "Runs all the tests for Xcode 13.2.1"
+  lane :test_latest_xcode do
     
     swift_version = '5.0'
     
     # iOS
     test_ios(
-      sdk: 'iphonesimulator12.4',
+      sdk: 'iphonesimulator',
       swift_version: swift_version,
       devices: [
-        'iPhone 6 (12.4)',
+        'iPhone 8',
+        'iPhone 12'
       ]
     )
     
     # tvOS
     test_tvos(
-      sdk: 'appletvsimulator12.4',
+      sdk: 'appletvsimulator',
       swift_version: swift_version,
       devices: [
-        'Apple TV (12.4)',
+        'Apple TV',
       ]
     )
 
     # watchOS (smoke test)
     test_watchos(
-      sdk: 'watchsimulator5.3',
+      sdk: 'watchsimulator',
       swift_version: swift_version
-    )
-  end
-
-  desc "Runs all the tests for Xcode 11"
-  lane :test_xcode11 do
-    
-    swift_version = '5.0'
-    
-    # iOS
-    test_ios(
-      sdk: 'iphonesimulator13.4',
-      swift_version: swift_version,
-      devices: [
-        'iPhone 6 (12.2)',
-        'iPhone 6 (12.4)',
-        'iPhone 8 (13.4)',
-      ]
-    )
-    
-    # tvOS
-    test_tvos(
-      sdk: 'appletvsimulator13.4',
-      swift_version: swift_version,
-      devices: [
-        'Apple TV (12.4)',
-        'Apple TV (13.4)',
-      ]
-    )
-
-    # watchOS (smoke test)
-    test_watchos(
-      sdk: 'watchsimulator6.2',
-      swift_version: swift_version
-    )
-  end
-  
-  desc "Runs all the tests for Xcode 12"
-  lane :test_xcode12 do
-    
-    swift_version = '5.0'
-    
-    # iOS
-    test_ios(
-      sdk: 'iphonesimulator14.4',
-      swift_version: swift_version,
-      devices: [
-        'iPhone 8 (14.4)',
-        'iPhone 12 (14.4)'
-      ]
     )
   end
 end
