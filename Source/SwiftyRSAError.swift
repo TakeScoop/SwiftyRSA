@@ -34,8 +34,10 @@ public enum SwiftyRSAError: Error {
     case notAPublicKey
     case notAPrivateKey
     case x509CertificateFailed
-    
-    var localizedDescription: String {
+}
+
+extension SwiftyRSAError: LocalizedError {
+    public var errorDescription: String? {
         switch self {
         case .pemDoesNotContainKey:
             return "Couldn't get data from PEM key: no data available after stripping headers"
