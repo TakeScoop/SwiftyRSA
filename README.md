@@ -45,13 +45,22 @@ Quick Start
 ### Encrypt with a public key
 
 ```swift
-let publicKey = try PublicKey(pemNamed: "public")
-let clear = try ClearMessage(string: "Clear Text", using: .utf8)
-let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
+do {
+    let publicKey = try PublicKey(pemNamed: "public")
 
-// Then you can use:
-let data = encrypted.data
-let base64String = encrypted.base64String
+    let str = "Clear String"
+    let clear = try ClearMessage(string: str, using: .utf8)
+    let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
+
+    let data = encencrypted.data
+    print(data)
+    
+    let base64String = encrypted.base64String
+    print(base64String)
+
+} catch {
+    print(error)
+}
 ```
 
 ### Decrypt with a private key
@@ -197,7 +206,7 @@ Create public and private RSA keys
 Use `ssh-keygen` to generate a PEM public key and a PEM private key. SwiftyRSA also supports DER public keys.
 
 ```
-$ ssh-keygen -t rsa -f ~/mykey -N ''
+$ ssh-keygen -t rsa -m PEM -f ~/mykey -N ''
 $ cat ~/mykey > ~/private.pem
 $ ssh-keygen -f ~/mykey.pub -e -m pem > ~/public.pem
 ```

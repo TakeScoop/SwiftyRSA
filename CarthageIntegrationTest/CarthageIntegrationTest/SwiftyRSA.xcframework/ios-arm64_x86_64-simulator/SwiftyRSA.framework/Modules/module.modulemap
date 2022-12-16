@@ -1,0 +1,4 @@
+framework module SwiftyRSA {
+  header "SwiftyRSA-Swift.h"
+  requires objc
+}
