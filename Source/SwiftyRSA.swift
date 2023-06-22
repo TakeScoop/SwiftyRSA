@@ -136,7 +136,7 @@ public enum SwiftyRSA {
             kSecPrivateKeyAttrs: [
                 kSecAttrIsPermanent: isPermanent,
                 kSecAttrApplicationTag: tagData
-            ]
+            ] as [CFString: Any]
         ]
         
         var error: Unmanaged<CFError>?
