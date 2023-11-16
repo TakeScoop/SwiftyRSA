@@ -31,12 +31,12 @@ struct TestError: Error {
     }
     
     @nonobjc
-    static public func publicKey(name: String) throws -> PublicKey {
+    static public func publicKey(name: String) throws -> SwiftyRSA.PublicKey {
         guard let path = bundle.path(forResource: name, ofType: "pem") else {
             throw TestError(description: "Couldn't load key for provided path")
         }
         let pemString = try String(contentsOf: URL(fileURLWithPath: path))
-        return try PublicKey(pemEncoded: pemString)
+        return try SwiftyRSA.PublicKey(pemEncoded: pemString)
     }
     
     @objc(publicKeyWithName:error:)
@@ -49,12 +49,12 @@ struct TestError: Error {
     }
     
     @nonobjc
-    static public func privateKey(name: String) throws -> PrivateKey {
+    static public func privateKey(name: String) throws -> SwiftyRSA.PrivateKey {
         guard let path = bundle.path(forResource: name, ofType: "pem") else {
             throw TestError(description: "Couldn't load key for provided path")
         }
         let pemString = try String(contentsOf: URL(fileURLWithPath: path))
-        return try PrivateKey(pemEncoded: pemString)
+        return try SwiftyRSA.PrivateKey(pemEncoded: pemString)
     }
     
     @objc(privateKeyWithName:error:)
