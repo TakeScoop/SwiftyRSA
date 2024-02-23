@@ -49,7 +49,7 @@ public class _objc_SwiftyRSA: NSObject { // swiftlint:disable:this type_name
 
 // MARK: - PublicKey
 
-@objc(PublicKey)
+@objc(ObjcPublicKey)
 public class _objc_PublicKey: NSObject, Key, ObjcBridgeable { // swiftlint:disable:this type_name
     
     fileprivate let swiftValue: SwiftyRSA.PublicKey
