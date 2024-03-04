@@ -76,8 +76,8 @@ class EncryptDecryptTests: XCTestCase {
         let data = TestUtils.randomData(count: 2048)
         let clearMessage = ClearMessage(data: data)
         
-        let newPublicKey = try PublicKey(reference: publicKey.reference)
-        let newPrivateKey = try PrivateKey(reference: privateKey.reference)
+        let newPublicKey = try SwiftyRSA.PublicKey(reference: publicKey.reference)
+        let newPrivateKey = try SwiftyRSA.PrivateKey(reference: privateKey.reference)
         
         // Encrypt with old public key, decrypt with old private key
         do {
@@ -113,8 +113,8 @@ class EncryptDecryptTests: XCTestCase {
         let data = TestUtils.randomData(count: 2048)
         let clearMessage = ClearMessage(data: data)
         
-        let newPublicKey = try PublicKey(data: try publicKey.data())
-        let newPrivateKey = try PrivateKey(data: try privateKey.data())
+        let newPublicKey = try SwiftyRSA.PublicKey(data: try publicKey.data())
+        let newPrivateKey = try SwiftyRSA.PrivateKey(data: try privateKey.data())
         
         // Encrypt with old public key, decrypt with old private key
         do {

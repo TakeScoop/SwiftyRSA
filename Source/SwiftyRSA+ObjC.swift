@@ -49,10 +49,10 @@ public class _objc_SwiftyRSA: NSObject { // swiftlint:disable:this type_name
 
 // MARK: - PublicKey
 
-@objc(PublicKey)
+@objc(ObjcPublicKey)
 public class _objc_PublicKey: NSObject, Key, ObjcBridgeable { // swiftlint:disable:this type_name
     
-    fileprivate let swiftValue: PublicKey
+    fileprivate let swiftValue: SwiftyRSA.PublicKey
     
     @objc public var reference: SecKey {
         return swiftValue.reference
@@ -74,36 +74,36 @@ public class _objc_PublicKey: NSObject, Key, ObjcBridgeable { // swiftlint:disab
         return try swiftValue.base64String()
     }
     
-    required public init(swiftValue: PublicKey) {
+    required public init(swiftValue: SwiftyRSA.PublicKey) {
         self.swiftValue = swiftValue
     }
     
     @objc required public init(data: Data) throws {
-        self.swiftValue = try PublicKey(data: data)
+        self.swiftValue = try SwiftyRSA.PublicKey(data: data)
     }
     
     @objc public required init(reference: SecKey) throws {
-        self.swiftValue = try PublicKey(reference: reference)
+        self.swiftValue = try SwiftyRSA.PublicKey(reference: reference)
     }
     
     @objc public required init(base64Encoded base64String: String) throws {
-        self.swiftValue = try PublicKey(base64Encoded: base64String)
+        self.swiftValue = try SwiftyRSA.PublicKey(base64Encoded: base64String)
     }
     
     @objc public required init(pemEncoded pemString: String) throws {
-        self.swiftValue = try PublicKey(pemEncoded: pemString)
+        self.swiftValue = try SwiftyRSA.PublicKey(pemEncoded: pemString)
     }
     
     @objc public required init(pemNamed pemName: String, in bundle: Bundle) throws {
-        self.swiftValue = try PublicKey(pemNamed: pemName, in: bundle)
+        self.swiftValue = try SwiftyRSA.PublicKey(pemNamed: pemName, in: bundle)
     }
     
     @objc public required init(derNamed derName: String, in bundle: Bundle) throws {
-        self.swiftValue = try PublicKey(derNamed: derName, in: bundle)
+        self.swiftValue = try SwiftyRSA.PublicKey(derNamed: derName, in: bundle)
     }
     
     @objc public static func publicKeys(pemEncoded pemString: String) -> [_objc_PublicKey] {
-        return PublicKey.publicKeys(pemEncoded: pemString).map { _objc_PublicKey(swiftValue: $0) }
+        return SwiftyRSA.PublicKey.publicKeys(pemEncoded: pemString).map { _objc_PublicKey(swiftValue: $0) }
     }
 }
 
@@ -112,7 +112,7 @@ public class _objc_PublicKey: NSObject, Key, ObjcBridgeable { // swiftlint:disab
 @objc(PrivateKey)
 public class _objc_PrivateKey: NSObject, Key, ObjcBridgeable { // swiftlint:disable:this type_name
     
-    fileprivate let swiftValue: PrivateKey
+    fileprivate let swiftValue: SwiftyRSA.PrivateKey
     
     @objc public var reference: SecKey {
         return swiftValue.reference
@@ -134,32 +134,32 @@ public class _objc_PrivateKey: NSObject, Key, ObjcBridgeable { // swiftlint:disa
         return try swiftValue.base64String()
     }
     
-    public required init(swiftValue: PrivateKey) {
+    public required init(swiftValue: SwiftyRSA.PrivateKey) {
         self.swiftValue = swiftValue
     }
     
     @objc public required init(data: Data) throws {
-        self.swiftValue = try PrivateKey(data: data)
+        self.swiftValue = try SwiftyRSA.PrivateKey(data: data)
     }
     
     @objc public required init(reference: SecKey) throws {
-        self.swiftValue = try PrivateKey(reference: reference)
+        self.swiftValue = try SwiftyRSA.PrivateKey(reference: reference)
     }
     
     @objc public required init(base64Encoded base64String: String) throws {
-        self.swiftValue = try PrivateKey(base64Encoded: base64String)
+        self.swiftValue = try SwiftyRSA.PrivateKey(base64Encoded: base64String)
     }
     
     @objc public required init(pemEncoded pemString: String) throws {
-        self.swiftValue = try PrivateKey(pemEncoded: pemString)
+        self.swiftValue = try SwiftyRSA.PrivateKey(pemEncoded: pemString)
     }
     
     @objc public required init(pemNamed pemName: String, in bundle: Bundle) throws {
-        self.swiftValue = try PrivateKey(pemNamed: pemName, in: bundle)
+        self.swiftValue = try SwiftyRSA.PrivateKey(pemNamed: pemName, in: bundle)
     }
     
     @objc public required init(derNamed derName: String, in bundle: Bundle) throws {
-        self.swiftValue = try PrivateKey(derNamed: derName, in: bundle)
+        self.swiftValue = try SwiftyRSA.PrivateKey(derNamed: derName, in: bundle)
     }
 }
 

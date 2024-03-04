@@ -27,7 +27,7 @@ public class EncryptedMessage: Message {
     ///   - padding: Padding to use during the decryption
     /// - Returns: Clear message
     /// - Throws: SwiftyRSAError
-    public func decrypted(with key: PrivateKey, padding: Padding) throws -> ClearMessage {
+    public func decrypted(with key: SwiftyRSA.PrivateKey, padding: Padding) throws -> ClearMessage {
         let blockSize = SecKeyGetBlockSize(key.reference)
         
         var encryptedDataAsArray = [UInt8](repeating: 0, count: data.count)
