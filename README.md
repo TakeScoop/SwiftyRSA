@@ -52,7 +52,7 @@ do {
     let clear = try ClearMessage(string: str, using: .utf8)
     let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
 
-    let data = encencrypted.data
+    let data = encrypted.data
     print(data)
     
     let base64String = encrypted.base64String
