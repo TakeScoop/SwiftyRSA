@@ -22,13 +22,13 @@ public enum SwiftyRSAError: Error {
     case invalidAsn1RootNode
     case invalidAsn1Structure
     case invalidBase64String
-    case chunkDecryptFailed(index: Int)
-    case chunkEncryptFailed(index: Int)
+    case decryptFailed(error: CFError?)
+    case encryptFailed(error: CFError?)
     case stringToDataConversionFailed
     case dataToStringConversionFailed
     case invalidDigestSize(digestSize: Int, maxChunkSize: Int)
-    case signatureCreateFailed(status: OSStatus)
-    case signatureVerifyFailed(status: OSStatus)
+    case signatureCreateFailed(error: CFError?)
+    case signatureVerifyFailed(error: CFError?)
     case pemFileNotFound(name: String)
     case derFileNotFound(name: String)
     case notAPublicKey
@@ -61,20 +61,20 @@ extension SwiftyRSAError: LocalizedError {
             return "Couldn't parse the provided key because it has an unexpected ASN1 structure"
         case .invalidBase64String:
             return "The provided string is not a valid Base 64 string"
-        case .chunkDecryptFailed(let index):
-            return "Couldn't decrypt chunk at index \(index)"
-        case .chunkEncryptFailed(let index):
-            return "Couldn't encrypt chunk at index \(index)"
+        case .decryptFailed(let error):
+            return "Couldn't decrypt data: CFError \(String(describing: error))"
+        case .encryptFailed(let error):
+            return "Couldn't encrypt data: CFError \(String(describing: error))"
         case .stringToDataConversionFailed:
             return "Couldn't convert string to data using specified encoding"
         case .dataToStringConversionFailed:
             return "Couldn't convert data to string representation"
         case .invalidDigestSize(let digestSize, let maxChunkSize):
             return "Provided digest type produces a size (\(digestSize)) that is bigger than the maximum chunk size \(maxChunkSize) of the RSA key"
-        case .signatureCreateFailed(let status):
-            return "Couldn't sign provided data: OSStatus \(status)"
-        case .signatureVerifyFailed(let status):
-            return "Couldn't verify signature of the provided data: OSStatus \(status)"
+        case .signatureCreateFailed(let error):
+            return "Couldn't sign provided data: CFError \(String(describing: error))"
+        case .signatureVerifyFailed(let error):
+            return "Couldn't verify signature of the provided data: CFError \(String(describing: error))"
         case .pemFileNotFound(let name):
             return "Couldn't find a PEM file named '\(name)'"
         case .derFileNotFound(let name):

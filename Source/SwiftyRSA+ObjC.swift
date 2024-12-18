@@ -210,8 +210,8 @@ public class _objc_ClearMessage: NSObject, Message, ObjcBridgeable { // swiftlin
         return try swiftValue.string(encoding: encoding)
     }
     
-    @objc public func encrypted(with key: _objc_PublicKey, padding: Padding) throws -> _objc_EncryptedMessage {
-        let encryptedMessage = try swiftValue.encrypted(with: key.swiftValue, padding: padding)
+    @objc public func encrypted(with key: _objc_PublicKey, algorithm: Algorithm) throws -> _objc_EncryptedMessage {
+        let encryptedMessage = try swiftValue.encrypted(with: key.swiftValue, algorithm: algorithm)
         return _objc_EncryptedMessage(swiftValue: encryptedMessage)
     }
     
@@ -253,8 +253,8 @@ public class _objc_EncryptedMessage: NSObject, Message, ObjcBridgeable { // swif
         self.swiftValue = try EncryptedMessage(base64Encoded: base64String)
     }
     
-    @objc public func decrypted(with key: _objc_PrivateKey, padding: Padding) throws -> _objc_ClearMessage {
-        let clearMessage = try swiftValue.decrypted(with: key.swiftValue, padding: padding)
+    @objc public func decrypted(with key: _objc_PrivateKey, algorithm: Algorithm) throws -> _objc_ClearMessage {
+        let clearMessage = try swiftValue.decrypted(with: key.swiftValue, algorithm: algorithm)
         return _objc_ClearMessage(swiftValue: clearMessage)
     }
 }

@@ -273,8 +273,8 @@ class PrivateKeyTests: XCTestCase {
         let str = "Clear Text"
         let clearMessage = try ClearMessage(string: str, using: .utf8)
         
-        let encrypted = try clearMessage.encrypted(with: keyPair.publicKey, padding: .PKCS1)
-        let decrypted = try encrypted.decrypted(with: keyPair.privateKey, padding: .PKCS1)
+        let encrypted = try clearMessage.encrypted(with: keyPair.publicKey, algorithm: .rsaEncryptionPKCS1)
+        let decrypted = try encrypted.decrypted(with: keyPair.privateKey, algorithm: .rsaEncryptionPKCS1)
         
         XCTAssertEqual(try? decrypted.string(encoding: .utf8), str)
     }

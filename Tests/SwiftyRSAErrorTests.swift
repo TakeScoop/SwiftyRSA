@@ -60,20 +60,20 @@ final class SwiftyRSAErrorTests: XCTestCase {
                 XCTAssertEqual($0.localizedDescription, "Couldn't parse the provided key because it has an unexpected ASN1 structure")
             case .invalidBase64String:
                 XCTAssertEqual($0.localizedDescription, "The provided string is not a valid Base 64 string")
-            case .chunkDecryptFailed(index: let index):
-                XCTAssertEqual($0.localizedDescription, "Couldn't decrypt chunk at index \(index)")
-            case .chunkEncryptFailed(index: let index):
-                XCTAssertEqual($0.localizedDescription, "Couldn't encrypt chunk at index \(index)")
+            case .decryptFailed(error: let error):
+                XCTAssertEqual($0.localizedDescription, "Couldn't decrypt data: CFError \(String(describing: error))")
+            case .encryptFailed(error: let error):
+                XCTAssertEqual($0.localizedDescription, "Couldn't encrypt data: CFError \(String(describing: error))")
             case .stringToDataConversionFailed:
                 XCTAssertEqual($0.localizedDescription, "Couldn't convert string to data using specified encoding")
             case .dataToStringConversionFailed:
                 XCTAssertEqual($0.localizedDescription, "Couldn't convert data to string representation")
             case .invalidDigestSize(digestSize: let digestSize, maxChunkSize: let maxChunkSize):
                 XCTAssertEqual($0.localizedDescription, "Provided digest type produces a size (\(digestSize)) that is bigger than the maximum chunk size \(maxChunkSize) of the RSA key")
-            case .signatureCreateFailed(status: let status):
-                XCTAssertEqual($0.localizedDescription, "Couldn't sign provided data: OSStatus \(status)")
-            case .signatureVerifyFailed(status: let status):
-                XCTAssertEqual($0.localizedDescription, "Couldn't verify signature of the provided data: OSStatus \(status)")
+            case .signatureCreateFailed(error: let error):
+                XCTAssertEqual($0.localizedDescription, "Couldn't sign provided data: CFError \(String(describing: error))")
+            case .signatureVerifyFailed(error: let error):
+                XCTAssertEqual($0.localizedDescription, "Couldn't verify signature of the provided data: CFError \(String(describing: error))")
             case .pemFileNotFound(name: let name):
                 XCTAssertEqual($0.localizedDescription, "Couldn't find a PEM file named '\(name)'")
             case .derFileNotFound(name: let name):
@@ -103,13 +103,13 @@ private extension SwiftyRSAErrorTests {
             .invalidAsn1RootNode,
             .invalidAsn1Structure,
             .invalidBase64String,
-            .chunkDecryptFailed(index: 0),
-            .chunkEncryptFailed(index: 0),
+            .decryptFailed(error: nil),
+            .encryptFailed(error: nil),
             .stringToDataConversionFailed,
             .dataToStringConversionFailed,
             .invalidDigestSize(digestSize: 0, maxChunkSize: 0),
-            .signatureCreateFailed(status: errSecSuccess),
-            .signatureVerifyFailed(status: errSecSuccess),
+            .signatureCreateFailed(error: nil),
+            .signatureVerifyFailed(error: nil),
             .pemFileNotFound(name: "dummy"),
             .derFileNotFound(name: "dummy"),
             .notAPublicKey,
