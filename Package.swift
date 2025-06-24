@@ -5,14 +5,14 @@ let package = Package(
     name: "SwiftyRSA",
     products: [
         .library(
-            name: "SwiftyRSA",
-            targets: ["SwiftyRSA"]),
+            name: "SwiftyRSASDK",
+            targets: ["SwiftyRSASDK"]),
     ],
     dependencies: [
     ],
     targets: [
         .target(
-            name: "SwiftyRSA",
+            name: "SwiftyRSASDK",
             dependencies: [],
             path: "Source")
     ]
