@@ -18,53 +18,72 @@ struct TestError: Error {
 // swiftlint:disable force_unwrapping
 @objc public class TestUtils: NSObject {
     
+    #if SWIFT_PACKAGE
+    static let bundle = Bundle.module
+    #else
     static let bundle = Bundle(for: TestUtils.self)
+    #endif
+    
+    static func path(forResource name: String, ofType ext: String) -> String? {
+        if let path = bundle.path(forResource: name, ofType: ext) {
+            return path
+        }
+        #if SWIFT_PACKAGE
+        return bundle.path(forResource: name, ofType: ext, inDirectory: "keys")
+        #else
+        return nil
+        #endif
+    }
     
     static public func pemKeyString(name: String) -> String {
-        let pubPath = bundle.path(forResource: name, ofType: "pem")!
+        let pubPath = path(forResource: name, ofType: "pem")!
         return (try! NSString(contentsOfFile: pubPath, encoding: String.Encoding.utf8.rawValue)) as String
     }
     
     static public func derKeyData(name: String) -> Data {
-        let pubPath  = bundle.path(forResource: name, ofType: "der")!
+        let pubPath = path(forResource: name, ofType: "der")!
         return (try! Data(contentsOf: URL(fileURLWithPath: pubPath)))
     }
     
     @nonobjc
     static public func publicKey(name: String) throws -> PublicKey {
-        guard let path = bundle.path(forResource: name, ofType: "pem") else {
+        guard let path = path(forResource: name, ofType: "pem") else {
             throw TestError(description: "Couldn't load key for provided path")
         }
         let pemString = try String(contentsOf: URL(fileURLWithPath: path))
         return try PublicKey(pemEncoded: pemString)
     }
     
+    #if !SWIFT_PACKAGE
     @objc(publicKeyWithName:error:)
     static public func _objc_publicKey(name: String) throws -> _objc_PublicKey { // swiftlint:disable:this identifier_name
-        guard let path = bundle.path(forResource: name, ofType: "pem") else {
+        guard let path = path(forResource: name, ofType: "pem") else {
             throw TestError(description: "Couldn't load key for provided path")
         }
         let pemString = try String(contentsOf: URL(fileURLWithPath: path))
         return try _objc_PublicKey(pemEncoded: pemString)
     }
+    #endif
     
     @nonobjc
     static public func privateKey(name: String) throws -> PrivateKey {
-        guard let path = bundle.path(forResource: name, ofType: "pem") else {
+        guard let path = path(forResource: name, ofType: "pem") else {
             throw TestError(description: "Couldn't load key for provided path")
         }
         let pemString = try String(contentsOf: URL(fileURLWithPath: path))
         return try PrivateKey(pemEncoded: pemString)
     }
     
+    #if !SWIFT_PACKAGE
     @objc(privateKeyWithName:error:)
     static public func _objc_privateKey(name: String) throws -> _objc_PrivateKey { // swiftlint:disable:this identifier_name
-        guard let path = bundle.path(forResource: name, ofType: "pem") else {
+        guard let path = path(forResource: name, ofType: "pem") else {
             throw TestError(description: "Couldn't load key for provided path")
         }
         let pemString = try String(contentsOf: URL(fileURLWithPath: path))
         return try _objc_PrivateKey(pemEncoded: pemString)
     }
+    #endif
     
     @objc
     static public func randomData(count: Int) -> Data {
@@ -104,8 +123,8 @@ extension SwiftyRSAError: Equatable {
             (.invalidAsn1RootNode, .invalidAsn1RootNode),
             (.invalidAsn1Structure, .invalidAsn1Structure),
             (.invalidBase64String, .invalidBase64String),
-            (.chunkDecryptFailed, .chunkDecryptFailed),
-            (.chunkEncryptFailed, .chunkEncryptFailed),
+            (.decryptFailed, .decryptFailed),
+            (.encryptFailed, .encryptFailed),
             (.stringToDataConversionFailed, .stringToDataConversionFailed),
             (.dataToStringConversionFailed, .dataToStringConversionFailed),
             (.invalidDigestSize, .invalidDigestSize),

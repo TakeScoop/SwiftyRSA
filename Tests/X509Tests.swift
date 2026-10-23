@@ -13,9 +13,12 @@ import XCTest
 
 class X509CertificateTests: XCTestCase {
     
+    /// PKCS#1 v1.5 with 1024 bit RSA key can encrypt up to 117 bytes.
+    let byteLimitForPKCS1 = 117
+    
     let publicKey = try! TestUtils.publicKey(name: "swiftyrsa-public") // swiftlint:disable:this force_try
     let privateKey = try! TestUtils.privateKey(name: "swiftyrsa-private") // swiftlint:disable:this force_try
-    let bundle = Bundle(for: X509CertificateTests.self)
+    let bundle = TestUtils.bundle
     
     /// Verify the ASN1 sruc with the ASN1 parser (private key)
     func testX509CertificateValidityPrivateKey() throws {
@@ -48,7 +51,7 @@ class X509CertificateTests: XCTestCase {
     /// Verify that the header added corresponds to the X509 key
     func testX509HeaderVerificationPublicKey() throws {
         // Generated on https://www.devglan.com/online-tools/rsa-encryption-decryption which uses X.509 certificate for public key
-        guard let path = bundle.path(forResource: "swiftyrsa-public-base64-X509-format", ofType: "txt") else {
+        guard let path = TestUtils.path(forResource: "swiftyrsa-public-base64-X509-format", ofType: "txt") else {
             return XCTFail("file not found in bundle")
         }
         let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
@@ -98,8 +101,8 @@ class X509CertificateTests: XCTestCase {
         let clear = "Hello world !"
         let clearMessage = try ClearMessage(string: clear, using: .utf8)
         
-        let encrypted = try clearMessage.encrypted(with: PublicKey(data: publicKeyX509), padding: .PKCS1)
-        let decrypted = try encrypted.decrypted(with: PrivateKey(data: privateKeyX509), padding: .PKCS1)
+        let encrypted = try clearMessage.encrypted(with: PublicKey(data: publicKeyX509), algorithm: .rsaEncryptionPKCS1)
+        let decrypted = try encrypted.decrypted(with: PrivateKey(data: privateKeyX509), algorithm: .rsaEncryptionPKCS1)
         
         XCTAssertEqual(try? decrypted.string(encoding: .utf8), clear)
     }
@@ -113,11 +116,11 @@ class X509CertificateTests: XCTestCase {
         let privateKeyX509 = try SwiftyRSA.prependX509KeyHeader(keyData: privateKeyData)
         let publicKeyX509 = try SwiftyRSA.prependX509KeyHeader(keyData: publicKeyData)
         
-        let clear = [String](repeating: "a", count: 9999).joined(separator: "")
+        let clear = [String](repeating: "a", count: 99).joined(separator: "")
         let clearMessage = try ClearMessage(string: clear, using: .utf8)
         
-        let encrypted = try clearMessage.encrypted(with: PublicKey(data: publicKeyX509), padding: .PKCS1)
-        let decrypted = try encrypted.decrypted(with: PrivateKey(data: privateKeyX509), padding: .PKCS1)
+        let encrypted = try clearMessage.encrypted(with: PublicKey(data: publicKeyX509), algorithm: .rsaEncryptionPKCS1)
+        let decrypted = try encrypted.decrypted(with: PrivateKey(data: privateKeyX509), algorithm: .rsaEncryptionPKCS1)
         
         XCTAssertEqual(try? decrypted.string(encoding: .utf8), clear)
     }
@@ -131,11 +134,11 @@ class X509CertificateTests: XCTestCase {
         let privateKeyX509 = try SwiftyRSA.prependX509KeyHeader(keyData: privateKeyData)
         let publicKeyX509 = try SwiftyRSA.prependX509KeyHeader(keyData: publicKeyData)
         
-        let data = TestUtils.randomData(count: 2048)
+        let data = TestUtils.randomData(count: byteLimitForPKCS1)
         let clearMessage = ClearMessage(data: data)
         
-        let encrypted = try clearMessage.encrypted(with: PublicKey(data: publicKeyX509), padding: .PKCS1)
-        let decrypted = try encrypted.decrypted(with: PrivateKey(data: privateKeyX509), padding: .PKCS1)
+        let encrypted = try clearMessage.encrypted(with: PublicKey(data: publicKeyX509), algorithm: .rsaEncryptionPKCS1)
+        let decrypted = try encrypted.decrypted(with: PrivateKey(data: privateKeyX509), algorithm: .rsaEncryptionPKCS1)
         
         XCTAssertEqual(decrypted.data, data)
     }
