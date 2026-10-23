@@ -47,3 +47,4 @@ Carthage/Build
 
 .DS_Store
 .swiftpm
+.build/

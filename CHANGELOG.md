@@ -3,6 +3,19 @@ SwiftyRSA Changelog
 
 # [master]
 
+# [1.9.0]
+
+ - **Breaking**: Replaced deprecated `SecPadding` / `SecKeyEncrypt` / `SecKeyDecrypt` / `SecKeyRawSign` / `SecKeyRawVerify` with `SecKeyAlgorithm` and `SecKeyCreateEncryptedData` / `SecKeyCreateDecryptedData` / `SecKeyCreateSignature` / `SecKeyVerifySignature` for Xcode 16/26 compatibility ([#251](https://github.com/TakeScoop/SwiftyRSA/issues/251), [#272](https://github.com/TakeScoop/SwiftyRSA/issues/272)).
+ - Call sites now use `algorithm:` (e.g. `.rsaEncryptionPKCS1`, `.rsaEncryptionOAEPSHA1`) instead of `padding:`.
+ - Updated Swift Package Manager manifest to swift-tools-version 5.9 with explicit Apple platforms (including visionOS) and a test target.
+ - Added `PrivacyInfo.xcprivacy` for Apple privacy manifest requirements ([#260](https://github.com/TakeScoop/SwiftyRSA/issues/260), [#264](https://github.com/TakeScoop/SwiftyRSA/issues/264)).
+ - Raised minimum deployment targets to iOS 12 / macOS 10.15 / tvOS 12 / watchOS 5.
+ - Bumped CocoaPods `swift_version` to 5.9.
+
+# [1.8.0]
+
+ - Added Swift Package Manager support.
+
 # [1.7.0]
 
  - Support of the X509 header for any public key.

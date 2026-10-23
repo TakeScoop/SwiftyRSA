@@ -70,7 +70,7 @@
         ClearMessage* clearMessage = [[ClearMessage alloc] initWithData:data];
         [clearMessage data];
         [clearMessage base64String];
-        [clearMessage encryptedWith:publicKey padding:kSecPaddingNone error:nil];
+        [clearMessage encryptedWith:publicKey algorithm:kSecKeyAlgorithmRSAEncryptionPKCS1 error:nil];
         [clearMessage signedWith:privateKey digestType:DigestTypeSha1 error:nil];
         [clearMessage verifyWith:publicKey signature:signature digestType:DigestTypeSha1 error:nil];
     }
@@ -80,7 +80,7 @@
         EncryptedMessage* encryptedMessage = [[EncryptedMessage alloc] initWithData:data];
         [encryptedMessage data];
         [encryptedMessage base64String];
-        [encryptedMessage decryptedWith:privateKey padding:kSecPaddingNone error:nil];
+        [encryptedMessage decryptedWith:privateKey algorithm:kSecKeyAlgorithmRSAEncryptionPKCS1 error:nil];
     }
     
     {

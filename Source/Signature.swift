@@ -17,13 +17,13 @@ public class Signature {
         case sha384
         case sha512
         
-        var padding: Padding {
+        var algorithm: Algorithm {
             switch self {
-            case .sha1: return .PKCS1SHA1
-            case .sha224: return .PKCS1SHA224
-            case .sha256: return .PKCS1SHA256
-            case .sha384: return .PKCS1SHA384
-            case .sha512: return .PKCS1SHA512
+            case .sha1: return .rsaSignatureDigestPKCS1v15SHA1
+            case .sha224: return .rsaSignatureDigestPKCS1v15SHA224
+            case .sha256: return .rsaSignatureDigestPKCS1v15SHA256
+            case .sha384: return .rsaSignatureDigestPKCS1v15SHA384
+            case .sha512: return .rsaSignatureDigestPKCS1v15SHA512
             }
         }
     }

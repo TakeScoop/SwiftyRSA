@@ -16,11 +16,17 @@ SwiftyRSA is used in the [Scoop](https://www.takescoop.com/) [iOS app](https://i
 Installation
 ------------
 
-### Swift 5.0+
+### Swift 5.9+
 
-SwiftyRSA uses Swift 5.0 and requires Xcode 10.2+.
+SwiftyRSA targets Swift 5.9+ and Xcode 15+ (tested with Xcode 16/26). It uses modern `SecKeyAlgorithm` APIs instead of the removed `SecPadding` / `SecKeyEncrypt` family.
 
-With Cocoapods:
+With Swift Package Manager:
+
+```swift
+.package(url: "https://github.com/TakeScoop/SwiftyRSA.git", from: "1.9.0")
+```
+
+With CocoaPods:
 
 ```
 pod 'SwiftyRSA'
@@ -50,7 +56,7 @@ do {
 
     let str = "Clear String"
     let clear = try ClearMessage(string: str, using: .utf8)
-    let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
+    let encrypted = try clear.encrypted(with: publicKey, algorithm: .rsaEncryptionPKCS1)
 
     let data = encencrypted.data
     print(data)
@@ -68,7 +74,7 @@ do {
 ```swift
 let privateKey = try PrivateKey(pemNamed: "private")
 let encrypted = try EncryptedMessage(base64Encoded: "AAA===")
-let clear = try encrypted.decrypted(with: privateKey, padding: .PKCS1)
+let clear = try encrypted.decrypted(with: privateKey, algorithm: .rsaEncryptionPKCS1)
 
 // Then you can use:
 let data = clear.data
@@ -129,7 +135,7 @@ let privateKey = try PrivateKey(reference: secKey)
 ```swift
 let str = "Clear Text"
 let clear = try ClearMessage(string: str, using: .utf8)
-let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
+let encrypted = try clear.encrypted(with: publicKey, algorithm: .rsaEncryptionPKCS1)
 
 let data = encrypted.data
 let base64String = encrypted.base64Encoded
@@ -139,7 +145,7 @@ let base64String = encrypted.base64Encoded
 
 ```swift
 let encrypted = try EncryptedMessage(base64Encoded: base64String)
-let clear = try encrypted.decrypted(with: privateKey, padding: .PKCS1)
+let clear = try encrypted.decrypted(with: privateKey, algorithm: .rsaEncryptionPKCS1)
 
 let data = clear.data
 let base64String = clear.base64Encoded
